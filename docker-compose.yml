@@ -1,0 +1,23 @@
+services:
+  five_web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: five_mascotas_web
+    restart: unless-stopped
+    ports:
+      - "8082:80"
+    environment:
+      TZ: America/Santiago
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /var/cache/nginx
+      - /var/run
+    networks:
+      - five_public
+
+networks:
+  five_public:
+    name: five_mascotas_public
+    driver: bridge
