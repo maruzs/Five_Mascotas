@@ -238,7 +238,7 @@ img {
 .five-search {
   display: flex;
   align-items: center;
-  background: #ffffff;
+  background: var(--primary);
   border: 2px solid var(--primary);
   border-radius: 30px;
   overflow: hidden;
@@ -259,8 +259,9 @@ img {
   outline: none;
   min-width: 0;
   color: #111111;
-  background: transparent;
+  background: #ffffff;
   height: 100%;
+  border-radius: 28px 0 0 28px;
 }
 
 .five-search button {
