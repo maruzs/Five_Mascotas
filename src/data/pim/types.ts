@@ -48,6 +48,7 @@ export interface AnnouncementTicker {
   couponText?: string;
   extraInfo?: string;
   active: boolean;
+  order?: number;
 }
 
 export interface PromoBanner {
@@ -58,8 +59,31 @@ export interface PromoBanner {
   disclaimer?: string;
   ctaText?: string;
   ctaHref?: string;
+  couponCode?: string;
+  expiresAt?: string;
   badge?: string;
   bgGradient?: string;
   categoryTarget?: string;
   petTarget?: string;
+  active: boolean;
+  order?: number;
+}
+
+export interface HeroSlide {
+  id: string;
+  badge: string;
+  title: string;
+  subtitle: string;
+  ctaText: string;
+  ctaHref: string;
+  image: string;
+  imageAlt: string;
+  active: boolean;
+  order?: number;
+}
+
+export interface CmsState {
+  tickers: AnnouncementTicker[];
+  banners: PromoBanner[];
+  heroSlides: HeroSlide[];
 }

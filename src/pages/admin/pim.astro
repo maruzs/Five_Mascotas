@@ -122,11 +122,11 @@ import { products, formatMoney } from '../../data/pim/catalog';
   </div>
 
   <!-- Product Edit/Create Modal Backdrop -->
-  <div id="pim-modal" class="admin-modal-backdrop" hidden>
+  <div id="pim-modal" class="admin-modal-backdrop" hidden style="display:none;">
     <div class="admin-modal" role="dialog" aria-modal="true" aria-labelledby="pim-modal-title">
       <div class="admin-modal-head">
         <h3 id="pim-modal-title">Editar Producto PIM</h3>
-        <button type="button" id="pim-modal-close" style="font-size:24px; color:#6c757d;">&times;</button>
+        <button type="button" id="pim-modal-close" style="font-size:24px; color:#6c757d; cursor:pointer; background:none; border:none; padding:4px 8px; line-height:1;" aria-label="Cerrar modal">&times;</button>
       </div>
 
       <form id="pim-form">
@@ -280,13 +280,25 @@ import { products, formatMoney } from '../../data/pim/catalog';
       attachRowEvents();
     };
 
+    const openModal = (title: string) => {
+      modalTitle.textContent = title;
+      modal.hidden = false;
+      modal.style.display = 'flex';
+      document.body.classList.add('overflow-hidden');
+    };
+
+    const closeModal = () => {
+      modal.hidden = true;
+      modal.style.display = 'none';
+      document.body.classList.remove('overflow-hidden');
+    };
+
     const attachRowEvents = () => {
       document.querySelectorAll('[data-edit-id]').forEach((btn) => {
         btn.addEventListener('click', () => {
           const id = (btn as HTMLElement).dataset.editId!;
           const product = AdminStoreService.getProducts().find((x) => x.id === id);
           if (!product) return;
-          modalTitle.textContent = 'Editar Producto PIM';
           (document.querySelector('#form-id') as HTMLInputElement).value = product.id;
           (document.querySelector('#form-name') as HTMLInputElement).value = product.name;
           (document.querySelector('#form-pet') as HTMLSelectElement).value = product.pet;
@@ -299,7 +311,7 @@ import { products, formatMoney } from '../../data/pim/catalog';
           (document.querySelector('#form-oldprice') as HTMLInputElement).value = String(product.oldPrice || 0);
           (document.querySelector('#form-badge') as HTMLInputElement).value = product.badge || '';
           (document.querySelector('#form-image') as HTMLInputElement).value = product.image;
-          modal.hidden = false;
+          openModal('Editar Producto PIM');
         });
       });
 
@@ -316,18 +328,27 @@ import { products, formatMoney } from '../../data/pim/catalog';
 
     // Open new product modal
     document.querySelector('#admin-new-prod-btn')?.addEventListener('click', () => {
-      modalTitle.textContent = 'Crear Nuevo Producto PIM';
       form.reset();
       (document.querySelector('#form-id') as HTMLInputElement).value = `prod-${Date.now()}`;
-      modal.hidden = false;
+      openModal('Crear Nuevo Producto PIM');
     });
-
-    const closeModal = () => {
-      modal.hidden = true;
-    };
 
     document.querySelector('#pim-modal-close')?.addEventListener('click', closeModal);
     document.querySelector('#pim-modal-cancel')?.addEventListener('click', closeModal);
+
+    // Close on backdrop click (clicking outside the modal container)
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    // Close on ESC key
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.hidden) {
+        closeModal();
+      }
+    });
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();

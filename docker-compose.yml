@@ -7,13 +7,12 @@ services:
     restart: unless-stopped
     ports:
       - "3004:80"
+    volumes:
+      - ./data:/app/data
     environment:
       TZ: America/Santiago
     security_opt:
       - no-new-privileges:true
-    tmpfs:
-      - /var/cache/nginx
-      - /var/run
     networks:
       - five_public
 

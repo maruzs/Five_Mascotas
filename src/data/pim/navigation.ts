@@ -1,13 +1,73 @@
-import type { NavigationCategory, AnnouncementTicker, PromoBanner } from './types';
+import type { NavigationCategory, AnnouncementTicker, PromoBanner, HeroSlide } from './types';
 
-export const announcementTicker: AnnouncementTicker = {
-  id: 'ticker-1',
-  text: '¡10% dto. en tu primera compra web!',
-  couponCode: 'PRIMERA10',
-  couponText: 'Usa el código PRIMERA10',
-  extraInfo: 'Despacho rápido a todo Santiago · Horario tienda Lun-Sáb 10:00 a 20:00',
-  active: true,
-};
+export const announcementTickers: AnnouncementTicker[] = [
+  {
+    id: 'ticker-1',
+    text: '¡10% dto. en tu primera compra web!',
+    couponCode: 'PRIMERA10',
+    couponText: 'Usa el código PRIMERA10',
+    extraInfo: 'Despacho rápido a todo Santiago · Horario tienda Lun-Sáb 10:00 a 20:00',
+    active: true,
+    order: 1,
+  },
+  {
+    id: 'ticker-2',
+    text: 'Envío Gratis en compras sobre $29.990 en Región Metropolitana',
+    extraInfo: 'Entregas en 24 a 48 hrs hábiles garantizadas',
+    active: true,
+    order: 2,
+  },
+  {
+    id: 'ticker-3',
+    text: 'Super Descuentos en Farmacia y Antiparasitarios de temporada',
+    couponCode: 'SALUD20',
+    couponText: 'Cupón: SALUD20',
+    extraInfo: 'Hasta agotar stock promocional',
+    active: true,
+    order: 3,
+  },
+];
+
+export const announcementTicker: AnnouncementTicker = announcementTickers[0];
+
+export const defaultHeroSlides: HeroSlide[] = [
+  {
+    id: 'hero-1',
+    badge: '🐾 SU MUNDO EMPIEZA CONTIGO',
+    title: 'Ellos ponen el amor. Tú, lo mejor.',
+    subtitle: 'Alimentos balanceados para quienes te reciben con alegría, te acompañan en silencio y hacen de tu casa un verdadero hogar.',
+    ctaText: 'Explora la tienda',
+    ctaHref: '/alimentos',
+    image: '/demos/miga/dog.webp',
+    imageAlt: 'Perro feliz disfrutando al aire libre',
+    active: true,
+    order: 1,
+  },
+  {
+    id: 'hero-2',
+    badge: '🐱 REYES DE LA CASA',
+    title: 'Nutrición Gourmet y Confort Felino',
+    subtitle: 'Alimentos húmedos seleccionados, rascadores resistentes y arenas aglomerantes para su máximo confort.',
+    ctaText: 'Ver Todo para Gatos',
+    ctaHref: '/gatos',
+    image: '/five-mascotas/alimento-1.svg',
+    imageAlt: 'Nutrición premium para gatos',
+    active: true,
+    order: 2,
+  },
+  {
+    id: 'hero-3',
+    badge: '💊 SALUD Y BIENESTAR',
+    title: 'Farmacia Especializada y Prevención',
+    subtitle: 'Antiparasitarios líderes, suplementos y cuidados clínicos para acompañar cada etapa de tu mascota.',
+    ctaText: 'Cuidado y Farmacia',
+    ctaHref: '/farmacia',
+    image: '/five-mascotas/botiquin.svg',
+    imageAlt: 'Botiquín y farmacia veterinaria',
+    active: true,
+    order: 3,
+  },
+];
 
 export const promoBanners: PromoBanner[] = [
   {
@@ -18,7 +78,11 @@ export const promoBanners: PromoBanner[] = [
     disclaimer: '*Válido hasta agotar stock. Descuento aplicado automáticamente al carrito.',
     ctaText: 'Ver Promociones 2x1',
     ctaHref: '/ofertas',
+    couponCode: 'FINDE2X1',
+    expiresAt: '2026-10-31T23:59:59',
     badge: '2x1 WEEKEND',
+    active: true,
+    order: 1,
   },
   {
     id: 'banner-perros',
@@ -27,8 +91,12 @@ export const promoBanners: PromoBanner[] = [
     subtitle: 'Alimentos secos, húmedos y snacks con hasta 25% de descuento.',
     ctaText: 'Explorar Alimentos para Perro',
     ctaHref: '/perros',
+    couponCode: 'CANINO25',
+    expiresAt: '2026-10-15T23:59:59',
     badge: 'HASTA 25% OFF',
     petTarget: 'Perros',
+    active: true,
+    order: 2,
   },
   {
     id: 'banner-gatos',
@@ -39,6 +107,8 @@ export const promoBanners: PromoBanner[] = [
     ctaHref: '/gatos',
     badge: 'SUPER PRECIOS',
     petTarget: 'Gatos',
+    active: true,
+    order: 3,
   },
   {
     id: 'banner-ofertas',
@@ -48,6 +118,8 @@ export const promoBanners: PromoBanner[] = [
     ctaText: 'Aprovechar Ofertas',
     ctaHref: '/ofertas',
     badge: 'LIQUIDACIÓN',
+    active: true,
+    order: 4,
   },
 ];
 

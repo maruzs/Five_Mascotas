@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PromoBannerStrip from '../components/PromoBannerStrip.astro';
+import HeroCarousel from '../components/HeroCarousel.astro';
 
 const products = [
   { name: 'Alimento para perro adulto', pet: 'Perros', detail: 'Pollo y arroz · 15 kg', price: 32990, color: 'violet', type: 'Alimentos', image: '/five-mascotas/alimento-0.svg', oldPrice: 36990, badge: 'Liquidación' },
@@ -51,22 +52,8 @@ const money = (n: number) =>
     ctaHref="/ofertas"
   />
 
-  <!-- 1. Hero Section (Foto 1) -->
-  <section class="five-home-hero five-wrap">
-    <div class="five-home-hero-card">
-      <div class="five-home-hero-copy">
-        <span class="five-hero-badge">🐾 SU MUNDO EMPIEZA CONTIGO</span>
-        <h1>Ellos ponen<br />el amor.<br /><em>Tú, lo mejor.</em></h1>
-        <p>Alimentos balanceados para quienes te reciben con alegría, te acompañan en silencio y hacen de tu casa un verdadero hogar.</p>
-        <div class="five-hero-actions">
-          <a class="five-button" href="/alimentos">Explora la tienda <span>↗</span></a>
-        </div>
-      </div>
-      <div class="five-home-hero-media">
-        <img src="/demos/miga/dog.webp" alt="Perro feliz disfrutando al aire libre" width="800" height="1000" fetchpriority="high" />
-      </div>
-    </div>
-  </section>
+  <!-- 1. Dynamic Hero Carousel (Foto 1) -->
+  <HeroCarousel />
 
   <!-- 2. Category Navigation ("Shop by Category" - Foto 1) -->
   <section class="five-home-categories five-wrap">

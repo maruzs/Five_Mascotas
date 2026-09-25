@@ -1,175 +1,385 @@
 ---
 import AdminLayout from '../../layouts/AdminLayout.astro';
-import { announcementTicker, promoBanners } from '../../data/pim/navigation';
+import { announcementTickers, promoBanners, defaultHeroSlides } from '../../data/pim/navigation';
 ---
 
 <AdminLayout title="FIVE Admin — CMS Banners & Campañas" activeNav="cms" breadcrumbTitle="CMS de Contenidos">
   <div class="admin-page-header">
-    <h1>CMS de Banners y Campañas</h1>
-    <p>Personaliza franjas informativas, cupones de descuento y promociones de la tienda.</p>
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px;">
+      <div>
+        <h1>CMS de Banners, Tickers y Campañas</h1>
+        <p>Gestiona mensajes rotativos superiores, banners de campaña con fecha límite y carrusel de portada.</p>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px; background:#e8f8ec; border:1px solid #c3e6cb; color:#1e824c; padding:6px 14px; border-radius:20px; font-size:12px; font-weight:750;">
+        <span style="width:8px; height:8px; border-radius:50%; background:#28a745; display:inline-block;"></span>
+        <span>Sincronizado en Servidor (Multi-dispositivo)</span>
+      </div>
+    </div>
   </div>
 
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start;">
-    <!-- 1. Ticker Superior (Foto 4) -->
+  <div style="display:flex; flex-direction:column; gap:36px;">
+
+    <!-- ==========================================
+         SECCIÓN 1: TICKERS SUPERIORES INFORMATIVOS
+         ========================================== -->
     <div class="admin-card">
-      <div class="admin-card-head">
+      <div class="admin-card-head" style="margin-bottom:16px;">
         <div>
-          <h2>Ticker Superior Informativo</h2>
-          <span class="admin-card-subtitle">Franja delgada global visible en todas las páginas</span>
+          <h2>1. Tickers Superiores Informativos (Carrusel de Cabecera)</h2>
+          <span class="admin-card-subtitle">Rotan automáticamente en la barra superior. Con o sin código de descuento.</span>
         </div>
-        <span class="admin-badge-trend up">Global</span>
+        <button type="button" class="admin-btn primary" id="btn-new-ticker" style="padding:8px 16px; font-size:13px;">
+          + Nuevo Ticker
+        </button>
       </div>
 
-      <form id="cms-ticker-form">
-        <div style="display:flex; flex-direction:column; gap:16px;">
+      <div style="overflow-x:auto;">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th style="width:70px;">Estado</th>
+              <th>Mensaje Principal</th>
+              <th>Cupón</th>
+              <th>Información Adicional / Horarios</th>
+              <th style="width:130px; text-align:right;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="cms-tickers-tbody">
+            {announcementTickers.map((t) => (
+              <tr data-ticker-row={t.id}>
+                <td>
+                  <span class={`admin-badge-trend ${t.active ? 'up' : 'danger'}`}>
+                    {t.active ? 'Activo' : 'Pausado'}
+                  </span>
+                </td>
+                <td><strong>{t.text}</strong></td>
+                <td>
+                  {t.couponCode ? (
+                    <span style="background:#f4ebfa; color:#7025a8; font-weight:700; padding:2px 8px; border-radius:10px; font-size:11px;">
+                      {t.couponCode}
+                    </span>
+                  ) : (
+                    <span style="color:#adb5bd; font-size:12px;">Sin cupón</span>
+                  )}
+                </td>
+                <td><small style="color:#6c757d;">{t.extraInfo || '-'}</small></td>
+                <td style="text-align:right;">
+                  <button type="button" class="admin-btn secondary" data-edit-ticker={t.id} style="padding:4px 8px; font-size:12px;">Editar</button>
+                  <button type="button" class="admin-btn danger" data-delete-ticker={t.id} style="padding:4px 8px; font-size:12px;">Eliminar</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         SECCIÓN 2: BANNERS DE CAMPAÑA SECUNDARIA
+         ========================================== -->
+    <div class="admin-card">
+      <div class="admin-card-head" style="margin-bottom:16px;">
+        <div>
+          <h2>2. Banners de Campaña Secundaria</h2>
+          <span class="admin-card-subtitle">Franja destacada con rotación, opción de código de descuento y fecha límite (cuenta regresiva).</span>
+        </div>
+        <button type="button" class="admin-btn primary" id="btn-new-banner" style="padding:8px 16px; font-size:13px;">
+          + Nuevo Banner
+        </button>
+      </div>
+
+      <div style="overflow-x:auto;">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th style="width:70px;">Estado</th>
+              <th>Campaña / Título</th>
+              <th>Cupón</th>
+              <th>Fecha Límite</th>
+              <th>Botón CTA</th>
+              <th style="width:130px; text-align:right;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="cms-banners-tbody">
+            {promoBanners.map((b) => (
+              <tr data-banner-row={b.id}>
+                <td>
+                  <span class={`admin-badge-trend ${b.active !== false ? 'up' : 'danger'}`}>
+                    {b.active !== false ? 'Activo' : 'Pausado'}
+                  </span>
+                </td>
+                <td>
+                  <div>
+                    <span style="background:#7025a8; color:#fff; font-size:9.5px; font-weight:800; padding:1px 6px; border-radius:8px;">{b.tag}</span>
+                    <strong style="display:block; margin-top:2px;">{b.title}</strong>
+                    <small style="color:#6c757d;">{b.subtitle}</small>
+                  </div>
+                </td>
+                <td>
+                  {b.couponCode ? (
+                    <span style="background:#e8f4fd; color:#0366d6; font-weight:700; padding:2px 8px; border-radius:10px; font-size:11px;">
+                      {b.couponCode}
+                    </span>
+                  ) : (
+                    <span style="color:#adb5bd; font-size:12px;">Sin cupón</span>
+                  )}
+                </td>
+                <td>
+                  {b.expiresAt ? (
+                    <small style="color:#c0392b; font-weight:700;">{b.expiresAt.replace('T', ' ')}</small>
+                  ) : (
+                    <span style="color:#adb5bd; font-size:12px;">Sin vencimiento</span>
+                  )}
+                </td>
+                <td><small>{b.ctaText || 'Aprovechar'} &rarr; {b.ctaHref || '/ofertas'}</small></td>
+                <td style="text-align:right;">
+                  <button type="button" class="admin-btn secondary" data-edit-banner={b.id} style="padding:4px 8px; font-size:12px;">Editar</button>
+                  <button type="button" class="admin-btn danger" data-delete-banner={b.id} style="padding:4px 8px; font-size:12px;">Eliminar</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         SECCIÓN 3: HERO SECTION — CARRUSEL DE PORTADA
+         ========================================== -->
+    <div class="admin-card">
+      <div class="admin-card-head" style="margin-bottom:16px;">
+        <div>
+          <h2>3. Hero Section (Carrusel de Portada)</h2>
+          <span class="admin-card-subtitle">Administra los slides principales: cambia imágenes, titulares, descripciones y botones.</span>
+        </div>
+        <button type="button" class="admin-btn primary" id="btn-new-hero" style="padding:8px 16px; font-size:13px;">
+          + Nuevo Slide Hero
+        </button>
+      </div>
+
+      <div style="overflow-x:auto;">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th style="width:70px;">Estado</th>
+              <th style="width:90px;">Miniatura</th>
+              <th>Badge y Título</th>
+              <th>Bajada</th>
+              <th>Botón CTA</th>
+              <th style="width:130px; text-align:right;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="cms-hero-tbody">
+            {defaultHeroSlides.map((s) => (
+              <tr data-hero-row={s.id}>
+                <td>
+                  <span class={`admin-badge-trend ${s.active !== false ? 'up' : 'danger'}`}>
+                    {s.active !== false ? 'Activo' : 'Pausado'}
+                  </span>
+                </td>
+                <td>
+                  <img src={s.image} alt="" style="width:65px; height:45px; object-fit:cover; border-radius:6px; border:1px solid #dee2e6;" />
+                </td>
+                <td>
+                  <div>
+                    <span style="font-size:10px; font-weight:700; color:#7025a8;">{s.badge}</span>
+                    <strong style="display:block;">{s.title}</strong>
+                  </div>
+                </td>
+                <td><small style="color:#6c757d; max-width:280px; display:block;">{s.subtitle}</small></td>
+                <td><small>{s.ctaText} &rarr; {s.ctaHref}</small></td>
+                <td style="text-align:right;">
+                  <button type="button" class="admin-btn secondary" data-edit-hero={s.id} style="padding:4px 8px; font-size:12px;">Editar</button>
+                  <button type="button" class="admin-btn danger" data-delete-hero={s.id} style="padding:4px 8px; font-size:12px;">Eliminar</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ==========================================
+       MODAL 1: EDITAR / CREAR TICKER
+       ========================================== -->
+  <div id="ticker-modal" class="admin-modal-backdrop" hidden style="display:none;">
+    <div class="admin-modal" role="dialog" aria-modal="true" aria-labelledby="ticker-modal-title">
+      <div class="admin-modal-head">
+        <h3 id="ticker-modal-title">Editar Ticker Superior</h3>
+        <button type="button" id="ticker-modal-close" style="font-size:24px; color:#6c757d; cursor:pointer; background:none; border:none; padding:4px 8px;">&times;</button>
+      </div>
+      <form id="ticker-form">
+        <div class="admin-modal-body">
+          <input type="hidden" id="ticker-form-id" name="id" />
+
           <div class="admin-form-group">
             <label style="display:flex; align-items:center; gap:8px;">
-              <input type="checkbox" id="ticker-active" name="active" checked={announcementTicker.active} />
-              <span>Mostrar ticker superior en toda la tienda</span>
+              <input type="checkbox" id="ticker-form-active" name="active" checked />
+              <span>Mostrar este aviso en la rotación</span>
             </label>
           </div>
 
           <div class="admin-form-group">
-            <label for="ticker-text">Mensaje Principal *</label>
-            <input
-              type="text"
-              id="ticker-text"
-              name="text"
-              value={announcementTicker.text}
-              required
-            />
+            <label for="ticker-form-text">Mensaje Principal *</label>
+            <input type="text" id="ticker-form-text" name="text" required placeholder="ej: ¡10% dto. en tu primera compra web!" />
           </div>
 
           <div class="admin-form-row">
             <div class="admin-form-group">
-              <label for="ticker-code">Código de Cupón</label>
-              <input
-                type="text"
-                id="ticker-code"
-                name="couponCode"
-                value={announcementTicker.couponCode || 'PRIMERA10'}
-              />
+              <label for="ticker-form-code">Código de Cupón (opcional)</label>
+              <input type="text" id="ticker-form-code" name="couponCode" placeholder="ej: PRIMERA10 (dejar vacío si no aplica)" />
             </div>
             <div class="admin-form-group">
-              <label for="ticker-coupon-text">Texto del Botón/Pill</label>
-              <input
-                type="text"
-                id="ticker-coupon-text"
-                name="couponText"
-                value={announcementTicker.couponText || 'Usa el código PRIMERA10'}
-              />
+              <label for="ticker-form-coupon-text">Texto del Cupón / Botón</label>
+              <input type="text" id="ticker-form-coupon-text" name="couponText" placeholder="ej: Usa el código PRIMERA10" />
             </div>
           </div>
 
           <div class="admin-form-group">
-            <label for="ticker-extra">Información de Horarios y Despacho</label>
-            <textarea
-              id="ticker-extra"
-              name="extraInfo"
-              rows="2"
-            >{announcementTicker.extraInfo}</textarea>
+            <label for="ticker-form-extra">Información de Horarios o Despacho (opcional)</label>
+            <textarea id="ticker-form-extra" name="extraInfo" rows="2" placeholder="ej: Despacho rápido a todo Santiago · Horario Lun-Sáb 10:00 a 20:00"></textarea>
           </div>
+        </div>
 
-          <!-- Live Preview Box -->
-          <div style="background:#571b86; color:#fff; padding:10px 14px; border-radius:8px; font-size:12px; display:flex; justify-content:space-between; align-items:center;">
-            <div id="ticker-preview-text">
-              <strong>{announcementTicker.text}</strong>
-              <span style="background:rgba(255,255,255,0.2); padding:2px 8px; border-radius:12px; margin-left:8px; color:#94f963; font-weight:700;">
-                {announcementTicker.couponCode}
-              </span>
-            </div>
-            <small style="opacity:0.8;">Vista previa</small>
-          </div>
-
-          <button type="submit" class="admin-btn primary" style="align-self:flex-start;">
-            Guardar Ticker
-          </button>
+        <div class="admin-modal-foot">
+          <button type="button" class="admin-btn secondary" id="ticker-modal-cancel">Cancelar</button>
+          <button type="submit" class="admin-btn primary">Guardar Ticker</button>
         </div>
       </form>
     </div>
+  </div>
 
-    <!-- 2. Banner de Campaña Secundario (Foto 4) -->
-    <div class="admin-card">
-      <div class="admin-card-head">
-        <div>
-          <h2>Banner de Campaña Secundaria</h2>
-          <span class="admin-card-subtitle">Franja destacada (ej: 2x1 camas y ropa)</span>
-        </div>
-        <span class="admin-badge-trend up">Destacado</span>
+  <!-- ==========================================
+       MODAL 2: EDITAR / CREAR BANNER SECUNDARIO
+       ========================================== -->
+  <div id="banner-modal" class="admin-modal-backdrop" hidden style="display:none;">
+    <div class="admin-modal" role="dialog" aria-modal="true" aria-labelledby="banner-modal-title">
+      <div class="admin-modal-head">
+        <h3 id="banner-modal-title">Editar Banner de Campaña</h3>
+        <button type="button" id="banner-modal-close" style="font-size:24px; color:#6c757d; cursor:pointer; background:none; border:none; padding:4px 8px;">&times;</button>
       </div>
-
-      <form id="cms-banner-form">
-        <div style="display:flex; flex-direction:column; gap:16px;">
-          <div class="admin-form-group">
-            <label for="banner-tag">Etiqueta de Campaña</label>
-            <input
-              type="text"
-              id="banner-tag"
-              name="tag"
-              value={promoBanners[0].tag}
-              placeholder="ej: ¡SOLO X EL FINDE!"
-            />
-          </div>
+      <form id="banner-form">
+        <div class="admin-modal-body">
+          <input type="hidden" id="banner-form-id" name="id" />
 
           <div class="admin-form-group">
-            <label for="banner-title">Título de la Promoción *</label>
-            <input
-              type="text"
-              id="banner-title"
-              name="title"
-              value={promoBanners[0].title}
-              required
-            />
-          </div>
-
-          <div class="admin-form-group">
-            <label for="banner-subtitle">Bajada / Descripción</label>
-            <textarea
-              id="banner-subtitle"
-              name="subtitle"
-              rows="2"
-            >{promoBanners[0].subtitle}</textarea>
+            <label style="display:flex; align-items:center; gap:8px;">
+              <input type="checkbox" id="banner-form-active" name="active" checked />
+              <span>Activar banner en la rotación</span>
+            </label>
           </div>
 
           <div class="admin-form-row">
             <div class="admin-form-group">
-              <label for="banner-cta-text">Texto Botón CTA</label>
-              <input
-                type="text"
-                id="banner-cta-text"
-                name="ctaText"
-                value={promoBanners[0].ctaText}
-              />
+              <label for="banner-form-tag">Etiqueta / Tag Superior</label>
+              <input type="text" id="banner-form-tag" name="tag" placeholder="ej: ¡SOLO X EL FINDE!, ESPECIAL CANINO" />
             </div>
             <div class="admin-form-group">
-              <label for="banner-cta-href">Ruta de Destino</label>
-              <input
-                type="text"
-                id="banner-cta-href"
-                name="ctaHref"
-                value={promoBanners[0].ctaHref}
-              />
+              <label for="banner-form-code">Código de Cupón (opcional)</label>
+              <input type="text" id="banner-form-code" name="couponCode" placeholder="ej: FINDE2X1" />
             </div>
           </div>
 
-          <!-- Live Preview Box -->
-          <div style="background:linear-gradient(90deg, #f7f1fc 0%, #edf9e7 100%); border:1px solid #e5dde9; border-radius:12px; padding:14px; display:flex; justify-content:space-between; align-items:center;">
-            <div>
-              <span style="background:#7025a8; color:#fff; font-size:10px; font-weight:800; padding:2px 8px; border-radius:10px;" id="banner-preview-tag">
-                {promoBanners[0].tag}
-              </span>
-              <strong style="display:block; font-size:14px; margin-top:4px;" id="banner-preview-title">
-                {promoBanners[0].title}
-              </strong>
-            </div>
-            <span style="background:#fff; border:1px solid #7025a8; color:#7025a8; font-size:11px; font-weight:700; padding:4px 10px; border-radius:14px;" id="banner-preview-cta">
-              {promoBanners[0].ctaText}
-            </span>
+          <div class="admin-form-group">
+            <label for="banner-form-title">Título de la Promoción *</label>
+            <input type="text" id="banner-form-title" name="title" required placeholder="ej: 2x1 Todo camas, mantas y ropa perro y gato" />
           </div>
 
-          <button type="submit" class="admin-btn primary" style="align-self:flex-start;">
-            Guardar Banner
-          </button>
+          <div class="admin-form-group">
+            <label for="banner-form-subtitle">Bajada / Descripción</label>
+            <textarea id="banner-form-subtitle" name="subtitle" rows="2" placeholder="ej: ¡Combínalas como quieras! Descuento aplicado automáticamente."></textarea>
+          </div>
+
+          <div class="admin-form-row">
+            <div class="admin-form-group">
+              <label for="banner-form-expiry">Fecha y Hora Límite (Cuenta Regresiva)</label>
+              <input type="datetime-local" id="banner-form-expiry" name="expiresAt" />
+              <small style="color:#6c757d; font-size:11px;">Opcional: Si se define, mostrará un reloj regresivo en vivo.</small>
+            </div>
+            <div class="admin-form-group">
+              <label for="banner-form-cta-text">Texto Botón CTA</label>
+              <input type="text" id="banner-form-cta-text" name="ctaText" placeholder="ej: Ver Promoción ↗" />
+            </div>
+          </div>
+
+          <div class="admin-form-group">
+            <label for="banner-form-cta-href">Ruta / Enlace de Destino</label>
+            <input type="text" id="banner-form-cta-href" name="ctaHref" value="/ofertas" placeholder="ej: /ofertas, /perros, /gatos" />
+          </div>
+        </div>
+
+        <div class="admin-modal-foot">
+          <button type="button" class="admin-btn secondary" id="banner-modal-cancel">Cancelar</button>
+          <button type="submit" class="admin-btn primary">Guardar Banner</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MODAL 3: EDITAR / CREAR SLIDE HERO
+       ========================================== -->
+  <div id="hero-modal" class="admin-modal-backdrop" hidden style="display:none;">
+    <div class="admin-modal" role="dialog" aria-modal="true" aria-labelledby="hero-modal-title">
+      <div class="admin-modal-head">
+        <h3 id="hero-modal-title">Editar Slide Hero</h3>
+        <button type="button" id="hero-modal-close" style="font-size:24px; color:#6c757d; cursor:pointer; background:none; border:none; padding:4px 8px;">&times;</button>
+      </div>
+      <form id="hero-form">
+        <div class="admin-modal-body">
+          <input type="hidden" id="hero-form-id" name="id" />
+
+          <div class="admin-form-group">
+            <label style="display:flex; align-items:center; gap:8px;">
+              <input type="checkbox" id="hero-form-active" name="active" checked />
+              <span>Slide activo en el carrusel de portada</span>
+            </label>
+          </div>
+
+          <div class="admin-form-group">
+            <label for="hero-form-badge">Badge / Etiqueta Superior</label>
+            <input type="text" id="hero-form-badge" name="badge" placeholder="ej: 🐾 SU MUNDO EMPIEZA CONTIGO, 🐱 REYES DE LA CASA" />
+          </div>
+
+          <div class="admin-form-group">
+            <label for="hero-form-title">Título Principal *</label>
+            <input type="text" id="hero-form-title" name="title" required placeholder="ej: Ellos ponen el amor. Tú, lo mejor." />
+          </div>
+
+          <div class="admin-form-group">
+            <label for="hero-form-subtitle">Descripción / Bajada</label>
+            <textarea id="hero-form-subtitle" name="subtitle" rows="3" placeholder="Alimentos balanceados para quienes te reciben con alegría..."></textarea>
+          </div>
+
+          <div class="admin-form-row">
+            <div class="admin-form-group">
+              <label for="hero-form-cta-text">Texto Botón</label>
+              <input type="text" id="hero-form-cta-text" name="ctaText" placeholder="ej: Explora la tienda" />
+            </div>
+            <div class="admin-form-group">
+              <label for="hero-form-cta-href">Ruta de Destino</label>
+              <input type="text" id="hero-form-cta-href" name="ctaHref" placeholder="ej: /alimentos, /gatos, /perros" />
+            </div>
+          </div>
+
+          <div class="admin-form-group">
+            <label for="hero-form-image">Ruta de la Imagen *</label>
+            <input type="text" id="hero-form-image" name="image" required placeholder="ej: /demos/miga/dog.webp o /demos/miga/arena.svg" />
+            <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:4px;">
+              <small style="color:#6c757d; width:100%;">Imágenes predefinidas de la tienda:</small>
+              <button type="button" class="admin-btn secondary preset-img-btn" data-img="/demos/miga/dog.webp" style="padding:2px 8px; font-size:11px;">🐶 Perro (/demos/miga/dog.webp)</button>
+              <button type="button" class="admin-btn secondary preset-img-btn" data-img="/five-mascotas/alimento-1.svg" style="padding:2px 8px; font-size:11px;">🐱 Gato (/five-mascotas/alimento-1.svg)</button>
+              <button type="button" class="admin-btn secondary preset-img-btn" data-img="/five-mascotas/botiquin.svg" style="padding:2px 8px; font-size:11px;">💊 Farmacia (/five-mascotas/botiquin.svg)</button>
+              <button type="button" class="admin-btn secondary preset-img-btn" data-img="/demos/miga/arena.svg" style="padding:2px 8px; font-size:11px;">🏖️ Arena (/demos/miga/arena.svg)</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-modal-foot">
+          <button type="button" class="admin-btn secondary" id="hero-modal-cancel">Cancelar</button>
+          <button type="submit" class="admin-btn primary">Guardar Slide</button>
         </div>
       </form>
     </div>
@@ -177,63 +387,372 @@ import { announcementTicker, promoBanners } from '../../data/pim/navigation';
 
   <!-- Notification Toast -->
   <div id="cms-toast" style="position:fixed; bottom:24px; right:24px; background:#1e824c; color:#fff; padding:12px 24px; border-radius:8px; font-weight:700; box-shadow:0 8px 20px rgba(0,0,0,0.15); display:none; z-index:3000;">
-    ✓ Configuración de CMS guardada y sincronizada con la tienda
+    ✓ Guardado y sincronizado con el servidor para todos los dispositivos
   </div>
 
-  <!-- Client Script for CMS Form Persistence -->
+  <!-- Client Script for Full CMS Management -->
   <script>
     import { AdminStoreService } from '../../scripts/admin-store';
-    import type { AnnouncementTicker, PromoBanner } from '../../data/pim/types';
+    import type { AnnouncementTicker, PromoBanner, HeroSlide } from '../../data/pim/types';
 
-    const tickerForm = document.querySelector<HTMLFormElement>('#cms-ticker-form')!;
-    const bannerForm = document.querySelector<HTMLFormElement>('#cms-banner-form')!;
     const toast = document.querySelector<HTMLElement>('#cms-toast')!;
-
-    const showToast = () => {
+    const showToast = (msg?: string) => {
+      if (msg) toast.textContent = msg;
       toast.style.display = 'block';
-      setTimeout(() => {
-        toast.style.display = 'none';
-      }, 3000);
+      setTimeout(() => { toast.style.display = 'none'; }, 3000);
     };
 
-    // Load saved ticker
-    const savedTicker = AdminStoreService.getTicker();
-    if (savedTicker) {
-      (document.querySelector('#ticker-active') as HTMLInputElement).checked = savedTicker.active;
-      (document.querySelector('#ticker-text') as HTMLInputElement).value = savedTicker.text;
-      (document.querySelector('#ticker-code') as HTMLInputElement).value = savedTicker.couponCode || '';
-      (document.querySelector('#ticker-coupon-text') as HTMLInputElement).value = savedTicker.couponText || '';
-      (document.querySelector('#ticker-extra') as HTMLTextAreaElement).value = savedTicker.extraInfo || '';
-    }
+    // Modal Helper
+    const setupModal = (modalId: string, closeBtnId: string, cancelBtnId: string) => {
+      const modal = document.querySelector<HTMLElement>(modalId)!;
+      const open = () => {
+        modal.hidden = false;
+        modal.style.display = 'flex';
+        document.body.classList.add('overflow-hidden');
+      };
+      const close = () => {
+        modal.hidden = true;
+        modal.style.display = 'none';
+        document.body.classList.remove('overflow-hidden');
+      };
+
+      document.querySelector(closeBtnId)?.addEventListener('click', close);
+      document.querySelector(cancelBtnId)?.addEventListener('click', close);
+
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) close();
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.hidden) close();
+      });
+
+      return { modal, open, close };
+    };
+
+    const tickerModalCtrl = setupModal('#ticker-modal', '#ticker-modal-close', '#ticker-modal-cancel');
+    const bannerModalCtrl = setupModal('#banner-modal', '#banner-modal-close', '#banner-modal-cancel');
+    const heroModalCtrl = setupModal('#hero-modal', '#hero-modal-close', '#hero-modal-cancel');
+
+    // Preset images helper
+    document.querySelectorAll<HTMLButtonElement>('.preset-img-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const input = document.querySelector<HTMLInputElement>('#hero-form-image');
+        if (input && btn.dataset.img) {
+          input.value = btn.dataset.img;
+        }
+      });
+    });
+
+    // ==========================================
+    // 1. TICKERS MANAGEMENT
+    // ==========================================
+    const tickersTbody = document.querySelector('#cms-tickers-tbody')!;
+    const tickerForm = document.querySelector<HTMLFormElement>('#ticker-form')!;
+
+    const renderTickersTable = () => {
+      const list = AdminStoreService.getTickers();
+      tickersTbody.innerHTML = '';
+
+      list.forEach((t) => {
+        const tr = document.createElement('tr');
+        tr.dataset.tickerRow = t.id;
+        tr.innerHTML = `
+          <td>
+            <span class="admin-badge-trend ${t.active ? 'up' : 'danger'}">
+              ${t.active ? 'Activo' : 'Pausado'}
+            </span>
+          </td>
+          <td><strong>${t.text}</strong></td>
+          <td>
+            ${t.couponCode ? `<span style="background:#f4ebfa; color:#7025a8; font-weight:700; padding:2px 8px; border-radius:10px; font-size:11px;">${t.couponCode}</span>` : `<span style="color:#adb5bd; font-size:12px;">Sin cupón</span>`}
+          </td>
+          <td><small style="color:#6c757d;">${t.extraInfo || '-'}</small></td>
+          <td style="text-align:right;">
+            <button type="button" class="admin-btn secondary" data-edit-ticker="${t.id}" style="padding:4px 8px; font-size:12px;">Editar</button>
+            <button type="button" class="admin-btn danger" data-delete-ticker="${t.id}" style="padding:4px 8px; font-size:12px;">Eliminar</button>
+          </td>
+        `;
+        tickersTbody.appendChild(tr);
+      });
+
+      attachTickerEvents();
+    };
+
+    const attachTickerEvents = () => {
+      document.querySelectorAll('[data-edit-ticker]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = (btn as HTMLElement).dataset.editTicker!;
+          const t = AdminStoreService.getTickers().find((x) => x.id === id);
+          if (!t) return;
+          (document.querySelector('#ticker-modal-title') as HTMLElement).textContent = 'Editar Ticker Superior';
+          (document.querySelector('#ticker-form-id') as HTMLInputElement).value = t.id;
+          (document.querySelector('#ticker-form-active') as HTMLInputElement).checked = t.active;
+          (document.querySelector('#ticker-form-text') as HTMLInputElement).value = t.text;
+          (document.querySelector('#ticker-form-code') as HTMLInputElement).value = t.couponCode || '';
+          (document.querySelector('#ticker-form-coupon-text') as HTMLInputElement).value = t.couponText || '';
+          (document.querySelector('#ticker-form-extra') as HTMLTextAreaElement).value = t.extraInfo || '';
+          tickerModalCtrl.open();
+        });
+      });
+
+      document.querySelectorAll('[data-delete-ticker]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = (btn as HTMLElement).dataset.deleteTicker!;
+          if (confirm('¿Eliminar este ticker de la rotación?')) {
+            AdminStoreService.deleteTicker(id);
+            renderTickersTable();
+            showToast('✓ Ticker eliminado y sincronizado');
+          }
+        });
+      });
+    };
+
+    document.querySelector('#btn-new-ticker')?.addEventListener('click', () => {
+      (document.querySelector('#ticker-modal-title') as HTMLElement).textContent = 'Crear Nuevo Ticker Superior';
+      tickerForm.reset();
+      (document.querySelector('#ticker-form-id') as HTMLInputElement).value = `ticker-${Date.now()}`;
+      (document.querySelector('#ticker-form-active') as HTMLInputElement).checked = true;
+      tickerModalCtrl.open();
+    });
 
     tickerForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const formData = new FormData(tickerForm);
+      const code = (formData.get('couponCode') as string || '').trim();
       const ticker: AnnouncementTicker = {
-        id: 'ticker-global',
-        active: (document.querySelector('#ticker-active') as HTMLInputElement).checked,
+        id: formData.get('id') as string,
+        active: (document.querySelector('#ticker-form-active') as HTMLInputElement).checked,
         text: formData.get('text') as string,
-        couponCode: formData.get('couponCode') as string,
-        couponText: formData.get('couponText') as string,
-        extraInfo: formData.get('extraInfo') as string,
+        couponCode: code || undefined,
+        couponText: (formData.get('couponText') as string) || (code ? `Usa el código ${code}` : undefined),
+        extraInfo: (formData.get('extraInfo') as string) || undefined,
       };
+
       AdminStoreService.saveTicker(ticker);
-      showToast();
+      tickerModalCtrl.close();
+      renderTickersTable();
+      showToast('✓ Ticker guardado y sincronizado con el servidor');
+    });
+
+    // ==========================================
+    // 2. BANNERS MANAGEMENT
+    // ==========================================
+    const bannersTbody = document.querySelector('#cms-banners-tbody')!;
+    const bannerForm = document.querySelector<HTMLFormElement>('#banner-form')!;
+
+    const renderBannersTable = () => {
+      const list = AdminStoreService.getBanners();
+      bannersTbody.innerHTML = '';
+
+      list.forEach((b) => {
+        const tr = document.createElement('tr');
+        tr.dataset.bannerRow = b.id;
+        tr.innerHTML = `
+          <td>
+            <span class="admin-badge-trend ${b.active !== false ? 'up' : 'danger'}">
+              ${b.active !== false ? 'Activo' : 'Pausado'}
+            </span>
+          </td>
+          <td>
+            <div>
+              <span style="background:#7025a8; color:#fff; font-size:9.5px; font-weight:800; padding:1px 6px; border-radius:8px;">${b.tag || 'PROMO'}</span>
+              <strong style="display:block; margin-top:2px;">${b.title}</strong>
+              <small style="color:#6c757d;">${b.subtitle || ''}</small>
+            </div>
+          </td>
+          <td>
+            ${b.couponCode ? `<span style="background:#e8f4fd; color:#0366d6; font-weight:700; padding:2px 8px; border-radius:10px; font-size:11px;">${b.couponCode}</span>` : `<span style="color:#adb5bd; font-size:12px;">Sin cupón</span>`}
+          </td>
+          <td>
+            ${b.expiresAt ? `<small style="color:#c0392b; font-weight:700;">${b.expiresAt.replace('T', ' ')}</small>` : `<span style="color:#adb5bd; font-size:12px;">Sin vencimiento</span>`}
+          </td>
+          <td><small>${b.ctaText || 'Aprovechar'} &rarr; ${b.ctaHref || '/ofertas'}</small></td>
+          <td style="text-align:right;">
+            <button type="button" class="admin-btn secondary" data-edit-banner="${b.id}" style="padding:4px 8px; font-size:12px;">Editar</button>
+            <button type="button" class="admin-btn danger" data-delete-banner="${b.id}" style="padding:4px 8px; font-size:12px;">Eliminar</button>
+          </td>
+        `;
+        bannersTbody.appendChild(tr);
+      });
+
+      attachBannerEvents();
+    };
+
+    const attachBannerEvents = () => {
+      document.querySelectorAll('[data-edit-banner]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = (btn as HTMLElement).dataset.editBanner!;
+          const b = AdminStoreService.getBanners().find((x) => x.id === id);
+          if (!b) return;
+          (document.querySelector('#banner-modal-title') as HTMLElement).textContent = 'Editar Banner de Campaña';
+          (document.querySelector('#banner-form-id') as HTMLInputElement).value = b.id;
+          (document.querySelector('#banner-form-active') as HTMLInputElement).checked = b.active !== false;
+          (document.querySelector('#banner-form-tag') as HTMLInputElement).value = b.tag || '';
+          (document.querySelector('#banner-form-code') as HTMLInputElement).value = b.couponCode || '';
+          (document.querySelector('#banner-form-title') as HTMLInputElement).value = b.title;
+          (document.querySelector('#banner-form-subtitle') as HTMLTextAreaElement).value = b.subtitle || '';
+          (document.querySelector('#banner-form-expiry') as HTMLInputElement).value = b.expiresAt ? b.expiresAt.slice(0, 16) : '';
+          (document.querySelector('#banner-form-cta-text') as HTMLInputElement).value = b.ctaText || '';
+          (document.querySelector('#banner-form-cta-href') as HTMLInputElement).value = b.ctaHref || '/ofertas';
+          bannerModalCtrl.open();
+        });
+      });
+
+      document.querySelectorAll('[data-delete-banner]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = (btn as HTMLElement).dataset.deleteBanner!;
+          if (confirm('¿Eliminar este banner secundario?')) {
+            AdminStoreService.deleteBanner(id);
+            renderBannersTable();
+            showToast('✓ Banner eliminado y sincronizado');
+          }
+        });
+      });
+    };
+
+    document.querySelector('#btn-new-banner')?.addEventListener('click', () => {
+      (document.querySelector('#banner-modal-title') as HTMLElement).textContent = 'Crear Nuevo Banner de Campaña';
+      bannerForm.reset();
+      (document.querySelector('#banner-form-id') as HTMLInputElement).value = `banner-${Date.now()}`;
+      (document.querySelector('#banner-form-active') as HTMLInputElement).checked = true;
+      (document.querySelector('#banner-form-cta-href') as HTMLInputElement).value = '/ofertas';
+      bannerModalCtrl.open();
     });
 
     bannerForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const formData = new FormData(bannerForm);
+      const code = (formData.get('couponCode') as string || '').trim();
+      const expiry = (formData.get('expiresAt') as string || '').trim();
+
       const banner: PromoBanner = {
-        id: 'banner-hero-home',
-        tag: formData.get('tag') as string,
+        id: formData.get('id') as string,
+        active: (document.querySelector('#banner-form-active') as HTMLInputElement).checked,
+        tag: (formData.get('tag') as string) || 'PROMO',
         title: formData.get('title') as string,
         subtitle: formData.get('subtitle') as string,
-        ctaText: formData.get('ctaText') as string,
-        ctaHref: formData.get('ctaHref') as string,
+        couponCode: code || undefined,
+        expiresAt: expiry || undefined,
+        ctaText: (formData.get('ctaText') as string) || 'Ver Promoción ↗',
+        ctaHref: (formData.get('ctaHref') as string) || '/ofertas',
       };
+
       AdminStoreService.saveBanner(banner);
-      showToast();
+      bannerModalCtrl.close();
+      renderBannersTable();
+      showToast('✓ Banner guardado y sincronizado con el servidor');
+    });
+
+    // ==========================================
+    // 3. HERO SLIDES MANAGEMENT
+    // ==========================================
+    const heroTbody = document.querySelector('#cms-hero-tbody')!;
+    const heroForm = document.querySelector<HTMLFormElement>('#hero-form')!;
+
+    const renderHeroTable = () => {
+      const list = AdminStoreService.getHeroSlides();
+      heroTbody.innerHTML = '';
+
+      list.forEach((s) => {
+        const tr = document.createElement('tr');
+        tr.dataset.heroRow = s.id;
+        tr.innerHTML = `
+          <td>
+            <span class="admin-badge-trend ${s.active !== false ? 'up' : 'danger'}">
+              ${s.active !== false ? 'Activo' : 'Pausado'}
+            </span>
+          </td>
+          <td>
+            <img src="${s.image}" alt="" style="width:65px; height:45px; object-fit:cover; border-radius:6px; border:1px solid #dee2e6;" />
+          </td>
+          <td>
+            <div>
+              <span style="font-size:10px; font-weight:700; color:#7025a8;">${s.badge}</span>
+              <strong style="display:block;">${s.title}</strong>
+            </div>
+          </td>
+          <td><small style="color:#6c757d; max-width:280px; display:block;">${s.subtitle}</small></td>
+          <td><small>${s.ctaText} &rarr; ${s.ctaHref}</small></td>
+          <td style="text-align:right;">
+            <button type="button" class="admin-btn secondary" data-edit-hero="${s.id}" style="padding:4px 8px; font-size:12px;">Editar</button>
+            <button type="button" class="admin-btn danger" data-delete-hero="${s.id}" style="padding:4px 8px; font-size:12px;">Eliminar</button>
+          </td>
+        `;
+        heroTbody.appendChild(tr);
+      });
+
+      attachHeroEvents();
+    };
+
+    const attachHeroEvents = () => {
+      document.querySelectorAll('[data-edit-hero]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = (btn as HTMLElement).dataset.editHero!;
+          const s = AdminStoreService.getHeroSlides().find((x) => x.id === id);
+          if (!s) return;
+          (document.querySelector('#hero-modal-title') as HTMLElement).textContent = 'Editar Slide Hero';
+          (document.querySelector('#hero-form-id') as HTMLInputElement).value = s.id;
+          (document.querySelector('#hero-form-active') as HTMLInputElement).checked = s.active !== false;
+          (document.querySelector('#hero-form-badge') as HTMLInputElement).value = s.badge;
+          (document.querySelector('#hero-form-title') as HTMLInputElement).value = s.title;
+          (document.querySelector('#hero-form-subtitle') as HTMLTextAreaElement).value = s.subtitle;
+          (document.querySelector('#hero-form-cta-text') as HTMLInputElement).value = s.ctaText;
+          (document.querySelector('#hero-form-cta-href') as HTMLInputElement).value = s.ctaHref;
+          (document.querySelector('#hero-form-image') as HTMLInputElement).value = s.image;
+          heroModalCtrl.open();
+        });
+      });
+
+      document.querySelectorAll('[data-delete-hero]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = (btn as HTMLElement).dataset.deleteHero!;
+          if (confirm('¿Eliminar este slide del carrusel de portada?')) {
+            AdminStoreService.deleteHeroSlide(id);
+            renderHeroTable();
+            showToast('✓ Slide eliminado y sincronizado');
+          }
+        });
+      });
+    };
+
+    document.querySelector('#btn-new-hero')?.addEventListener('click', () => {
+      (document.querySelector('#hero-modal-title') as HTMLElement).textContent = 'Crear Nuevo Slide Hero';
+      heroForm.reset();
+      (document.querySelector('#hero-form-id') as HTMLInputElement).value = `hero-${Date.now()}`;
+      (document.querySelector('#hero-form-active') as HTMLInputElement).checked = true;
+      (document.querySelector('#hero-form-cta-text') as HTMLInputElement).value = 'Explora la tienda';
+      (document.querySelector('#hero-form-cta-href') as HTMLInputElement).value = '/alimentos';
+      (document.querySelector('#hero-form-image') as HTMLInputElement).value = '/demos/miga/dog.webp';
+      heroModalCtrl.open();
+    });
+
+    heroForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(heroForm);
+      const slide: HeroSlide = {
+        id: formData.get('id') as string,
+        active: (document.querySelector('#hero-form-active') as HTMLInputElement).checked,
+        badge: (formData.get('badge') as string) || '🐾 FIVE MASCOTAS',
+        title: formData.get('title') as string,
+        subtitle: formData.get('subtitle') as string,
+        ctaText: (formData.get('ctaText') as string) || 'Explora la tienda',
+        ctaHref: (formData.get('ctaHref') as string) || '/alimentos',
+        image: (formData.get('image') as string) || '/demos/miga/dog.webp',
+        imageAlt: formData.get('title') as string,
+      };
+
+      AdminStoreService.saveHeroSlide(slide);
+      heroModalCtrl.close();
+      renderHeroTable();
+      showToast('✓ Slide Hero guardado y sincronizado con el servidor');
+    });
+
+    // Initial load and sync
+    AdminStoreService.init().then(() => {
+      renderTickersTable();
+      renderBannersTable();
+      renderHeroTable();
     });
   </script>
 </AdminLayout>

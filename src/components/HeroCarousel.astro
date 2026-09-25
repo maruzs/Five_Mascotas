@@ -1,0 +1,190 @@
+---
+import { defaultHeroSlides } from '../data/pim/navigation';
+
+const initial = defaultHeroSlides[0];
+---
+
+<section class="five-home-hero five-wrap" aria-label="Destacados y bienvenida">
+  <div class="five-hero-carousel-container" id="five-hero-container">
+    <div class="five-home-hero-card" id="five-hero-card">
+      <div class="five-home-hero-copy" id="five-hero-copy">
+        <span class="five-hero-badge" id="five-hero-badge">{initial.badge}</span>
+        <h1 id="five-hero-title" set:html={initial.title.replace('Tú, lo mejor.', '<em>Tú, lo mejor.</em>')}></h1>
+        <p id="five-hero-sub">{initial.subtitle}</p>
+        <div class="five-hero-actions">
+          <a class="five-button" id="five-hero-cta" href={initial.ctaHref}>
+            <span id="five-hero-cta-text">{initial.ctaText}</span> <span>↗</span>
+          </a>
+        </div>
+      </div>
+      <div class="five-home-hero-media">
+        <img
+          id="five-hero-img"
+          src={initial.image}
+          alt={initial.imageAlt}
+          width="800"
+          height="1000"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+
+    <!-- Carousel Controls (Dots & Navigation) -->
+    <div class="five-hero-controls" id="five-hero-controls">
+      <div class="five-hero-dots" id="five-hero-dots"></div>
+      <button type="button" class="five-hero-nav-btn" id="five-hero-prev" aria-label="Slide anterior">‹</button>
+      <button type="button" class="five-hero-nav-btn" id="five-hero-next" aria-label="Slide siguiente">›</button>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { AdminStoreService } from '../scripts/admin-store';
+  import type { HeroSlide } from '../data/pim/types';
+
+  const container = document.querySelector<HTMLElement>('#five-hero-container');
+  const badgeEl = document.querySelector<HTMLElement>('#five-hero-badge');
+  const titleEl = document.querySelector<HTMLElement>('#five-hero-title');
+  const subEl = document.querySelector<HTMLElement>('#five-hero-sub');
+  const ctaEl = document.querySelector<HTMLAnchorElement>('#five-hero-cta');
+  const ctaTextEl = document.querySelector<HTMLElement>('#five-hero-cta-text');
+  const imgEl = document.querySelector<HTMLImageElement>('#five-hero-img');
+  const dotsContainer = document.querySelector<HTMLElement>('#five-hero-dots');
+  const controlsEl = document.querySelector<HTMLElement>('#five-hero-controls');
+  const prevBtn = document.querySelector<HTMLButtonElement>('#five-hero-prev');
+  const nextBtn = document.querySelector<HTMLButtonElement>('#five-hero-next');
+
+  let activeSlides: HeroSlide[] = [];
+  let currentIndex = 0;
+  let timer: any = null;
+  let isPaused = false;
+
+  const renderDots = () => {
+    if (!dotsContainer) return;
+    dotsContainer.innerHTML = '';
+    if (activeSlides.length <= 1) {
+      if (controlsEl) controlsEl.style.display = 'none';
+      return;
+    }
+    if (controlsEl) controlsEl.style.display = 'flex';
+
+    activeSlides.forEach((_, idx) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = `five-hero-dot ${idx === currentIndex ? 'is-active' : ''}`;
+      dot.setAttribute('aria-label', `Ir al slide ${idx + 1}`);
+      dot.addEventListener('click', () => {
+        currentIndex = idx;
+        renderSlide();
+        startTimer();
+      });
+      dotsContainer.appendChild(dot);
+    });
+  };
+
+  const renderSlide = () => {
+    const s = activeSlides[currentIndex];
+    if (!s) return;
+
+    if (badgeEl) badgeEl.textContent = s.badge;
+    if (titleEl) {
+      titleEl.innerHTML = s.title.includes('<em>')
+        ? s.title
+        : s.title.replace('Tú, lo mejor.', '<em>Tú, lo mejor.</em>');
+    }
+    if (subEl) subEl.textContent = s.subtitle;
+    if (ctaEl && ctaTextEl) {
+      ctaTextEl.textContent = s.ctaText;
+      ctaEl.href = s.ctaHref;
+    }
+    if (imgEl) {
+      imgEl.src = s.image;
+      imgEl.alt = s.imageAlt || s.title;
+    }
+
+    // Update active dot
+    const dots = dotsContainer?.querySelectorAll('.five-hero-dot');
+    dots?.forEach((d, idx) => {
+      d.classList.toggle('is-active', idx === currentIndex);
+    });
+  };
+
+  const nextSlide = () => {
+    if (activeSlides.length <= 1) return;
+    currentIndex = (currentIndex + 1) % activeSlides.length;
+    renderSlide();
+  };
+
+  const prevSlide = () => {
+    if (activeSlides.length <= 1) return;
+    currentIndex = (currentIndex - 1 + activeSlides.length) % activeSlides.length;
+    renderSlide();
+  };
+
+  const startTimer = () => {
+    stopTimer();
+    if (activeSlides.length > 1) {
+      timer = setInterval(() => {
+        if (!isPaused) {
+          nextSlide();
+        }
+      }, 6000);
+    }
+  };
+
+  const stopTimer = () => {
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+    }
+  };
+
+  const refreshSlides = () => {
+    const list = AdminStoreService.getHeroSlides();
+    activeSlides = list.filter((s) => s.active !== false);
+    if (currentIndex >= activeSlides.length) {
+      currentIndex = 0;
+    }
+    renderDots();
+    renderSlide();
+    startTimer();
+  };
+
+  // Event handlers
+  prevBtn?.addEventListener('click', () => {
+    prevSlide();
+    startTimer();
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    nextSlide();
+    startTimer();
+  });
+
+  container?.addEventListener('mouseenter', () => { isPaused = true; });
+  container?.addEventListener('mouseleave', () => { isPaused = false; });
+
+  // Touch swipe support for mobile
+  let touchStartX = 0;
+  container?.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+    isPaused = true;
+  }, { passive: true });
+
+  container?.addEventListener('touchend', (e) => {
+    const touchEndX = e.changedTouches[0].screenX;
+    if (touchStartX - touchEndX > 50) {
+      nextSlide();
+    } else if (touchEndX - touchStartX > 50) {
+      prevSlide();
+    }
+    isPaused = false;
+    startTimer();
+  }, { passive: true });
+
+  // Reactive listener
+  window.addEventListener('five:cms-updated', refreshSlides);
+
+  // Initial load
+  AdminStoreService.init().then(refreshSlides);
+</script>

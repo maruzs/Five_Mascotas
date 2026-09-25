@@ -1,12 +1,185 @@
-import type { Product, AnnouncementTicker, PromoBanner } from '../data/pim/types';
+import type { Product, AnnouncementTicker, PromoBanner, HeroSlide, CmsState } from '../data/pim/types';
 import { products as defaultProducts } from '../data/pim/catalog';
-import { announcementTicker as defaultTicker, promoBanners as defaultBanners } from '../data/pim/navigation';
+import { announcementTickers as defaultTickers, promoBanners as defaultBanners, defaultHeroSlides } from '../data/pim/navigation';
 
-export const PIM_STORAGE_KEY = 'five_pim_products_v1';
-export const CMS_TICKER_KEY = 'five_cms_ticker_v1';
-export const CMS_BANNERS_KEY = 'five_cms_banners_v1';
+export const PIM_STORAGE_KEY = 'five_pim_products_v2';
+export const CMS_STORAGE_KEY = 'five_cms_state_v2';
 
 export class AdminStoreService {
+  private static cmsState: CmsState = {
+    tickers: [...defaultTickers],
+    banners: [...defaultBanners],
+    heroSlides: [...defaultHeroSlides],
+  };
+
+  private static initialized = false;
+
+  // Initialize and sync with server
+  public static async init(): Promise<void> {
+    if (this.initialized) return;
+    this.initialized = true;
+
+    // Load local cache first for instant rendering
+    if (typeof localStorage !== 'undefined') {
+      try {
+        const cachedCms = localStorage.getItem(CMS_STORAGE_KEY);
+        if (cachedCms) {
+          const parsed = JSON.parse(cachedCms);
+          if (parsed && Array.isArray(parsed.tickers)) {
+            this.cmsState = {
+              tickers: parsed.tickers.length ? parsed.tickers : [...defaultTickers],
+              banners: parsed.banners?.length ? parsed.banners : [...defaultBanners],
+              heroSlides: parsed.heroSlides?.length ? parsed.heroSlides : [...defaultHeroSlides],
+            };
+          }
+        }
+      } catch {
+        // Fallback
+      }
+    }
+
+    // Attempt server fetch in background (Multi-Device Sync)
+    await this.fetchCmsFromServer();
+  }
+
+  // ================= SERVER SYNC (CMS) =================
+  public static async fetchCmsFromServer(): Promise<CmsState> {
+    try {
+      const res = await fetch('/api/cms', { cache: 'no-store' });
+      if (res.ok) {
+        const json = await res.json();
+        if (json?.data) {
+          const remote = json.data;
+          this.cmsState = {
+            tickers: Array.isArray(remote.tickers) && remote.tickers.length ? remote.tickers : [...defaultTickers],
+            banners: Array.isArray(remote.banners) && remote.banners.length ? remote.banners : [...defaultBanners],
+            heroSlides: Array.isArray(remote.heroSlides) && remote.heroSlides.length ? remote.heroSlides : [...defaultHeroSlides],
+          };
+          this.saveLocalCms(this.cmsState, false);
+          return this.cmsState;
+        }
+      }
+    } catch {
+      // Offline or static fallback
+    }
+    return this.cmsState;
+  }
+
+  private static async syncCmsToServer(): Promise<void> {
+    try {
+      await fetch('/api/cms', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(this.cmsState),
+      });
+    } catch (err) {
+      console.warn('[AdminStore] Server sync offline, saved to local cache:', err);
+    }
+  }
+
+  private static saveLocalCms(state: CmsState, triggerServerSync = true): void {
+    if (typeof localStorage !== 'undefined') {
+      try {
+        localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(state));
+      } catch {
+        // Ignored
+      }
+      window.dispatchEvent(new CustomEvent('five:cms-updated', { detail: state }));
+    }
+    if (triggerServerSync) {
+      this.syncCmsToServer();
+    }
+  }
+
+  // ================= TICKERS =================
+  public static getTickers(): AnnouncementTicker[] {
+    this.init();
+    return [...this.cmsState.tickers];
+  }
+
+  public static getTicker(): AnnouncementTicker {
+    const list = this.getTickers();
+    return list.find((t) => t.active) || list[0] || defaultTickers[0];
+  }
+
+  public static saveTicker(ticker: AnnouncementTicker): void {
+    this.init();
+    const list = [...this.cmsState.tickers];
+    const idx = list.findIndex((t) => t.id === ticker.id);
+    if (idx >= 0) {
+      list[idx] = ticker;
+    } else {
+      list.push(ticker);
+    }
+    this.cmsState.tickers = list;
+    this.saveLocalCms(this.cmsState, true);
+  }
+
+  public static deleteTicker(id: string): void {
+    this.init();
+    this.cmsState.tickers = this.cmsState.tickers.filter((t) => t.id !== id);
+    if (this.cmsState.tickers.length === 0) {
+      this.cmsState.tickers = [...defaultTickers];
+    }
+    this.saveLocalCms(this.cmsState, true);
+  }
+
+  // ================= BANNERS =================
+  public static getBanners(): PromoBanner[] {
+    this.init();
+    return [...this.cmsState.banners];
+  }
+
+  public static saveBanner(banner: PromoBanner): void {
+    this.init();
+    const list = [...this.cmsState.banners];
+    const idx = list.findIndex((b) => b.id === banner.id);
+    if (idx >= 0) {
+      list[idx] = banner;
+    } else {
+      list.push(banner);
+    }
+    this.cmsState.banners = list;
+    this.saveLocalCms(this.cmsState, true);
+  }
+
+  public static deleteBanner(id: string): void {
+    this.init();
+    this.cmsState.banners = this.cmsState.banners.filter((b) => b.id !== id);
+    if (this.cmsState.banners.length === 0) {
+      this.cmsState.banners = [...defaultBanners];
+    }
+    this.saveLocalCms(this.cmsState, true);
+  }
+
+  // ================= HERO SLIDES =================
+  public static getHeroSlides(): HeroSlide[] {
+    this.init();
+    return [...this.cmsState.heroSlides];
+  }
+
+  public static saveHeroSlide(slide: HeroSlide): void {
+    this.init();
+    const list = [...this.cmsState.heroSlides];
+    const idx = list.findIndex((s) => s.id === slide.id);
+    if (idx >= 0) {
+      list[idx] = slide;
+    } else {
+      list.push(slide);
+    }
+    this.cmsState.heroSlides = list;
+    this.saveLocalCms(this.cmsState, true);
+  }
+
+  public static deleteHeroSlide(id: string): void {
+    this.init();
+    this.cmsState.heroSlides = this.cmsState.heroSlides.filter((s) => s.id !== id);
+    if (this.cmsState.heroSlides.length === 0) {
+      this.cmsState.heroSlides = [...defaultHeroSlides];
+    }
+    this.saveLocalCms(this.cmsState, true);
+  }
+
   // ================= PRODUCTS PIM =================
   public static getProducts(): Product[] {
     try {
@@ -18,6 +191,25 @@ export class AdminStoreService {
       // Fallback
     }
     return [...defaultProducts];
+  }
+
+  public static async fetchPimFromServer(): Promise<Product[]> {
+    try {
+      const res = await fetch('/api/pim', { cache: 'no-store' });
+      if (res.ok) {
+        const json = await res.json();
+        if (Array.isArray(json?.data?.products)) {
+          if (typeof localStorage !== 'undefined') {
+            localStorage.setItem(PIM_STORAGE_KEY, JSON.stringify(json.data.products));
+            window.dispatchEvent(new CustomEvent('five:pim-updated', { detail: json.data.products }));
+          }
+          return json.data.products;
+        }
+      }
+    } catch {
+      // Fallback
+    }
+    return this.getProducts();
   }
 
   public static saveProduct(product: Product): void {
@@ -32,6 +224,7 @@ export class AdminStoreService {
       localStorage.setItem(PIM_STORAGE_KEY, JSON.stringify(list));
       window.dispatchEvent(new CustomEvent('five:pim-updated', { detail: list }));
     }
+    this.syncPimToServer(list);
   }
 
   public static deleteProduct(id: string): void {
@@ -40,12 +233,26 @@ export class AdminStoreService {
       localStorage.setItem(PIM_STORAGE_KEY, JSON.stringify(list));
       window.dispatchEvent(new CustomEvent('five:pim-updated', { detail: list }));
     }
+    this.syncPimToServer(list);
   }
 
   public static resetProducts(): void {
     if (typeof localStorage !== 'undefined') {
       localStorage.removeItem(PIM_STORAGE_KEY);
       window.dispatchEvent(new CustomEvent('five:pim-updated', { detail: defaultProducts }));
+    }
+    this.syncPimToServer(defaultProducts);
+  }
+
+  private static async syncPimToServer(products: Product[]): Promise<void> {
+    try {
+      await fetch('/api/pim', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ products }),
+      });
+    } catch (err) {
+      console.warn('[AdminStore] PIM server sync offline:', err);
     }
   }
 
@@ -58,51 +265,5 @@ export class AdminStoreService {
     a.download = `five-mascotas-catalogo-${new Date().toISOString().slice(0, 10)}.json`;
     a.click();
     URL.revokeObjectURL(url);
-  }
-
-  // ================= CMS BANNERS =================
-  public static getTicker(): AnnouncementTicker {
-    try {
-      if (typeof localStorage !== 'undefined') {
-        const saved = localStorage.getItem(CMS_TICKER_KEY);
-        if (saved) return JSON.parse(saved);
-      }
-    } catch {
-      // Fallback
-    }
-    return { ...defaultTicker };
-  }
-
-  public static saveTicker(ticker: AnnouncementTicker): void {
-    if (typeof localStorage !== 'undefined') {
-      localStorage.setItem(CMS_TICKER_KEY, JSON.stringify(ticker));
-      window.dispatchEvent(new CustomEvent('five:cms-updated', { detail: ticker }));
-    }
-  }
-
-  public static getBanners(): PromoBanner[] {
-    try {
-      if (typeof localStorage !== 'undefined') {
-        const saved = localStorage.getItem(CMS_BANNERS_KEY);
-        if (saved) return JSON.parse(saved);
-      }
-    } catch {
-      // Fallback
-    }
-    return [...defaultBanners];
-  }
-
-  public static saveBanner(banner: PromoBanner): void {
-    const list = this.getBanners();
-    const idx = list.findIndex((b) => b.id === banner.id);
-    if (idx >= 0) {
-      list[idx] = banner;
-    } else {
-      list.push(banner);
-    }
-    if (typeof localStorage !== 'undefined') {
-      localStorage.setItem(CMS_BANNERS_KEY, JSON.stringify(list));
-      window.dispatchEvent(new CustomEvent('five:cms-updated', { detail: list }));
-    }
   }
 }

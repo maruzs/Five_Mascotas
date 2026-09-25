@@ -20,31 +20,204 @@ const {
   ctaHref
 } = Astro.props;
 
-// Pick banner by ID or fall back to default
-const banner: Partial<PromoBanner> = bannerId
-  ? promoBanners.find((b) => b.id === bannerId) || promoBanners[0]
-  : {
-      tag: tag || '¡SOLO X EL FINDE!',
-      title: title || '2x1 Todo camas, mantas y ropa perro y gato',
-      subtitle: subtitle || '¡Combínalas como quieras! Descuento automático al carrito',
-      ctaText: ctaText || 'Ver Promoción ↗',
-      ctaHref: ctaHref || '/ofertas',
-    };
+const activeList = promoBanners.filter(b => b.active);
+const initial: PromoBanner = bannerId
+  ? promoBanners.find((b) => b.id === bannerId) || activeList[0] || promoBanners[0]
+  : activeList[0] || promoBanners[0];
 ---
 
-<section class="five-promo-strip" aria-label="Campaña promocional destacada">
-  <div class="five-wrap five-promo-strip-inner">
-    <div class="five-promo-tag">
-      <span class="five-promo-pill">{tag || banner.tag || 'PROMO FIVE'}</span>
+<section class="five-promo-strip" id="five-promo-strip" aria-label="Campaña promocional destacada">
+  <div class="five-wrap five-promo-strip-inner" id="five-promo-inner">
+    <div class="five-promo-tag" id="five-promo-tag-wrap">
+      <span class="five-promo-pill" id="five-promo-tag">{tag || initial.tag || 'PROMO FIVE'}</span>
     </div>
-    <div class="five-promo-content">
-      <h2 class="five-promo-title">{title || banner.title}</h2>
-      <p class="five-promo-sub">{subtitle || banner.subtitle}</p>
+
+    <div class="five-promo-content" id="five-promo-content">
+      <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px;">
+        <h2 class="five-promo-title" id="five-promo-title">{title || initial.title}</h2>
+        <span class="five-promo-coupon-pill" id="five-promo-coupon" style={initial.couponCode ? "display: inline-flex;" : "display: none;"}>
+          🎟️ <span id="five-promo-coupon-code">{initial.couponCode || ''}</span>
+          <small style="opacity:0.75; font-size:9.5px; font-weight:normal;">(copiar)</small>
+        </span>
+        <span class="five-promo-countdown" id="five-promo-countdown" style={initial.expiresAt ? "display: inline-flex;" : "display: none;"}>
+          ⏱️ <span id="five-promo-countdown-text">Termina pronto</span>
+        </span>
+      </div>
+      <p class="five-promo-sub" id="five-promo-sub">{subtitle || initial.subtitle}</p>
     </div>
-    <div class="five-promo-action">
-      <a href={ctaHref || banner.ctaHref || '/ofertas'} class="five-promo-cta">
-        {ctaText || banner.ctaText || 'Aprovechar'}
-      </a>
+
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <div class="five-promo-action">
+        <a href={ctaHref || initial.ctaHref || '/ofertas'} class="five-promo-cta" id="five-promo-cta">
+          {ctaText || initial.ctaText || 'Aprovechar'}
+        </a>
+      </div>
+
+      <div class="five-promo-nav-box" id="five-promo-controls" style={activeList.length > 1 ? "display: flex;" : "display: none;"}>
+        <button type="button" class="five-promo-nav-btn" id="five-promo-prev" aria-label="Banner anterior">‹</button>
+        <button type="button" class="five-promo-nav-btn" id="five-promo-next" aria-label="Banner siguiente">›</button>
+      </div>
     </div>
   </div>
 </section>
+
+<script>
+  import { AdminStoreService } from '../scripts/admin-store';
+  import type { PromoBanner } from '../data/pim/types';
+
+  const strip = document.querySelector<HTMLElement>('#five-promo-strip');
+  const tagEl = document.querySelector<HTMLElement>('#five-promo-tag');
+  const titleEl = document.querySelector<HTMLElement>('#five-promo-title');
+  const subEl = document.querySelector<HTMLElement>('#five-promo-sub');
+  const ctaEl = document.querySelector<HTMLAnchorElement>('#five-promo-cta');
+  const couponEl = document.querySelector<HTMLElement>('#five-promo-coupon');
+  const couponCodeEl = document.querySelector<HTMLElement>('#five-promo-coupon-code');
+  const countdownEl = document.querySelector<HTMLElement>('#five-promo-countdown');
+  const countdownTextEl = document.querySelector<HTMLElement>('#five-promo-countdown-text');
+  const controlsEl = document.querySelector<HTMLElement>('#five-promo-controls');
+  const prevBtn = document.querySelector<HTMLButtonElement>('#five-promo-prev');
+  const nextBtn = document.querySelector<HTMLButtonElement>('#five-promo-next');
+
+  let activeBanners: PromoBanner[] = [];
+  let currentIndex = 0;
+  let timer: any = null;
+  let countdownInterval: any = null;
+  let isPaused = false;
+
+  const updateCountdown = () => {
+    if (!countdownEl || !countdownTextEl) return;
+    const banner = activeBanners[currentIndex];
+    if (!banner?.expiresAt) {
+      countdownEl.style.display = 'none';
+      return;
+    }
+
+    const expiry = new Date(banner.expiresAt).getTime();
+    const now = Date.now();
+    const diff = expiry - now;
+
+    if (diff <= 0) {
+      countdownEl.style.display = 'none';
+      return;
+    }
+
+    countdownEl.style.display = 'inline-flex';
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+    if (days > 0) {
+      countdownTextEl.textContent = `${days}d ${hours}h ${mins}m restantes`;
+    } else {
+      countdownTextEl.textContent = `${hours}h ${mins}m ${secs}s restantes`;
+    }
+  };
+
+  const renderCurrent = () => {
+    if (!strip) return;
+    if (activeBanners.length === 0) {
+      strip.style.display = 'none';
+      return;
+    }
+    strip.style.display = 'block';
+
+    const b = activeBanners[currentIndex];
+    if (!b) return;
+
+    if (tagEl) tagEl.textContent = b.tag || 'PROMO FIVE';
+    if (titleEl) titleEl.textContent = b.title;
+    if (subEl) subEl.textContent = b.subtitle;
+    if (ctaEl) {
+      ctaEl.textContent = b.ctaText || 'Aprovechar';
+      ctaEl.href = b.ctaHref || '/ofertas';
+    }
+
+    if (couponEl && couponCodeEl) {
+      if (b.couponCode) {
+        couponEl.style.display = 'inline-flex';
+        couponCodeEl.textContent = b.couponCode;
+      } else {
+        couponEl.style.display = 'none';
+      }
+    }
+
+    updateCountdown();
+
+    if (controlsEl) {
+      controlsEl.style.display = activeBanners.length > 1 ? 'flex' : 'none';
+    }
+  };
+
+  const nextBanner = () => {
+    if (activeBanners.length <= 1) return;
+    currentIndex = (currentIndex + 1) % activeBanners.length;
+    renderCurrent();
+  };
+
+  const prevBanner = () => {
+    if (activeBanners.length <= 1) return;
+    currentIndex = (currentIndex - 1 + activeBanners.length) % activeBanners.length;
+    renderCurrent();
+  };
+
+  const startAutoRotation = () => {
+    stopAutoRotation();
+    if (activeBanners.length > 1) {
+      timer = setInterval(() => {
+        if (!isPaused) {
+          nextBanner();
+        }
+      }, 7000);
+    }
+  };
+
+  const stopAutoRotation = () => {
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+    }
+  };
+
+  const refreshBanners = () => {
+    const list = AdminStoreService.getBanners();
+    activeBanners = list.filter((b) => b.active !== false);
+    if (currentIndex >= activeBanners.length) {
+      currentIndex = 0;
+    }
+    renderCurrent();
+    startAutoRotation();
+  };
+
+  // Click to copy coupon
+  couponEl?.addEventListener('click', () => {
+    const banner = activeBanners[currentIndex];
+    if (banner?.couponCode) {
+      navigator.clipboard?.writeText(banner.couponCode);
+      const originalText = couponCodeEl?.textContent;
+      if (couponCodeEl) couponCodeEl.textContent = '¡Copiado!';
+      setTimeout(() => {
+        if (couponCodeEl && originalText) couponCodeEl.textContent = originalText;
+      }, 1500);
+    }
+  });
+
+  // Controls
+  prevBtn?.addEventListener('click', prevBanner);
+  nextBtn?.addEventListener('click', nextBanner);
+
+  // Pause on hover
+  strip?.addEventListener('mouseenter', () => { isPaused = true; });
+  strip?.addEventListener('mouseleave', () => { isPaused = false; });
+
+  // Countdown timer clock
+  if (!countdownInterval) {
+    countdownInterval = setInterval(updateCountdown, 1000);
+  }
+
+  // Reactive listener
+  window.addEventListener('five:cms-updated', refreshBanners);
+
+  // Initial load
+  AdminStoreService.init().then(refreshBanners);
+</script>
