@@ -1,0 +1,326 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { defaultShippingRates } from '../../data/pim/shipping';
+import { formatMoney } from '../../data/pim/catalog';
+---
+
+<AdminLayout title="FIVE Admin — Tarifas de Despacho" activeNav="despacho" breadcrumbTitle="Tarifas de Despacho">
+  <div class="admin-page-header">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+      <div>
+        <h1>Tarifas de Despacho por Ciudad</h1>
+        <p>Configura los costos de envío fijos, horarios de corte y notas de entrega para cada ciudad de Chile.</p>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <button type="button" class="admin-btn secondary" id="shipping-reset-btn" title="Restablecer tarifas predeterminadas">
+          <span>Restablecer</span> ↺
+        </button>
+        <button type="button" class="admin-btn primary" id="shipping-new-btn">
+          <span>+ Nueva Ciudad</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- City Rates Table -->
+  <div class="admin-card" style="padding:0; overflow:hidden;">
+    <div class="admin-table-container" style="border:0; border-radius:0;">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Ciudad</th>
+            <th>Región</th>
+            <th>Tarifa Plana</th>
+            <th>Horario de Corte</th>
+            <th>Compromiso de Entrega</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="shipping-tbody">
+          {defaultShippingRates.map((r) => (
+            <tr data-ship-row data-id={r.id}>
+              <td><strong>{r.city}</strong></td>
+              <td>{r.region}</td>
+              <td><strong style="color:#7025a8; font-size:15px;">{formatMoney(r.price)}</strong></td>
+              <td><code>{r.cutoffTime || '14:00'} hrs</code></td>
+              <td><small style="color:#495057;">{r.deliveryNote}</small></td>
+              <td>
+                {r.isDefault ? (
+                  <span class="admin-badge-trend up">Predeterminada</span>
+                ) : (
+                  <span style="color:#adb5bd; font-size:12px;">Secundaria</span>
+                )}
+              </td>
+              <td>
+                <div style="display:flex; gap:6px;">
+                  <button type="button" class="admin-btn secondary" data-edit-ship={r.id} style="padding:5px 10px; font-size:12px;">
+                    Editar
+                  </button>
+                  {!r.isDefault && (
+                    <button type="button" class="admin-btn danger" data-delete-ship={r.id} style="padding:5px 10px; font-size:12px;">
+                      Eliminar
+                    </button>
+                  )}
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Bank Account & QR Configuration Card -->
+  <div class="admin-card" style="margin-top:24px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+      <div>
+        <h2 style="font-size:18px; font-weight:800; color:#111827; margin:0 0 4px;">Cuenta Bancaria para Transferencias & QR</h2>
+        <p style="color:#6b7280; font-size:13px; margin:0;">
+          Configura los datos bancarios oficiales que se muestran en el Checkout y que se codifican en el código QR para escaneo con teléfonos móviles.
+        </p>
+      </div>
+      <span class="admin-badge-trend up" id="bank-status-badge">Activa en Checkout</span>
+    </div>
+
+    <form id="bank-config-form" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:16px;">
+      <div class="admin-form-group">
+        <label for="bank-name">Banco *</label>
+        <input type="text" id="bank-name" name="bankName" required placeholder="BancoEstado / Banco de Chile" />
+      </div>
+
+      <div class="admin-form-group">
+        <label for="bank-type">Tipo de Cuenta *</label>
+        <input type="text" id="bank-type" name="accountType" required placeholder="Cuenta Corriente / Cuenta RUT" />
+      </div>
+
+      <div class="admin-form-group">
+        <label for="bank-num">Número de Cuenta *</label>
+        <input type="text" id="bank-num" name="accountNumber" required placeholder="1234567890" />
+      </div>
+
+      <div class="admin-form-group">
+        <label for="bank-rut">RUT del Titular *</label>
+        <input type="text" id="bank-rut" name="holderRut" required placeholder="77.892.340-K" />
+      </div>
+
+      <div class="admin-form-group">
+        <label for="bank-holder">Nombre o Razón Social *</label>
+        <input type="text" id="bank-holder" name="holderName" required placeholder="FIVE Mascotas SpA" />
+      </div>
+
+      <div class="admin-form-group">
+        <label for="bank-email">Correo para Comprobantes *</label>
+        <input type="email" id="bank-email" name="email" required placeholder="pagos@fivemascotas.cl" />
+      </div>
+
+      <div class="admin-form-group" style="grid-column: 1 / -1;">
+        <label for="bank-instructions">Instrucciones o Referencia Solicitada al Cliente</label>
+        <input type="text" id="bank-instructions" name="customInstructions" placeholder="Indicar código FIVE-TRK-XXXX en el asunto" />
+      </div>
+
+      <div style="grid-column: 1 / -1; display:flex; justify-content:flex-end;">
+        <button type="submit" class="admin-btn primary">
+          Guardar Datos Bancarios
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Modal Backdrop for New/Edit City Shipping Rate -->
+  <div id="ship-modal" class="admin-modal-backdrop" hidden>
+    <div class="admin-modal" role="dialog" aria-modal="true" aria-labelledby="ship-modal-title">
+      <div class="admin-modal-head">
+        <h3 id="ship-modal-title">Configurar Tarifa por Ciudad</h3>
+        <button type="button" id="ship-modal-close" style="font-size:24px; color:#6c757d;">&times;</button>
+      </div>
+
+      <form id="ship-form">
+        <div class="admin-modal-body">
+          <input type="hidden" id="ship-id" name="id" />
+
+          <div class="admin-form-row">
+            <div class="admin-form-group">
+              <label for="ship-city">Ciudad / Comuna *</label>
+              <input type="text" id="ship-city" name="city" required placeholder="ej: Talca, Curicó, Santiago" />
+            </div>
+            <div class="admin-form-group">
+              <label for="ship-region">Región *</label>
+              <input type="text" id="ship-region" name="region" required placeholder="ej: Maule, Metropolitana" />
+            </div>
+          </div>
+
+          <div class="admin-form-row">
+            <div class="admin-form-group">
+              <label for="ship-price">Tarifa Plana de Envío (CLP) *</label>
+              <input type="number" id="ship-price" name="price" required min="0" step="100" placeholder="1500" />
+            </div>
+            <div class="admin-form-group">
+              <label for="ship-cutoff">Horario Límite de Corte</label>
+              <input type="text" id="ship-cutoff" name="cutoffTime" placeholder="ej: 14:00" value="14:00" />
+            </div>
+          </div>
+
+          <div class="admin-form-group">
+            <label for="ship-note">Nota de Entrega / Política</label>
+            <textarea id="ship-note" name="deliveryNote" rows="2" placeholder="ej: Mismo día en compras hasta las 14:00 hrs. Los repartos inician a las 15:00 hrs."></textarea>
+          </div>
+
+          <div class="admin-form-group">
+            <label style="display:flex; align-items:center; gap:8px;">
+              <input type="checkbox" id="ship-default" name="isDefault" />
+              <span>Marcar como ciudad predeterminada de la tienda</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="admin-modal-foot">
+          <button type="button" class="admin-btn secondary" id="ship-modal-cancel">Cancelar</button>
+          <button type="submit" class="admin-btn primary">Guardar Tarifa</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    import { AdminStoreService } from '../../scripts/admin-store';
+    import { formatMoney } from '../../data/pim/catalog';
+    import type { ShippingCityRate } from '../../data/pim/shipping';
+
+    const tbody = document.querySelector('#shipping-tbody')!;
+    const modal = document.querySelector<HTMLElement>('#ship-modal')!;
+    const form = document.querySelector<HTMLFormElement>('#ship-form')!;
+    const modalTitle = document.querySelector('#ship-modal-title')!;
+
+    const render = () => {
+      const rates = AdminStoreService.getShippingRates();
+      tbody.innerHTML = '';
+      rates.forEach((r) => {
+        const tr = document.createElement('tr');
+        tr.dataset.shipRow = 'true';
+        tr.dataset.id = r.id;
+        tr.innerHTML = `
+          <td><strong>${r.city}</strong></td>
+          <td>${r.region}</td>
+          <td><strong style="color:#7025a8; font-size:15px;">${formatMoney(r.price)}</strong></td>
+          <td><code>${r.cutoffTime || '14:00'} hrs</code></td>
+          <td><small style="color:#495057;">${r.deliveryNote || ''}</small></td>
+          <td>
+            ${r.isDefault ? '<span class="admin-badge-trend up">Predeterminada</span>' : '<span style="color:#adb5bd; font-size:12px;">Secundaria</span>'}
+          </td>
+          <td>
+            <div style="display:flex; gap:6px;">
+              <button type="button" class="admin-btn secondary" data-edit-ship="${r.id}" style="padding:5px 10px; font-size:12px;">
+                Editar
+              </button>
+              ${!r.isDefault ? `<button type="button" class="admin-btn danger" data-delete-ship="${r.id}" style="padding:5px 10px; font-size:12px;">Eliminar</button>` : ''}
+            </div>
+          </td>
+        `;
+        tbody.append(tr);
+      });
+      attachEvents();
+    };
+
+    const attachEvents = () => {
+      document.querySelectorAll('[data-edit-ship]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = (btn as HTMLElement).dataset.editShip!;
+          const rate = AdminStoreService.getShippingRates().find((x) => x.id === id);
+          if (!rate) return;
+          modalTitle.textContent = 'Editar Tarifa de Despacho';
+          (document.querySelector('#ship-id') as HTMLInputElement).value = rate.id;
+          (document.querySelector('#ship-city') as HTMLInputElement).value = rate.city;
+          (document.querySelector('#ship-region') as HTMLInputElement).value = rate.region;
+          (document.querySelector('#ship-price') as HTMLInputElement).value = String(rate.price);
+          (document.querySelector('#ship-cutoff') as HTMLInputElement).value = rate.cutoffTime || '14:00';
+          (document.querySelector('#ship-note') as HTMLTextAreaElement).value = rate.deliveryNote || '';
+          (document.querySelector('#ship-default') as HTMLInputElement).checked = !!rate.isDefault;
+          modal.hidden = false;
+        });
+      });
+
+      document.querySelectorAll('[data-delete-ship]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = (btn as HTMLElement).dataset.deleteShip!;
+          if (confirm('¿Eliminar esta ciudad de las opciones de despacho?')) {
+            AdminStoreService.deleteShippingRate(id);
+            render();
+          }
+        });
+      });
+    };
+
+    document.querySelector('#shipping-new-btn')?.addEventListener('click', () => {
+      modalTitle.textContent = 'Crear Nueva Tarifa de Ciudad';
+      form.reset();
+      (document.querySelector('#ship-id') as HTMLInputElement).value = `ship-${Date.now()}`;
+      modal.hidden = false;
+    });
+
+    const close = () => {
+      modal.hidden = true;
+    };
+
+    document.querySelector('#ship-modal-close')?.addEventListener('click', close);
+    document.querySelector('#ship-modal-cancel')?.addEventListener('click', close);
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const isDefault = (document.querySelector('#ship-default') as HTMLInputElement).checked;
+
+      const rate: ShippingCityRate = {
+        id: formData.get('id') as string,
+        city: formData.get('city') as string,
+        region: formData.get('region') as string,
+        price: Number(formData.get('price')),
+        cutoffTime: (formData.get('cutoffTime') as string) || '14:00',
+        deliveryNote: formData.get('deliveryNote') as string,
+        isDefault,
+      };
+
+      AdminStoreService.saveShippingRate(rate);
+      close();
+      render();
+    });
+
+    document.querySelector('#shipping-reset-btn')?.addEventListener('click', () => {
+      if (confirm('¿Restablecer todas las tarifas de despacho a los valores iniciales?')) {
+        AdminStoreService.resetShippingRates();
+        render();
+      }
+    });
+
+    // Bank Account Form Logic
+    const bankForm = document.querySelector<HTMLFormElement>('#bank-config-form');
+    if (bankForm) {
+      const bankConfig = AdminStoreService.getBankAccount();
+      (bankForm.querySelector('#bank-name') as HTMLInputElement).value = bankConfig.bankName || '';
+      (bankForm.querySelector('#bank-type') as HTMLInputElement).value = bankConfig.accountType || '';
+      (bankForm.querySelector('#bank-num') as HTMLInputElement).value = bankConfig.accountNumber || '';
+      (bankForm.querySelector('#bank-rut') as HTMLInputElement).value = bankConfig.holderRut || '';
+      (bankForm.querySelector('#bank-holder') as HTMLInputElement).value = bankConfig.holderName || '';
+      (bankForm.querySelector('#bank-email') as HTMLInputElement).value = bankConfig.email || '';
+      (bankForm.querySelector('#bank-instructions') as HTMLInputElement).value = bankConfig.customInstructions || '';
+
+      bankForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const updated = {
+          bankName: (bankForm.querySelector('#bank-name') as HTMLInputElement).value,
+          accountType: (bankForm.querySelector('#bank-type') as HTMLInputElement).value,
+          accountNumber: (bankForm.querySelector('#bank-num') as HTMLInputElement).value,
+          holderRut: (bankForm.querySelector('#bank-rut') as HTMLInputElement).value,
+          holderName: (bankForm.querySelector('#bank-holder') as HTMLInputElement).value,
+          email: (bankForm.querySelector('#bank-email') as HTMLInputElement).value,
+          customInstructions: (bankForm.querySelector('#bank-instructions') as HTMLInputElement).value,
+          active: true,
+        };
+        AdminStoreService.saveBankAccount(updated);
+        alert('✓ Datos bancarios guardados con éxito. Se actualizaron en el Checkout y en el código QR.');
+      });
+    }
+
+    render();
+  </script>
+</AdminLayout>

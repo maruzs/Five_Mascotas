@@ -1,9 +1,13 @@
 import type { Product, AnnouncementTicker, PromoBanner, HeroSlide, CmsState } from '../data/pim/types';
 import { products as defaultProducts } from '../data/pim/catalog';
 import { announcementTickers as defaultTickers, promoBanners as defaultBanners, defaultHeroSlides } from '../data/pim/navigation';
+import { defaultShippingRates, type ShippingCityRate } from '../data/pim/shipping';
+import { defaultBankAccount, type BankAccountConfig, BANK_STORAGE_KEY } from '../data/pim/bank';
 
 export const PIM_STORAGE_KEY = 'five_pim_products_v2';
 export const CMS_STORAGE_KEY = 'five_cms_state_v2';
+export const SHIPPING_STORAGE_KEY = 'five_shipping_rates_v1';
+export const ORDERS_STORAGE_KEY = 'five_orders_v1';
 
 export class AdminStoreService {
   private static cmsState: CmsState = {
@@ -265,5 +269,100 @@ export class AdminStoreService {
     a.download = `five-mascotas-catalogo-${new Date().toISOString().slice(0, 10)}.json`;
     a.click();
     URL.revokeObjectURL(url);
+  }
+
+  // ================= SHIPPING RATES (TARIFA PLANA CIUDADES) =================
+  public static getShippingRates(): ShippingCityRate[] {
+    try {
+      if (typeof localStorage !== 'undefined') {
+        const saved = localStorage.getItem(SHIPPING_STORAGE_KEY);
+        if (saved) return JSON.parse(saved);
+      }
+    } catch {
+      // Fallback
+    }
+    return [...defaultShippingRates];
+  }
+
+  public static saveShippingRate(rate: ShippingCityRate): void {
+    const list = this.getShippingRates();
+    const idx = list.findIndex((r) => r.id === rate.id || r.city.toLowerCase() === rate.city.toLowerCase());
+    if (idx >= 0) {
+      list[idx] = rate;
+    } else {
+      list.push(rate);
+    }
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem(SHIPPING_STORAGE_KEY, JSON.stringify(list));
+      window.dispatchEvent(new CustomEvent('five:shipping-updated', { detail: list }));
+    }
+  }
+
+  public static deleteShippingRate(id: string): void {
+    const list = this.getShippingRates().filter((r) => r.id !== id);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem(SHIPPING_STORAGE_KEY, JSON.stringify(list));
+      window.dispatchEvent(new CustomEvent('five:shipping-updated', { detail: list }));
+    }
+  }
+
+  public static resetShippingRates(): void {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem(SHIPPING_STORAGE_KEY);
+      window.dispatchEvent(new CustomEvent('five:shipping-updated', { detail: defaultShippingRates }));
+    }
+  }
+
+  // ================= BANK ACCOUNT CONFIG (QR & TRANSFERENCIAS) =================
+  public static getBankAccount(): BankAccountConfig {
+    try {
+      if (typeof localStorage !== 'undefined') {
+        const saved = localStorage.getItem(BANK_STORAGE_KEY);
+        if (saved) return JSON.parse(saved);
+      }
+    } catch {
+      // Fallback
+    }
+    return { ...defaultBankAccount };
+  }
+
+  public static saveBankAccount(config: BankAccountConfig): void {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem(BANK_STORAGE_KEY, JSON.stringify(config));
+      window.dispatchEvent(new CustomEvent('five:bank-updated', { detail: config }));
+    }
+  }
+
+  // ================= ORDERS SYSTEM (SEGUIMIENTO Y RASTREO) =================
+  public static getOrders(): any[] {
+    try {
+      if (typeof localStorage !== 'undefined') {
+        const saved = localStorage.getItem(ORDERS_STORAGE_KEY);
+        if (saved) return JSON.parse(saved);
+      }
+    } catch {
+      // Fallback
+    }
+    return [];
+  }
+
+  public static saveOrder(order: any): void {
+    const list = this.getOrders();
+    const idx = list.findIndex((o) => o.code === order.code);
+    if (idx >= 0) {
+      list[idx] = order;
+    } else {
+      list.unshift(order);
+    }
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(list));
+      window.dispatchEvent(new CustomEvent('five:orders-updated', { detail: list }));
+    }
+  }
+
+  public static getOrderByCode(code: string): any | null {
+    const clean = code.trim().toUpperCase();
+    const list = this.getOrders();
+    return list.find((o) => o.code.toUpperCase() === clean || o.phone?.includes(clean)) || null;
   }
 }

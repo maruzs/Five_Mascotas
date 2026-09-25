@@ -1,0 +1,426 @@
+---
+// src/pages/comparador.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { products } from '../data/pim/catalog';
+import { defaultFoodNutrition } from '../data/pim/nutrition';
+
+// Filter products that have nutritional profiles or are in the Alimentos category
+const foodProducts = products.filter((p) => p.category === 'Alimentos' || defaultFoodNutrition[p.id]);
+
+// Initial 2 items to compare
+const initialLeft = foodProducts[0] || products[0];
+const initialRight = foodProducts[1] || products[1];
+---
+
+<BaseLayout
+  title="Comparador de Alimentos e Ingredientes — FIVE Mascotas"
+  description="Compara la composición nutricional, porcentaje de proteína, primeros ingredientes y granos de los mejores alimentos para perros y gatos."
+>
+  <div class="five-wrap" style="padding-block: 28px 60px;">
+    <!-- Breadcrumbs -->
+    <nav class="five-breadcrumbs" aria-label="Navegación">
+      <ol>
+        <li><a href="/">Inicio</a> <span class="five-crumb-separator">/</span></li>
+        <li><span aria-current="page">Comparador de Alimentos</span></li>
+      </ol>
+    </nav>
+
+    <!-- Header Section -->
+    <div style="margin-bottom: 30px;">
+      <span class="five-pdp-brand-tag" style="background:#f3e8ff; color:#7025a8; padding:4px 10px; border-radius:6px; font-size:12px;">
+        🔍 Herramienta Nutricional Asistida
+      </span>
+      <h1 style="font-size:clamp(26px, 4vw, 36px); font-weight:850; letter-spacing:-0.8px; margin:10px 0 8px;">
+        Comparador de Alimentos e Ingredientes
+      </h1>
+      <p style="color:#6b7280; font-size:15px; max-width:760px; line-height:1.6;">
+        Elige 2 o 3 fórmulas para analizar lado a lado su porcentaje de proteína, fuentes cárnicas reales, si contienen granos (*Grain-Free*) y la relación calidad/precio antes de comprar.
+      </p>
+    </div>
+
+    <!-- Product Pickers Row -->
+    <div class="five-comparator-pickers-card">
+      <div class="five-picker-col">
+        <label for="picker-slot-1"><strong>Alimento 1 (Principal):</strong></label>
+        <select id="picker-slot-1" class="five-select" style="width:100%;">
+          {foodProducts.map((p) => (
+            <option value={p.id} selected={p.id === initialLeft.id}>
+              {p.name} ({p.brand}) — {p.format}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div class="five-picker-vs">VS</div>
+
+      <div class="five-picker-col">
+        <label for="picker-slot-2"><strong>Alimento 2 (Comparar con):</strong></label>
+        <select id="picker-slot-2" class="five-select" style="width:100%;">
+          {foodProducts.map((p) => (
+            <option value={p.id} selected={p.id === initialRight.id}>
+              {p.name} ({p.brand}) — {p.format}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div class="five-picker-vs">VS</div>
+
+      <div class="five-picker-col">
+        <label for="picker-slot-3"><strong>Alimento 3 (Opcional):</strong></label>
+        <select id="picker-slot-3" class="five-select" style="width:100%;">
+          <option value="">-- Ninguno (Comparar 2) --</option>
+          {foodProducts.map((p) => (
+            <option value={p.id}>
+              {p.name} ({p.brand}) — {p.format}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
+
+    <!-- Live Comparison Table -->
+    <div class="five-comparison-table-wrap" id="comparison-table-container">
+      <!-- Injected via script -->
+    </div>
+
+    <!-- Educational Banner on Reading Pet Food Labels -->
+    <div class="five-education-card" style="margin-top:40px; background:#faf8fb; border:1px solid #e5dde9; border-radius:18px; padding:24px;">
+      <h3 style="font-size:18px; font-weight:800; color:#111827; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+        <span>💡</span> ¿Cómo interpretar los ingredientes según el equipo veterinario de FIVE?
+      </h3>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:16px; font-size:13.5px; color:#4b5563; line-height:1.6;">
+        <div>
+          <strong style="color:#7025a8; display:block; margin-bottom:4px;">1. Regla del Primer Ingrediente:</strong>
+          Los ingredientes se ordenan por peso. El primer elemento debe ser carne fresca deshuesada o harina de carne deshidratada pura, nunca maíz, subproductos no especificados o trigo.
+        </div>
+        <div>
+          <strong style="color:#7025a8; display:block; margin-bottom:4px;">2. Fórmulas Grain-Free vs Con Granos:</strong>
+          Los alimentos libres de granos sustituyen el trigo y maíz por legumbres nobles (arvejas, garbanzos) o camote, ofreciendo una digestibilidad superior y previniendo alergias dérmicas.
+        </div>
+        <div>
+          <strong style="color:#7025a8; display:block; margin-bottom:4px;">3. Relación Proteína y Grasa:</strong>
+          En perros adultos activos, busca al menos 24-30% de proteína. En gatos (carnívoros estrictos), lo ideal es superar el 30-36% con taurina garantizada.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import { products, formatMoney } from '../data/pim/catalog';
+    import { defaultFoodNutrition, type FoodNutritionProfile } from '../data/pim/nutrition';
+
+    const slot1 = document.querySelector<HTMLSelectElement>('#picker-slot-1')!;
+    const slot2 = document.querySelector<HTMLSelectElement>('#picker-slot-2')!;
+    const slot3 = document.querySelector<HTMLSelectElement>('#picker-slot-3')!;
+    const container = document.querySelector<HTMLElement>('#comparison-table-container')!;
+
+    const renderComparison = () => {
+      const ids = [slot1.value, slot2.value, slot3.value].filter(Boolean);
+      const items = ids.map((id) => {
+        const prod = products.find((p) => p.id === id) || products[0];
+        const nut: FoodNutritionProfile = defaultFoodNutrition[id] || {
+          productId: prod.id,
+          brand: prod.brand,
+          name: prod.name,
+          pet: prod.pet === 'Gatos' ? 'Gatos' : 'Perros',
+          lifeStage: prod.lifeStage,
+          formatWeightKg: parseFloat(prod.format) || 10,
+          proteinPct: 28,
+          fatPct: 15,
+          fiberPct: 3.5,
+          moisturePct: 10,
+          grainFree: false,
+          firstFiveIngredients: ['Carne deshidratada', 'Arroz integral', 'Grasa animal', 'Pulpa de vegetales', 'Vitaminas y minerales'],
+          primaryProteinSource: 'Proteína animal balanceada',
+          hasProbiotics: true,
+          omega3_6: true,
+          qualityRating: 4,
+          caloricDensityKcalKg: 3700,
+          recommendationNote: 'Fórmula nutritiva adecuada para el consumo diario regular.'
+        };
+        const debitPrice = Math.round(prod.price * 1.05);
+        const pricePerKg = Math.round(prod.price / (nut.formatWeightKg || 1));
+        return { prod, nut, debitPrice, pricePerKg };
+      });
+
+      if (!items.length) return;
+
+      const numCols = items.length;
+
+      let html = `
+        <div class="five-comp-grid cols-${numCols}">
+          <!-- Header Product Cards -->
+          <div class="five-comp-row header-row">
+            <div class="five-comp-cell label-cell"><strong>Producto / Presentación</strong></div>
+            ${items.map(item => `
+              <div class="five-comp-cell product-head-cell">
+                <img src="${item.prod.image}" alt="${item.prod.name}" width="120" height="120" style="object-fit:contain; margin-bottom:8px;" />
+                <span class="five-product-brand">${item.prod.brand}®</span>
+                <strong style="font-size:15px; display:block; margin:4px 0;">${item.prod.name}</strong>
+                <span style="font-size:12px; color:#6b7280;">Formato: ${item.prod.format}</span>
+                <div style="margin-top:10px;">
+                  <strong style="color:#7025a8; font-size:18px;">${formatMoney(item.prod.price)}</strong>
+                  <span style="font-size:11px; display:block; color:#276717; font-weight:700;">Transferencia / Efectivo</span>
+                  <small style="color:#6b7280; font-size:11.5px;">Débito (+5%): ${formatMoney(item.debitPrice)}</small>
+                </div>
+                <button
+                  type="button"
+                  class="five-card-add-btn"
+                  data-add="${item.prod.id}"
+                  data-name="${item.prod.name}"
+                  data-price="${item.prod.price}"
+                  data-image="${item.prod.image}"
+                  style="width:100%; margin-top:12px; justify-content:center;"
+                >
+                  Agregar al Carro
+                </button>
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- Price per Kilo -->
+          <div class="five-comp-row">
+            <div class="five-comp-cell label-cell"><strong>Precio Estimado por Kilo</strong></div>
+            ${items.map(item => `
+              <div class="five-comp-cell highlight-cell">
+                <strong style="font-size:15px; color:#111827;">${formatMoney(item.pricePerKg)} / kg</strong>
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- Protein % -->
+          <div class="five-comp-row">
+            <div class="five-comp-cell label-cell">
+              <strong>Proteína Bruta (%)</strong>
+              <small style="display:block; color:#6b7280; font-size:11px;">Músculo y energía</small>
+            </div>
+            ${items.map(item => `
+              <div class="five-comp-cell">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <strong style="font-size:16px; color:#7025a8;">${item.nut.proteinPct}%</strong>
+                  <div class="five-comp-bar"><div class="five-comp-bar-fill" style="width:${Math.min(item.nut.proteinPct * 2.5, 100)}%;"></div></div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- Fat % -->
+          <div class="five-comp-row">
+            <div class="five-comp-cell label-cell"><strong>Grasa Bruta (%)</strong></div>
+            ${items.map(item => `
+              <div class="five-comp-cell">
+                <strong>${item.nut.fatPct}%</strong>
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- Grain-Free -->
+          <div class="five-comp-row">
+            <div class="five-comp-cell label-cell"><strong>Libre de Granos (Grain-Free)</strong></div>
+            ${items.map(item => `
+              <div class="five-comp-cell">
+                ${item.nut.grainFree ? `
+                  <span class="five-badge-pill green">✓ 100% Grain-Free</span>
+                ` : `
+                  <span class="five-badge-pill neutral">Contiene Granos Nobles</span>
+                `}
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- Primary Protein Source -->
+          <div class="five-comp-row">
+            <div class="five-comp-cell label-cell"><strong>Fuente Proteica Principal</strong></div>
+            ${items.map(item => `
+              <div class="five-comp-cell">
+                <strong style="color:#276717;">${item.nut.primaryProteinSource}</strong>
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- First 5 Ingredients -->
+          <div class="five-comp-row">
+            <div class="five-comp-cell label-cell">
+              <strong>Primeros 5 Ingredientes</strong>
+              <small style="display:block; color:#6b7280; font-size:11px;">Los de mayor concentración en peso</small>
+            </div>
+            ${items.map(item => `
+              <div class="five-comp-cell ingredients-list-cell">
+                <ol style="margin:0; padding-left:18px; font-size:12.5px; color:#374151; line-height:1.5;">
+                  ${item.nut.firstFiveIngredients.map(ing => `<li>${ing}</li>`).join('')}
+                </ol>
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- Probiotics & Omega -->
+          <div class="five-comp-row">
+            <div class="five-comp-cell label-cell"><strong>Aditivos Clave (Probióticos / Omega 3 y 6)</strong></div>
+            ${items.map(item => `
+              <div class="five-comp-cell">
+                <div style="display:flex; flex-direction:column; gap:4px; font-size:12px;">
+                  <span>${item.nut.hasProbiotics ? '✓ Probióticos activos' : '— Sin probióticos añadidos'}</span>
+                  <span>${item.nut.omega3_6 ? '✓ Ácidos grasos Omega 3 y 6' : '— Nivel estándar'}</span>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- Rating & Verdict -->
+          <div class="five-comp-row verdict-row">
+            <div class="five-comp-cell label-cell"><strong>Veredicto Nutricional FIVE</strong></div>
+            ${items.map(item => `
+              <div class="five-comp-cell" style="background:#faf8fb;">
+                <div style="color:#f59e0b; font-size:14px; margin-bottom:4px;">
+                  ${'★'.repeat(item.nut.qualityRating)}${'☆'.repeat(5 - item.nut.qualityRating)}
+                </div>
+                <small style="display:block; color:#495057; font-size:12px; line-height:1.4;">
+                  ${item.nut.recommendationNote}
+                </small>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+      container.innerHTML = html;
+    };
+
+    slot1.addEventListener('change', renderComparison);
+    slot2.addEventListener('change', renderComparison);
+    slot3.addEventListener('change', renderComparison);
+    renderComparison();
+  </script>
+</BaseLayout>
+
+<style>
+  .five-comparator-pickers-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  }
+
+  .five-picker-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .five-picker-col label {
+    font-size: 13px;
+    color: #374151;
+  }
+
+  .five-picker-vs {
+    font-size: 12px;
+    font-weight: 850;
+    color: #9ca3af;
+    background: #f3f4f6;
+    padding: 6px 10px;
+    border-radius: 50%;
+  }
+
+  .five-comparison-table-wrap {
+    overflow-x: auto;
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  }
+
+  .five-comp-grid {
+    display: grid;
+    min-width: 680px;
+  }
+
+  .five-comp-grid.cols-2 {
+    grid-template-columns: 240px 1fr 1fr;
+  }
+
+  .five-comp-grid.cols-3 {
+    grid-template-columns: 220px 1fr 1fr 1fr;
+  }
+
+  .five-comp-row {
+    display: contents;
+  }
+
+  .five-comp-cell {
+    padding: 16px;
+    border-bottom: 1px solid var(--border-subtle);
+    border-right: 1px solid var(--border-subtle);
+    font-size: 13.5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .five-comp-cell.label-cell {
+    background: #fdfcff;
+    font-size: 13px;
+    color: #1f2937;
+  }
+
+  .five-comp-cell.product-head-cell {
+    background: #ffffff;
+    text-align: center;
+    align-items: center;
+    padding-top: 24px;
+  }
+
+  .five-comp-cell.highlight-cell {
+    background: #f9fbf8;
+  }
+
+  .five-comp-bar {
+    flex: 1;
+    height: 8px;
+    background: #f3f4f6;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .five-comp-bar-fill {
+    height: 100%;
+    background: #7025a8;
+    border-radius: 4px;
+  }
+
+  .five-badge-pill {
+    display: inline-flex;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11.5px;
+    font-weight: 750;
+    width: fit-content;
+  }
+
+  .five-badge-pill.green {
+    background: #edf8e8;
+    color: #276717;
+  }
+
+  .five-badge-pill.neutral {
+    background: #f3f4f6;
+    color: #4b5563;
+  }
+
+  @media (max-width: 768px) {
+    .five-comparator-pickers-card {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .five-picker-vs {
+      text-align: center;
+      align-self: center;
+    }
+  }
+</style>

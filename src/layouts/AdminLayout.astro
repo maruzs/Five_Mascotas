@@ -4,7 +4,7 @@ import '../styles/admin.css';
 
 interface Props {
   title?: string;
-  activeNav?: 'dashboard' | 'pim' | 'cms' | 'categorias';
+  activeNav?: 'dashboard' | 'pim' | 'cms' | 'categorias' | 'despacho';
   breadcrumbTitle?: string;
 }
 
@@ -73,6 +73,16 @@ const {
           </svg>
           <span>Mega-Menú</span>
         </a>
+
+        <a href="/admin/despacho" class={`admin-nav-item ${activeNav === 'despacho' ? 'is-active' : ''}`}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="3" width="15" height="13"></rect>
+            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+          </svg>
+          <span>Tarifas Despacho</span>
+        </a>
       </nav>
 
       <div class="admin-sidebar-footer">
@@ -97,10 +107,20 @@ const {
           <strong>{breadcrumbTitle}</strong>
         </div>
 
-        <div class="admin-topbar-actions">
+        <div class="admin-topbar-actions" style="display:flex; align-items:center; gap:14px;">
           <div class="admin-status-pill">
             <span class="admin-status-dot"></span>
             <span>PIM Conectado</span>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="text-align:right;">
+              <strong id="admin-user-name" style="font-size:12.5px; display:block; color:#111827;">Admin</strong>
+              <small style="font-size:11px; color:#276717; font-weight:700;">Sesión Activa</small>
+            </div>
+            <button type="button" id="admin-logout-btn" class="admin-btn secondary" style="padding:5px 12px; font-size:12px;" title="Cerrar sesión">
+              Salir ⎋
+            </button>
           </div>
         </div>
       </header>
@@ -110,5 +130,40 @@ const {
         <slot />
       </main>
     </div>
+
+    <!-- Admin Authentication Guard & Logout Script -->
+    <script>
+      const checkAuth = async () => {
+        try {
+          const res = await fetch('/api/auth/me');
+          if (!res.ok) {
+            // Not authenticated, redirect to login
+            window.location.href = '/mi-cuenta?redirect=' + encodeURIComponent(window.location.pathname);
+            return;
+          }
+          const data = await res.json();
+          if (data?.user?.role !== 'admin') {
+            alert('Acceso restringido: Se requieren permisos de administrador.');
+            window.location.href = '/mi-cuenta';
+            return;
+          }
+          const nameEl = document.querySelector('#admin-user-name');
+          if (nameEl && data?.user?.name) {
+            nameEl.textContent = data.user.name;
+          }
+        } catch {
+          // If offline / static demo, permit local access
+        }
+      };
+
+      document.querySelector('#admin-logout-btn')?.addEventListener('click', async () => {
+        try {
+          await fetch('/api/auth/logout', { method: 'POST' });
+        } catch {}
+        window.location.href = '/mi-cuenta';
+      });
+
+      checkAuth();
+    </script>
   </body>
 </html>

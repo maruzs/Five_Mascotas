@@ -6,6 +6,8 @@ import Header from '../components/Header.astro';
 import MegaMenu from '../components/MegaMenu.astro';
 import Footer from '../components/Footer.astro';
 import CartDrawer from '../components/CartDrawer.astro';
+import QuickViewModal from '../components/QuickViewModal.astro';
+import CheckoutModal from '../components/CheckoutModal.astro';
 import MobileDrawer from '../components/MobileDrawer.astro';
 import MobileBottomNav from '../components/MobileBottomNav.astro';
 
@@ -54,6 +56,12 @@ const currentPath = Astro.url.pathname;
 
     <!-- Shopping Cart Modal / Drawer -->
     <CartDrawer />
+
+    <!-- Quick View Product Modal -->
+    <QuickViewModal />
+
+    <!-- Checkout Modal Step-by-Step with QR -->
+    <CheckoutModal />
 
     <!-- Mobile Navigation Drawer -->
     <MobileDrawer />

@@ -3,10 +3,10 @@ import type { NavigationCategory, AnnouncementTicker, PromoBanner, HeroSlide } f
 export const announcementTickers: AnnouncementTicker[] = [
   {
     id: 'ticker-1',
-    text: '¡10% dto. en tu primera compra web!',
-    couponCode: 'PRIMERA10',
-    couponText: 'Usa el código PRIMERA10',
-    extraInfo: 'Despacho rápido a todo Santiago · Horario tienda Lun-Sáb 10:00 a 20:00',
+    text: '¡Despacho plano a todo Talca por $1.500!',
+    couponCode: 'TALCA1500',
+    couponText: 'Repartos hoy desde 15:00',
+    extraInfo: 'Compras hasta las 14:00 se entregan el mismo día · Pagos con Transferencia y Débito (+5%)',
     active: true,
     order: 1,
   },
@@ -254,6 +254,12 @@ export const navigationCategories: NavigationCategory[] = [
     name: 'Ofertas',
     slug: 'ofertas',
     href: '/ofertas',
+    hasDropdown: false,
+  },
+  {
+    name: 'Comparador',
+    slug: 'comparador',
+    href: '/comparador',
     hasDropdown: false,
   },
   {

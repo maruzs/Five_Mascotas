@@ -1,0 +1,128 @@
+---
+// QuickViewModal.astro
+// Modal emergente interactivo para ver detalles, cambiar imágenes, precio dual y calcular despacho de cualquier producto sin recargar la página.
+import { formatMoney } from '../data/pim/catalog';
+import { defaultShippingRates } from '../data/pim/shipping';
+---
+
+<dialog id="five-quickview-modal" class="five-quickview-dialog" aria-labelledby="qv-title">
+  <div class="five-quickview-card">
+    <button type="button" class="five-quickview-close" data-qv-close aria-label="Cerrar vista rápida">&times;</button>
+
+    <div class="five-quickview-grid">
+      <!-- Image Gallery Column -->
+      <div class="five-quickview-gallery">
+        <div class="five-quickview-main-image-wrap">
+          <span id="qv-discount-badge" class="five-discount-pill five-qv-badge" hidden>-0%</span>
+          <img id="qv-main-image" src="/five-mascotas/alimento-0.svg" alt="Imagen producto" width="380" height="380" />
+        </div>
+
+        <div class="five-quickview-thumbs" id="qv-thumbs-container">
+          <!-- Dynamically populated or switchable -->
+          <button type="button" class="five-qv-thumb is-active" data-thumb-idx="0">
+            <img id="qv-thumb-0" src="/five-mascotas/alimento-0.svg" alt="Vista 1" />
+          </button>
+          <button type="button" class="five-qv-thumb" data-thumb-idx="1">
+            <img id="qv-thumb-1" src="/demos/miga/plato.svg" alt="Vista 2" />
+          </button>
+          <button type="button" class="five-qv-thumb" data-thumb-idx="2">
+            <img id="qv-thumb-2" src="/five-mascotas/botiquin.svg" alt="Vista 3" />
+          </button>
+        </div>
+      </div>
+
+      <!-- Info & Actions Column -->
+      <div class="five-quickview-info">
+        <div class="five-quickview-header">
+          <span id="qv-brand" class="five-pdp-brand-tag">MARCA®</span>
+          <h2 id="qv-title" class="five-quickview-title">Nombre del Producto</h2>
+          <span id="qv-detail" class="five-quickview-detail">Detalle y formato</span>
+          <div class="five-product-sku-row" style="margin-top:6px;">
+            <span id="qv-sku" class="five-sku-text">ID 00001</span>
+            <span class="five-stock-badge">✓ Stock disponible para envío hoy</span>
+          </div>
+        </div>
+
+        <!-- Dual Pricing Block (Idéntico a foto de referencia física) -->
+        <div class="five-pdp-pricing-card" style="margin-block:14px 18px; padding:14px;">
+          <!-- Primary: Transferencia / Efectivo -->
+          <div class="five-pdp-price-row primary">
+            <div>
+              <strong id="qv-price-primary" class="five-pdp-main-price" style="font-size:22px;">$0</strong>
+              <span class="five-price-type-label">Transferencia / Efectivo</span>
+            </div>
+            <span class="five-badge-best-price">Mejor Precio</span>
+          </div>
+
+          <!-- Secondary: Débito (+5%) -->
+          <div class="five-pdp-price-row secondary" style="margin-top:8px;">
+            <div>
+              <strong id="qv-price-debit" class="five-pdp-debit-price" style="font-size:16px;">$0</strong>
+              <span class="five-price-type-sublabel">Tarjeta Débito (+5%)</span>
+            </div>
+            <small style="color:#6c757d; font-size:11px;">Redcompra / Webpay</small>
+          </div>
+        </div>
+
+        <!-- Format & Info -->
+        <div style="margin-bottom:16px;">
+          <label style="font-size:12px; font-weight:750; color:#374151; display:block; margin-bottom:6px;">
+            Formato: <strong id="qv-format-badge" style="color:#7025a8;">15 KG</strong>
+          </label>
+          <div class="five-pdp-format-pills">
+            <button type="button" class="five-format-pill is-active" id="qv-format-btn">Estándar</button>
+            <button type="button" class="five-format-pill">Formato Ahorro</button>
+          </div>
+        </div>
+
+        <!-- Add to cart row -->
+        <div class="five-pdp-actions-row" style="margin-bottom:18px;">
+          <div class="five-pdp-qty-control">
+            <button type="button" id="qv-qty-minus" aria-label="Menos">-</button>
+            <input type="number" id="qv-qty-input" value="1" min="1" max="10" readonly />
+            <button type="button" id="qv-qty-plus" aria-label="Más">+</button>
+          </div>
+
+          <button type="button" class="five-card-add-btn five-pdp-buy-btn" id="qv-add-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span>Agregar al Carrito</span>
+          </button>
+        </div>
+
+        <!-- Flat shipping quick check -->
+        <div class="five-pdp-shipping-box" style="padding:14px; border-radius:12px; margin-bottom:14px;">
+          <div class="five-pdp-ship-head" style="margin-bottom:8px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="1" y="3" width="15" height="13"></rect>
+              <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+              <circle cx="5.5" cy="18.5" r="2.5"></circle>
+              <circle cx="18.5" cy="18.5" r="2.5"></circle>
+            </svg>
+            <div>
+              <strong style="font-size:13px;">Despacho rápido según tu ciudad</strong>
+              <small id="qv-ship-city-note">Tarifa plana seleccionable</small>
+            </div>
+          </div>
+          <select id="qv-city-select" class="five-select" style="width:100%; font-size:12px; padding:6px 10px;">
+            {defaultShippingRates.map((r) => (
+              <option value={r.id} selected={r.isDefault} data-price={r.price} data-note={r.deliveryNote}>
+                {r.city} — {formatMoney(r.price)}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <!-- Full page link -->
+        <div style="text-align:right;">
+          <a id="qv-full-link" href="/producto/prod-0" class="five-text-btn" style="font-weight:700; color:#7025a8; font-size:12.5px;">
+            Ver ficha técnica completa y nutricional ↗
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</dialog>

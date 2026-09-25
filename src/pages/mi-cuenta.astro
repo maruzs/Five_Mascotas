@@ -1,0 +1,394 @@
+---
+// src/pages/mi-cuenta.astro
+// Portal Unificado de Usuario: Inicio de Sesión, Registro, Historial de Pedidos y Acceso de Administradores
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Mi Cuenta — FIVE Mascotas"
+  description="Inicia sesión o regístrate en FIVE Mascotas para revisar tus compras anteriores, estado de pedidos activos y datos de entrega guardados."
+>
+  <div class="five-wrap" style="padding-block: 30px 70px;">
+    <!-- Breadcrumbs -->
+    <nav class="five-breadcrumbs" aria-label="Navegación">
+      <ol>
+        <li><a href="/">Inicio</a> <span class="five-crumb-separator">/</span></li>
+        <li><span aria-current="page">Mi Cuenta</span></li>
+      </ol>
+    </nav>
+
+    <!-- 1. AUTHENTICATED STATE VIEW (Client or Admin Portal) -->
+    <div id="auth-portal-view" hidden style="max-width:860px; margin:0 auto;">
+      <div class="five-account-header-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+          <div style="display:flex; align-items:center; gap:16px;">
+            <div class="five-avatar-circle">🐾</div>
+            <div>
+              <span id="portal-role-tag" class="five-pdp-brand-tag" style="font-size:11px; color:#7025a8;">Cliente FIVE</span>
+              <h1 id="portal-user-name" style="font-size:24px; font-weight:850; margin:4px 0 2px; color:#111827;">Hola, Usuario</h1>
+              <span id="portal-user-email" style="font-size:13px; color:#6b7280;">usuario@correo.cl</span>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:10px;">
+            <a href="/admin" id="portal-admin-link" class="five-button" style="background:#7025a8; font-size:13px; padding:10px 18px;" hidden>
+              ⚙️ Ir al Panel Admin
+            </a>
+            <button type="button" id="portal-logout-btn" class="five-card-add-btn" style="background:#f3f4f6; color:#374151; font-size:13px; padding:10px 16px;">
+              Cerrar Sesión ⎋
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Customer Tabs -->
+      <div style="margin-top:28px;">
+        <h2 style="font-size:18px; font-weight:850; margin-bottom:14px; color:#111827; display:flex; align-items:center; gap:8px;">
+          <span>📦</span> Mis Pedidos y Compras Recientes
+        </h2>
+
+        <div id="portal-orders-list" class="five-portal-orders-list">
+          <!-- Dynamically populated or empty message -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. GUEST LOGIN / REGISTER TABS (When not logged in) -->
+    <div id="auth-guest-view" style="max-width:480px; margin:0 auto;">
+      <div class="five-auth-card">
+        <!-- Brand Header -->
+        <div style="text-align:center; margin-bottom:20px;">
+          <span style="font-size:32px;">🔐</span>
+          <h1 style="font-size:24px; font-weight:850; margin:8px 0 4px; color:#111827;">Acceso a tu Cuenta</h1>
+          <p style="color:#6b7280; font-size:13px; margin:0;">
+            Ingresa a tu cuenta de cliente o al panel de administración de FIVE Mascotas.
+          </p>
+        </div>
+
+        <!-- Tab Switcher (Iniciar Sesión vs Crear Cuenta) -->
+        <div class="five-auth-tabs">
+          <button type="button" id="tab-btn-login" class="five-auth-tab is-active">Iniciar Sesión</button>
+          <button type="button" id="tab-btn-register" class="five-auth-tab">Crear Cuenta</button>
+        </div>
+
+        <!-- Alert messages -->
+        <div id="auth-alert" class="five-cart-notice" hidden style="margin-bottom:14px;"></div>
+
+        <!-- Form 1: Iniciar Sesión -->
+        <form id="form-login" style="display:flex; flex-direction:column; gap:14px;">
+          <div>
+            <label for="login-email" class="five-label">Correo Electrónico *</label>
+            <input type="email" id="login-email" class="five-input" required placeholder="tu@correo.cl o admin@fivemascotas.cl" autocomplete="username" />
+          </div>
+
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <label for="login-pass" class="five-label">Contraseña *</label>
+            </div>
+            <input type="password" id="login-pass" class="five-input" required placeholder="Tu contraseña segura" autocomplete="current-password" />
+          </div>
+
+          <button type="submit" id="login-submit-btn" class="five-button" style="width:100%; justify-content:center; padding:12px; margin-top:6px; font-size:14px;">
+            Ingresar a mi Cuenta ➔
+          </button>
+
+          <!-- Admin Quick Demo Hint -->
+          <div style="background:#fdfcff; border:1px dashed #d8b4fe; border-radius:10px; padding:10px 14px; font-size:11.5px; color:#6b21a8; margin-top:8px;">
+            🔑 <strong>Acceso Administrador:</strong><br />
+            Usuario: <code>admin@fivemascotas.cl</code><br />
+            Contraseña: <code>Five2026!Mascotas</code>
+          </div>
+        </form>
+
+        <!-- Form 2: Registro de Cliente -->
+        <form id="form-register" hidden style="display:flex; flex-direction:column; gap:14px;">
+          <div>
+            <label for="reg-name" class="five-label">Nombre Completo *</label>
+            <input type="text" id="reg-name" class="five-input" required placeholder="ej: Valentina Rojas" />
+          </div>
+
+          <div>
+            <label for="reg-email" class="five-label">Correo Electrónico *</label>
+            <input type="email" id="reg-email" class="five-input" required placeholder="tu@correo.cl" autocomplete="email" />
+          </div>
+
+          <div>
+            <label for="reg-phone" class="five-label">Teléfono WhatsApp *</label>
+            <input type="tel" id="reg-phone" class="five-input" required placeholder="+56 9 1234 5678" />
+          </div>
+
+          <div>
+            <label for="reg-pass" class="five-label">Contraseña (Mínimo 6 caracteres) *</label>
+            <input type="password" id="reg-pass" class="five-input" required minlength="6" placeholder="Crea tu contraseña" autocomplete="new-password" />
+          </div>
+
+          <button type="submit" id="reg-submit-btn" class="five-button" style="width:100%; justify-content:center; padding:12px; margin-top:6px; font-size:14px; background:#276717;">
+            Registrarme y Comenzar ➔
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import { AdminStoreService } from '../scripts/admin-store';
+    import { formatMoney } from '../data/pim/catalog';
+
+    const guestView = document.querySelector<HTMLElement>('#auth-guest-view')!;
+    const portalView = document.querySelector<HTMLElement>('#auth-portal-view')!;
+
+    const tabLogin = document.querySelector<HTMLButtonElement>('#tab-btn-login')!;
+    const tabRegister = document.querySelector<HTMLButtonElement>('#tab-btn-register')!;
+    const formLogin = document.querySelector<HTMLFormElement>('#form-login')!;
+    const formRegister = document.querySelector<HTMLFormElement>('#form-register')!;
+    const alertBox = document.querySelector<HTMLElement>('#auth-alert')!;
+
+    // Portal elements
+    const portalName = document.querySelector<HTMLElement>('#portal-user-name')!;
+    const portalEmail = document.querySelector<HTMLElement>('#portal-user-email')!;
+    const portalRole = document.querySelector<HTMLElement>('#portal-role-tag')!;
+    const adminLink = document.querySelector<HTMLElement>('#portal-admin-link')!;
+    const logoutBtn = document.querySelector<HTMLButtonElement>('#portal-logout-btn')!;
+    const ordersList = document.querySelector<HTMLElement>('#portal-orders-list')!;
+
+    const showAlert = (msg: string, isError = true) => {
+      alertBox.textContent = msg;
+      alertBox.style.background = isError ? '#fdeeed' : '#edf8e8';
+      alertBox.style.color = isError ? '#c0392b' : '#276717';
+      alertBox.style.borderColor = isError ? '#f5c6cb' : '#cce9c2';
+      alertBox.hidden = false;
+    };
+
+    // Tab switching
+    tabLogin.addEventListener('click', () => {
+      tabLogin.classList.add('is-active');
+      tabRegister.classList.remove('is-active');
+      formLogin.hidden = false;
+      formRegister.hidden = true;
+      alertBox.hidden = true;
+    });
+
+    tabRegister.addEventListener('click', () => {
+      tabRegister.classList.add('is-active');
+      tabLogin.classList.remove('is-active');
+      formLogin.hidden = true;
+      formRegister.hidden = false;
+      alertBox.hidden = true;
+    });
+
+    // Render Portal with orders
+    const renderPortal = (user: any) => {
+      guestView.hidden = true;
+      portalView.hidden = false;
+
+      portalName.textContent = `Hola, ${user.name}`;
+      portalEmail.textContent = user.email;
+      portalRole.textContent = user.role === 'admin' ? '🛡️ Administrador del Sistema' : '🐾 Cliente FIVE';
+
+      if (user.role === 'admin') {
+        adminLink.hidden = false;
+      } else {
+        adminLink.hidden = true;
+      }
+
+      // Load user orders
+      const allOrders = AdminStoreService.getOrders();
+      const userOrders = allOrders.filter(
+        (o) => (o.email && o.email.toLowerCase() === user.email.toLowerCase()) || user.role === 'admin'
+      );
+
+      if (!userOrders.length) {
+        ordersList.innerHTML = `
+          <div class="five-empty-state" style="padding:28px; background:#ffffff; border:1px solid var(--border-color); border-radius:14px;">
+            <p style="color:#6b7280; font-size:13.5px; margin:0 0 12px;">Aún no tienes pedidos registrados con esta cuenta.</p>
+            <a href="/alimentos" class="five-button" style="font-size:12.5px; padding:8px 16px;">Explorar Catálogo ➔</a>
+          </div>
+        `;
+      } else {
+        ordersList.innerHTML = userOrders.map((o) => `
+          <div class="five-order-row-item">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+              <div>
+                <strong style="color:#7025a8; font-family:monospace; font-size:16px;">${o.code}</strong>
+                <span style="display:block; font-size:11.5px; color:#6b7280;">Fecha: ${new Date(o.createdAt || Date.now()).toLocaleDateString('es-CL')}</span>
+              </div>
+              <span class="five-badge-pill green" style="font-size:11px;">
+                ● ${o.status || 'Recibido'}
+              </span>
+            </div>
+
+            <div style="font-size:13px; color:#374151; margin-bottom:8px;">
+              ${(o.items || []).map((it: any) => `${it.quantity}x ${it.name}`).join(' · ')}
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid #f3f4f6; padding-top:8px;">
+              <span style="font-size:13.5px; font-weight:800; color:#276717;">Total: ${formatMoney(o.totalTransfer || 0)}</span>
+              <a href="/rastreo?codigo=${o.code}" class="five-text-btn" style="font-weight:750; color:#7025a8; font-size:12px;">
+                Ver Seguimiento ↗
+              </a>
+            </div>
+          </div>
+        `).join('');
+      }
+    };
+
+    // Check existing session on load
+    const initSession = async () => {
+      try {
+        const res = await fetch('/api/auth/me');
+        if (res.ok) {
+          const data = await res.json();
+          if (data?.user) {
+            renderPortal(data.user);
+            return;
+          }
+        }
+      } catch {}
+      guestView.hidden = false;
+      portalView.hidden = true;
+    };
+
+    // Submit Login
+    formLogin.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = (document.querySelector('#login-email') as HTMLInputElement).value;
+      const password = (document.querySelector('#login-pass') as HTMLInputElement).value;
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          showAlert(data.error || 'Credenciales incorrectas');
+          return;
+        }
+
+        // Check if there was a redirect query param
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirect = urlParams.get('redirect');
+        if (redirect && (data.user.role === 'admin' || !redirect.startsWith('/admin'))) {
+          window.location.href = redirect;
+          return;
+        }
+
+        renderPortal(data.user);
+      } catch (err) {
+        showAlert('Error de conexión con el servidor de autenticación');
+      }
+    });
+
+    // Submit Register
+    formRegister.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = (document.querySelector('#reg-name') as HTMLInputElement).value;
+      const email = (document.querySelector('#reg-email') as HTMLInputElement).value;
+      const phone = (document.querySelector('#reg-phone') as HTMLInputElement).value;
+      const password = (document.querySelector('#reg-pass') as HTMLInputElement).value;
+
+      try {
+        const res = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, phone, password }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          showAlert(data.error || 'Error al crear la cuenta');
+          return;
+        }
+        renderPortal(data.user);
+      } catch (err) {
+        showAlert('Error al procesar el registro');
+      }
+    });
+
+    // Logout
+    logoutBtn?.addEventListener('click', async () => {
+      try {
+        await fetch('/api/auth/logout', { method: 'POST' });
+      } catch {}
+      window.location.reload();
+    });
+
+    initSession();
+  </script>
+</BaseLayout>
+
+<style>
+  .five-auth-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 30px 28px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  }
+
+  .five-auth-tabs {
+    display: flex;
+    background: #f3f4f6;
+    border-radius: 10px;
+    padding: 4px;
+    gap: 4px;
+    margin-bottom: 20px;
+  }
+
+  .five-auth-tab {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .five-auth-tab.is-active {
+    background: #ffffff;
+    color: #7025a8;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  }
+
+  .five-account-header-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  }
+
+  .five-avatar-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #f3e8ff;
+    font-size: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .five-portal-orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .five-order-row-item {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 16px 20px;
+    transition: transform 0.15s;
+  }
+
+  .five-order-row-item:hover {
+    border-color: #d8b4fe;
+    transform: translateY(-1px);
+  }
+</style>

@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import fsp from 'node:fs/promises';
 import path from 'node:path';
 import zlib from 'node:zlib';
+import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -19,6 +20,10 @@ if (!fs.existsSync(dataDir)) {
 
 const cmsFilePath = path.join(dataDir, 'cms.json');
 const pimFilePath = path.join(dataDir, 'pim.json');
+const usersFilePath = path.join(dataDir, 'users.json');
+
+// In-memory session store (sessionId -> { userId, email, role, name, expiresAt })
+const sessionStore = new Map();
 
 // MIME types dictionary
 const MIME_TYPES = {
@@ -59,6 +64,46 @@ const getDefaultCms = () => ({
 const getDefaultPim = () => ({
   products: [...defaultProducts],
 });
+
+// Cryptographic Password Hashing using Scrypt (Argon2 / Scrypt standard)
+const hashPassword = (password) => {
+  return new Promise((resolve, reject) => {
+    const salt = crypto.randomBytes(16).toString('hex');
+    crypto.scrypt(password, salt, 64, (err, derivedKey) => {
+      if (err) return reject(err);
+      resolve(`${salt}:${derivedKey.toString('hex')}`);
+    });
+  });
+};
+
+const verifyPassword = (password, combined) => {
+  return new Promise((resolve, reject) => {
+    const [salt, key] = (combined || '').split(':');
+    if (!salt || !key) return resolve(false);
+    crypto.scrypt(password, salt, 64, (err, derivedKey) => {
+      if (err) return reject(err);
+      const keyBuffer = Buffer.from(key, 'hex');
+      resolve(crypto.timingSafeEqual(keyBuffer, derivedKey));
+    });
+  });
+};
+
+const getDefaultUsers = async () => {
+  // Pre-seed default admin user (fiveadmin / Five2026!Mascotas)
+  const adminPasswordHash = await hashPassword('Five2026!Mascotas');
+  return {
+    users: [
+      {
+        id: 'usr-admin-01',
+        email: 'admin@fivemascotas.cl',
+        passwordHash: adminPasswordHash,
+        name: 'Administrador FIVE',
+        role: 'admin',
+        createdAt: new Date().toISOString(),
+      },
+    ],
+  };
+};
 
 // Read / Write helpers
 const readJsonFile = async (filePath, defaultFn) => {
@@ -201,6 +246,190 @@ const server = http.createServer(async (req, res) => {
 
     res.statusCode = 405;
     res.end(JSON.stringify({ ok: false, error: 'Method Not Allowed' }));
+    return;
+  }
+
+  // Helper to parse cookies from request header
+  const getCookies = (req) => {
+    const header = req.headers.cookie || '';
+    const cookies = {};
+    header.split(';').forEach((pair) => {
+      const parts = pair.split('=');
+      const name = parts[0]?.trim();
+      const val = parts.slice(1).join('=').trim();
+      if (name) cookies[name] = decodeURIComponent(val);
+    });
+    return cookies;
+  };
+
+  // Helper to get session from cookie
+  const getSessionFromReq = (req) => {
+    const cookies = getCookies(req);
+    const sid = cookies['five_session'];
+    if (!sid) return null;
+    const session = sessionStore.get(sid);
+    if (!session) return null;
+    if (session.expiresAt < Date.now()) {
+      sessionStore.delete(sid);
+      return null;
+    }
+    return session;
+  };
+
+  // API ROUTE: /api/auth
+  if (pathname.startsWith('/api/auth/')) {
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+
+    const authAction = pathname.replace('/api/auth/', '');
+
+    // /api/auth/login
+    if (authAction === 'login' && req.method === 'POST') {
+      try {
+        const body = await parseBody(req);
+        const email = (body.email || '').trim().toLowerCase();
+        const password = body.password || '';
+
+        if (!email || !password) {
+          res.statusCode = 400;
+          res.end(JSON.stringify({ ok: false, error: 'Correo y contraseña son requeridos' }));
+          return;
+        }
+
+        const data = await readJsonFile(usersFilePath, getDefaultUsers);
+        const user = data.users.find((u) => u.email.toLowerCase() === email);
+
+        if (!user) {
+          res.statusCode = 401;
+          res.end(JSON.stringify({ ok: false, error: 'Credenciales inválidas' }));
+          return;
+        }
+
+        const valid = await verifyPassword(password, user.passwordHash);
+        if (!valid) {
+          res.statusCode = 401;
+          res.end(JSON.stringify({ ok: false, error: 'Credenciales inválidas' }));
+          return;
+        }
+
+        // Generate session
+        const sessionId = crypto.randomBytes(32).toString('hex');
+        const sessionData = {
+          userId: user.id,
+          email: user.email,
+          name: user.name,
+          role: user.role,
+          expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
+        };
+        sessionStore.set(sessionId, sessionData);
+
+        // Set HttpOnly Cookie (In compliance with AppSec rules)
+        const isProd = process.env.NODE_ENV === 'production';
+        const cookieStr = `five_session=${sessionId}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800${isProd ? '; Secure' : ''}`;
+        res.setHeader('Set-Cookie', cookieStr);
+
+        res.statusCode = 200;
+        res.end(JSON.stringify({
+          ok: true,
+          user: { id: user.id, email: user.email, name: user.name, role: user.role },
+        }));
+      } catch (err) {
+        res.statusCode = 500;
+        res.end(JSON.stringify({ ok: false, error: err.message }));
+      }
+      return;
+    }
+
+    // /api/auth/register (Client registration)
+    if (authAction === 'register' && req.method === 'POST') {
+      try {
+        const body = await parseBody(req);
+        const email = (body.email || '').trim().toLowerCase();
+        const password = body.password || '';
+        const name = (body.name || '').trim();
+        const phone = (body.phone || '').trim();
+
+        if (!email || !password || password.length < 6) {
+          res.statusCode = 400;
+          res.end(JSON.stringify({ ok: false, error: 'Ingresa un correo válido y contraseña de al menos 6 caracteres' }));
+          return;
+        }
+
+        const data = await readJsonFile(usersFilePath, getDefaultUsers);
+        if (data.users.some((u) => u.email.toLowerCase() === email)) {
+          res.statusCode = 409;
+          res.end(JSON.stringify({ ok: false, error: 'Este correo ya se encuentra registrado' }));
+          return;
+        }
+
+        const passwordHash = await hashPassword(password);
+        const newUser = {
+          id: `usr-${Date.now()}`,
+          email,
+          passwordHash,
+          name: name || email.split('@')[0],
+          phone: phone || '',
+          role: 'client',
+          createdAt: new Date().toISOString(),
+        };
+        data.users.push(newUser);
+        await writeJsonFile(usersFilePath, data);
+
+        // Auto login session
+        const sessionId = crypto.randomBytes(32).toString('hex');
+        sessionStore.set(sessionId, {
+          userId: newUser.id,
+          email: newUser.email,
+          name: newUser.name,
+          role: newUser.role,
+          expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        });
+
+        const isProd = process.env.NODE_ENV === 'production';
+        res.setHeader('Set-Cookie', `five_session=${sessionId}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800${isProd ? '; Secure' : ''}`);
+
+        res.statusCode = 201;
+        res.end(JSON.stringify({
+          ok: true,
+          user: { id: newUser.id, email: newUser.email, name: newUser.name, role: newUser.role },
+        }));
+      } catch (err) {
+        res.statusCode = 500;
+        res.end(JSON.stringify({ ok: false, error: err.message }));
+      }
+      return;
+    }
+
+    // /api/auth/me (Check active session)
+    if (authAction === 'me' && req.method === 'GET') {
+      const session = getSessionFromReq(req);
+      if (!session) {
+        res.statusCode = 401;
+        res.end(JSON.stringify({ ok: false, user: null }));
+        return;
+      }
+      res.statusCode = 200;
+      res.end(JSON.stringify({
+        ok: true,
+        user: { id: session.userId, email: session.email, name: session.name, role: session.role },
+      }));
+      return;
+    }
+
+    // /api/auth/logout
+    if (authAction === 'logout' && (req.method === 'POST' || req.method === 'GET')) {
+      const cookies = getCookies(req);
+      const sid = cookies['five_session'];
+      if (sid) sessionStore.delete(sid);
+
+      res.setHeader('Set-Cookie', 'five_session=; Path=/; HttpOnly; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT');
+      res.statusCode = 200;
+      res.end(JSON.stringify({ ok: true }));
+      return;
+    }
+
+    res.statusCode = 404;
+    res.end(JSON.stringify({ ok: false, error: 'Auth action not found' }));
     return;
   }
 

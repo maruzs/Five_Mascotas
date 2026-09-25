@@ -1075,62 +1075,426 @@ img {
 
 .five-product-title {
   font-size: 14.5px;
-  font-weight: 700;
+  font-weight: 750;
   line-height: 1.35;
-  margin: 6px 0;
-  min-height: 40px;
+  margin: 4px 0 2px;
+  min-height: 38px;
   color: var(--text-main);
 }
 
+.five-product-title a:hover {
+  color: var(--primary);
+}
+
 .five-product-meta {
-  font-size: 12px;
+  font-size: 11.5px;
   color: var(--text-muted);
-  margin-bottom: 14px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* Sku and Stock Row (User Reference Image) */
+.five-product-sku-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #6c757d;
+  margin-bottom: 6px;
+}
+
+.five-sku-text {
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.five-stock-badge {
+  color: #1e824c;
+  font-weight: 700;
+}
+
+/* Discount and Old Price Row (User Reference Image) */
+.five-product-discount-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 20px;
+  margin-bottom: 4px;
+}
+
+.five-discount-pill {
+  background: #dbeafe;
+  color: #1e40af;
+  font-size: 11.5px;
+  font-weight: 850;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.2px;
+}
+
+.five-old-price {
+  font-size: 13px;
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+.five-old-price-spacer {
+  height: 1px;
+}
+
+/* Dual Pricing Block (User Reference Image: Transferencia vs Débito) */
+.five-dual-pricing-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-block: 6px 12px;
+}
+
+.five-primary-price-group {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.five-price-hero {
+  font-size: 22px;
+  font-weight: 900;
+  color: #111827;
+  letter-spacing: -0.6px;
+}
+
+.five-price-type-label {
+  font-size: 11.5px;
+  font-weight: 650;
+  color: #374151;
+  margin-top: 2px;
+}
+
+.five-secondary-price-group {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+  margin-top: 4px;
+}
+
+.five-price-debit {
+  font-size: 15px;
+  font-weight: 800;
+  color: #4b5563;
+}
+
+.five-price-type-sublabel {
+  font-size: 10.5px;
+  color: #6b7280;
+  margin-top: 1px;
 }
 
 .five-product-bottom-row {
   margin-top: auto;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.five-product-pricing {
-  display: flex;
-  flex-direction: column;
-}
-
-.five-old-price {
-  font-size: 11.5px;
-  color: var(--text-muted);
-}
-
-.five-current-price {
-  font-size: 18px;
-  font-weight: 850;
-  color: var(--text-main);
-  letter-spacing: -0.5px;
+  width: 100%;
 }
 
 .five-card-add-btn {
-  background: var(--primary);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #374151;
   color: #ffffff;
-  padding: 9px 18px;
+  padding: 10px 14px;
   border-radius: 8px;
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 13.5px;
+  font-weight: 750;
   transition: background 0.2s, transform 0.15s;
 }
 
 .five-card-add-btn:hover {
-  background: var(--primary-hover);
+  background: #1f2937;
   transform: translateY(-2px);
 }
 
 .five-card-add-btn.is-added {
   background: var(--lime);
   color: #111;
+}
+
+/* ==========================================================================
+   PRODUCT DETAIL PAGE (PDP) STYLING
+   ========================================================================== */
+.five-pdp-page {
+  padding-block: 24px 60px;
+}
+
+.five-pdp-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 50px;
+  align-items: start;
+  margin-top: 20px;
+}
+
+.five-pdp-main-image-box {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  height: 440px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 24px;
+}
+
+.five-pdp-main-image-box img {
+  max-height: 380px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s;
+}
+
+.five-pdp-discount-badge {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  background: #dbeafe;
+  color: #1e40af;
+  font-size: 12px;
+  font-weight: 850;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.five-pdp-thumbs-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.five-pdp-thumb-btn {
+  background: #ffffff;
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  padding: 6px;
+  width: 74px;
+  height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.five-pdp-thumb-btn.is-active, .five-pdp-thumb-btn:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.five-pdp-thumb-btn img {
+  max-height: 58px;
+  object-fit: contain;
+}
+
+.five-pdp-brand-tag {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.five-pdp-title {
+  font-size: clamp(26px, 3vw, 36px);
+  font-weight: 850;
+  letter-spacing: -1px;
+  line-height: 1.15;
+  margin: 6px 0 10px;
+}
+
+.five-pdp-detail-line {
+  font-size: 14.5px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.five-pdp-pricing-card {
+  background: #faf8fb;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-block: 16px 24px;
+}
+
+.five-pdp-price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.five-pdp-price-row.primary {
+  padding-bottom: 16px;
+  border-bottom: 1px dashed var(--border-color);
+  margin-bottom: 14px;
+}
+
+.five-pdp-main-price {
+  font-size: 34px;
+  font-weight: 900;
+  color: #111827;
+  display: block;
+}
+
+.five-badge-best-price {
+  background: var(--lime);
+  color: #111;
+  font-size: 11.5px;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.five-pdp-debit-price {
+  font-size: 20px;
+  font-weight: 850;
+  color: #4b5563;
+  display: block;
+}
+
+.five-pdp-options-section {
+  margin-bottom: 24px;
+}
+
+.five-pdp-option-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 750;
+  margin-bottom: 10px;
+}
+
+.five-pdp-format-pills {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.five-format-pill {
+  background: #ffffff;
+  border: 1.5px solid var(--border-color);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main);
+  transition: all 0.15s;
+}
+
+.five-format-pill.is-active, .five-format-pill:hover {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.five-pdp-actions-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.five-pdp-qty-control {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--border-color);
+  border-radius: 8px;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.five-pdp-qty-control button {
+  width: 40px;
+  height: 46px;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-main);
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.five-pdp-qty-control input {
+  width: 44px;
+  height: 46px;
+  border: 0;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.five-pdp-buy-btn {
+  flex: 1;
+  height: 48px;
+  font-size: 15px;
+  border-radius: 10px;
+}
+
+/* Shipping Box (Talca $1.500) */
+.five-pdp-shipping-box {
+  background: #edf8e8;
+  border: 1px solid #cce9c2;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.five-pdp-ship-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #276717;
+  margin-bottom: 12px;
+}
+
+.five-pdp-ship-head strong {
+  display: block;
+  font-size: 14px;
+}
+
+.five-pdp-ship-head small {
+  font-size: 11.5px;
+  color: #3b7425;
+}
+
+.five-pdp-ship-feedback {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12.5px;
+  color: #2d5d1c;
+  line-height: 1.5;
+  margin-top: 10px;
+}
+
+.five-ship-check {
+  font-weight: 900;
+  color: #276717;
+}
+
+.five-pdp-extra-info {
+  margin-top: 50px;
+  padding-top: 30px;
+  border-top: 1px solid var(--border-color);
+}
+
+@media (max-width: 900px) {
+  .five-pdp-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .five-pdp-main-image-box {
+    height: 320px;
+  }
 }
 
 /* Empty State */
@@ -2068,6 +2432,203 @@ img {
   .five-footer-grid {
     grid-template-columns: 1fr;
     gap: 24px;
+  }
+}
+
+/* ==========================================================================
+   QUICK VIEW MODAL & TRIGGER BUTTON
+   ========================================================================== */
+.five-card-quickview-btn {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 750;
+  color: #374151;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  transform: translateY(4px);
+  z-index: 2;
+}
+
+.five-product-card:hover .five-card-quickview-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.five-card-quickview-btn:hover {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+}
+
+@media (max-width: 768px) {
+  .five-card-quickview-btn {
+    opacity: 1;
+    transform: none;
+    padding: 5px 8px;
+    font-size: 10px;
+  }
+}
+
+.five-quickview-dialog {
+  width: min(860px, calc(100% - 32px));
+  max-height: 92vh;
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  padding: 0;
+  background: #ffffff;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.five-quickview-dialog::backdrop {
+  background: rgba(23, 12, 33, 0.65);
+  backdrop-filter: blur(4px);
+}
+
+.five-quickview-card {
+  position: relative;
+  padding: 28px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.five-quickview-close {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 24px;
+  line-height: 1;
+  color: #4b5563;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.15s;
+}
+
+.five-quickview-close:hover {
+  background: #e5e7eb;
+  color: #111827;
+  transform: scale(1.05);
+}
+
+.five-quickview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.five-quickview-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.five-quickview-main-image-wrap {
+  position: relative;
+  background: #f8f9fa;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.five-quickview-main-image-wrap img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.five-qv-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+}
+
+.five-quickview-thumbs {
+  display: flex;
+  gap: 10px;
+}
+
+.five-qv-thumb {
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+  border: 2px solid var(--border-color);
+  background: #ffffff;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.five-qv-thumb img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.five-qv-thumb.is-active,
+.five-qv-thumb:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.five-quickview-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.five-quickview-title {
+  font-size: 22px;
+  font-weight: 850;
+  line-height: 1.25;
+  margin: 4px 0 6px;
+  color: #111827;
+}
+
+.five-quickview-detail {
+  font-size: 13.5px;
+  color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+  .five-quickview-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .five-quickview-card {
+    padding: 20px 16px;
+  }
+  .five-quickview-main-image-wrap {
+    height: 240px;
   }
 }
 

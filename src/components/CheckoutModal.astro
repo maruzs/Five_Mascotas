@@ -1,0 +1,431 @@
+---
+// src/components/CheckoutModal.astro
+// Modal de Checkout interactivo paso a paso: Datos de entrega -> Pago Transferencia con QR + Datos Bancarios -> Generación de Código de Seguimiento.
+import { defaultBankAccount } from '../data/pim/bank';
+import { defaultShippingRates } from '../data/pim/shipping';
+import { formatMoney } from '../data/pim/catalog';
+---
+
+<dialog id="five-checkout-modal" class="five-checkout-dialog" aria-labelledby="chk-title">
+  <div class="five-checkout-card">
+    <!-- Header with Steps -->
+    <div class="five-checkout-head">
+      <div style="display:flex; align-items:center; justify-content:space-between;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:20px;">🛍️</span>
+          <h2 id="chk-title" style="font-size:18px; font-weight:850; margin:0; color:#111827;">Finalizar Compra FIVE</h2>
+        </div>
+        <button type="button" class="five-dialog-close" data-chk-close aria-label="Cerrar checkout">&times;</button>
+      </div>
+
+      <!-- Step Indicator Bar -->
+      <div class="five-chk-steps-bar" role="tablist">
+        <div class="five-chk-step is-active" id="chk-step-pill-1">
+          <span class="chk-step-num">1</span>
+          <span>Despacho</span>
+        </div>
+        <div class="chk-step-divider"></div>
+        <div class="five-chk-step" id="chk-step-pill-2">
+          <span class="chk-step-num">2</span>
+          <span>Pago & QR</span>
+        </div>
+        <div class="chk-step-divider"></div>
+        <div class="five-chk-step" id="chk-step-pill-3">
+          <span class="chk-step-num">3</span>
+          <span>Confirmación</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Body Container with 3 Steps -->
+    <div class="five-checkout-body">
+      <!-- ================= STEP 1: DESPACHO Y CONTACTO ================= -->
+      <div id="chk-step-1" class="five-chk-step-pane">
+        <h3 style="font-size:15px; font-weight:800; margin-bottom:12px; color:#111827;">1. Datos de Entrega y Contacto</h3>
+        <form id="chk-form-step1" style="display:flex; flex-direction:column; gap:12px;">
+          <div class="five-form-grid-2">
+            <div>
+              <label for="chk-name" class="five-label">Nombre y Apellido *</label>
+              <input type="text" id="chk-name" class="five-input" required placeholder="ej: Constanza Silva" />
+            </div>
+            <div>
+              <label for="chk-phone" class="five-label">Teléfono WhatsApp *</label>
+              <input type="tel" id="chk-phone" class="five-input" required placeholder="+56 9 1234 5678" />
+            </div>
+          </div>
+
+          <div class="five-form-grid-2">
+            <div>
+              <label for="chk-email" class="five-label">Correo Electrónico (opcional)</label>
+              <input type="email" id="chk-email" class="five-input" placeholder="tu@correo.cl" />
+            </div>
+            <div>
+              <label for="chk-city" class="five-label">Ciudad / Comuna de Despacho *</label>
+              <select id="chk-city" class="five-select" style="width:100%;" required>
+                {defaultShippingRates.map((r) => (
+                  <option value={r.id} selected={r.isDefault} data-price={r.price} data-city={r.city}>
+                    {r.city} — {formatMoney(r.price)}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label for="chk-address" class="five-label">Dirección de Entrega (Calle, Número, Depto/Casa) *</label>
+            <input type="text" id="chk-address" class="five-input" required placeholder="ej: Av. San Miguel 3420, Dpto 402" />
+          </div>
+
+          <div>
+            <label for="chk-notes" class="five-label">Instrucciones o Referencias de Entrega</label>
+            <textarea id="chk-notes" class="five-textarea" rows="2" placeholder="ej: Dejar en conserjería o llamar al citófono"></textarea>
+          </div>
+
+          <!-- Order Summary snippet -->
+          <div class="five-chk-mini-summary" id="chk-mini-summary">
+            <!-- Dynamically populated -->
+          </div>
+
+          <div style="display:flex; justify-content:space-between; margin-top:8px;">
+            <button type="button" class="five-text-btn" data-chk-close>Cancelar</button>
+            <button type="submit" class="five-button" style="padding:10px 24px;">
+              Continuar al Pago con Transferencia / QR ➔
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- ================= STEP 2: PAGO TRANSFERENCIA + QR ================= -->
+      <div id="chk-step-2" class="five-chk-step-pane" hidden>
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+          <h3 style="font-size:15px; font-weight:800; margin:0; color:#111827;">2. Pagar mediante Transferencia Bancaria</h3>
+          <span class="five-badge-pill green" style="font-size:11px;">★ Precio más conveniente</span>
+        </div>
+
+        <div class="five-qr-payment-grid">
+          <!-- QR Code Display Box -->
+          <div class="five-qr-box">
+            <div class="five-qr-code-canvas-wrap">
+              <!-- Dynamic QR Code generated via API / SVG -->
+              <img
+                id="chk-qr-image"
+                src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=FIVE%20Mascotas"
+                alt="Código QR para Transferencia Bancaria"
+                width="190"
+                height="190"
+                loading="eager"
+              />
+            </div>
+            <span class="five-qr-hint">📲 Escanea con tu cámara o app bancaria para obtener los datos</span>
+          </div>
+
+          <!-- Bank Details text card -->
+          <div class="five-bank-details-card">
+            <div class="five-bank-row">
+              <span class="five-bank-label">Banco:</span>
+              <strong id="chk-bank-name" class="five-bank-val">{defaultBankAccount.bankName}</strong>
+            </div>
+            <div class="five-bank-row">
+              <span class="five-bank-label">Tipo de Cuenta:</span>
+              <strong id="chk-bank-type" class="five-bank-val">{defaultBankAccount.accountType}</strong>
+            </div>
+            <div class="five-bank-row">
+              <span class="five-bank-label">Número de Cuenta:</span>
+              <strong id="chk-bank-number" class="five-bank-val" style="color:#7025a8; font-size:15px;">{defaultBankAccount.accountNumber}</strong>
+            </div>
+            <div class="five-bank-row">
+              <span class="five-bank-label">RUT:</span>
+              <strong id="chk-bank-rut" class="five-bank-val">{defaultBankAccount.holderRut}</strong>
+            </div>
+            <div class="five-bank-row">
+              <span class="five-bank-label">Titular:</span>
+              <strong id="chk-bank-holder" class="five-bank-val">{defaultBankAccount.holderName}</strong>
+            </div>
+            <div class="five-bank-row">
+              <span class="five-bank-label">Correo para Comprobante:</span>
+              <strong id="chk-bank-email" class="five-bank-val">{defaultBankAccount.email}</strong>
+            </div>
+            <div class="five-bank-row" style="border-top:1px dashed #d1d5db; padding-top:8px; margin-top:6px;">
+              <span class="five-bank-label" style="font-weight:800; color:#111827;">Monto Exacto:</span>
+              <strong id="chk-bank-amount" class="five-bank-val" style="font-size:17px; color:#276717;">$0</strong>
+            </div>
+
+            <button type="button" class="five-copy-data-btn" id="chk-copy-btn">
+              <span>📋 Copiar todos los datos de transferencia</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="five-cart-notice" style="margin-block:14px 10px; font-size:11.5px; background:#faf5ff; border:1px solid #e9d5ff; color:#6b21a8;">
+          💡 <strong>Nota:</strong> Una vez transferido, haz clic en "Confirmar Transferencia" para generar tu código de seguimiento y enviar tu comprobante a nuestro WhatsApp de atención.
+        </div>
+
+        <div style="display:flex; justify-content:space-between; margin-top:12px;">
+          <button type="button" class="five-text-btn" id="chk-back-to-step1">← Volver a Datos</button>
+          <button type="button" class="five-button" id="chk-confirm-pay-btn" style="background:#276717; padding:10px 24px;">
+            ✓ Ya Transferí / Confirmar Pedido ➔
+          </button>
+        </div>
+      </div>
+
+      <!-- ================= STEP 3: CONFIRMACIÓN Y CÓDIGO DE SEGUIMIENTO ================= -->
+      <div id="chk-step-3" class="five-chk-step-pane" hidden>
+        <div style="text-align:center; padding:10px 0 16px;">
+          <div style="font-size:42px; margin-bottom:8px;">🎉</div>
+          <h3 style="font-size:20px; font-weight:850; color:#111827; margin:0 0 6px;">¡Tu pedido ha sido registrado con éxito!</h3>
+          <p style="color:#4b5563; font-size:13.5px; margin:0;">
+            Hemos generado tu orden y reservado tu compra. Guarda tu código de seguimiento:
+          </p>
+
+          <!-- Tracking Code Hero Box -->
+          <div class="five-tracking-code-hero">
+            <span style="font-size:11px; text-transform:uppercase; letter-spacing:0.8px; color:#6b7280; font-weight:700;">Código de Rastreo Oficial</span>
+            <strong id="chk-tracking-code" class="five-tracking-code-text">FIVE-TRK-8492</strong>
+            <small style="color:#276717; font-weight:600; font-size:11.5px;">Estado: 🕒 Pendiente de confirmación de transferencia</small>
+          </div>
+
+          <!-- WhatsApp Verification Button -->
+          <div style="max-width:440px; margin:18px auto 0;">
+            <a id="chk-whatsapp-proof-btn" href="#" target="_blank" rel="noopener noreferrer" class="five-button" style="background:#25d366; color:#ffffff; width:100%; justify-content:center; padding:12px 18px; font-size:14px; box-shadow:0 4px 14px rgba(37,211,102,0.3);">
+              <span>📲 Enviar Comprobante por WhatsApp</span>
+            </a>
+            <small style="display:block; color:#6b7280; font-size:11px; margin-top:6px;">
+              Haz clic para abrir WhatsApp con el mensaje pre-llenado listo para adjuntar tu captura o comprobante.
+            </small>
+          </div>
+
+          <div style="margin-top:24px; display:flex; justify-content:center; gap:12px;">
+            <a href="/rastreo" id="chk-go-track-btn" class="five-text-btn" style="font-weight:750; color:#7025a8;">
+              🔍 Ir a Rastrear este Pedido
+            </a>
+            <span style="color:#d1d5db;">|</span>
+            <button type="button" class="five-text-btn" data-chk-close>
+              Continuar comprando
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .five-checkout-dialog {
+    width: min(720px, calc(100% - 24px));
+    max-height: 94vh;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 0;
+    background: #ffffff;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+  }
+
+  .five-checkout-dialog::backdrop {
+    background: rgba(23, 12, 33, 0.68);
+    backdrop-filter: blur(3px);
+  }
+
+  .five-checkout-card {
+    padding: 24px 28px;
+    max-height: 92vh;
+    overflow-y: auto;
+  }
+
+  .five-chk-steps-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-block: 16px 20px;
+    padding: 10px 16px;
+    background: #f9fafb;
+    border-radius: 12px;
+  }
+
+  .five-chk-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    font-weight: 750;
+    color: #9ca3af;
+  }
+
+  .five-chk-step.is-active {
+    color: #7025a8;
+  }
+
+  .chk-step-num {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    color: #4b5563;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 850;
+  }
+
+  .five-chk-step.is-active .chk-step-num {
+    background: #7025a8;
+    color: #ffffff;
+  }
+
+  .chk-step-divider {
+    flex: 1;
+    height: 2px;
+    background: #e5e7eb;
+    margin-inline: 12px;
+  }
+
+  .five-form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .five-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 750;
+    color: #374151;
+    margin-bottom: 4px;
+  }
+
+  .five-input, .five-textarea {
+    width: 100%;
+    border: 1.5px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: #111827;
+    background: #ffffff;
+    box-sizing: border-box;
+  }
+
+  .five-input:focus, .five-textarea:focus {
+    outline: none;
+    border-color: #7025a8;
+    box-shadow: 0 0 0 2px rgba(112, 37, 168, 0.15);
+  }
+
+  .five-chk-mini-summary {
+    background: #fdfcff;
+    border: 1px solid #ebdcf5;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    color: #4b5563;
+  }
+
+  .five-qr-payment-grid {
+    display: grid;
+    grid-template-columns: 210px 1fr;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .five-qr-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .five-qr-code-canvas-wrap {
+    background: #ffffff;
+    padding: 10px;
+    border: 1.5px solid var(--border-color);
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .five-qr-hint {
+    font-size: 11px;
+    color: #6b7280;
+    line-height: 1.35;
+  }
+
+  .five-bank-details-card {
+    background: #f9fafb;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .five-bank-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12.5px;
+  }
+
+  .five-bank-label {
+    color: #6b7280;
+  }
+
+  .five-bank-val {
+    color: #111827;
+  }
+
+  .five-copy-data-btn {
+    margin-top: 10px;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+  }
+
+  .five-copy-data-btn:hover {
+    border-color: #7025a8;
+    color: #7025a8;
+    background: #faf5ff;
+  }
+
+  .five-tracking-code-hero {
+    background: #f5f3ff;
+    border: 2px dashed #c084fc;
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin: 14px auto;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .five-tracking-code-text {
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: #7025a8;
+    font-family: monospace;
+  }
+
+  @media (max-width: 640px) {
+    .five-qr-payment-grid {
+      grid-template-columns: 1fr;
+    }
+    .five-form-grid-2 {
+      grid-template-columns: 1fr;
+    }
+    .five-checkout-card {
+      padding: 18px 14px;
+    }
+  }
+</style>

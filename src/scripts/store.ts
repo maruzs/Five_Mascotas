@@ -1,5 +1,8 @@
 // Global Storefront Client Script: Cart, Predictive Search, Drawers, and Interactive Filters
 import { products, formatMoney } from '../data/pim/catalog';
+import { defaultShippingRates, type ShippingCityRate } from '../data/pim/shipping';
+import { AdminStoreService } from './admin-store';
+import { formatBankTransferPayload } from '../data/pim/bank';
 
 interface CartItem {
   id: string;
@@ -15,10 +18,105 @@ class StoreManager {
   private cart: Map<string, CartItem> = new Map();
 
   constructor() {
+    this.initShippingSync();
     this.initCart();
     this.initSearch();
     this.initDrawer();
     this.initPLP();
+    this.initQuickView();
+    this.initCheckout();
+  }
+
+  // ===================== SHIPPING RATES SYNCHRONIZATION =====================
+  public getShippingRates(): ShippingCityRate[] {
+    try {
+      if (typeof localStorage !== 'undefined') {
+        const saved = localStorage.getItem('five_shipping_rates_v1');
+        if (saved) return JSON.parse(saved);
+      }
+    } catch {
+      // Fallback
+    }
+    return [...defaultShippingRates];
+  }
+
+  private initShippingSync() {
+    this.populateShippingDropdowns();
+
+    // Listen for cross-component or admin events
+    if (typeof window !== 'undefined') {
+      window.addEventListener('five:shipping-updated', () => {
+        this.populateShippingDropdowns();
+        this.renderCartUI();
+      });
+    }
+  }
+
+  private populateShippingDropdowns() {
+    const rates = this.getShippingRates();
+
+    // 1. Cart selector
+    const cartSelect = document.querySelector<HTMLSelectElement>('#cart-city-select');
+    if (cartSelect) {
+      const prevVal = cartSelect.value;
+      cartSelect.innerHTML = '';
+      rates.forEach((r) => {
+        const opt = document.createElement('option');
+        opt.value = r.id;
+        opt.selected = prevVal ? r.id === prevVal : !!r.isDefault;
+        opt.dataset.price = String(r.price);
+        opt.dataset.note = r.deliveryNote || '';
+        opt.textContent = `${r.city} — ${formatMoney(r.price)}`;
+        cartSelect.appendChild(opt);
+      });
+      const selected = cartSelect.selectedOptions[0];
+      const noteEl = document.querySelector('#cart-city-note');
+      if (selected && noteEl && selected.dataset.note) {
+        noteEl.textContent = selected.dataset.note;
+      }
+    }
+
+    // 2. PDP selector
+    const pdpSelect = document.querySelector<HTMLSelectElement>('#pdp-city-select');
+    if (pdpSelect) {
+      const prevVal = pdpSelect.value;
+      pdpSelect.innerHTML = '';
+      rates.forEach((r) => {
+        const opt = document.createElement('option');
+        opt.value = r.id;
+        opt.selected = prevVal ? r.id === prevVal : !!r.isDefault;
+        opt.dataset.price = String(r.price);
+        opt.dataset.note = r.deliveryNote || '';
+        opt.textContent = `${r.city} — ${formatMoney(r.price)}`;
+        pdpSelect.appendChild(opt);
+      });
+      const selected = pdpSelect.selectedOptions[0];
+      const noteEl = document.querySelector('#pdp-ship-note-text');
+      if (selected && noteEl && selected.dataset.note) {
+        noteEl.textContent = selected.dataset.note;
+      }
+    }
+
+    // 3. QuickView selector
+    const qvSelect = document.querySelector<HTMLSelectElement>('#qv-city-select');
+    if (qvSelect) {
+      const prevVal = qvSelect.value;
+      qvSelect.innerHTML = '';
+      rates.forEach((r) => {
+        const opt = document.createElement('option');
+        opt.value = r.id;
+        opt.selected = prevVal ? r.id === prevVal : !!r.isDefault;
+        opt.dataset.price = String(r.price);
+        opt.dataset.note = r.deliveryNote || '';
+        opt.textContent = `${r.city} — ${formatMoney(r.price)}`;
+        qvSelect.appendChild(opt);
+      });
+      const selected = qvSelect.selectedOptions[0];
+      const noteEl = document.querySelector('#qv-ship-city-note');
+      if (selected && noteEl && selected.dataset.note) {
+        noteEl.textContent = selected.dataset.note;
+      }
+    }
   }
 
   // ===================== CART SYSTEM =====================
@@ -169,6 +267,63 @@ class StoreManager {
 
     const headerTotalEl = document.querySelector('#five-header-cart-total');
     if (headerTotalEl) headerTotalEl.textContent = formatMoney(total);
+
+    // City shipping fee & dual totals (Transferencia vs Débito +5%)
+    const citySelect = document.querySelector<HTMLSelectElement>('#cart-city-select');
+    let shipFee = 1500;
+    if (citySelect && citySelect.selectedOptions && citySelect.selectedOptions[0]) {
+      shipFee = Number(citySelect.selectedOptions[0].dataset.price) || 1500;
+    }
+
+    const shipFeeEl = document.querySelector('#five-cart-shipping-fee');
+    if (shipFeeEl) shipFeeEl.textContent = formatMoney(shipFee);
+
+    const grandTotal = count > 0 ? total + shipFee : 0;
+    const debitTotal = count > 0 ? Math.round(grandTotal * 1.05) : 0;
+
+    const grandTotalEl = document.querySelector('#five-cart-grand-total');
+    if (grandTotalEl) grandTotalEl.textContent = formatMoney(grandTotal);
+
+    const debitTotalEl = document.querySelector('#five-cart-debit-total');
+    if (debitTotalEl) debitTotalEl.textContent = formatMoney(debitTotal);
+
+    // Update WhatsApp checkout link with items, city and breakdown
+    const checkoutBtn = document.querySelector<HTMLAnchorElement>('#five-checkout-btn');
+    if (checkoutBtn) {
+      if (count === 0) {
+        checkoutBtn.href = '/conoce-five#contacto';
+      } else {
+        const cityName = (citySelect && citySelect.selectedOptions[0]?.textContent) || 'Talca';
+        const lines: string[] = ['¡Hola FIVE Mascotas! Quiero realizar el siguiente pedido:'];
+        this.cart.forEach((item) => {
+          lines.push(`• ${item.quantity}x ${item.name} (${formatMoney(item.price * item.quantity)})`);
+        });
+        lines.push('');
+        lines.push(`📦 Subtotal: ${formatMoney(total)}`);
+        lines.push(`🚚 Despacho (${cityName}): ${formatMoney(shipFee)}`);
+        lines.push(`💰 Total Efectivo/Transferencia: ${formatMoney(grandTotal)}`);
+        lines.push(`💳 Total Tarjeta Débito (+5%): ${formatMoney(debitTotal)}`);
+        lines.push('');
+        lines.push('Por favor confírmenme disponibilidad para coordinar el pago y entrega. ¡Gracias!');
+
+        const textParam = encodeURIComponent(lines.join('\n'));
+        checkoutBtn.href = `https://wa.me/56912345678?text=${textParam}`;
+        checkoutBtn.target = '_blank';
+        checkoutBtn.rel = 'noopener noreferrer';
+      }
+    }
+
+    if (citySelect && !citySelect.dataset.listenerAttached) {
+      citySelect.dataset.listenerAttached = 'true';
+      citySelect.addEventListener('change', () => {
+        const opt = citySelect.selectedOptions[0];
+        const noteEl = document.querySelector('#cart-city-note');
+        if (opt && noteEl && opt.dataset.note) {
+          noteEl.textContent = opt.dataset.note;
+        }
+        this.renderCartUI();
+      });
+    }
   }
 
   // ===================== PREDICTIVE SEARCH =====================
@@ -464,6 +619,390 @@ class StoreManager {
 
     // Initial check
     applyFilter();
+  }
+
+  // ===================== QUICK VIEW MODAL SYSTEM =====================
+  private initQuickView() {
+    const dialog = document.querySelector<HTMLDialogElement>('#five-quickview-modal');
+    if (!dialog) return;
+
+    // Elements inside modal
+    const mainImg = dialog.querySelector<HTMLImageElement>('#qv-main-image');
+    const brandEl = dialog.querySelector<HTMLElement>('#qv-brand');
+    const titleEl = dialog.querySelector<HTMLElement>('#qv-title');
+    const detailEl = dialog.querySelector<HTMLElement>('#qv-detail');
+    const skuEl = dialog.querySelector<HTMLElement>('#qv-sku');
+    const discountEl = dialog.querySelector<HTMLElement>('#qv-discount-badge');
+    const pricePrimEl = dialog.querySelector<HTMLElement>('#qv-price-primary');
+    const priceDebEl = dialog.querySelector<HTMLElement>('#qv-price-debit');
+    const formatBadgeEl = dialog.querySelector<HTMLElement>('#qv-format-badge');
+    const formatBtnEl = dialog.querySelector<HTMLElement>('#qv-format-btn');
+    const fullLinkEl = dialog.querySelector<HTMLAnchorElement>('#qv-full-link');
+    const addBtn = dialog.querySelector<HTMLButtonElement>('#qv-add-btn');
+
+    // Thumbs
+    const thumb0 = dialog.querySelector<HTMLImageElement>('#qv-thumb-0');
+    const thumb1 = dialog.querySelector<HTMLImageElement>('#qv-thumb-1');
+    const thumb2 = dialog.querySelector<HTMLImageElement>('#qv-thumb-2');
+    const thumbBtns = dialog.querySelectorAll<HTMLButtonElement>('.five-qv-thumb');
+
+    // Quantity controls
+    const qtyInput = dialog.querySelector<HTMLInputElement>('#qv-qty-input');
+    const minusBtn = dialog.querySelector<HTMLButtonElement>('#qv-qty-minus');
+    const plusBtn = dialog.querySelector<HTMLButtonElement>('#qv-qty-plus');
+
+    // City Selector
+    const qvCitySelect = dialog.querySelector<HTMLSelectElement>('#qv-city-select');
+    const qvShipNote = dialog.querySelector<HTMLElement>('#qv-ship-city-note');
+
+    // State for current quickview
+    let currentProd = {
+      id: '',
+      name: '',
+      price: 0,
+      image: '',
+    };
+
+    // Thumbnail switcher
+    thumbBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        thumbBtns.forEach((b) => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        const img = btn.querySelector('img');
+        if (img && mainImg) {
+          mainImg.src = img.src;
+        }
+      });
+    });
+
+    // Quantity adjustments
+    minusBtn?.addEventListener('click', () => {
+      if (!qtyInput) return;
+      let val = Number(qtyInput.value) || 1;
+      if (val > 1) qtyInput.value = String(val - 1);
+    });
+
+    plusBtn?.addEventListener('click', () => {
+      if (!qtyInput) return;
+      let val = Number(qtyInput.value) || 1;
+      if (val < 10) qtyInput.value = String(val + 1);
+    });
+
+    // City change note
+    qvCitySelect?.addEventListener('change', () => {
+      const opt = qvCitySelect.selectedOptions[0];
+      if (opt && qvShipNote && opt.dataset.note) {
+        qvShipNote.textContent = opt.dataset.note;
+      }
+    });
+
+    // Close button
+    dialog.querySelectorAll('[data-qv-close]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (typeof dialog.close === 'function') dialog.close();
+      });
+    });
+
+    // Add to cart from QuickView modal
+    addBtn?.addEventListener('click', () => {
+      if (!currentProd.id) return;
+      const qty = Number(qtyInput?.value) || 1;
+      for (let i = 0; i < qty; i++) {
+        this.addToCart(currentProd.id, currentProd.name, currentProd.price, currentProd.image);
+      }
+
+      // Visual feedback
+      const origText = addBtn.innerHTML;
+      addBtn.textContent = '✓ Agregado al Carrito';
+      setTimeout(() => {
+        addBtn.innerHTML = origText;
+        if (typeof dialog.close === 'function') dialog.close();
+      }, 900);
+    });
+
+    // Open QuickView on trigger button click anywhere
+    document.addEventListener('click', (e) => {
+      const trigger = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-quickview]');
+      if (!trigger) return;
+
+      const id = trigger.dataset.quickview || '';
+      const name = trigger.dataset.name || '';
+      const brand = trigger.dataset.brand || 'FIVE';
+      const detail = trigger.dataset.detail || '';
+      const price = Number(trigger.dataset.price) || 0;
+      const oldPrice = Number(trigger.dataset.oldprice) || 0;
+      const image = trigger.dataset.image || '/five-mascotas/alimento-0.svg';
+      const format = trigger.dataset.format || 'Unidad';
+      const cleanId = trigger.dataset.cleanid || '00001';
+
+      currentProd = { id, name, price, image };
+
+      // Set fields
+      if (brandEl) brandEl.textContent = `${brand}®`;
+      if (titleEl) titleEl.textContent = name;
+      if (detailEl) detailEl.textContent = detail;
+      if (skuEl) skuEl.textContent = `ID ${cleanId.padStart(5, '0')}`;
+      if (formatBadgeEl) formatBadgeEl.textContent = format;
+      if (formatBtnEl) formatBtnEl.textContent = format;
+      if (fullLinkEl) fullLinkEl.href = `/producto/${id}`;
+
+      // Reset quantity
+      if (qtyInput) qtyInput.value = '1';
+
+      // Images
+      if (mainImg) mainImg.src = image;
+      if (thumb0) thumb0.src = image;
+      if (thumb1) thumb1.src = '/demos/miga/plato.svg';
+      if (thumb2) thumb2.src = '/five-mascotas/botiquin.svg';
+      thumbBtns.forEach((b, idx) => {
+        b.classList.toggle('is-active', idx === 0);
+      });
+
+      // Discount badge
+      if (discountEl) {
+        if (oldPrice > price) {
+          const pct = Math.round(((oldPrice - price) / oldPrice) * 100);
+          discountEl.textContent = `-${pct}% OFF`;
+          discountEl.hidden = false;
+        } else {
+          discountEl.hidden = true;
+        }
+      }
+
+      // Dual Prices
+      const debitPrice = Math.round(price * 1.05);
+      if (pricePrimEl) pricePrimEl.textContent = formatMoney(price);
+      if (priceDebEl) priceDebEl.textContent = formatMoney(debitPrice);
+
+      // Open Modal
+      if (typeof dialog.showModal === 'function') {
+        dialog.showModal();
+      }
+    });
+  }
+
+  // ===================== CHECKOUT MODAL SYSTEM =====================
+  private initCheckout() {
+    const chkModal = document.querySelector<HTMLDialogElement>('#five-checkout-modal');
+    if (!chkModal) return;
+
+    // Steps
+    const step1Pane = chkModal.querySelector<HTMLElement>('#chk-step-1');
+    const step2Pane = chkModal.querySelector<HTMLElement>('#chk-step-2');
+    const step3Pane = chkModal.querySelector<HTMLElement>('#chk-step-3');
+
+    const stepPill1 = chkModal.querySelector<HTMLElement>('#chk-step-pill-1');
+    const stepPill2 = chkModal.querySelector<HTMLElement>('#chk-step-pill-2');
+    const stepPill3 = chkModal.querySelector<HTMLElement>('#chk-step-pill-3');
+
+    // Forms & Controls
+    const formStep1 = chkModal.querySelector<HTMLFormElement>('#chk-form-step1');
+    const miniSummary = chkModal.querySelector<HTMLElement>('#chk-mini-summary');
+
+    const backBtn = chkModal.querySelector<HTMLButtonElement>('#chk-back-to-step1');
+    const confirmPayBtn = chkModal.querySelector<HTMLButtonElement>('#chk-confirm-pay-btn');
+    const copyDataBtn = chkModal.querySelector<HTMLButtonElement>('#chk-copy-btn');
+
+    const qrImage = chkModal.querySelector<HTMLImageElement>('#chk-qr-image');
+    const bankAmountEl = chkModal.querySelector<HTMLElement>('#chk-bank-amount');
+    const trackingCodeEl = chkModal.querySelector<HTMLElement>('#chk-tracking-code');
+    const waProofBtn = chkModal.querySelector<HTMLAnchorElement>('#chk-whatsapp-proof-btn');
+    const goTrackBtn = chkModal.querySelector<HTMLAnchorElement>('#chk-go-track-btn');
+
+    let currentOrder = {
+      code: '',
+      customerName: '',
+      phone: '',
+      email: '',
+      city: '',
+      address: '',
+      notes: '',
+      items: [] as any[],
+      subtotal: 0,
+      shippingFee: 0,
+      totalTransfer: 0,
+      totalDebit: 0,
+      status: 'Recibido', // 'Recibido' | 'Pago Confirmado' | 'En Reparto' | 'Entregado'
+      createdAt: '',
+    };
+
+    const showStep = (step: 1 | 2 | 3) => {
+      if (step1Pane) step1Pane.hidden = step !== 1;
+      if (step2Pane) step2Pane.hidden = step !== 2;
+      if (step3Pane) step3Pane.hidden = step !== 3;
+
+      stepPill1?.classList.toggle('is-active', step === 1);
+      stepPill2?.classList.toggle('is-active', step === 2);
+      stepPill3?.classList.toggle('is-active', step === 3);
+    };
+
+    // Close buttons
+    chkModal.querySelectorAll('[data-chk-close]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (typeof chkModal.close === 'function') chkModal.close();
+      });
+    });
+
+    backBtn?.addEventListener('click', () => showStep(1));
+
+    // Handle Cart Drawer Checkout Button click -> Open Checkout Modal
+    const cartCheckoutBtn = document.querySelector<HTMLElement>('#five-checkout-btn');
+    if (cartCheckoutBtn) {
+      cartCheckoutBtn.addEventListener('click', (e) => {
+        // If there are items in the cart, prevent default and open checkout modal
+        if (this.cart.size > 0) {
+          e.preventDefault();
+
+          // Close cart drawer
+          const cartDialog = document.querySelector<HTMLDialogElement>('#five-cart-modal, .five-cart-dialog');
+          if (cartDialog && typeof cartDialog.close === 'function') {
+            cartDialog.close();
+          }
+
+          // Populate step 1 mini summary
+          let count = 0;
+          let total = 0;
+          this.cart.forEach((item) => {
+            count += item.quantity;
+            total += item.price * item.quantity;
+          });
+
+          // Sync shipping city from cart select if available
+          const cartCitySelect = document.querySelector<HTMLSelectElement>('#cart-city-select');
+          const chkCitySelect = chkModal.querySelector<HTMLSelectElement>('#chk-city');
+          if (cartCitySelect && chkCitySelect) {
+            chkCitySelect.value = cartCitySelect.value;
+          }
+
+          const shipFee = chkCitySelect?.selectedOptions[0]
+            ? Number(chkCitySelect.selectedOptions[0].dataset.price) || 1500
+            : 1500;
+
+          if (miniSummary) {
+            miniSummary.innerHTML = `
+              <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                <span>Productos (${count} unidades):</span>
+                <strong>${formatMoney(total)}</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                <span>Tarifa Plana Despacho:</span>
+                <strong style="color:#7025a8;">${formatMoney(shipFee)}</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between; border-top:1px dashed #e5dde9; padding-top:6px; margin-top:4px;">
+                <span style="font-weight:800; color:#111827;">Total Transferencia:</span>
+                <strong style="font-size:16px; color:#276717;">${formatMoney(total + shipFee)}</strong>
+              </div>
+            `;
+          }
+
+          showStep(1);
+          if (typeof chkModal.showModal === 'function') {
+            chkModal.showModal();
+          }
+        }
+      });
+    }
+
+    // Step 1 Submit -> Generate order draft and go to Step 2 (QR)
+    formStep1?.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = (chkModal.querySelector('#chk-name') as HTMLInputElement).value;
+      const phone = (chkModal.querySelector('#chk-phone') as HTMLInputElement).value;
+      const email = (chkModal.querySelector('#chk-email') as HTMLInputElement).value;
+      const chkCitySelect = chkModal.querySelector<HTMLSelectElement>('#chk-city')!;
+      const city = chkCitySelect.selectedOptions[0]?.dataset.city || chkCitySelect.value;
+      const shipFee = Number(chkCitySelect.selectedOptions[0]?.dataset.price) || 1500;
+      const address = (chkModal.querySelector('#chk-address') as HTMLInputElement).value;
+      const notes = (chkModal.querySelector('#chk-notes') as HTMLTextAreaElement).value;
+
+      let subtotal = 0;
+      const itemsList: any[] = [];
+      this.cart.forEach((item) => {
+        subtotal += item.price * item.quantity;
+        itemsList.push({ ...item });
+      });
+
+      const totalTransfer = subtotal + shipFee;
+      const totalDebit = Math.round(totalTransfer * 1.05);
+      const code = `FIVE-TRK-${Math.floor(1000 + Math.random() * 9000)}`;
+
+      currentOrder = {
+        code,
+        customerName: name,
+        phone,
+        email,
+        city,
+        address,
+        notes,
+        items: itemsList,
+        subtotal,
+        shippingFee: shipFee,
+        totalTransfer,
+        totalDebit,
+        status: 'Recibido',
+        createdAt: new Date().toISOString(),
+      };
+
+      // Set Step 2 data
+      if (bankAmountEl) bankAmountEl.textContent = formatMoney(totalTransfer);
+
+      // Generate QR Code URL with bank details payload
+      const bankConfig = AdminStoreService.getBankAccount();
+      const qrPayload = formatBankTransferPayload(bankConfig, code, totalTransfer);
+      if (qrImage) {
+        qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(qrPayload)}`;
+      }
+
+      showStep(2);
+    });
+
+    // Copy bank data button
+    copyDataBtn?.addEventListener('click', () => {
+      const bankConfig = AdminStoreService.getBankAccount();
+      const payload = formatBankTransferPayload(bankConfig, currentOrder.code, currentOrder.totalTransfer);
+      navigator.clipboard?.writeText(payload);
+      const origText = copyDataBtn.innerHTML;
+      copyDataBtn.innerHTML = '<span>✓ ¡Datos copiados al portapapeles!</span>';
+      setTimeout(() => {
+        copyDataBtn.innerHTML = origText;
+      }, 2000);
+    });
+
+    // Step 2 Confirm Payment -> Save Order & Show Step 3 (Tracking code)
+    confirmPayBtn?.addEventListener('click', () => {
+      // Save order to persistent store
+      AdminStoreService.saveOrder(currentOrder);
+
+      // Set Step 3 Tracking info
+      if (trackingCodeEl) trackingCodeEl.textContent = currentOrder.code;
+
+      // WhatsApp pre-formatted proof message
+      const lines = [
+        `¡Hola FIVE Mascotas! Acabo de realizar la transferencia de mi pedido *${currentOrder.code}*:`,
+        '',
+        `👤 Cliente: ${currentOrder.customerName}`,
+        `📞 Teléfono: ${currentOrder.phone}`,
+        `📍 Entrega en: ${currentOrder.address}, ${currentOrder.city}`,
+        `💰 Monto Transferido: ${formatMoney(currentOrder.totalTransfer)}`,
+        '',
+        `Adjunto comprobante de transferencia para confirmación. ¡Muchas gracias!`,
+      ];
+      if (waProofBtn) {
+        waProofBtn.href = `https://wa.me/56912345678?text=${encodeURIComponent(lines.join('\n'))}`;
+      }
+
+      if (goTrackBtn) {
+        goTrackBtn.href = `/rastreo?codigo=${currentOrder.code}`;
+      }
+
+      // Clear cart
+      this.cart.clear();
+      this.saveCart();
+      this.renderCartUI();
+
+      showStep(3);
+    });
   }
 }
 

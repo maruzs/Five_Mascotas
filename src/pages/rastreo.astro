@@ -1,0 +1,290 @@
+---
+// src/pages/rastreo.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Seguimiento de Pedido — FIVE Mascotas"
+  description="Ingresa tu código de seguimiento oficial (ej: FIVE-TRK-XXXX) o tu número de teléfono para revisar el estado en vivo de tu compra y despacho."
+>
+  <div class="five-wrap" style="padding-block: 30px 70px;">
+    <!-- Breadcrumbs -->
+    <nav class="five-breadcrumbs" aria-label="Navegación">
+      <ol>
+        <li><a href="/">Inicio</a> <span class="five-crumb-separator">/</span></li>
+        <li><span aria-current="page">Rastreo de Pedido</span></li>
+      </ol>
+    </nav>
+
+    <div style="max-width:720px; margin:0 auto;">
+      <!-- Title & Search Hero -->
+      <div style="text-align:center; margin-bottom:28px;">
+        <span style="font-size:36px; display:inline-block; margin-bottom:6px;">📦</span>
+        <h1 style="font-size:clamp(24px, 4vw, 32px); font-weight:850; letter-spacing:-0.8px; margin:0 0 8px;">
+          Rastrea tu Pedido en Vivo
+        </h1>
+        <p style="color:#6b7280; font-size:14.5px; margin:0;">
+          Revisa el estado de confirmación de tu transferencia y el progreso de preparación o reparto a tu domicilio.
+        </p>
+      </div>
+
+      <!-- Search Box Card -->
+      <div class="five-track-search-card">
+        <form id="track-search-form" style="display:flex; gap:10px;">
+          <input
+            type="text"
+            id="track-input"
+            class="five-input"
+            placeholder="Ingresa tu código de rastreo (ej: FIVE-TRK-8492) o teléfono"
+            required
+            style="font-size:14px; padding:12px 16px; border-radius:12px;"
+          />
+          <button type="submit" class="five-button" style="padding:12px 24px; border-radius:12px; font-weight:800; white-space:nowrap;">
+            🔍 Buscar
+          </button>
+        </form>
+      </div>
+
+      <!-- Order Result Box (Hidden by default) -->
+      <div id="track-result-box" class="five-track-result-box" hidden>
+        <!-- Injected via script -->
+      </div>
+
+      <!-- Empty / Not Found Message -->
+      <div id="track-empty-box" class="five-empty-state" hidden style="margin-top:24px; padding:32px; background:#faf8fb; border:1px solid #e5dde9; border-radius:16px;">
+        <div style="font-size:32px; margin-bottom:8px;">🔎</div>
+        <h3 style="font-size:16px; font-weight:800; color:#111827;">No encontramos pedidos con ese código</h3>
+        <p style="font-size:13px; color:#6b7280; max-width:440px; margin:4px auto 14px;">
+          Verifica que el código esté bien escrito (incluyendo <code>FIVE-TRK-</code>) o contáctanos por WhatsApp para asistirte de inmediato.
+        </p>
+        <a href="https://wa.me/56912345678" target="_blank" rel="noopener noreferrer" class="five-button" style="background:#25d366; color:#ffffff; font-size:13px; padding:8px 18px;">
+          Consultar por WhatsApp ↗
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import { AdminStoreService } from '../scripts/admin-store';
+    import { formatMoney } from '../data/pim/catalog';
+
+    const form = document.querySelector<HTMLFormElement>('#track-search-form')!;
+    const input = document.querySelector<HTMLInputElement>('#track-input')!;
+    const resultBox = document.querySelector<HTMLElement>('#track-result-box')!;
+    const emptyBox = document.querySelector<HTMLElement>('#track-empty-box')!;
+
+    // Status definitions
+    const statuses = [
+      { key: 'Recibido', label: '1. Pedido Recibido', desc: 'Esperando validación de transferencia' },
+      { key: 'Pago Confirmado', label: '2. Pago Confirmado', desc: 'Transferencia verificada con éxito' },
+      { key: 'En Reparto', label: '3. En Reparto / Despacho', desc: 'En ruta a tu domicilio' },
+      { key: 'Entregado', label: '4. Entregado', desc: 'Entregado a entera satisfacción' },
+    ];
+
+    const getStatusIndex = (current: string) => {
+      if (current === 'Pago Confirmado') return 1;
+      if (current === 'En Reparto') return 2;
+      if (current === 'Entregado') return 3;
+      return 0; // Recibido
+    };
+
+    const doSearch = (query: string) => {
+      const q = query.trim();
+      if (!q) return;
+
+      const order = AdminStoreService.getOrderByCode(q);
+
+      if (!order) {
+        resultBox.hidden = true;
+        emptyBox.hidden = false;
+        return;
+      }
+
+      emptyBox.hidden = true;
+      resultBox.hidden = false;
+
+      const currentIndex = getStatusIndex(order.status || 'Recibido');
+
+      let timelineHtml = `
+        <div class="five-track-timeline">
+          ${statuses.map((st, idx) => {
+            const isDone = idx <= currentIndex;
+            const isCurrent = idx === currentIndex;
+            return `
+              <div class="five-timeline-step ${isDone ? 'is-done' : ''} ${isCurrent ? 'is-current' : ''}">
+                <div class="five-timeline-node">
+                  ${isDone ? '✓' : idx + 1}
+                </div>
+                <div class="five-timeline-content">
+                  <strong>${st.label}</strong>
+                  <small>${st.desc}</small>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+
+      let itemsHtml = (order.items || []).map((it: any) => `
+        <div style="display:flex; justify-content:space-between; font-size:13px; padding-block:4px; border-bottom:1px solid #f3f4f6;">
+          <span>${it.quantity}x ${it.name}</span>
+          <strong>${formatMoney(it.price * it.quantity)}</strong>
+        </div>
+      `).join('');
+
+      resultBox.innerHTML = `
+        <div class="five-order-card-view">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:16px; border-bottom:1px solid #e5dde9; padding-bottom:12px;">
+            <div>
+              <span style="font-size:11px; text-transform:uppercase; color:#6b7280; font-weight:700;">Código de Pedido</span>
+              <strong style="display:block; font-size:22px; color:#7025a8; font-family:monospace;">${order.code}</strong>
+              <small style="color:#6b7280;">Fecha: ${new Date(order.createdAt || Date.now()).toLocaleDateString('es-CL', { day:'numeric', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit' })}</small>
+            </div>
+            <span class="five-badge-pill green" style="font-size:12px;">
+              ● Estado: ${order.status || 'Recibido'}
+            </span>
+          </div>
+
+          <!-- Timeline -->
+          <h4 style="font-size:14px; font-weight:800; margin-bottom:12px; color:#111827;">Progreso de tu Envío:</h4>
+          ${timelineHtml}
+
+          <!-- Delivery & Client Info -->
+          <div style="margin-top:20px; display:grid; grid-template-columns:1fr 1fr; gap:16px; background:#fdfcff; border:1px solid #ebdcf5; border-radius:12px; padding:14px; font-size:12.5px;">
+            <div>
+              <span style="color:#6b7280; display:block;">Destinatario:</span>
+              <strong>${order.customerName}</strong>
+              <span style="color:#6b7280; display:block; margin-top:6px;">Teléfono:</span>
+              <strong>${order.phone}</strong>
+            </div>
+            <div>
+              <span style="color:#6b7280; display:block;">Dirección de Entrega:</span>
+              <strong>${order.address}</strong>
+              <small style="display:block; color:#7025a8; font-weight:700; margin-top:2px;">${order.city}</small>
+            </div>
+          </div>
+
+          <!-- Items Breakdown -->
+          <div style="margin-top:18px;">
+            <h4 style="font-size:13.5px; font-weight:800; margin-bottom:8px;">Detalle de Productos:</h4>
+            ${itemsHtml}
+            <div style="display:flex; justify-content:space-between; font-size:13.5px; margin-top:8px;">
+              <span>Costo Despacho (${order.city}):</span>
+              <strong style="color:#7025a8;">${formatMoney(order.shippingFee || 1500)}</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:16px; margin-top:6px; border-top:1px dashed #e5dde9; padding-top:8px;">
+              <strong style="color:#111827;">Total Pagado / a Transferir:</strong>
+              <strong style="color:#276717;">${formatMoney(order.totalTransfer || 0)}</strong>
+            </div>
+          </div>
+
+          <!-- WhatsApp contact for assistance -->
+          <div style="margin-top:20px; text-align:center; padding-top:14px; border-top:1px solid #f3f4f6;">
+            <a href="https://wa.me/56912345678?text=Hola%20tengo%20una%20consulta%20sobre%20mi%20pedido%20${order.code}" target="_blank" rel="noopener noreferrer" class="five-button" style="background:#25d366; color:#ffffff; font-size:13px; padding:10px 20px;">
+              💬 Hablar con Soporte de Despacho
+            </a>
+          </div>
+        </div>
+      `;
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      doSearch(input.value);
+    });
+
+    // Auto-search if query param present in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const codeParam = urlParams.get('codigo') || urlParams.get('code');
+    if (codeParam) {
+      input.value = codeParam;
+      doSearch(codeParam);
+    }
+  </script>
+</BaseLayout>
+
+<style>
+  .five-track-search-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  }
+
+  .five-order-card-view {
+    margin-top: 24px;
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
+  }
+
+  .five-track-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    padding-left: 12px;
+  }
+
+  .five-track-timeline::before {
+    content: '';
+    position: absolute;
+    left: 23px;
+    top: 14px;
+    bottom: 24px;
+    width: 2px;
+    background: #e5e7eb;
+    z-index: 1;
+  }
+
+  .five-timeline-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .five-timeline-node {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    color: #6b7280;
+    font-size: 11px;
+    font-weight: 850;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ffffff;
+  }
+
+  .five-timeline-step.is-done .five-timeline-node {
+    background: #276717;
+    color: #ffffff;
+  }
+
+  .five-timeline-step.is-current .five-timeline-node {
+    background: #7025a8;
+    color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(112, 37, 168, 0.2);
+  }
+
+  .five-timeline-content strong {
+    font-size: 13.5px;
+    display: block;
+    color: #111827;
+  }
+
+  .five-timeline-content small {
+    font-size: 11.5px;
+    color: #6b7280;
+  }
+
+  .five-timeline-step.is-current .five-timeline-content strong {
+    color: #7025a8;
+  }
+</style>
