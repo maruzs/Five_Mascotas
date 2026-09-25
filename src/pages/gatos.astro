@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CatalogPLP from '../components/CatalogPLP.astro';
+---
+
+<BaseLayout
+  title="Todo para Gatos — Alimentos, Arenas y Accesorios | FIVE Mascotas"
+  description="Catálogo felino especializado: alimentos secos y húmedos, arenas aglomerantes, rascadores y salud para gatos."
+>
+  <CatalogPLP
+    pageTitle="Todo para tu Gato"
+    initialPet="Gatos"
+    initialCategory="Todos"
+    bannerId="banner-gatos"
+    breadcrumbs={[
+      { label: 'Inicio', href: '/' },
+      { label: 'Gatos' },
+    ]}
+  />
+</BaseLayout>

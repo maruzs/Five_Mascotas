@@ -1,0 +1,33 @@
+# ==============================================================================
+# Directivas de Rastreo para Buscadores y Motores de IA
+# Guardar en: /public/robots.txt
+# ==============================================================================
+
+# 1. Buscadores tradicionales (Google, Bing, Yahoo, DuckDuckGo)
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /settings/
+Disallow: /auth/
+
+# 2. Rastreadores de Inteligencia Artificial (Permitir indexación para citaciones)
+User-agent: GPTBot
+Allow: /
+Disallow: /api/
+Disallow: /dashboard/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /api/
+Disallow: /dashboard/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /api/
+Disallow: /dashboard/
+
+# 3. Ubicación oficial del Sitemap y especificación para LLMs
+Sitemap: https://tudominio.cl/sitemap.xml
+# llms.txt: https://tudominio.cl/llms.txt

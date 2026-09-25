@@ -1,7 +1,1869 @@
-:root{font-family:'DM Sans Variable',sans-serif;color:#281c32;background:#fcfafd;font-synthesis:none;--primary:#7025a8;--lime:#94f963}*{box-sizing:border-box}body{margin:0}a{color:inherit;text-decoration:none}button,input{font:inherit}button,a{-webkit-tap-highlight-color:transparent}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #7025a8;outline-offset:5px}html{scroll-behavior:smooth;scroll-padding-top:25px}h1,h2,h3,p{margin:0}img{max-width:100%}.five-wrap{width:min(1260px,calc(100% - 80px));margin-inline:auto}.sr-only,.five-skip:not(:focus){position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}.five-skip:focus{display:block;padding:15px}.five-preview{padding:7px 40px;display:flex;justify-content:space-between;font-size:10px;color:#655c6d;border-bottom:1px solid #eee7f1}.five-preview a{text-decoration:underline}.five-announcement{background:#7025a8;color:white;text-align:center;padding:11px;font-size:12px;letter-spacing:.2px}.five-announcement span{opacity:.8;margin-left:12px}.five-header{display:flex;align-items:center;gap:70px;padding-block:24px}.five-logo{display:block;width:130px;flex-shrink:0;text-align:center}.five-logo img{width:130px;height:65px;object-fit:contain;display:block}.five-logo>span{font-size:10px;letter-spacing:6px;color:#655c6d}.five-search{flex:1;display:flex;border:1px solid #e4dce9;background:white;border-radius:8px;overflow:hidden}.five-search input{padding:15px 20px;border:0;outline-offset:-4px;min-width:0;flex:1;background:transparent;font-size:13px;color:#281c32}.five-search button{border:0;background:transparent;width:60px;display:grid;place-items:center}.five-basket{border:0;background:none;display:flex;align-items:center;gap:10px;font-size:13px;color:#281c32}.five-basket b{background:#94f963;min-width:24px;border-radius:50%;padding:5px;font-size:11px}.five-nav{display:flex;gap:32px;align-items:center;padding:17px 0 23px;font-size:13px}.five-nav>a:hover{color:#7025a8}.five-nav span{margin-left:auto;font-size:11px;color:#655c6d}.five-hero{display:grid;grid-template-columns:1fr 1fr;min-height:550px;border-radius:20px;overflow:hidden;background:#f3e8fc}.five-hero-copy{padding:53px 50px 28px}.five-eyebrow{font-size:10px;font-weight:700;letter-spacing:1.7px;display:block}.five-dot{display:inline-block;width:8px;height:8px;background:#7025a8;border-radius:50%;margin-right:7px}.five-hero h1{font-size:clamp(48px,5.2vw,73px);line-height:1.01;letter-spacing:-3.8px;font-weight:750;margin:26px 0 23px}.five-hero h1 em{color:#7025a8;font-style:normal}.five-hero-copy>p{max-width:355px;font-size:15px;line-height:1.7;color:#655c6d}.five-button{display:inline-flex;align-items:center;justify-content:space-between;gap:32px;background:#7025a8;color:white;border:0;padding:17px 23px;font-size:13px;font-weight:650;border-radius:7px;transition:background .2s,transform .2s}.five-button:hover{background:#591d87;transform:translateY(-2px)}.five-button>span{font-size:20px}.five-hero .five-button{margin-top:28px}.five-hero-foot{display:flex;gap:15px;align-items:center;margin-top:36px;font-size:10px;color:#655c6d}.five-hero-foot>span:first-child{font-weight:700;letter-spacing:.7px;color:#7025a8}.five-hero-photo{position:relative;min-height:550px;overflow:hidden;background:#bec5ad}.five-hero-photo>img{position:absolute;width:100%;height:100%;object-fit:cover;object-position:center 80%;inset:0}.five-photo-shade{position:absolute;inset:0;background:linear-gradient(transparent 60%,#172117b3)}.five-sticker{position:absolute;right:25px;top:28px;background:#94f963;color:#281c32;border-radius:50%;height:134px;width:134px;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(11deg);font-size:13px;line-height:1.5}.five-sticker>span{font-size:28px;line-height:1.2}.five-photo-caption{position:absolute;bottom:35px;left:35px;color:white;display:flex;flex-direction:column;gap:7px}.five-photo-caption>span{font-size:10px;letter-spacing:2px}.five-photo-caption strong{font-size:30px;letter-spacing:-1px}.five-benefits{display:grid;grid-template-columns:repeat(3,1fr);padding-block:31px;border-bottom:1px solid #e9e1ee;gap:25px}.five-benefits>div{display:flex;gap:15px;align-items:center;justify-content:center}.five-benefits img{width:28px;height:28px;opacity:.75}.five-benefits strong{display:block;font-size:13px;font-weight:650}.five-benefits small{font-size:11px;color:#655c6d;display:block;margin-top:5px}.five-categories,.five-products{padding-top:65px}.five-section-title{display:flex;align-items:end;justify-content:space-between;gap:25px;margin-bottom:25px}.five-section-title h2{font-size:32px;letter-spacing:-1.2px;font-weight:650;margin-top:10px}.five-section-title>p{font-size:13px;color:#655c6d}.five-category-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}.five-category{border-radius:15px;min-height:260px;padding:30px;position:relative;overflow:hidden;display:flex;align-items:center}.five-category>div:first-child{position:relative;z-index:1}.five-category>div>span{font-size:9px;font-weight:650;letter-spacing:1.3px}.five-category h3{font-size:34px;letter-spacing:-1px;margin:13px 0}.five-category p{font-size:13px;line-height:1.6;color:#655c6d}.five-category b{display:block;font-size:12px;margin-top:22px}.five-category b span{display:inline-block;margin-left:20px;transition:transform .2s}.five-category:hover b span{transform:translate(3px,-3px)}.five-dogs{background:#effce8}.five-cats{background:#f3e8fc}.five-pet-letter{font-size:72px;letter-spacing:-12px;font-weight:850;position:absolute;right:28px;transform:rotate(-12deg);color:#518e38}.five-pet-letter span{font-size:50px;margin:0 8px;color:#7025a8}.five-cat-art{position:absolute;right:36px;top:75px;width:125px;height:125px;background:#c563fb;border-radius:40% 40% 45% 45%;transform:rotate(10deg)}.five-cat-art:before,.five-cat-art:after{content:'';position:absolute;top:-28px;width:55px;height:70px;background:#c563fb;clip-path:polygon(0 0,100% 70%,0 100%)}.five-cat-art:after{right:0;transform:scaleX(-1)}.five-cat-art i{position:absolute;top:42px;left:25px;background:#281c32;width:10px;height:15px;border-radius:50%}.five-cat-art i:nth-child(2){left:85px}.five-cat-art span{position:absolute;top:64px;left:48px;font-size:30px}.five-filters{display:flex;gap:8px}.five-filters button{border:1px solid #e4dce9;border-radius:30px;background:white;color:#655c6d;padding:10px 19px;font-size:12px}.five-filters button[aria-pressed=true]{background:#7025a8;color:white;border-color:#7025a8}.five-catalog-note{font-size:11px;color:#655c6d;margin:-10px 0 23px}.five-product-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}.five-product{min-width:0}.five-product-image{background:#f3eef7;border-radius:12px;position:relative;height:260px;overflow:hidden}.five-product-image>span{position:absolute;top:14px;left:14px;background:#fff9;border-radius:20px;padding:5px 10px;font-size:10px;z-index:1}.five-product-image img{display:block;width:100%;height:100%;object-fit:contain;transition:transform .3s}.five-product:hover img{transform:translateY(-5px) rotate(-2deg)}.five-product-image.green{background:#edf4e9}.five-product-image.peach{background:#fbf0e9}.five-product-image.lavender{background:#efedf8}.five-product-info{padding:20px 2px}.five-product-info>p{font-size:8px;letter-spacing:1.4px;color:#655c6d}.five-product-info h3{font-size:15px;line-height:1.35;font-weight:650;min-height:40px;margin:9px 0 6px}.five-product-info>span{font-size:12px;color:#655c6d}.five-product-info>div{display:flex;justify-content:space-between;align-items:center;margin-top:22px;gap:5px}.five-product-info strong{font-size:22px;letter-spacing:-.7px}.five-product-info button{border:0;background:#effce8;color:#281c32;padding:10px 12px;border-radius:7px;font-size:16px}.five-product-info button span{font-size:11px}.five-product-info button:hover{background:#94f963}.five-brand{margin-top:55px;display:grid;grid-template-columns:1fr 1fr;gap:65px;align-items:center;padding-block:40px 55px}.five-brand-mark{border-radius:18px;background:#7025a8;color:white;padding:35px 40px;min-height:320px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}.five-brand-mark>span{font-size:37px;line-height:1.12;letter-spacing:-1.5px}.five-brand-mark b{color:#94f963;font-weight:600}.five-brand-mark img{width:135px;height:auto;align-self:flex-end;margin-top:18px}.five-brand h2{font-size:37px;line-height:1.14;letter-spacing:-1.5px;font-weight:600;margin:20px 0}.five-brand p{font-size:14px;line-height:1.85;color:#655c6d;max-width:470px}.five-text-link{display:inline-block;border-bottom:1px solid #7025a8;padding-bottom:8px;font-size:13px;margin-top:24px;color:#7025a8}.five-text-link span{margin-left:25px}.five-last{text-align:center;background:#effce8;border-radius:16px;padding:40px;margin-bottom:65px}.five-last>span{font-size:9px;letter-spacing:2px}.five-last h2{font-size:34px;letter-spacing:-1.1px;margin:14px 0 22px}.five-footer{background:#f3e8fc;padding:38px 0 20px}.five-footer>.five-wrap:first-child{display:flex;align-items:center;justify-content:space-between;gap:40px}.five-footer p{font-size:17px;line-height:1.5}.five-footer nav{display:flex;flex-direction:column;gap:10px;font-size:12px}.five-footer-bottom{display:flex;justify-content:space-between;border-top:1px solid #dacbe5;padding-top:20px;margin-top:35px;font-size:10px;color:#655c6d}.five-cart-dialog{width:min(510px,calc(100% - 32px));max-height:85vh;border:1px solid #e4dce9;border-radius:16px;padding:28px;color:#281c32;background:#fcfafd}.five-cart-dialog::backdrop{background:#281c3277}.five-dialog-heading{display:flex;justify-content:space-between;align-items:center;gap:20px}.five-dialog-heading h2{font-size:24px;letter-spacing:-.7px}.five-dialog-heading button{border:0;background:transparent;font-size:30px}.five-cart-dialog>p{font-size:12px;line-height:1.6;color:#655c6d;margin:15px 0}.five-cart-dialog ul{padding:0;list-style:none}.five-cart-dialog li{display:flex;align-items:center;gap:10px;border-bottom:1px solid #e4dce9;padding:14px 0;font-size:13px}.five-cart-dialog li span{flex:1}.five-cart-dialog li button{border:0;background:#f3e8fc;border-radius:5px;padding:7px;font-size:11px}.five-cart-total{display:flex;justify-content:space-between;margin:24px 0;font-size:15px}[hidden]{display:none!important}
-@media(max-width:1000px){.five-header{gap:35px}.five-hero-copy{padding:35px}.five-hero h1{font-size:57px}.five-nav span{display:none}.five-pet-letter{right:15px;font-size:52px}.five-cat-art{right:17px;width:95px;height:100px;opacity:.5}.five-cat-art i:nth-child(2){left:65px}.five-cat-art span{left:35px}.five-brand{gap:35px}.five-product-grid{gap:15px}.five-product-info button span{display:none}.five-product-image{height:220px}}
-@media(max-width:700px){.five-wrap{width:calc(100% - 32px)}.five-preview{padding:7px 16px;font-size:8px}.five-announcement{font-size:11px}.five-announcement span{display:none}.five-header{flex-wrap:wrap;gap:18px;justify-content:space-between;padding-block:15px}.five-logo{width:100px}.five-logo img{width:100px;height:50px}.five-logo>span{font-size:8px;letter-spacing:4px}.five-search{order:3;flex-basis:100%}.five-search input{padding:13px;font-size:12px}.five-basket{font-size:12px}.five-nav{gap:0;justify-content:space-between;font-size:10px;padding:5px 0 18px}.five-hero{grid-template-columns:1fr}.five-hero-copy{padding:30px 27px}.five-hero h1{font-size:60px;letter-spacing:-3px;margin:23px 0 18px}.five-hero-copy>p{font-size:14px;max-width:340px}.five-hero-foot{margin-top:28px;font-size:9px;gap:10px}.five-hero-photo{min-height:340px}.five-hero-photo>img{object-position:center 77%}.five-sticker{width:108px;height:108px;font-size:11px;top:18px;right:18px}.five-photo-caption{bottom:25px;left:25px}.five-photo-caption strong{font-size:25px}.five-benefits{grid-template-columns:1fr;padding-block:25px;gap:20px}.five-benefits>div{justify-content:flex-start;padding-left:15px}.five-section-title{flex-direction:column;align-items:flex-start;gap:17px}.five-section-title h2{font-size:29px}.five-categories,.five-products{padding-top:45px}.five-category-grid{grid-template-columns:1fr;gap:16px}.five-category{min-height:220px;padding:26px}.five-pet-letter{font-size:67px;right:27px}.five-cat-art{right:35px;opacity:1}.five-product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.five-product-image{height:205px}.five-product-info h3{font-size:13px;min-height:36px}.five-product-info>span{font-size:10px}.five-product-info strong{font-size:19px}.five-product-info{padding-top:15px}.five-product-info>div{margin-top:15px}.five-catalog-note{line-height:1.6;margin-top:-8px}.five-brand{grid-template-columns:1fr;gap:30px;margin-top:10px;padding-bottom:40px}.five-brand-mark{min-height:290px;padding:30px}.five-brand h2{font-size:32px}.five-last{padding:35px 23px;margin-bottom:40px}.five-last h2{font-size:29px}.five-footer>.five-wrap:first-child{flex-wrap:wrap;gap:25px}.five-footer p{font-size:14px}.five-footer nav{flex-basis:100%}.five-eyebrow{font-size:9px}.five-product-info button{padding:8px 12px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
-.five-nav{gap:25px;flex-wrap:wrap}.five-sale-link{color:#7025a8;font-weight:750}.five-departments{padding-top:50px}.five-department-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}.five-department-grid a{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;padding:25px 10px;border:1px solid #e4dce9;border-radius:14px;background:white;transition:background .2s,transform .2s}.five-department-grid a:hover{background:#f3e8fc;transform:translateY(-3px)}.five-department-grid a:last-child{background:#effce8}.five-department-grid strong{font-size:14px}.five-department-grid span{font-size:10px;color:#655c6d}.five-catalog-tools{display:flex;align-items:center;flex-wrap:wrap;gap:20px;background:#f3eef7;padding:18px;border-radius:12px;margin-bottom:25px}.five-catalog-tools label{font-size:12px;display:flex;align-items:center;gap:10px}.five-catalog-tools select{font:inherit;background:white;color:#281c32;border:1px solid #d8c4e8;border-radius:6px;padding:9px}.five-catalog-tools input{accent-color:#7025a8;width:17px;height:17px}.five-catalog-tools button,#five-clear{background:none;border:0;text-decoration:underline;color:#7025a8;font-size:12px}.five-catalog-tools>span{font-size:12px;color:#655c6d;margin-left:auto}.five-offer-badge{position:absolute;right:12px;top:14px;z-index:1;background:#94f963;padding:5px 10px;border-radius:20px;font-size:10px}.five-price{display:flex;flex-direction:column;gap:2px}.five-price del{font-size:11px;color:#655c6d}.five-product-info>div{min-height:45px}.five-product-image>span{max-width:60%}
-@media(max-width:950px){.five-department-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.five-nav{gap:18px}}
-@media(max-width:700px){.five-nav{justify-content:flex-start;gap:12px 18px;font-size:11px}.five-department-grid{gap:9px}.five-department-grid a{padding:20px 8px}.five-department-grid span{font-size:9px}.five-department-grid strong{font-size:12px}.five-catalog-tools{gap:14px;padding:14px}.five-catalog-tools>label:first-child{width:100%;justify-content:space-between}.five-catalog-tools>span{margin-left:0}.five-offer-badge{top:auto;bottom:10px;right:10px}}
+/* ==========================================================================
+   FIVE MASCOTAS — SISTEMA DE DISEÑO E-COMMERCE FULL-WIDTH Y RESPONSIVE
+   Inspirado en SuperZoo.cl y Animania.cl con identidad propia de FIVE
+   ========================================================================== */
+
+:root {
+  font-family: 'DM Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #241830;
+  background-color: #fcfafd;
+  font-synthesis: none;
+
+  /* Brand Tokens */
+  --primary: #7025a8;
+  --primary-hover: #581c85;
+  --primary-soft: #f4ebfa;
+  --lime: #94f963;
+  --lime-dark: #64ca2f;
+  --accent-yellow: #feca57;
+  --accent-orange: #ff7675;
+  --text-main: #241830;
+  --text-muted: #675e72;
+  --border-color: #e5dde9;
+  --border-subtle: #f0eaf4;
+  --bg-subtle: #f8f5fa;
+  --bg-card: #ffffff;
+  --max-width: 1560px;
+  --bottom-nav-height: 64px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-body);
+  color: var(--text-main);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+body.overflow-hidden {
+  overflow: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  background: none;
+}
+
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Utilities */
+.sr-only, .five-skip:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.five-skip:focus {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 9999;
+  background: var(--lime);
+  color: #111;
+  padding: 12px 20px;
+  font-weight: 700;
+  border-radius: 6px;
+}
+
+/* Generous Fluid Container */
+.five-wrap {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: clamp(16px, 3vw, 40px);
+}
+
+/* ==========================================================================
+   TOP TICKER ANNOUNCEMENT (Foto 4)
+   ========================================================================== */
+.five-top-ticker {
+  background: #571b86;
+  color: #ffffff;
+  font-size: 12.5px;
+  padding-block: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.five-ticker-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.five-ticker-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.five-ticker-bold {
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.five-ticker-pill {
+  background: rgba(255, 255, 255, 0.18);
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+}
+
+.five-ticker-pill strong {
+  color: var(--lime);
+  font-weight: 700;
+}
+
+.five-ticker-extra {
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ==========================================================================
+   MAIN HEADER (Foto 4)
+   ========================================================================== */
+.five-main-header {
+  background: #ffffff;
+  border-bottom: 1px solid var(--border-color);
+  padding-block: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.five-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(16px, 3vw, 40px);
+}
+
+.five-mobile-menu-btn {
+  display: none;
+  padding: 8px;
+  color: var(--primary);
+}
+
+.five-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.five-logo img {
+  width: 130px;
+  height: auto;
+  display: block;
+}
+
+.five-logo-sub {
+  font-size: 9px;
+  letter-spacing: 5px;
+  font-weight: 800;
+  color: var(--primary);
+  margin-top: -2px;
+}
+
+/* Search Bar & Predictive Dropdown */
+.five-search-wrapper {
+  flex: 1;
+  max-width: 720px;
+  position: relative;
+}
+
+.five-search {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 2px solid var(--primary);
+  border-radius: 30px;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+
+.five-search:focus-within {
+  box-shadow: 0 0 0 3px rgba(112, 37, 168, 0.2);
+}
+
+.five-search input {
+  flex: 1;
+  border: 0;
+  padding: 12px 20px;
+  font-size: 14px;
+  outline: none;
+  min-width: 0;
+  color: var(--text-main);
+}
+
+.five-search button {
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  color: #fff;
+  border: 0;
+  height: 100%;
+}
+
+.five-search-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.five-search-dropdown-header {
+  padding: 10px 16px;
+  background: var(--bg-subtle);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.five-search-results-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.five-search-suggestion a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background 0.15s;
+}
+
+.five-search-suggestion a:hover {
+  background: var(--primary-soft);
+}
+
+.five-suggestion-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.five-suggestion-text strong {
+  font-size: 13px;
+  color: var(--text-main);
+}
+
+.five-suggestion-text small {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.five-suggestion-arrow {
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.five-search-empty {
+  padding: 16px;
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* Header Action Buttons */
+.five-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.five-header-action-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-main);
+  transition: color 0.2s;
+}
+
+.five-header-action-item:hover {
+  color: var(--primary);
+}
+
+.five-header-action-item svg {
+  color: var(--primary);
+}
+
+.five-header-action-item span {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.five-header-action-item small {
+  font-size: 10.5px;
+  color: var(--text-muted);
+}
+
+.five-header-action-item strong {
+  font-size: 12.5px;
+  font-weight: 650;
+}
+
+.five-basket {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 14px;
+  background: var(--primary-soft);
+  border-radius: 25px;
+  transition: background 0.2s;
+}
+
+.five-basket:hover {
+  background: #edd8fa;
+}
+
+.five-basket-icon-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.five-cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background: var(--lime);
+  color: #111;
+  font-size: 11px;
+  font-weight: 800;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.five-basket-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  line-height: 1.15;
+}
+
+.five-basket-text small {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.five-basket-text strong {
+  font-size: 13px;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   MEGA NAVBAR (Foto 2)
+   ========================================================================== */
+.five-mega-navbar {
+  background: var(--primary);
+  color: #ffffff;
+  position: relative;
+  z-index: 90;
+  box-shadow: 0 4px 12px rgba(112, 37, 168, 0.15);
+}
+
+.five-mega-list {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.five-mega-list::-webkit-scrollbar {
+  display: none;
+}
+
+.five-mega-item {
+  position: static;
+}
+
+.five-mega-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 13px 16px;
+  font-size: 13.5px;
+  font-weight: 650;
+  color: #ffffff;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+
+.five-mega-link:hover, .five-mega-item:hover > .five-mega-link {
+  background: var(--primary-hover);
+}
+
+.five-mega-link.is-sale {
+  color: var(--lime);
+  font-weight: 800;
+}
+
+.five-dropdown-chevron {
+  transition: transform 0.2s;
+}
+
+.five-mega-item:hover .five-dropdown-chevron {
+  transform: rotate(180deg);
+}
+
+/* Mega-Menu Dropdown Panel */
+.five-mega-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: #ffffff;
+  color: var(--text-main);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  padding-block: 28px;
+  z-index: 100;
+}
+
+.five-mega-item:hover .five-mega-dropdown {
+  display: block;
+}
+
+.five-mega-dropdown-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+.five-mega-col-title {
+  display: block;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 14px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--primary-soft);
+}
+
+.five-mega-col-title:hover {
+  text-decoration: underline;
+}
+
+.five-mega-sublinks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.five-mega-sublink {
+  font-size: 13px;
+  color: #443a50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: color 0.15s, transform 0.15s;
+}
+
+.five-mega-sublink:hover {
+  color: var(--primary);
+  transform: translateX(3px);
+}
+
+.five-sublink-badge {
+  background: var(--lime);
+  color: #111;
+  font-size: 10px;
+  font-weight: 750;
+  padding: 2px 7px;
+  border-radius: 12px;
+}
+
+/* ==========================================================================
+   PROMO BANNER STRIP (Foto 4)
+   ========================================================================== */
+.five-promo-strip {
+  background: linear-gradient(90deg, #f7f1fc 0%, #edf9e7 100%);
+  border-bottom: 1px solid var(--border-color);
+  padding-block: 16px;
+}
+
+.five-promo-strip-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.five-promo-tag .five-promo-pill {
+  background: var(--primary);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 6px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.five-promo-content {
+  flex: 1;
+}
+
+.five-promo-title {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  margin: 0;
+  color: var(--text-main);
+}
+
+.five-promo-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 2px 0 0;
+}
+
+.five-promo-cta {
+  background: #ffffff;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 12.5px;
+  font-weight: 700;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.five-promo-cta:hover {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   PLP (PRODUCT LISTING PAGE) (Foto 3)
+   ========================================================================== */
+.five-plp-page {
+  padding-bottom: 60px;
+}
+
+.five-plp-container {
+  padding-top: 20px;
+}
+
+.five-breadcrumbs {
+  margin-bottom: 16px;
+}
+
+.five-breadcrumbs ol {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.five-breadcrumbs a:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.five-crumb-separator {
+  margin-left: 6px;
+  opacity: 0.5;
+}
+
+.five-plp-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.five-plp-title {
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 800;
+  letter-spacing: -0.8px;
+  margin: 0;
+}
+
+.five-plp-header-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.five-results-count {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.five-mobile-filter-trigger {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Main 2-Column PLP Layout */
+.five-plp-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+/* Sidebar & Accordions */
+.five-plp-sidebar {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 20px;
+  position: sticky;
+  top: 90px;
+}
+
+.five-sidebar-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.five-sidebar-head h3 {
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.five-sidebar-close {
+  display: none;
+  font-size: 24px;
+}
+
+.five-sidebar-tools {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.five-filter-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.five-select-wrap select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 13px;
+  background: #ffffff;
+  color: var(--text-main);
+  outline: none;
+}
+
+.five-clear-btn {
+  width: 100%;
+  padding: 9px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.five-clear-btn:hover {
+  background: var(--bg-subtle);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.five-facets-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.five-facet-item {
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 12px;
+}
+
+.five-facet-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main);
+  cursor: pointer;
+  padding-block: 6px;
+  list-style: none;
+}
+
+.five-facet-summary::-webkit-details-marker {
+  display: none;
+}
+
+.five-facet-summary svg {
+  transition: transform 0.2s;
+}
+
+.five-facet-item[open] .five-facet-summary svg {
+  transform: rotate(180deg);
+}
+
+.five-facet-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.five-facet-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #4a3e56;
+  cursor: pointer;
+  user-select: none;
+}
+
+.five-facet-check input {
+  accent-color: var(--primary);
+  width: 16px;
+  height: 16px;
+}
+
+.five-facet-check.highlight-check {
+  margin-top: 4px;
+}
+
+.five-badge-pill {
+  background: var(--lime);
+  color: #111;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+
+.five-sidebar-mobile-apply {
+  display: none;
+  margin-top: 20px;
+}
+
+/* Product Cards Grid */
+.five-product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 22px;
+}
+
+/* Single Product Card (Foto 3) */
+.five-product-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.five-product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.five-product-image-box {
+  height: 240px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow: hidden;
+}
+
+.five-product-image-box.violet { background: #f5edfc; }
+.five-product-image-box.green { background: #edf7e8; }
+.five-product-image-box.peach { background: #fdf2ea; }
+.five-product-image-box.lavender { background: #eeecf9; }
+
+.five-product-pet-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(255, 255, 255, 0.85);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 9px;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+  color: var(--text-main);
+}
+
+.five-product-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--lime);
+  color: #111;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.five-product-image-box img {
+  max-height: 180px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s;
+}
+
+.five-product-card:hover .five-product-image-box img {
+  transform: scale(1.05);
+}
+
+.five-wishlist-btn {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: #ffffff;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  color: var(--text-muted);
+  transition: all 0.2s;
+}
+
+.five-wishlist-btn:hover {
+  color: var(--primary);
+  transform: scale(1.1);
+}
+
+.five-product-details {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.five-product-brand {
+  font-size: 11px;
+  font-weight: 750;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.five-product-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1.35;
+  margin: 6px 0;
+  min-height: 40px;
+  color: var(--text-main);
+}
+
+.five-product-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.five-product-bottom-row {
+  margin-top: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.five-product-pricing {
+  display: flex;
+  flex-direction: column;
+}
+
+.five-old-price {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.five-current-price {
+  font-size: 18px;
+  font-weight: 850;
+  color: var(--text-main);
+  letter-spacing: -0.5px;
+}
+
+.five-card-add-btn {
+  background: var(--primary);
+  color: #ffffff;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.five-card-add-btn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+.five-card-add-btn.is-added {
+  background: var(--lime);
+  color: #111;
+}
+
+/* Empty State */
+.five-empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px dashed var(--border-color);
+}
+
+.five-empty-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.five-empty-state h3 {
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.five-empty-state p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* ==========================================================================
+   HOMEPAGE MOBILE-FIRST BLOCKS (Foto 1)
+   ========================================================================== */
+.five-home-hero {
+  padding-block: 24px;
+}
+
+.five-home-hero-card {
+  background: #f4ebfa;
+  border-radius: 24px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  min-height: 440px;
+  position: relative;
+}
+
+.five-home-hero-copy {
+  padding: clamp(24px, 5vw, 60px);
+}
+
+.five-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  color: var(--primary);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.five-home-hero h1 {
+  font-size: clamp(32px, 4vw, 54px);
+  font-weight: 850;
+  letter-spacing: -1.8px;
+  line-height: 1.05;
+  margin: 0 0 16px;
+}
+
+.five-home-hero h1 em {
+  font-style: normal;
+  color: var(--primary);
+}
+
+.five-home-hero p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  max-width: 440px;
+  margin-bottom: 24px;
+}
+
+.five-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--primary);
+  color: #ffffff;
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+
+.five-button:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+.five-home-hero-media {
+  position: relative;
+  height: 100%;
+  min-height: 380px;
+}
+
+.five-home-hero-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Category Navigation ("Shop by Category" circles/cards - Foto 1) */
+.five-home-categories {
+  padding-block: 36px;
+}
+
+.five-section-heading-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.five-section-heading-row h2 {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin: 0;
+}
+
+.five-view-all-link {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.five-view-all-link:hover {
+  text-decoration: underline;
+}
+
+.five-category-circles-scroll {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+}
+
+.five-category-circle-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 20px 10px;
+  transition: all 0.2s;
+}
+
+.five-category-circle-item:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  box-shadow: 0 8px 20px rgba(112, 37, 168, 0.08);
+}
+
+.five-circle-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--primary-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+}
+
+.five-circle-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* Sale Banner with Urgency Countdown (Foto 1) */
+.five-flash-sale-banner {
+  margin-block: 30px;
+  background: #1f1429;
+  color: #ffffff;
+  border-radius: 20px;
+  padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.five-sale-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.five-sale-icon {
+  font-size: 32px;
+}
+
+.five-sale-text small {
+  font-size: 12px;
+  color: var(--lime);
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.five-sale-text h3 {
+  font-size: 26px;
+  font-weight: 900;
+  margin: 2px 0 0;
+  letter-spacing: -0.5px;
+}
+
+.five-sale-countdown {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.five-countdown-box {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 8px 12px;
+  text-align: center;
+  min-width: 52px;
+}
+
+.five-countdown-box strong {
+  display: block;
+  font-size: 18px;
+  font-weight: 850;
+  color: #fff;
+}
+
+.five-countdown-box span {
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+}
+
+.five-sale-cta {
+  background: var(--lime);
+  color: #111;
+  font-weight: 800;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  transition: transform 0.2s;
+}
+
+.five-sale-cta:hover {
+  transform: scale(1.04);
+}
+
+/* ==========================================================================
+   FOOTER (Expanded Full-Width)
+   ========================================================================== */
+.five-footer {
+  background: #f4ebfa;
+  border-top: 1px solid var(--border-color);
+  padding-top: 60px;
+  margin-top: 40px;
+}
+
+.five-footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+  padding-bottom: 40px;
+}
+
+.five-footer-tagline {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 16px 0;
+}
+
+.five-footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.five-footer-nav-col h4 {
+  font-size: 15px;
+  font-weight: 800;
+  margin: 0 0 16px;
+  color: var(--primary);
+}
+
+.five-footer-nav-col nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.five-footer-nav-col a:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.five-footer-bottom {
+  border-top: 1px solid rgba(112, 37, 168, 0.12);
+  padding-block: 20px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.five-footer-bottom-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.five-footer-trust {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.five-trust-badge {
+  background: #ffffff;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   SHOPPING CART DIALOG / DRAWER
+   ========================================================================== */
+.five-cart-dialog {
+  width: min(520px, calc(100% - 24px));
+  max-height: 90vh;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 24px;
+  background: #ffffff;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+.five-cart-dialog::backdrop {
+  background: rgba(36, 24, 48, 0.6);
+  backdrop-filter: blur(2px);
+}
+
+.five-dialog-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 14px;
+}
+
+.five-dialog-heading h2 {
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.five-dialog-subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.five-dialog-close {
+  font-size: 28px;
+  line-height: 1;
+  color: var(--text-muted);
+}
+
+.five-cart-notice {
+  background: var(--primary-soft);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--primary);
+  margin-block: 16px;
+}
+
+.five-cart-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 340px;
+  overflow-y: auto;
+}
+
+.five-cart-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-block: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.five-cart-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.five-cart-item-info strong {
+  font-size: 13.5px;
+}
+
+.five-cart-item-info span {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.five-cart-item-subtotal {
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.five-cart-item-remove {
+  background: var(--bg-subtle);
+  color: #d63031;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.five-cart-empty-message {
+  padding: 30px 10px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13.5px;
+}
+
+.five-cart-subtotals {
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.five-cart-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.five-cart-row strong {
+  font-size: 20px;
+  color: var(--primary);
+}
+
+.five-free-text {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.five-dialog-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.five-checkout-btn {
+  width: 100%;
+  justify-content: center;
+  padding: 14px;
+  font-size: 15px;
+}
+
+.five-text-btn {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+  text-decoration: underline;
+}
+
+.five-cart-disclaimer {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 12px;
+}
+
+/* ==========================================================================
+   MOBILE BOTTOM NAVIGATION BAR (Foto 1)
+   ========================================================================== */
+.five-mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--bottom-nav-height);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border-color);
+  z-index: 1000;
+  align-items: center;
+  justify-content: space-around;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.five-bottom-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px;
+  flex: 1;
+  text-align: center;
+}
+
+.five-bottom-item.is-active, .five-bottom-item:hover {
+  color: var(--primary);
+}
+
+.five-bottom-cart-badge-wrap {
+  position: relative;
+  display: flex;
+}
+
+/* ==========================================================================
+   MOBILE DRAWER (SLIDE-IN)
+   ========================================================================== */
+.five-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1100;
+}
+
+.five-mobile-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: min(340px, 85vw);
+  background: #ffffff;
+  z-index: 1200;
+  overflow-y: auto;
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-100%);
+  transition: transform 0.25s ease-out;
+}
+
+.five-mobile-drawer.is-open {
+  transform: translateX(0);
+}
+
+.five-drawer-head {
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.five-drawer-brand {
+  display: flex;
+  flex-direction: column;
+}
+
+.five-drawer-brand span {
+  font-size: 8px;
+  letter-spacing: 3px;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.five-drawer-close {
+  font-size: 32px;
+  line-height: 1;
+  color: var(--text-muted);
+}
+
+.five-drawer-content {
+  padding: 16px 20px;
+  flex: 1;
+}
+
+.five-drawer-search form {
+  display: flex;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.five-drawer-search input {
+  flex: 1;
+  border: 0;
+  padding: 10px 12px;
+  font-size: 13px;
+  background: transparent;
+  outline: none;
+}
+
+.five-drawer-search button {
+  padding: 8px 12px;
+  color: var(--primary);
+}
+
+.five-drawer-pets {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.five-drawer-pet-pill {
+  padding: 12px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.five-drawer-pet-pill.dog {
+  background: #edf8e8;
+  color: #3b7425;
+}
+
+.five-drawer-pet-pill.cat {
+  background: #f4ebfa;
+  color: var(--primary);
+}
+
+.five-drawer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.five-drawer-section {
+  border-bottom: 1px solid var(--border-subtle);
+  padding-block: 6px;
+}
+
+.five-drawer-summary, .five-drawer-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 4px;
+  font-size: 14.5px;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+
+.five-drawer-summary::-webkit-details-marker {
+  display: none;
+}
+
+.five-drawer-link.is-sale {
+  color: var(--primary);
+  font-weight: 850;
+}
+
+.five-drawer-sublist {
+  padding: 10px 12px;
+  background: var(--bg-subtle);
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.five-drawer-all-link {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 750;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+.five-drawer-subsec strong {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+.five-drawer-subsec ul {
+  list-style: none;
+  margin: 6px 0;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.five-drawer-subsec a {
+  font-size: 12.5px;
+  color: var(--text-main);
+}
+
+.five-drawer-foot {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.five-drawer-foot p {
+  margin: 2px 0;
+}
+
+.five-drawer-about-link {
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS (Mobile-First / Screen scaling)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .five-header-actions .five-hide-mobile {
+    display: none;
+  }
+
+  .five-mega-navbar {
+    display: none; /* Replaced by bottom nav & mobile drawer */
+  }
+
+  .five-mobile-menu-btn {
+    display: block;
+  }
+
+  .five-plp-layout {
+    grid-template-columns: 1fr;
+  }
+
+  /* Slide-in Drawer for Sidebar Filters on Mobile */
+  .five-plp-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: min(340px, 85vw);
+    z-index: 1300;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease-out;
+    overflow-y: auto;
+    border-radius: 0;
+  }
+
+  .five-plp-sidebar.is-mobile-open {
+    transform: translateX(0);
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .five-sidebar-close {
+    display: block;
+  }
+
+  .five-sidebar-mobile-apply {
+    display: block;
+  }
+
+  .five-mobile-filter-trigger {
+    display: inline-flex;
+  }
+
+  .five-footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-bottom: calc(var(--bottom-nav-height) + 16px);
+  }
+
+  .five-mobile-bottom-nav {
+    display: flex;
+  }
+
+  .five-home-hero-card {
+    grid-template-columns: 1fr;
+    border-radius: 18px;
+  }
+
+  .five-home-hero-media {
+    min-height: 260px;
+  }
+
+  .five-category-circles-scroll {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .five-product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .five-product-image-box {
+    height: 180px;
+    padding: 10px;
+  }
+
+  .five-product-image-box img {
+    max-height: 130px;
+  }
+
+  .five-product-details {
+    padding: 12px;
+  }
+
+  .five-product-title {
+    font-size: 13px;
+    min-height: 34px;
+  }
+
+  .five-current-price {
+    font-size: 16px;
+  }
+
+  .five-card-add-btn {
+    padding: 7px 12px;
+    font-size: 12px;
+  }
+
+  .five-flash-sale-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  .five-footer-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+[hidden] {
+  display: none !important;
+}

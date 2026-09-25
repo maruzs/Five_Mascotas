@@ -1,0 +1,37 @@
+/**
+ * 🌲 Paleta Bosque y Sol (Cercana y Natural) - PAL-02
+ *
+ * Basada en la estética orgánica y cercana de Agora / Miga:
+ * Verde Bosque (#203E35), Ámbar Solar (#F5D66C) y Crema Suave (#FFFDF8).
+ */
+
+:root {
+  --bosque-bg: #FFFDF8;
+  --bosque-bg-surface: #FFFFFF;
+  --bosque-primary: #203E35;
+  --bosque-secondary: #F5D66C;
+  --bosque-accent: #D48B38;
+  --bosque-border: rgba(32, 62, 53, 0.12);
+  --bosque-text-primary: #12241F;
+  --bosque-text-secondary: #4A635B;
+  --bosque-shadow: 0 4px 20px -2px rgba(32, 62, 53, 0.07);
+}
+
+.theme-bosque {
+  background-color: var(--bosque-bg);
+  color: var(--bosque-text-primary);
+}
+
+.dark .theme-bosque,
+.theme-bosque-dark {
+  --bosque-bg: #0D1915;
+  --bosque-bg-surface: #142520;
+  --bosque-primary: #F5D66C;
+  --bosque-secondary: #2C5247;
+  --bosque-border: rgba(245, 214, 108, 0.15);
+  --bosque-text-primary: #FFFDF8;
+  --bosque-text-secondary: #C8DDD6;
+  --bosque-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.5);
+  background-color: var(--bosque-bg);
+  color: var(--bosque-text-primary);
+}

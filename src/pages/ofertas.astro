@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CatalogPLP from '../components/CatalogPLP.astro';
+---
+
+<BaseLayout
+  title="Ofertas y Descuentos Especiales | FIVE Mascotas"
+  description="Zona de liquidaciones, descuentos por volumen y promociones exclusivas en alimentos y accesorios para mascotas."
+>
+  <CatalogPLP
+    pageTitle="Ofertas y Promociones Exclusivas"
+    initialPet="Todos"
+    initialCategory="Todos"
+    initialOnlyOffers={true}
+    bannerId="banner-ofertas"
+    breadcrumbs={[
+      { label: 'Inicio', href: '/' },
+      { label: 'Ofertas' },
+    ]}
+  />
+</BaseLayout>

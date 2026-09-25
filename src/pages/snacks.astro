@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CatalogPLP from '../components/CatalogPLP.astro';
+---
+
+<BaseLayout
+  title="Snacks y Premios para Perros y Gatos | FIVE Mascotas"
+  description="Los premios más ricos y saludables para reforzar su educación y alegrar su día. Bocados naturales y cremosos."
+>
+  <CatalogPLP
+    pageTitle="Snacks y Premios Deliciosos"
+    initialPet="Todos"
+    initialCategory="Snacks"
+    breadcrumbs={[
+      { label: 'Inicio', href: '/' },
+      { label: 'Snacks' },
+    ]}
+  />
+</BaseLayout>

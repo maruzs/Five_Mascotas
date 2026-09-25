@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CatalogPLP from '../components/CatalogPLP.astro';
+---
+
+<BaseLayout
+  title="Farmacia Veterinaria y Salud — Antiparasitarios y Cuidados | FIVE Mascotas"
+  description="Cuidados esenciales y bienestar animal. Antiparasitarios, apósitos, botiquines y suplementos para perros y gatos."
+>
+  <CatalogPLP
+    pageTitle="Farmacia y Cuidado Veterinario"
+    initialPet="Todos"
+    initialCategory="Farmacia"
+    breadcrumbs={[
+      { label: 'Inicio', href: '/' },
+      { label: 'Farmacia' },
+    ]}
+  />
+</BaseLayout>

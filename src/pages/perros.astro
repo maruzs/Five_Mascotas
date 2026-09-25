@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CatalogPLP from '../components/CatalogPLP.astro';
+---
+
+<BaseLayout
+  title="Todo para Perros — Alimentos, Accesorios y Farmacia | FIVE Mascotas"
+  description="Encuentra alimentos secos, húmedos, antiparasitarios y camas para perros. Las mejores marcas al mejor precio en FIVE Mascotas."
+>
+  <CatalogPLP
+    pageTitle="Todo para tu Perro"
+    initialPet="Perros"
+    initialCategory="Todos"
+    bannerId="banner-perros"
+    breadcrumbs={[
+      { label: 'Inicio', href: '/' },
+      { label: 'Perros' },
+    ]}
+  />
+</BaseLayout>

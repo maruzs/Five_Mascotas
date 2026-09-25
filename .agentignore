@@ -1,0 +1,27 @@
+# Zona privada y notas personales
+no_leer/
+*.tmp
+*.log
+
+# Documentación interna en bruto
+Docs/Ideas/
+
+# Dependencias pesadas
+node_modules/
+vendor/
+.dart_tool/
+.pub-cache/
+
+# Builds y artefactos compilados
+dist/
+build/
+.next/
+.astro/
+out/
+target/
+
+# Volcados de datos y archivos masivos
+*.sql
+*.csv
+*.jsonl
+storage/

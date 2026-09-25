@@ -1,0 +1,37 @@
+/**
+ * 🌊 Paleta Tinta y Cielo (Clara y Profesional) - PAL-03
+ *
+ * Basada en la estética corporativa y analítica de Agora:
+ * Tinta Azul Marino (#142D4E), Celeste Etereo (#A8CEF0) y Blanco Nieve (#F6F8FC).
+ */
+
+:root {
+  --tinta-bg: #F6F8FC;
+  --tinta-bg-surface: #FFFFFF;
+  --tinta-primary: #142D4E;
+  --tinta-secondary: #A8CEF0;
+  --tinta-accent: #2563EB;
+  --tinta-border: rgba(20, 45, 78, 0.12);
+  --tinta-text-primary: #0A192F;
+  --tinta-text-secondary: #475B76;
+  --tinta-shadow: 0 4px 20px -2px rgba(20, 45, 78, 0.06);
+}
+
+.theme-tinta {
+  background-color: var(--tinta-bg);
+  color: var(--tinta-text-primary);
+}
+
+.dark .theme-tinta,
+.theme-tinta-dark {
+  --tinta-bg: #07101C;
+  --tinta-bg-surface: #0E1B2D;
+  --tinta-primary: #A8CEF0;
+  --tinta-secondary: #1E3A5F;
+  --tinta-border: rgba(168, 206, 240, 0.15);
+  --tinta-text-primary: #F6F8FC;
+  --tinta-text-secondary: #94A9C4;
+  --tinta-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.6);
+  background-color: var(--tinta-bg);
+  color: var(--tinta-text-primary);
+}

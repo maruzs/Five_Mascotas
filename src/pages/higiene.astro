@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CatalogPLP from '../components/CatalogPLP.astro';
+---
+
+<BaseLayout
+  title="Higiene y Limpieza para Mascotas — Arenas y Sabanillas | FIVE Mascotas"
+  description="Arenas sanitarias para gatos, sabanillas de entrenamiento para cachorros, shampoo y cuidado dental para tus mascotas."
+>
+  <CatalogPLP
+    pageTitle="Higiene y Confort"
+    initialPet="Todos"
+    initialCategory="Higiene"
+    breadcrumbs={[
+      { label: 'Inicio', href: '/' },
+      { label: 'Higiene' },
+    ]}
+  />
+</BaseLayout>

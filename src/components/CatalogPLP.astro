@@ -1,0 +1,249 @@
+---
+import { products } from '../data/pim/catalog';
+import ProductCard from './ProductCard.astro';
+import PromoBannerStrip from './PromoBannerStrip.astro';
+
+interface Props {
+  pageTitle: string;
+  initialPet?: 'Perros' | 'Gatos' | 'Todos';
+  initialCategory?: string;
+  initialOnlyOffers?: boolean;
+  breadcrumbs: { label: string; href?: string }[];
+  bannerId?: string;
+}
+
+const {
+  pageTitle,
+  initialPet = 'Todos',
+  initialCategory = 'Todos',
+  initialOnlyOffers = false,
+  breadcrumbs,
+  bannerId
+} = Astro.props;
+
+// Compute unique facet options
+const brands = [...new Set(products.map((p) => p.brand))].sort();
+const categories = ['Alimentos', 'Farmacia', 'Accesorios', 'Higiene', 'Snacks'];
+const lifeStages = ['Cachorro', 'Adulto', 'Senior', 'Todas las edades'];
+const formats = [...new Set(products.map((p) => p.format))].sort();
+---
+
+<div class="five-plp-page">
+  <!-- Contextual campaign banner (Foto 4) -->
+  <PromoBannerStrip bannerId={bannerId} />
+
+  <div class="five-wrap five-plp-container">
+    <!-- Breadcrumbs -->
+    <nav class="five-breadcrumbs" aria-label="Ruta de navegación">
+      <ol>
+        {breadcrumbs.map((crumb, idx) => (
+          <li>
+            {crumb.href ? (
+              <a href={crumb.href}>{crumb.label}</a>
+            ) : (
+              <span aria-current="page">{crumb.label}</span>
+            )}
+            {idx < breadcrumbs.length - 1 && <span class="five-crumb-separator">/</span>}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <!-- Page Title & Mobile Trigger -->
+    <div class="five-plp-header">
+      <h1 class="five-plp-title">{pageTitle}</h1>
+      <div class="five-plp-header-meta">
+        <span id="five-results" class="five-results-count" role="status">
+          {products.length} Resultados
+        </span>
+        <button type="button" class="five-mobile-filter-trigger" id="five-mobile-filter-open">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="4" y1="21" x2="4" y2="14"></line>
+            <line x1="4" y1="10" x2="4" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12" y2="3"></line>
+            <line x1="20" y1="21" x2="20" y2="16"></line>
+            <line x1="20" y1="12" x2="20" y2="3"></line>
+            <line x1="1" y1="14" x2="7" y2="14"></line>
+            <line x1="9" y1="8" x2="15" y2="8"></line>
+            <line x1="17" y1="16" x2="23" y2="16"></line>
+          </svg>
+          <span>Filtrar y Ordenar</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main 2-column layout: Sidebar + Product Grid (Foto 3) -->
+    <div class="five-plp-layout">
+      <!-- Filter Sidebar -->
+      <aside class="five-plp-sidebar" id="five-plp-sidebar" aria-label="Filtros del catálogo">
+        <div class="five-sidebar-head">
+          <h3>Filtros</h3>
+          <button type="button" class="five-sidebar-close" id="five-sidebar-close" aria-label="Cerrar filtros">
+            &times;
+          </button>
+        </div>
+
+        <div class="five-sidebar-tools">
+          <!-- Sort dropdown (Foto 3) -->
+          <div class="five-filter-group-sort">
+            <label for="five-sort-select" class="five-filter-label">Ordenar por</label>
+            <div class="five-select-wrap">
+              <select id="five-sort-select" class="five-select">
+                <option value="featured">Recomendados</option>
+                <option value="price-asc">Menor a mayor precio</option>
+                <option value="price-desc">Mayor a menor precio</option>
+                <option value="name-asc">Nombre (A - Z)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Clear all filters button (Foto 3) -->
+          <button type="button" id="five-reset" class="five-clear-btn">
+            Borrar todo
+          </button>
+        </div>
+
+        <!-- Facet Accordions (Foto 3) -->
+        <div class="five-facets-list">
+          <!-- Mascota -->
+          <details class="five-facet-item" open>
+            <summary class="five-facet-summary">
+              <span>Mascota</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </summary>
+            <div class="five-facet-content" role="group" aria-label="Filtrar por mascota">
+              <label class="five-facet-check">
+                <input type="radio" name="facet-pet" value="Todos" checked={initialPet === 'Todos'} data-filter-pet="Todos" />
+                <span>Todos</span>
+              </label>
+              <label class="five-facet-check">
+                <input type="radio" name="facet-pet" value="Perros" checked={initialPet === 'Perros'} data-filter-pet="Perros" />
+                <span>Perro</span>
+              </label>
+              <label class="five-facet-check">
+                <input type="radio" name="facet-pet" value="Gatos" checked={initialPet === 'Gatos'} data-filter-pet="Gatos" />
+                <span>Gato</span>
+              </label>
+            </div>
+          </details>
+
+          <!-- Marca -->
+          <details class="five-facet-item" open>
+            <summary class="five-facet-summary">
+              <span>Marca</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </summary>
+            <div class="five-facet-content">
+              {brands.map((brand) => (
+                <label class="five-facet-check">
+                  <input type="checkbox" name="facet-brand" value={brand} data-filter-brand={brand} />
+                  <span>{brand}</span>
+                </label>
+              ))}
+            </div>
+          </details>
+
+          <!-- Categoría -->
+          <details class="five-facet-item" open>
+            <summary class="five-facet-summary">
+              <span>Categoría</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </summary>
+            <div class="five-facet-content">
+              {categories.map((cat) => (
+                <label class="five-facet-check">
+                  <input
+                    type="checkbox"
+                    name="facet-category"
+                    value={cat}
+                    checked={initialCategory === cat}
+                    data-filter-category={cat}
+                  />
+                  <span>{cat}</span>
+                </label>
+              ))}
+            </div>
+          </details>
+
+          <!-- Formato / Peso -->
+          <details class="five-facet-item">
+            <summary class="five-facet-summary">
+              <span>Formato / Tamaño</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </summary>
+            <div class="five-facet-content">
+              {formats.map((fmt) => (
+                <label class="five-facet-check">
+                  <input type="checkbox" name="facet-format" value={fmt} data-filter-format={fmt} />
+                  <span>{fmt}</span>
+                </label>
+              ))}
+            </div>
+          </details>
+
+          <!-- Edad -->
+          <details class="five-facet-item">
+            <summary class="five-facet-summary">
+              <span>Edad / Etapa</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </summary>
+            <div class="five-facet-content">
+              {lifeStages.map((stage) => (
+                <label class="five-facet-check">
+                  <input type="checkbox" name="facet-lifestage" value={stage} data-filter-stage={stage} />
+                  <span>{stage}</span>
+                </label>
+              ))}
+            </div>
+          </details>
+
+          <!-- Ofertas Especiales -->
+          <details class="five-facet-item" open>
+            <summary class="five-facet-summary">
+              <span>Oportunidades</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </summary>
+            <div class="five-facet-content">
+              <label class="five-facet-check highlight-check">
+                <input
+                  type="checkbox"
+                  id="five-offers"
+                  checked={initialOnlyOffers}
+                  data-filter-offers
+                />
+                <span class="five-badge-pill">Solo productos en oferta</span>
+              </label>
+            </div>
+          </details>
+        </div>
+
+        <div class="five-sidebar-mobile-apply">
+          <button type="button" class="five-button" id="five-mobile-apply-btn">
+            Ver resultados
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Products Grid Column -->
+      <section class="five-plp-products" aria-label="Lista de productos">
+        <div class="five-product-grid" id="five-product-grid">
+          {products.map((product) => (
+            <ProductCard product={product} />
+          ))}
+        </div>
+
+        <!-- Empty State -->
+        <div id="five-empty" class="five-empty-state" hidden>
+          <div class="five-empty-icon">🐾</div>
+          <h3>No encontramos productos con esos filtros</h3>
+          <p>Prueba desmarcando algunas opciones o buscando otro término.</p>
+          <button id="five-clear" class="five-button">Limpiar todos los filtros</button>
+        </div>
+
+        <!-- Live ARIA status for accessibility -->
+        <p class="sr-only" id="five-status" role="status"></p>
+      </section>
+    </div>
+  </div>
+</div>

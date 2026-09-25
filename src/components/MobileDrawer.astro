@@ -1,0 +1,84 @@
+---
+import { navigationCategories } from '../data/pim/navigation';
+---
+
+<div id="five-drawer-overlay" class="five-drawer-overlay" hidden></div>
+
+<aside id="five-drawer" class="five-mobile-drawer" aria-label="Menú principal móvil" hidden>
+  <div class="five-drawer-head">
+    <div class="five-drawer-brand">
+      <img src="/five-mascotas/logo.png" alt="FIVE" width="100" height="50" />
+      <span>MASCOTAS</span>
+    </div>
+    <button id="five-drawer-close" class="five-drawer-close" aria-label="Cerrar menú">
+      &times;
+    </button>
+  </div>
+
+  <div class="five-drawer-content">
+    <div class="five-drawer-search">
+      <form action="/perros" method="get">
+        <input type="search" name="q" placeholder="¿Qué necesita tu mascota?" />
+        <button type="submit" aria-label="Buscar"><img src="/icons/lucide/search.svg" alt="" width="18" height="18" /></button>
+      </form>
+    </div>
+
+    <!-- Quick Pet Switcher -->
+    <div class="five-drawer-pets">
+      <a href="/perros" class="five-drawer-pet-pill dog">
+        <span>🐶 Para Perros</span>
+      </a>
+      <a href="/gatos" class="five-drawer-pet-pill cat">
+        <span>🐱 Para Gatos</span>
+      </a>
+    </div>
+
+    <!-- Navigation List with Accordions -->
+    <nav class="five-drawer-nav">
+      {navigationCategories.map((cat) => (
+        <div class="five-drawer-section">
+          {cat.hasDropdown && cat.sections ? (
+            <details class="five-drawer-details">
+              <summary class="five-drawer-summary">
+                <span>{cat.name}</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </summary>
+              <div class="five-drawer-sublist">
+                <a href={cat.href} class="five-drawer-all-link">Ver todo en {cat.name} ↗</a>
+                {cat.sections.map((sec) => (
+                  <div class="five-drawer-subsec">
+                    <strong>{sec.title}</strong>
+                    <ul>
+                      {sec.items.map((sub) => (
+                        <li>
+                          <a href={sub.href}>{sub.label}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </details>
+          ) : (
+            <a
+              href={cat.href}
+              class={`five-drawer-link ${cat.name === 'Ofertas' ? 'is-sale' : ''}`}
+            >
+              <span>{cat.name}</span>
+              <span class="five-drawer-arrow">→</span>
+            </a>
+          )}
+        </div>
+      ))}
+    </nav>
+
+    <!-- Support / Store info -->
+    <div class="five-drawer-foot">
+      <p><strong>Tienda FIVE Mascotas</strong></p>
+      <p>Lun - Sáb: 10:00 a 20:00 hrs</p>
+      <a href="/conoce-five" class="five-drawer-about-link">Conoce nuestra historia ↗</a>
+    </div>
+  </div>
+</aside>

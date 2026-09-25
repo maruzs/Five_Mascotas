@@ -1,0 +1,86 @@
+---
+import type { Product } from '../data/pim/types';
+import { formatMoney } from '../data/pim/catalog';
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+---
+
+<article
+  class="five-product-card"
+  data-product
+  data-id={product.id}
+  data-pet={product.pet}
+  data-brand={product.brand}
+  data-category={product.category}
+  data-subcategory={product.subcategory}
+  data-type={product.category}
+  data-format={product.format}
+  data-lifestage={product.lifeStage}
+  data-price={product.price}
+  data-offer={product.oldPrice > 0 ? "true" : "false"}
+  data-search={`${product.name} ${product.brand} ${product.detail} ${product.category} ${product.subcategory} ${product.pet}`}
+>
+  <div class={`five-product-image-box ${product.color}`}>
+    <span class="five-product-pet-tag">
+      {product.pet === 'Perros Gatos' ? 'Perros y gatos' : product.pet}
+    </span>
+
+    {product.badge && (
+      <span class="five-product-badge">
+        {product.badge}
+      </span>
+    )}
+
+    <img
+      src={product.image}
+      alt={`Envase: ${product.name}`}
+      width="300"
+      height="360"
+      loading="lazy"
+    />
+
+    <button
+      type="button"
+      class="five-wishlist-btn"
+      aria-label={`Guardar ${product.name} en favoritos`}
+    >
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+      </svg>
+    </button>
+  </div>
+
+  <div class="five-product-details">
+    <span class="five-product-brand">{product.brand}</span>
+    <h3 class="five-product-title">{product.name}</h3>
+    <span class="five-product-meta">{product.detail}</span>
+
+    <div class="five-product-bottom-row">
+      <div class="five-product-pricing">
+        {product.oldPrice > 0 && (
+          <del class="five-old-price" aria-label="Precio anterior">
+            {formatMoney(product.oldPrice)}
+          </del>
+        )}
+        <strong class="five-current-price">
+          {formatMoney(product.price)}
+        </strong>
+      </div>
+
+      <button
+        class="five-card-add-btn"
+        data-add={product.id}
+        data-name={product.name}
+        data-price={product.price}
+        data-image={product.image}
+        aria-label={`Comprar ${product.name}`}
+      >
+        <span>Comprar</span>
+      </button>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,55 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { navigationCategories } from '../../data/pim/navigation';
+---
+
+<AdminLayout title="FIVE Admin — Categorías & Mega-Menú" activeNav="categorias" breadcrumbTitle="Taxonomía y Mega-Menú">
+  <div class="admin-page-header">
+    <h1>Estructura de Categorías y Mega-Menú</h1>
+    <p>Organización jerárquica de departamentos, especies y accesos rápidos de la tienda.</p>
+  </div>
+
+  <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(340px, 1fr)); gap:24px;">
+    {navigationCategories.map((cat) => (
+      <div class="admin-card">
+        <div class="admin-card-head" style="margin-bottom:14px;">
+          <div>
+            <h3>{cat.name}</h3>
+            <span class="admin-card-subtitle">Ruta: <code>{cat.href}</code></span>
+          </div>
+          {cat.hasDropdown ? (
+            <span class="admin-badge-trend up">Mega-Menú</span>
+          ) : (
+            <span class="admin-badge-trend warning">Enlace Directo</span>
+          )}
+        </div>
+
+        {cat.sections ? (
+          <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
+            {cat.sections.map((sec) => (
+              <div style="background:#fafbfc; border:1px solid #e9ecef; border-radius:8px; padding:10px 14px;">
+                <strong style="color:#7025a8; font-size:12px; text-transform:uppercase;">{sec.title}</strong>
+                <ul style="margin:6px 0 0; padding-left:18px; color:#495057;">
+                  {sec.items.map((sub) => (
+                    <li style="margin-block:2px;">
+                      <span>{sub.label}</span>
+                      {sub.badge && (
+                        <span style="background:#94f963; color:#111; font-size:9.5px; font-weight:750; padding:1px 6px; border-radius:10px; margin-left:6px;">
+                          {sub.badge}
+                        </span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p style="font-size:13px; color:#6c757d; margin:0;">
+            Página de destino individual sin menú desplegable.
+          </p>
+        )}
+      </div>
+    ))}
+  </div>
+</AdminLayout>

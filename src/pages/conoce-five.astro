@@ -1,0 +1,253 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PromoBannerStrip from '../components/PromoBannerStrip.astro';
+---
+
+<BaseLayout
+  title="Conoce FIVE Mascotas — Nuestra Historia, Filosofía y Tienda"
+  description="Conoce el equipo y la vocación detrás de FIVE Mascotas. Nutrición animal honesta, dedicación y compromiso con tu familia peluda."
+>
+  <div class="five-about-page">
+    <PromoBannerStrip
+      tag="FAMILIA FIVE"
+      title="El amor incondicional empieza con un plato nutritivo"
+      subtitle="Trabajamos con veterinarios y nutricionistas certificados para orientarte en la mejor decisión."
+      ctaText="Explorar Tienda"
+      ctaHref="/alimentos"
+    />
+
+    <div class="five-wrap five-about-container">
+      <nav class="five-breadcrumbs" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="/">Inicio</a> <span class="five-crumb-separator">/</span></li>
+          <li><span aria-current="page">Conoce FIVE</span></li>
+        </ol>
+      </nav>
+
+      <section class="five-about-hero-section">
+        <div class="five-about-hero-grid">
+          <div class="five-about-copy">
+            <span class="five-hero-badge">HOLA, SOMOS FIVE MASCOTAS</span>
+            <h1>Ellos ponen el amor.<br /><em>Tú, lo mejor.</em></h1>
+            <p>
+              Sabemos que no son solo mascotas. Son compañía leal, risas compartidas y miembros esenciales de tu familia.
+              En FIVE Mascotas nacimos con un propósito simple y honesto: elevar la calidad de vida de perros y gatos
+              a través de una nutrición balanceada y un cuidado respetuoso.
+            </p>
+            <div class="five-about-stats">
+              <div>
+                <strong>100%</strong>
+                <span>Productos garantizados</span>
+              </div>
+              <div>
+                <strong>+10</strong>
+                <span>Años cuidando familias</span>
+              </div>
+              <div>
+                <strong>24-48h</strong>
+                <span>Despacho express Santiago</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="five-about-visual">
+            <div class="five-about-card-banner">
+              <span>Una pata. Una mano.<br /><b>El mismo equipo.</b></span>
+              <img src="/five-mascotas/logo.png" alt="FIVE Mascotas" width="180" height="90" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="five-about-pillars" id="filosofia">
+        <h2>Nuestros Pilares</h2>
+        <div class="five-pillars-grid">
+          <div class="five-pillar-card">
+            <div class="five-pillar-icon">🥗</div>
+            <h3>Nutrición Consciente</h3>
+            <p>Seleccionamos únicamente fórmulas balanceadas con ingredientes de alta digestibilidad y trazabilidad rigurosa.</p>
+          </div>
+          <div class="five-pillar-card">
+            <div class="five-pillar-icon">🩺</div>
+            <h3>Salud Preventiva</h3>
+            <p>Antiparasitarios y suplementos certificados para protegerlos en cada etapa de su vida.</p>
+          </div>
+          <div class="five-pillar-card">
+            <div class="five-pillar-icon">🤝</div>
+            <h3>Asesoría Cercana</h3>
+            <p>Te orientamos según la edad, tamaño y requerimientos específicos de tu compañero peludo.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="five-about-location" id="contacto">
+        <div class="five-location-card">
+          <div>
+            <span class="five-hero-badge">VISÍTANOS EN TIENDA</span>
+            <h2>Atención Presencial y Retiro</h2>
+            <p>Ven con tu mascota a visitarnos, conocer nuestras novedades o retirar tus compras web.</p>
+            <ul class="five-location-details">
+              <li><strong>Dirección:</strong> Av. Providencia 1234, Santiago, Chile</li>
+              <li><strong>Horario:</strong> Lunes a Sábado de 10:00 a 20:00 hrs</li>
+              <li><strong>Teléfono / WhatsApp:</strong> +56 9 1234 5678</li>
+              <li><strong>Email:</strong> contacto@fivemascotas.cl</li>
+            </ul>
+          </div>
+          <div class="five-location-badge-box">
+            <span>🐾 Pet Friendly</span>
+            <p>¡Los esperamos con premios de degustación y agua fresca!</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .five-about-page {
+    padding-bottom: 60px;
+  }
+  .five-about-container {
+    padding-top: 24px;
+  }
+  .five-about-hero-section {
+    margin-block: 24px 60px;
+  }
+  .five-about-hero-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .five-about-copy h1 {
+    font-size: clamp(34px, 4vw, 56px);
+    letter-spacing: -1.5px;
+    line-height: 1.05;
+    margin: 16px 0;
+  }
+  .five-about-copy h1 em {
+    font-style: normal;
+    color: var(--primary);
+  }
+  .five-about-copy p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+  .five-about-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-color);
+  }
+  .five-about-stats strong {
+    font-size: 26px;
+    color: var(--primary);
+    display: block;
+  }
+  .five-about-stats span {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .five-about-card-banner {
+    background: var(--primary);
+    color: #ffffff;
+    border-radius: 24px;
+    padding: 40px;
+    min-height: 360px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .five-about-card-banner span {
+    font-size: 32px;
+    line-height: 1.2;
+    font-weight: 700;
+  }
+  .five-about-card-banner b {
+    color: var(--lime);
+  }
+  .five-about-card-banner img {
+    align-self: flex-end;
+  }
+  .five-about-pillars {
+    margin-block: 60px;
+  }
+  .five-about-pillars h2 {
+    font-size: 28px;
+    margin-bottom: 28px;
+    text-align: center;
+  }
+  .five-pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .five-pillar-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+  }
+  .five-pillar-icon {
+    font-size: 36px;
+    margin-bottom: 16px;
+  }
+  .five-pillar-card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .five-pillar-card p {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+  .five-about-location {
+    margin-top: 40px;
+  }
+  .five-location-card {
+    background: #edf8e8;
+    border-radius: 24px;
+    padding: clamp(24px, 4vw, 50px);
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 36px;
+    align-items: center;
+  }
+  .five-location-details {
+    list-style: none;
+    margin: 20px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 14px;
+  }
+  .five-location-badge-box {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  }
+  .five-location-badge-box span {
+    font-size: 24px;
+    font-weight: 800;
+    color: #3b7425;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .five-location-badge-box p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0;
+  }
+  @media (max-width: 900px) {
+    .five-about-hero-grid, .five-pillars-grid, .five-location-card {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

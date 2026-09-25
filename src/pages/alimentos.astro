@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CatalogPLP from '../components/CatalogPLP.astro';
+---
+
+<BaseLayout
+  title="Alimentos para Perros y Gatos — Seco, Húmedo y Dietas | FIVE Mascotas"
+  description="Nutrición avanzada para tu compañero. Alimento balanceado, recetas libres de grano y opciones para cachorros y adultos."
+>
+  <CatalogPLP
+    pageTitle="Alimentos para Mascotas"
+    initialPet="Todos"
+    initialCategory="Alimentos"
+    bannerId="banner-perros"
+    breadcrumbs={[
+      { label: 'Inicio', href: '/' },
+      { label: 'Alimentos' },
+    ]}
+  />
+</BaseLayout>

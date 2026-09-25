@@ -1,0 +1,239 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { announcementTicker, promoBanners } from '../../data/pim/navigation';
+---
+
+<AdminLayout title="FIVE Admin — CMS Banners & Campañas" activeNav="cms" breadcrumbTitle="CMS de Contenidos">
+  <div class="admin-page-header">
+    <h1>CMS de Banners y Campañas</h1>
+    <p>Personaliza franjas informativas, cupones de descuento y promociones de la tienda.</p>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start;">
+    <!-- 1. Ticker Superior (Foto 4) -->
+    <div class="admin-card">
+      <div class="admin-card-head">
+        <div>
+          <h2>Ticker Superior Informativo</h2>
+          <span class="admin-card-subtitle">Franja delgada global visible en todas las páginas</span>
+        </div>
+        <span class="admin-badge-trend up">Global</span>
+      </div>
+
+      <form id="cms-ticker-form">
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div class="admin-form-group">
+            <label style="display:flex; align-items:center; gap:8px;">
+              <input type="checkbox" id="ticker-active" name="active" checked={announcementTicker.active} />
+              <span>Mostrar ticker superior en toda la tienda</span>
+            </label>
+          </div>
+
+          <div class="admin-form-group">
+            <label for="ticker-text">Mensaje Principal *</label>
+            <input
+              type="text"
+              id="ticker-text"
+              name="text"
+              value={announcementTicker.text}
+              required
+            />
+          </div>
+
+          <div class="admin-form-row">
+            <div class="admin-form-group">
+              <label for="ticker-code">Código de Cupón</label>
+              <input
+                type="text"
+                id="ticker-code"
+                name="couponCode"
+                value={announcementTicker.couponCode || 'PRIMERA10'}
+              />
+            </div>
+            <div class="admin-form-group">
+              <label for="ticker-coupon-text">Texto del Botón/Pill</label>
+              <input
+                type="text"
+                id="ticker-coupon-text"
+                name="couponText"
+                value={announcementTicker.couponText || 'Usa el código PRIMERA10'}
+              />
+            </div>
+          </div>
+
+          <div class="admin-form-group">
+            <label for="ticker-extra">Información de Horarios y Despacho</label>
+            <textarea
+              id="ticker-extra"
+              name="extraInfo"
+              rows="2"
+            >{announcementTicker.extraInfo}</textarea>
+          </div>
+
+          <!-- Live Preview Box -->
+          <div style="background:#571b86; color:#fff; padding:10px 14px; border-radius:8px; font-size:12px; display:flex; justify-content:space-between; align-items:center;">
+            <div id="ticker-preview-text">
+              <strong>{announcementTicker.text}</strong>
+              <span style="background:rgba(255,255,255,0.2); padding:2px 8px; border-radius:12px; margin-left:8px; color:#94f963; font-weight:700;">
+                {announcementTicker.couponCode}
+              </span>
+            </div>
+            <small style="opacity:0.8;">Vista previa</small>
+          </div>
+
+          <button type="submit" class="admin-btn primary" style="align-self:flex-start;">
+            Guardar Ticker
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- 2. Banner de Campaña Secundario (Foto 4) -->
+    <div class="admin-card">
+      <div class="admin-card-head">
+        <div>
+          <h2>Banner de Campaña Secundaria</h2>
+          <span class="admin-card-subtitle">Franja destacada (ej: 2x1 camas y ropa)</span>
+        </div>
+        <span class="admin-badge-trend up">Destacado</span>
+      </div>
+
+      <form id="cms-banner-form">
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div class="admin-form-group">
+            <label for="banner-tag">Etiqueta de Campaña</label>
+            <input
+              type="text"
+              id="banner-tag"
+              name="tag"
+              value={promoBanners[0].tag}
+              placeholder="ej: ¡SOLO X EL FINDE!"
+            />
+          </div>
+
+          <div class="admin-form-group">
+            <label for="banner-title">Título de la Promoción *</label>
+            <input
+              type="text"
+              id="banner-title"
+              name="title"
+              value={promoBanners[0].title}
+              required
+            />
+          </div>
+
+          <div class="admin-form-group">
+            <label for="banner-subtitle">Bajada / Descripción</label>
+            <textarea
+              id="banner-subtitle"
+              name="subtitle"
+              rows="2"
+            >{promoBanners[0].subtitle}</textarea>
+          </div>
+
+          <div class="admin-form-row">
+            <div class="admin-form-group">
+              <label for="banner-cta-text">Texto Botón CTA</label>
+              <input
+                type="text"
+                id="banner-cta-text"
+                name="ctaText"
+                value={promoBanners[0].ctaText}
+              />
+            </div>
+            <div class="admin-form-group">
+              <label for="banner-cta-href">Ruta de Destino</label>
+              <input
+                type="text"
+                id="banner-cta-href"
+                name="ctaHref"
+                value={promoBanners[0].ctaHref}
+              />
+            </div>
+          </div>
+
+          <!-- Live Preview Box -->
+          <div style="background:linear-gradient(90deg, #f7f1fc 0%, #edf9e7 100%); border:1px solid #e5dde9; border-radius:12px; padding:14px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <span style="background:#7025a8; color:#fff; font-size:10px; font-weight:800; padding:2px 8px; border-radius:10px;" id="banner-preview-tag">
+                {promoBanners[0].tag}
+              </span>
+              <strong style="display:block; font-size:14px; margin-top:4px;" id="banner-preview-title">
+                {promoBanners[0].title}
+              </strong>
+            </div>
+            <span style="background:#fff; border:1px solid #7025a8; color:#7025a8; font-size:11px; font-weight:700; padding:4px 10px; border-radius:14px;" id="banner-preview-cta">
+              {promoBanners[0].ctaText}
+            </span>
+          </div>
+
+          <button type="submit" class="admin-btn primary" style="align-self:flex-start;">
+            Guardar Banner
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="cms-toast" style="position:fixed; bottom:24px; right:24px; background:#1e824c; color:#fff; padding:12px 24px; border-radius:8px; font-weight:700; box-shadow:0 8px 20px rgba(0,0,0,0.15); display:none; z-index:3000;">
+    ✓ Configuración de CMS guardada y sincronizada con la tienda
+  </div>
+
+  <!-- Client Script for CMS Form Persistence -->
+  <script>
+    import { AdminStoreService } from '../../scripts/admin-store';
+    import type { AnnouncementTicker, PromoBanner } from '../../data/pim/types';
+
+    const tickerForm = document.querySelector<HTMLFormElement>('#cms-ticker-form')!;
+    const bannerForm = document.querySelector<HTMLFormElement>('#cms-banner-form')!;
+    const toast = document.querySelector<HTMLElement>('#cms-toast')!;
+
+    const showToast = () => {
+      toast.style.display = 'block';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 3000);
+    };
+
+    // Load saved ticker
+    const savedTicker = AdminStoreService.getTicker();
+    if (savedTicker) {
+      (document.querySelector('#ticker-active') as HTMLInputElement).checked = savedTicker.active;
+      (document.querySelector('#ticker-text') as HTMLInputElement).value = savedTicker.text;
+      (document.querySelector('#ticker-code') as HTMLInputElement).value = savedTicker.couponCode || '';
+      (document.querySelector('#ticker-coupon-text') as HTMLInputElement).value = savedTicker.couponText || '';
+      (document.querySelector('#ticker-extra') as HTMLTextAreaElement).value = savedTicker.extraInfo || '';
+    }
+
+    tickerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(tickerForm);
+      const ticker: AnnouncementTicker = {
+        id: 'ticker-global',
+        active: (document.querySelector('#ticker-active') as HTMLInputElement).checked,
+        text: formData.get('text') as string,
+        couponCode: formData.get('couponCode') as string,
+        couponText: formData.get('couponText') as string,
+        extraInfo: formData.get('extraInfo') as string,
+      };
+      AdminStoreService.saveTicker(ticker);
+      showToast();
+    });
+
+    bannerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(bannerForm);
+      const banner: PromoBanner = {
+        id: 'banner-hero-home',
+        tag: formData.get('tag') as string,
+        title: formData.get('title') as string,
+        subtitle: formData.get('subtitle') as string,
+        ctaText: formData.get('ctaText') as string,
+        ctaHref: formData.get('ctaHref') as string,
+      };
+      AdminStoreService.saveBanner(banner);
+      showToast();
+    });
+  </script>
+</AdminLayout>

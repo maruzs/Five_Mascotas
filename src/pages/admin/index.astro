@@ -1,0 +1,227 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { products } from '../../data/pim/catalog';
+
+const totalProducts = products.length;
+const totalOffers = products.filter((p) => p.oldPrice > 0).length;
+---
+
+<AdminLayout title="FIVE Admin — Dashboard General" activeNav="dashboard" breadcrumbTitle="Visión Ejecutiva">
+  <div class="admin-page-header">
+    <h1>Dashboard Analítico</h1>
+    <p>Métricas clave de rendimiento, catálogo e inventario de FIVE Mascotas.</p>
+  </div>
+
+  <!-- 1. The 4 KPIs Grid (60-30-10 & Law 1 Hero KPI) -->
+  <section class="admin-kpi-grid">
+    <!-- Hero KPI (Dominant metric) -->
+    <div class="admin-kpi-card hero-kpi">
+      <div class="admin-kpi-header">
+        <span class="admin-kpi-title">Ventas del Mes (Simulado)</span>
+        <div class="admin-kpi-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="1" x2="12" y2="23"></line>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+        </div>
+      </div>
+      <div class="admin-kpi-value">$4.850.000</div>
+      <div class="admin-kpi-footer">
+        <span class="admin-badge-trend up">↗ +18.4%</span>
+        <span>vs mes anterior</span>
+      </div>
+    </div>
+
+    <!-- KPI 2: Ticket Promedio -->
+    <div class="admin-kpi-card">
+      <div class="admin-kpi-header">
+        <span class="admin-kpi-title">Ticket Promedio</span>
+        <div class="admin-kpi-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+            <line x1="7" y1="7" x2="7.01" y2="7"></line>
+          </svg>
+        </div>
+      </div>
+      <div class="admin-kpi-value">$28.450</div>
+      <div class="admin-kpi-footer">
+        <span class="admin-badge-trend up">↗ +5.2%</span>
+        <span>vs mes anterior</span>
+      </div>
+    </div>
+
+    <!-- KPI 3: Catálogo Activo -->
+    <div class="admin-kpi-card">
+      <div class="admin-kpi-header">
+        <span class="admin-kpi-title">Catálogo PIM Activo</span>
+        <div class="admin-kpi-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+        </div>
+      </div>
+      <div class="admin-kpi-value" id="admin-kpi-total-prods">{totalProducts} Items</div>
+      <div class="admin-kpi-footer">
+        <span class="admin-badge-trend up">{totalOffers} en Oferta</span>
+        <span>100% indexado</span>
+      </div>
+    </div>
+
+    <!-- KPI 4: Alerta de Reposición -->
+    <div class="admin-kpi-card">
+      <div class="admin-kpi-header">
+        <span class="admin-kpi-title">Reposición Pendiente</span>
+        <div class="admin-kpi-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </div>
+      </div>
+      <div class="admin-kpi-value">2 SKUs</div>
+      <div class="admin-kpi-footer">
+        <span class="admin-badge-trend warning">Stock Bajo</span>
+        <span>Arenas y Alimento 15kg</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Bento Analytics Grid (Law 3 Chart before question) -->
+  <section class="admin-bento-grid">
+    <!-- Chart 1: Tendencia Semanal de Pedidos (Spline Area) -->
+    <div class="admin-card">
+      <div class="admin-card-head">
+        <div>
+          <h2>Evolución de Pedidos Semanales</h2>
+          <span class="admin-card-subtitle">Volumen de órdenes procesadas últimos 7 días</span>
+        </div>
+        <span class="admin-badge-trend up">Total: 142 pedidos</span>
+      </div>
+      <div class="admin-chart-wrap">
+        <!-- Responsive SVG Spline Curve -->
+        <svg viewBox="0 0 500 180" width="100%" height="100%" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#7025a8" stop-opacity="0.3" />
+              <stop offset="100%" stop-color="#7025a8" stop-opacity="0.0" />
+            </linearGradient>
+          </defs>
+          <!-- Grid lines -->
+          <line x1="0" y1="40" x2="500" y2="40" stroke="#f1f3f5" stroke-dasharray="4" />
+          <line x1="0" y1="90" x2="500" y2="90" stroke="#f1f3f5" stroke-dasharray="4" />
+          <line x1="0" y1="140" x2="500" y2="140" stroke="#f1f3f5" stroke-dasharray="4" />
+          
+          <!-- Area fill -->
+          <path d="M 0 140 Q 70 120, 100 80 T 200 100 T 300 50 T 400 30 T 500 40 L 500 180 L 0 180 Z" fill="url(#areaGradient)" />
+          <!-- Spline Line -->
+          <path d="M 0 140 Q 70 120, 100 80 T 200 100 T 300 50 T 400 30 T 500 40" fill="none" stroke="#7025a8" stroke-width="3" stroke-linecap="round" />
+          <!-- Focus point -->
+          <circle cx="400" cy="30" r="5" fill="#94f963" stroke="#7025a8" stroke-width="2" />
+        </svg>
+      </div>
+      <div style="display:flex; justify-content:space-between; font-size:11px; color:#6c757d; margin-top:8px;">
+        <span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span>
+      </div>
+    </div>
+
+    <!-- Chart 2: Donut Chart con Total Central (Law 2 & Pattern 1) -->
+    <div class="admin-card">
+      <div class="admin-card-head">
+        <div>
+          <h3>Composición por Especie</h3>
+          <span class="admin-card-subtitle">Distribución porcentual de demanda</span>
+        </div>
+      </div>
+      <div class="admin-donut-container">
+        <!-- SVG Donut Chart with center total -->
+        <div style="position:relative; width:140px; height:140px;">
+          <svg viewBox="0 0 36 36" width="140" height="140">
+            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#f1f3f5" stroke-width="4.5" />
+            <!-- Segment 1: Dogs (58%) -->
+            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#7025a8" stroke-width="4.5" stroke-dasharray="58, 100" stroke-linecap="round" />
+            <!-- Segment 2: Cats (42%) -->
+            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#94f963" stroke-width="4.5" stroke-dasharray="42, 100" stroke-dashoffset="-58" stroke-linecap="round" />
+          </svg>
+          <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+            <strong style="font-size:20px; font-weight:850; color:#212529;">100%</strong>
+            <small style="font-size:10px; color:#6c757d; text-transform:uppercase;">Catálogo</small>
+          </div>
+        </div>
+
+        <div class="admin-donut-legend">
+          <div class="admin-donut-legend-item">
+            <span class="admin-legend-dot" style="background:#7025a8;"></span>
+            <span><strong>Perros:</strong> 58% ($2.8M)</span>
+          </div>
+          <div class="admin-donut-legend-item">
+            <span class="admin-legend-dot" style="background:#94f963;"></span>
+            <span><strong>Gatos:</strong> 42% ($2.0M)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Immediate Action Table: Artículos con Alertas -->
+  <section class="admin-card">
+    <div class="admin-card-head">
+      <div>
+        <h2>Alertas de Inventario y Precios</h2>
+        <span class="admin-card-subtitle">Productos prioritarios para reposición o ajuste en PIM</span>
+      </div>
+      <a href="/admin/pim" class="admin-btn primary">Ir al Catálogo PIM ↗</a>
+    </div>
+
+    <div class="admin-table-container">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Mascota</th>
+            <th>Categoría</th>
+            <th>Precio Actual</th>
+            <th>Estado Stock</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="admin-product-cell">
+                <img src="/five-mascotas/alimento-0.svg" alt="" class="admin-product-thumb" />
+                <div class="admin-product-meta-col">
+                  <strong>Alimento para perro adulto</strong>
+                  <small>Wellness Core · 15 kg</small>
+                </div>
+              </div>
+            </td>
+            <td>Perros</td>
+            <td>Alimentos</td>
+            <td><strong>$32.990</strong></td>
+            <td><span class="admin-badge-trend warning">Quedan 3 un</span></td>
+            <td><a href="/admin/pim" class="admin-btn secondary">Editar en PIM</a></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="admin-product-cell">
+                <img src="/demos/miga/arena.svg" alt="" class="admin-product-thumb" />
+                <div class="admin-product-meta-col">
+                  <strong>Arena aglomerante</strong>
+                  <small>FIVE Clean · 4 kg</small>
+                </div>
+              </div>
+            </td>
+            <td>Gatos</td>
+            <td>Higiene</td>
+            <td><strong>$11.990</strong></td>
+            <td><span class="admin-badge-trend warning">Quedan 5 un</span></td>
+            <td><a href="/admin/pim" class="admin-btn secondary">Editar en PIM</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</AdminLayout>

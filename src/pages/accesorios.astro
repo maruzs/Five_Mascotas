@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CatalogPLP from '../components/CatalogPLP.astro';
+---
+
+<BaseLayout
+  title="Accesorios, Camas y Juguetes para Mascotas | FIVE Mascotas"
+  description="Todo para hacer su vida más cómoda y divertida. Camas ortopédicas, comederos de cerámica, correas y juguetes resistentes."
+>
+  <CatalogPLP
+    pageTitle="Accesorios, Camas y Juguetes"
+    initialPet="Todos"
+    initialCategory="Accesorios"
+    bannerId="banner-hero-home"
+    breadcrumbs={[
+      { label: 'Inicio', href: '/' },
+      { label: 'Accesorios' },
+    ]}
+  />
+</BaseLayout>

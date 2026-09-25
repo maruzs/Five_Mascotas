@@ -1,0 +1,72 @@
+/**
+ * 💼 SaaS B2B Trusted Palette (Stripe & Mercury Inspired)
+ *
+ * Clean, authoritative corporate palette designed for high-conversion B2B apps,
+ * fintech portals, dense data tables, and enterprise workflows.
+ */
+
+:root {
+  /* Surface Layers (Light Neutral Hierarchy) */
+  --bg-canvas: #f8fafc;
+  --bg-subtle: #f1f5f9;
+  --bg-surface: #ffffff;
+  --bg-surface-hover: #f8fafc;
+  --bg-surface-active: #f1f5f9;
+  --bg-glass: rgba(255, 255, 255, 0.85);
+  --bg-glass-elevated: rgba(255, 255, 255, 0.95);
+
+  /* Hairline Borders & Dividers */
+  --border-hairline: #e2e8f0;
+  --border-subtle: #cbd5e1;
+  --border-focus: #2563eb;
+  --border-highlight: #94a3b8;
+
+  /* Typography / Foreground */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --text-faint: #94a3b8;
+  --text-inverse: #ffffff;
+
+  /* Brand Accents (Mercury Cobalt & Stripe Deep Indigo) */
+  --brand-primary: #0055ff;
+  --brand-primary-hover: #0045d8;
+  --brand-primary-glow: rgba(0, 85, 255, 0.18);
+  --brand-navy: #0a2540;
+  --brand-cyan: #0284c7;
+  --brand-emerald: #059669;
+  --brand-amber: #d97706;
+  --brand-rose: #e11d48;
+
+  /* Status Colors */
+  --status-success: #059669;
+  --status-success-bg: #ecfdf5;
+  --status-warning: #d97706;
+  --status-warning-bg: #fffbeb;
+  --status-error: #dc2626;
+  --status-error-bg: #fef2f2;
+  --status-info: #0284c7;
+  --status-info-bg: #f0f9ff;
+
+  /* Elevation & Clean Shadows */
+  --shadow-subtle: 0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 1px 2px -1px rgba(15, 23, 42, 0.05);
+  --shadow-card: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05), 0 0 0 1px var(--border-hairline);
+  --shadow-overlay: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.08), 0 0 0 1px var(--border-subtle);
+  --shadow-glow: 0 0 20px -2px var(--brand-primary-glow);
+
+  /* Radii */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+}
+
+/* Light theme body application */
+body.saas-b2b,
+.saas-b2b {
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  color-scheme: light;
+}

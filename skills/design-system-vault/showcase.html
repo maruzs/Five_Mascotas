@@ -1,0 +1,1939 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solo-Founder Design System — Master Showcase (Ágora + Rare UI + Libraries.dev)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes shimmer-spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes border-beam {
+      100% { offset-distance: 100%; }
+    }
+    @keyframes bell-swing {
+      0% { transform: rotate(0deg); }
+      20% { transform: rotate(16deg); }
+      40% { transform: rotate(-14deg); }
+      60% { transform: rotate(8deg); }
+      80% { transform: rotate(-4deg); }
+      100% { transform: rotate(0deg); }
+    }
+    @keyframes float-up {
+      0% { opacity: 1; transform: translateY(0px) scale(0.8); }
+      100% { opacity: 0; transform: translateY(-44px) scale(1.3); }
+    }
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+  
+    /* OSMO & Physics Suite Extra Styles */
+    .card-drop-anim {
+      animation: dropDownCard 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+    .card-return-anim {
+      animation: returnUpCard 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+    @keyframes dropDownCard {
+      0% { transform: translate(0px, 0px) rotate(0deg) scale(1); opacity: 1; }
+      80% { opacity: 1; }
+      100% { transform: translate(25px, 260px) rotate(8deg) scale(0.96); opacity: 0; }
+    }
+    @keyframes returnUpCard {
+      0% { transform: translate(-15px, -180px) rotate(-6deg) scale(0.96); opacity: 0; }
+      100% { transform: translate(0px, 0px) rotate(0deg) scale(1); opacity: 1; }
+    }
+    .printer-paper-roll {
+      animation: printSlideOut 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes printSlideOut {
+      0% { transform: translateY(-100%); opacity: 0; }
+      15% { opacity: 1; }
+      100% { transform: translateY(0%); opacity: 1; }
+    }
+    .dock-icon-item {
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .dock-icon-item:hover {
+      transform: scale(1.4) translateY(-10px);
+    }
+    .dock-icon-item:hover + .dock-icon-item,
+    .dock-icon-item:has(+ .dock-icon-item:hover) {
+      transform: scale(1.18) translateY(-4px);
+    }
+
+  </style>
+</head>
+<body class="bg-[#08090a] text-slate-100 antialiased selection:bg-indigo-500 selection:text-white pb-32">
+
+  <!-- ============================================================ -->
+  <!-- 1. FLOATING NAVBAR WITH GLASSMORPHISM                        -->
+  <!-- ============================================================ -->
+  <header class="sticky top-4 z-50 flex justify-center px-4">
+    <div class="flex items-center justify-between gap-3 sm:gap-6 rounded-full border border-white/10 bg-[#0d0f14]/85 px-4 sm:px-6 py-2.5 shadow-2xl backdrop-blur-xl">
+      <div class="flex items-center gap-2.5 font-bold text-white tracking-tight">
+        <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-500 text-xs font-black text-white shadow-lg shadow-indigo-500/40">
+          Δ
+        </div>
+        <span class="text-xs sm:text-sm">Design System Master</span>
+      </div>
+
+      <nav class="hidden lg:flex items-center gap-1 text-xs font-medium text-slate-400">
+        <a href="#osmo-suite" class="rounded-full px-2.5 py-1 bg-amber-500/20 text-amber-300 font-semibold hover:text-white transition">✨ OSMO Motion & Physics</a>
+        <a href="#ai-libraries" class="rounded-full px-2.5 py-1 hover:text-white transition">AI Orbs & Beams</a>
+        <a href="#rare-ui" class="rounded-full px-2.5 py-1 hover:text-white transition">Rare UI</a>
+        <a href="#agora-primitives" class="rounded-full px-2.5 py-1 hover:text-white transition">Ágora</a>
+        <a href="#dashboards" class="rounded-full px-2.5 py-1 hover:text-white transition">Dashboards</a>
+        <a href="#ecommerce" class="rounded-full px-2.5 py-1 hover:text-white transition">E-Commerce</a>
+        <a href="#flutter" class="rounded-full px-2.5 py-1 hover:text-white transition">Flutter</a>
+      </nav>
+
+      <div class="flex items-center gap-2">
+        <button onclick="openCmdMenu()" class="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-400 hover:text-white hover:bg-white/10 transition">
+          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <span class="hidden sm:inline">Cmd+K</span>
+        </button>
+        <button onclick="toggleCart()" class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-white shadow-md shadow-indigo-600/30 hover:bg-indigo-500 transition">
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+          <span id="nav-cart-badge" class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-rose-500 text-[10px] font-bold">2</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================ -->
+  <!-- 2. HERO SPOTLIGHT                                           -->
+  <!-- ============================================================ -->
+  <section class="relative overflow-hidden border-b border-white/10 px-6 py-20 text-center" onmousemove="updateHeroSpotlight(event)">
+    <div class="pointer-events-none absolute inset-0 opacity-[0.05]" style="background-image: linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px); background-size: 40px 40px;"></div>
+    <div id="hero-spotlight" class="pointer-events-none absolute inset-0 transition-opacity duration-200" style="background: radial-gradient(420px circle at 50% 50%, rgba(99, 102, 241, 0.18), transparent 80%);"></div>
+
+    <div class="relative z-10 mx-auto max-w-4xl">
+      <div class="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-1 text-xs font-semibold text-indigo-400">
+        <span class="flex h-1.5 w-1.5 rounded-full bg-indigo-400 animate-ping"></span>
+        <span>Biblioteca Maestra de Diseño Modular — Catálogo Completo</span>
+      </div>
+
+      <h1 class="mt-6 text-4xl font-extrabold tracking-tight sm:text-6xl text-white">
+        El Ecosistema Completo de <br>
+        <span class="bg-gradient-to-r from-indigo-400 via-sky-300 to-emerald-400 bg-clip-text text-transparent">
+          Ágora + Rare UI + Libraries.dev
+        </span>
+      </h1>
+
+      <p class="mx-auto mt-4 max-w-2xl text-sm sm:text-base text-slate-400">
+        Todas las secciones, interacciones, dashboards, tablas, carritos, orbes y scroll storytelling integrados en un único visor interactivo.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 0. OSMO MOTION & ADVANCED PHYSICS SUITE                      -->
+  <!-- ============================================================ -->
+  <section id="osmo-suite" class="mx-auto max-w-7xl px-4 sm:px-6 py-20 border-b border-white/10">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+      <div>
+        <div class="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-amber-300">
+          <span>✨ Colección Cinemática OSMO + Physics</span>
+        </div>
+        <h2 class="mt-3 text-3xl sm:text-4xl font-black tracking-tight text-white">OSMO & Physics Interactive Showcase</h2>
+        <p class="mt-1 text-sm text-slate-400 max-w-2xl">
+          Componentes de clase mundial recreados desde animaciones avanzadas: mazo con caída por gravedad, dock macOS interactivo, impresora térmica POS, tipografía rodante 3D y carrusel polaroid tangencial.
+        </p>
+      </div>
+      <div class="flex items-center gap-2 text-xs font-mono text-slate-400 bg-white/5 px-3 py-1.5 rounded-xl border border-white/10">
+        <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        10 Componentes Templates 100% Funcionales
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+      <!-- COMPONENTE 1: OSMO DROPPING CARDS STACK -->
+      <div class="rounded-3xl border border-white/10 bg-[#0d0f14] p-6 sm:p-8 flex flex-col justify-between overflow-hidden shadow-2xl relative">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <span class="text-[11px] font-mono text-amber-400 font-bold uppercase">01 / Interactive Stack</span>
+            <h3 class="text-xl font-bold text-white">OSMO Dropping Cards Stack</h3>
+            <p class="text-xs text-slate-400">Mazo con desprendimiento por gravedad y ciclo infinito.</p>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="prevDroppingCard()" class="w-9 h-9 rounded-full bg-white/5 hover:bg-white/15 text-white flex items-center justify-center border border-white/10 transition active:scale-90">←</button>
+            <button onclick="nextDroppingCard()" class="w-9 h-9 rounded-full bg-white text-slate-950 font-black flex items-center justify-center shadow-lg hover:bg-slate-200 transition active:scale-90">→</button>
+          </div>
+        </div>
+
+        <!-- Viewport Cards -->
+        <div class="relative w-full h-[280px] my-2 select-none" id="osmo-dropping-viewport">
+          <!-- Cards generadas por JS -->
+        </div>
+
+        <div class="flex items-center justify-between pt-4 border-t border-white/5 text-[11px] text-slate-400 font-mono">
+          <span>Click en la tarjeta frontal para desenganchar</span>
+          <span id="dropping-card-indicator">1 / 4</span>
+        </div>
+      </div>
+
+      <!-- COMPONENTE 2: APPLE MACOS DOCK NAVIGATION BAR -->
+      <div class="rounded-3xl border border-white/10 bg-[#0d0f14] p-6 sm:p-8 flex flex-col justify-between overflow-hidden shadow-2xl relative">
+        <div>
+          <span class="text-[11px] font-mono text-indigo-400 font-bold uppercase">02 / Navigation Dock</span>
+          <h3 class="text-xl font-bold text-white">Apple macOS Dock Navigation Bar</h3>
+          <p class="text-xs text-slate-400 mb-6">Magnificación parabólica ultra suave (scale + translateY), tooltips flotantes e indicadores de app activa.</p>
+        </div>
+
+        <!-- Dock Container -->
+        <div class="py-12 flex flex-col items-center justify-center">
+          <div class="flex items-end gap-3 px-4 py-2.5 rounded-2xl bg-white/[0.08] backdrop-blur-2xl border border-white/15 shadow-2xl">
+            <div class="dock-icon-item group relative flex flex-col items-center cursor-pointer">
+              <span class="absolute -top-9 opacity-0 group-hover:opacity-100 transition-all duration-200 px-2 py-0.5 rounded-md bg-[#1e2029] text-[10px] text-white font-medium border border-white/10 whitespace-nowrap shadow-xl pointer-events-none">Finder</span>
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-sky-600 to-blue-400 flex items-center justify-center text-xl shadow-lg border border-white/20">💻</div>
+              <span class="w-1 h-1 rounded-full bg-white/80 mt-1.5"></span>
+            </div>
+            <div class="dock-icon-item group relative flex flex-col items-center cursor-pointer">
+              <span class="absolute -top-9 opacity-0 group-hover:opacity-100 transition-all duration-200 px-2 py-0.5 rounded-md bg-[#1e2029] text-[10px] text-white font-medium border border-white/10 whitespace-nowrap shadow-xl pointer-events-none">Notion</span>
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-zinc-800 to-zinc-600 flex items-center justify-center text-xl shadow-lg border border-white/20">📝</div>
+              <span class="w-1 h-1 rounded-full bg-white/80 mt-1.5"></span>
+            </div>
+            <div class="dock-icon-item group relative flex flex-col items-center cursor-pointer">
+              <span class="absolute -top-9 opacity-0 group-hover:opacity-100 transition-all duration-200 px-2 py-0.5 rounded-md bg-[#1e2029] text-[10px] text-white font-medium border border-white/10 whitespace-nowrap shadow-xl pointer-events-none">Figma</span>
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-violet-600 to-pink-500 flex items-center justify-center text-xl shadow-lg border border-white/20">🎨</div>
+              <span class="w-1 h-1 rounded-full bg-white/80 mt-1.5"></span>
+            </div>
+            <div class="dock-icon-item group relative flex flex-col items-center cursor-pointer">
+              <span class="absolute -top-9 opacity-0 group-hover:opacity-100 transition-all duration-200 px-2 py-0.5 rounded-md bg-[#1e2029] text-[10px] text-white font-medium border border-white/10 whitespace-nowrap shadow-xl pointer-events-none">Slack</span>
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-600 to-rose-500 flex items-center justify-center text-xl shadow-lg border border-white/20">💬</div>
+            </div>
+            <div class="dock-icon-item group relative flex flex-col items-center cursor-pointer">
+              <span class="absolute -top-9 opacity-0 group-hover:opacity-100 transition-all duration-200 px-2 py-0.5 rounded-md bg-[#1e2029] text-[10px] text-white font-medium border border-white/10 whitespace-nowrap shadow-xl pointer-events-none">Terminal / SSH</span>
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-700 to-teal-500 flex items-center justify-center text-xl shadow-lg border border-white/20">⚡</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-4 border-t border-white/5 text-[11px] text-slate-400 font-mono">
+          <span>Efecto parabólico CSS fluido</span>
+          <span class="text-emerald-400">Sin saltos de scrollbar ✓</span>
+        </div>
+      </div>
+
+      <!-- COMPONENTE 3: THERMAL RECEIPT PRINTER (POS MODAL) -->
+      <div class="rounded-3xl border border-white/10 bg-[#0d0f14] p-6 sm:p-8 flex flex-col justify-between overflow-hidden shadow-2xl relative">
+        <div>
+          <span class="text-[11px] font-mono text-emerald-400 font-bold uppercase">03 / Interactive POS E-Commerce</span>
+          <h3 class="text-xl font-bold text-white">Thermal Receipt Printer Modal</h3>
+          <p class="text-xs text-slate-400 mb-6">Animación de terminal punto de venta con ranura física, pantalla LCD interactiva y boleta con corte troquelado.</p>
+        </div>
+
+        <!-- Terminal POS Visual -->
+        <div class="flex flex-col items-center justify-center py-4">
+          <div class="w-72 bg-[#181a20] rounded-2xl p-5 border border-white/10 shadow-2xl relative">
+            <!-- Ranura de papel -->
+            <div class="w-full h-3 bg-black/60 rounded-full mb-3 border-b border-white/10 relative overflow-visible flex justify-center">
+              <!-- Papel deslizándose -->
+              <div id="printer-paper" class="hidden absolute top-1 w-56 bg-[#fcfaf2] text-slate-900 rounded-b-lg p-3 shadow-2xl font-mono text-[10px] printer-paper-roll border border-slate-300">
+                <div class="text-center font-bold pb-1 border-b border-dashed border-slate-400">EPISTIA SAAS STORE</div>
+                <div class="flex justify-between py-1 text-[9px] text-slate-600">
+                  <span>#ORD-9841</span>
+                  <span>25/09 11:45</span>
+                </div>
+                <div class="py-1 space-y-0.5 border-b border-dashed border-slate-400">
+                  <div class="flex justify-between"><span>1x Pro License</span><span>9.00</span></div>
+                  <div class="flex justify-between"><span>1x Cloud Addon</span><span>2.00</span></div>
+                </div>
+                <div class="flex justify-between font-bold pt-1 text-xs">
+                  <span>TOTAL PAGADO</span>
+                  <span>1.00</span>
+                </div>
+                <div class="text-center text-[8px] text-slate-500 pt-1">¡Gracias por tu compra!</div>
+              </div>
+            </div>
+
+            <!-- Mini Pantalla LCD -->
+            <div class="bg-[#0d2818] border border-emerald-500/40 rounded-xl p-3 mb-4 font-mono text-emerald-400 text-xs flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span id="pos-lcd-status" class="h-2 w-2 rounded-full bg-emerald-400 animate-ping"></span>
+                <span id="pos-lcd-text">LISTO: 1.00 USD</span>
+              </div>
+              <span class="text-[10px] text-emerald-600 font-bold">ONLINE</span>
+            </div>
+
+            <!-- Botón físico de imprimir -->
+            <button id="btn-print-receipt" onclick="triggerPrintSimulation()" class="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition active:scale-95 shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2">
+              <span>🖨️</span> <span>Imprimir Comprobante</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-4 border-t border-white/5 text-[11px] text-slate-400 font-mono">
+          <span>Reemplazo cinematográfico para checkouts aburridos</span>
+          <span class="text-emerald-400">Física 2 etapas ✓</span>
+        </div>
+      </div>
+
+      <!-- COMPONENTE 4: OSMO ROTATING TEXT FLIPPER -->
+      <div class="rounded-3xl border border-white/10 bg-[#0d0f14] p-6 sm:p-8 flex flex-col justify-between overflow-hidden shadow-2xl relative">
+        <div>
+          <span class="text-[11px] font-mono text-pink-400 font-bold uppercase">04 / Headline Typography</span>
+          <h3 class="text-xl font-bold text-white">OSMO Rotating Text Flipper</h3>
+          <p class="text-xs text-slate-400 mb-6">Efecto tipográfico 3D (rotateX) para títulos principales que alternan palabras clave con dinamismo sin descolocar la frase.</p>
+        </div>
+
+        <div class="py-12 flex flex-col items-center justify-center text-center">
+          <div class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white max-w-md leading-relaxed">
+            Construye software con
+            <span class="inline-block relative h-10 w-36 mx-1.5 align-middle perspective-1000 overflow-hidden">
+              <span id="rotating-text-word" class="inline-block w-full h-full text-center text-emerald-400 transition-transform duration-500 ease-out font-black">
+                velocidad
+              </span>
+            </span>
+            que enamora a tus usuarios.
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-4 border-t border-white/5 text-[11px] text-slate-400 font-mono">
+          <span>Ciclo cada 2.5s</span>
+          <span class="text-pink-400">Transform 3D rotateX ✓</span>
+        </div>
+      </div>
+
+      <!-- COMPONENTE 5: LIQUID FLUID TAB BAR (CREST) -->
+      <div class="rounded-3xl border border-white/10 bg-[#0d0f14] p-6 sm:p-8 flex flex-col justify-between overflow-hidden shadow-2xl relative">
+        <div>
+          <span class="text-[11px] font-mono text-sky-400 font-bold uppercase">05 / Mobile & Floating Navigation</span>
+          <h3 class="text-xl font-bold text-white">Liquid Fluid Tab Bar (Animación CREST)</h3>
+          <p class="text-xs text-slate-400 mb-6">Barra flotante estilo cápsula con física de onda de fluido, proyección de gota elástica y animación de relleno SVG.</p>
+        </div>
+
+        <!-- Tab Bar Interactive Simulation -->
+        <div class="py-8 flex flex-col items-center justify-center">
+          <div class="relative flex items-center bg-[#16181f] rounded-full p-2 border border-white/10 shadow-2xl gap-3">
+            <button onclick="selectFluidTab(0)" class="fluid-tab-btn relative z-10 w-14 h-14 rounded-full flex flex-col items-center justify-center text-white transition-all">
+              <span class="text-lg">🏠</span>
+              <span class="text-[9px] font-bold mt-0.5">Home</span>
+            </button>
+            <button onclick="selectFluidTab(1)" class="fluid-tab-btn relative z-10 w-14 h-14 rounded-full flex flex-col items-center justify-center text-slate-400 hover:text-white transition-all">
+              <span class="text-lg">📊</span>
+              <span class="text-[9px] font-bold mt-0.5">Stats</span>
+            </button>
+            <button onclick="selectFluidTab(2)" class="fluid-tab-btn relative z-10 w-14 h-14 rounded-full flex flex-col items-center justify-center text-slate-400 hover:text-white transition-all">
+              <span class="text-lg">🛍️</span>
+              <span class="text-[9px] font-bold mt-0.5">Orders</span>
+            </button>
+            <button onclick="selectFluidTab(3)" class="fluid-tab-btn relative z-10 w-14 h-14 rounded-full flex flex-col items-center justify-center text-slate-400 hover:text-white transition-all">
+              <span class="text-lg">⚙️</span>
+              <span class="text-[9px] font-bold mt-0.5">Settings</span>
+            </button>
+            <!-- Fluid hill indicator -->
+            <div id="fluid-hill-pill" class="absolute left-2 top-2 w-14 h-14 rounded-full bg-gradient-to-tr from-sky-500 to-indigo-600 shadow-lg shadow-sky-500/40 transition-all duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] pointer-events-none"></div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-4 border-t border-white/5 text-[11px] text-slate-400 font-mono">
+          <span>React + Flutter equivalentes</span>
+          <span class="text-sky-400">Física Bézier fluida ✓</span>
+        </div>
+      </div>
+
+      <!-- COMPONENTE 6: OSMO SECTION ANCHOR DOCK -->
+      <div class="rounded-3xl border border-white/10 bg-[#0d0f14] p-6 sm:p-8 flex flex-col justify-between overflow-hidden shadow-2xl relative">
+        <div>
+          <span class="text-[11px] font-mono text-purple-400 font-bold uppercase">06 / Section Scroll Spy</span>
+          <h3 class="text-xl font-bold text-white">OSMO Section Anchor Dock</h3>
+          <p class="text-xs text-slate-400 mb-6">Píldora flotante que detecta la sección activa de la página con fade tipográfico y menú desplegable numerado.</p>
+        </div>
+
+        <!-- Section Dock Simulation -->
+        <div class="py-8 flex flex-col items-center justify-center relative">
+          <!-- Popover desplegable -->
+          <div id="anchor-dock-menu" class="hidden absolute bottom-20 flex flex-col gap-1.5 p-2 rounded-2xl bg-[#1a1c24] border border-white/10 shadow-2xl w-48 text-xs font-mono animate-in fade-in zoom-in-95">
+            <div onclick="setAnchorSection('01 Discovery')" class="p-2 rounded-xl hover:bg-white/10 cursor-pointer flex justify-between text-slate-300 hover:text-white"><span>01 Discovery</span><span>→</span></div>
+            <div onclick="setAnchorSection('02 Strategy')" class="p-2 rounded-xl hover:bg-white/10 cursor-pointer flex justify-between text-slate-300 hover:text-white"><span>02 Strategy</span><span>→</span></div>
+            <div onclick="setAnchorSection('03 Design')" class="p-2 rounded-xl hover:bg-white/10 cursor-pointer flex justify-between text-slate-300 hover:text-white"><span>03 Design</span><span>→</span></div>
+            <div onclick="setAnchorSection('04 Development')" class="p-2 rounded-xl hover:bg-white/10 cursor-pointer flex justify-between text-slate-300 hover:text-white"><span>04 Development</span><span>→</span></div>
+          </div>
+
+          <!-- Main Pill -->
+          <div onclick="toggleAnchorMenu()" class="flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/[0.08] hover:bg-white/15 border border-white/15 backdrop-blur-xl cursor-pointer shadow-xl transition active:scale-95">
+            <span class="h-2 w-2 rounded-full bg-purple-400 animate-pulse"></span>
+            <span id="anchor-current-text" class="text-xs font-bold text-white tracking-wide">01 Discovery</span>
+            <span class="text-[10px] text-slate-400">▾</span>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-4 border-t border-white/5 text-[11px] text-slate-400 font-mono">
+          <span>Scroll-spy con IntersectionObserver</span>
+          <span class="text-purple-400">Popover vertical ✓</span>
+        </div>
+      </div>
+
+      <!-- COMPONENTE 7: OSMO SPATIAL 3D CURVED CARDS SLIDER -->
+      <div class="rounded-3xl border border-white/10 bg-[#0d0f14] p-6 sm:p-8 flex flex-col justify-between overflow-hidden shadow-2xl relative">
+        <div>
+          <span class="text-[11px] font-mono text-emerald-400 font-bold uppercase">07 / Spatial 3D Curved Slider</span>
+          <h3 class="text-xl font-bold text-white">OSMO Spatial 3D Curved Slider</h3>
+          <p class="text-xs text-slate-400 mb-6">Carrusel cilíndrico espacial cóncavo con perspectiva 3D profunda, rotación tangencial y controles interactivos.</p>
+        </div>
+
+        <!-- Slider Viewport -->
+        <div class="py-8 flex flex-col items-center justify-center relative perspective-1000 overflow-hidden">
+          <div class="flex items-center justify-center gap-4 py-6" id="spatial-cards-track">
+            <div onclick="setSpatialActive(0)" class="spatial-card cursor-pointer transition-all duration-500 rounded-2xl w-32 h-44 bg-gradient-to-br from-amber-700 to-amber-900 border border-white/10 p-3 flex flex-col justify-between shadow-xl" style="transform: rotateY(25deg) scale(0.85); opacity: 0.5;">
+              <span class="text-[9px] font-mono text-amber-200">01 / WOOD</span>
+              <span class="text-base font-black text-white">WØOD</span>
+            </div>
+            <div onclick="setSpatialActive(1)" class="spatial-card cursor-pointer transition-all duration-500 rounded-2xl w-40 h-52 bg-gradient-to-br from-emerald-600 to-teal-900 border border-emerald-400/30 p-4 flex flex-col justify-between shadow-2xl scale-105" style="transform: rotateY(0deg) scale(1); opacity: 1;">
+              <span class="text-[10px] font-mono text-emerald-200 font-bold">02 / GRÄSS</span>
+              <span class="text-2xl font-black text-white">GRÄSS</span>
+            </div>
+            <div onclick="setSpatialActive(2)" class="spatial-card cursor-pointer transition-all duration-500 rounded-2xl w-32 h-44 bg-gradient-to-br from-sky-700 to-indigo-950 border border-white/10 p-3 flex flex-col justify-between shadow-xl" style="transform: rotateY(-25deg) scale(0.85); opacity: 0.5;">
+              <span class="text-[9px] font-mono text-sky-200">03 / STÊPS</span>
+              <span class="text-base font-black text-white">STÊPS</span>
+            </div>
+          </div>
+          <!-- Slider Controls -->
+          <div class="flex gap-3 mt-4">
+            <button onclick="shiftSpatial(-1)" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-xs active:scale-90">←</button>
+            <button onclick="shiftSpatial(1)" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-xs active:scale-90">→</button>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-4 border-t border-white/5 text-[11px] text-slate-400 font-mono">
+          <span>Templates: SpatialCardsSlider.tsx</span>
+          <span class="text-emerald-400">Curvatura cilíndrica ✓</span>
+        </div>
+      </div>
+
+      <!-- COMPONENTE 8: OSMO POLAROID ARCH WHEEL SLIDER -->
+      <div class="rounded-3xl border border-white/10 bg-[#0d0f14] p-6 sm:p-8 flex flex-col justify-between overflow-hidden shadow-2xl relative">
+        <div>
+          <span class="text-[11px] font-mono text-amber-400 font-bold uppercase">08 / Editorial Polaroid Carousel</span>
+          <h3 class="text-xl font-bold text-white">OSMO Polaroid Arch Wheel Slider</h3>
+          <p class="text-xs text-slate-400 mb-6">Tarjetas estilo polaroid vintage montadas sobre un arco parabólico inferior con distribución tangencial en abanico.</p>
+        </div>
+
+        <!-- Arch Wheel Viewport -->
+        <div class="py-8 flex flex-col items-center justify-center relative overflow-hidden">
+          <div class="flex items-end justify-center gap-3 h-52" id="polaroid-track">
+            <div class="w-28 h-36 bg-[#f7f5ee] text-slate-900 rounded-lg p-2 shadow-2xl flex flex-col justify-between cursor-pointer transition-all duration-300" style="transform: translateY(18px) rotate(-12deg); opacity: 0.6;">
+              <div class="w-full h-24 bg-amber-800 rounded overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=300&q=80" class="w-full h-full object-cover" />
+              </div>
+              <span class="text-[10px] font-black tracking-tight text-center">YØGA</span>
+            </div>
+            <div class="w-32 h-44 bg-[#f7f5ee] text-slate-900 rounded-lg p-2.5 shadow-2xl flex flex-col justify-between cursor-pointer transition-all duration-300 ring-2 ring-amber-400" style="transform: translateY(0px) rotate(0deg); opacity: 1;">
+              <div class="w-full h-30 bg-emerald-800 rounded overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=300&q=80" class="w-full h-full object-cover" />
+              </div>
+              <span class="text-xs font-black tracking-tight text-center">RĀDIAL</span>
+            </div>
+            <div class="w-28 h-36 bg-[#f7f5ee] text-slate-900 rounded-lg p-2 shadow-2xl flex flex-col justify-between cursor-pointer transition-all duration-300" style="transform: translateY(18px) rotate(12deg); opacity: 0.6;">
+              <div class="w-full h-24 bg-teal-800 rounded overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=300&q=80" class="w-full h-full object-cover" />
+              </div>
+              <span class="text-[10px] font-black tracking-tight text-center">TRØPICAL</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-4 border-t border-white/5 text-[11px] text-slate-400 font-mono">
+          <span>Templates: PolaroidWheelSlider.tsx</span>
+          <span class="text-amber-400">Abanico tangencial ✓</span>
+        </div>
+      </div>
+
+      <!-- COMPONENTE 9: OSMO EXPANDING FEATURE PILLS -->
+      <div class="rounded-3xl border border-white/10 bg-[#0d0f14] p-6 sm:p-8 flex flex-col justify-between overflow-hidden shadow-2xl relative">
+        <div>
+          <span class="text-[11px] font-mono text-blue-400 font-bold uppercase">09 / Interactive Product Bento</span>
+          <h3 class="text-xl font-bold text-white">OSMO Expanding Feature Pills</h3>
+          <p class="text-xs text-slate-400 mb-6">Píldoras interactivas con botón "+" que rota a "x", revelan descripción técnica y conmutan la vista multimedia del producto.</p>
+        </div>
+
+        <!-- Bento Pills Simulation -->
+        <div class="py-4 space-y-3">
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4 cursor-pointer transition-all" onclick="toggleFeaturePill(1)">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-bold text-white">Effortless Movement</span>
+              <span id="pill-icon-1" class="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold text-white transition-transform duration-300">＋</span>
+            </div>
+            <div id="pill-body-1" class="hidden mt-2 text-xs text-slate-400 leading-relaxed pt-2 border-t border-white/5">
+              Tejido elástico en cuatro direcciones y corte biomecánico adaptativo que acompaña cada paso y movimiento natural.
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4 cursor-pointer transition-all" onclick="toggleFeaturePill(2)">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-bold text-white">Storm-ready Waterproofing</span>
+              <span id="pill-icon-2" class="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold text-white transition-transform duration-300">＋</span>
+            </div>
+            <div id="pill-body-2" class="hidden mt-2 text-xs text-slate-400 leading-relaxed pt-2 border-t border-white/5">
+              Capa exterior hidrofugada de sellado térmico que repele el agua antes de que alcance la fibra interna.
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-4 border-t border-white/5 text-[11px] text-slate-400 font-mono">
+          <span>Templates: ExpandingFeaturePills.tsx</span>
+          <span class="text-blue-400">Micro-interacción 2 columnas ✓</span>
+        </div>
+      </div>
+
+      <!-- COMPONENTE 10: OSMO STACKING CARDS 3D (CSS PERSPECTIVE) -->
+      <div class="rounded-3xl border border-white/10 bg-[#0d0f14] p-6 sm:p-8 flex flex-col justify-between overflow-hidden shadow-2xl relative">
+        <div>
+          <span class="text-[11px] font-mono text-rose-400 font-bold uppercase">10 / Scroll Depth Stacking</span>
+          <h3 class="text-xl font-bold text-white">OSMO 3D Stacking Cards</h3>
+          <p class="text-xs text-slate-400 mb-6">Tarjetas fijas (`sticky`) con inclinación 3D retrocediendo en profundidad (`rotateX(25deg)`), reducción de escala y atenuación de luz.</p>
+        </div>
+
+        <!-- 3D Stack Mockup -->
+        <div class="py-6 flex flex-col items-center justify-center perspective-1000">
+          <div class="relative w-64 h-40">
+            <div class="absolute inset-0 rounded-2xl bg-[#e8c4b8] text-[#2b1a12] p-4 shadow-xl flex flex-col justify-between" style="transform: rotateX(25deg) scale(0.85) translateY(-30px); filter: brightness(0.5); opacity: 0.8;">
+              <span class="text-[10px] font-bold">Tarjeta 01 (Retirada 3D)</span>
+              <span class="text-lg font-black">Velocidad</span>
+            </div>
+            <div class="absolute inset-0 rounded-2xl bg-[#dde3c0] text-[#1d2212] p-4 shadow-xl flex flex-col justify-between" style="transform: rotateX(15deg) scale(0.92) translateY(-15px); filter: brightness(0.75); opacity: 0.9;">
+              <span class="text-[10px] font-bold">Tarjeta 02 (Transición)</span>
+              <span class="text-lg font-black">Seguridad</span>
+            </div>
+            <div class="absolute inset-0 rounded-2xl bg-[#c9d6e8] text-[#121a24] p-4 shadow-2xl flex flex-col justify-between border border-white/20" style="transform: rotateX(0deg) scale(1) translateY(0px); filter: brightness(1);">
+              <span class="text-[10px] font-bold">Tarjeta 03 (Activa al Frente)</span>
+              <span class="text-lg font-black">Autonomía</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-4 border-t border-white/5 text-[11px] text-slate-400 font-mono">
+          <span>Templates: StackingCards3D.tsx</span>
+          <span class="text-rose-400">Pure CSS Scroll Timeline ✓</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 1: LIBRARIES.DEV AI ORBS & BEAMS                     -->
+  <!-- ============================================================ -->
+  <section id="ai-libraries" class="mx-auto max-w-6xl px-6 py-16 border-b border-white/10">
+    <div class="mb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-sky-400">
+        <span>01</span>
+        <span class="h-1 w-1 rounded-full bg-sky-400"></span>
+        <span>Libraries.dev — AI Interfaces & Visual Effects</span>
+      </div>
+      <h2 class="text-2xl font-bold tracking-tight text-white mt-1">Orbes de IA, Border Beam y Fusión Líquida</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- 1. Thinking Orb AI Canvas -->
+      <div class="flex flex-col items-center justify-between rounded-3xl border border-white/10 bg-[#0f1115] p-6 shadow-2xl">
+        <div class="w-full text-left">
+          <span class="rounded-full bg-indigo-500/10 px-2.5 py-0.5 text-[10px] font-bold text-indigo-400 border border-indigo-500/20">
+            libraries.dev: thinking-orbs
+          </span>
+          <h3 class="text-base font-bold text-white mt-2">Thinking Orb (ChatGPT Voice)</h3>
+          <p class="text-xs text-slate-400 mt-1">Simulación multi-frecuencia en HTML5 Canvas con morphing orgánico.</p>
+        </div>
+
+        <div class="my-6">
+          <canvas id="thinking-orb-canvas" width="180" height="180" class="will-change-transform"></canvas>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-1.5 w-full border-t border-white/10 pt-4">
+          <button onclick="setOrbState('idle')" class="rounded-lg bg-white/5 px-2.5 py-1 text-[11px] font-medium text-slate-300 hover:bg-white/10">Idle</button>
+          <button onclick="setOrbState('listening')" class="rounded-lg bg-emerald-500/20 text-emerald-300 px-2.5 py-1 text-[11px] font-medium hover:bg-emerald-500/30">Listening</button>
+          <button onclick="setOrbState('thinking')" class="rounded-lg bg-indigo-600 text-white px-2.5 py-1 text-[11px] font-medium">Thinking</button>
+          <button onclick="setOrbState('speaking')" class="rounded-lg bg-rose-500/20 text-rose-300 px-2.5 py-1 text-[11px] font-medium hover:bg-rose-500/30">Speaking</button>
+        </div>
+      </div>
+
+      <!-- 2. Matrix Orb 3D Points -->
+      <div class="flex flex-col items-center justify-between rounded-3xl border border-white/10 bg-[#0f1115] p-6 shadow-2xl">
+        <div class="w-full text-left">
+          <span class="rounded-full bg-sky-500/10 px-2.5 py-0.5 text-[10px] font-bold text-sky-400 border border-sky-500/20">
+            libraries.dev: matrix-orb
+          </span>
+          <h3 class="text-base font-bold text-white mt-2">Matrix Orb 3D</h3>
+          <p class="text-xs text-slate-400 mt-1">Esfera en espiral de Fibonacci con rotación de profundidad 3D.</p>
+        </div>
+
+        <div class="my-6">
+          <canvas id="matrix-orb-canvas" width="180" height="180" class="will-change-transform"></canvas>
+        </div>
+
+        <div class="w-full border-t border-white/10 pt-4 text-center text-[11px] text-slate-400">
+          Rotación continua en coordenadas esféricas
+        </div>
+      </div>
+
+      <!-- 3. Border Beam Card -->
+      <div class="relative flex flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-[#0f1115] p-6 shadow-2xl">
+        <div class="pointer-events-none absolute inset-0 rounded-[inherit] border-[2px] border-transparent" style="mask: linear-gradient(transparent,transparent), linear-gradient(white,white); mask-clip: padding-box, border-box; mask-composite: intersect;">
+          <div class="absolute aspect-square w-48 animate-[border-beam_8s_linear_infinite]" style="background: linear-gradient(to left, #ffaa40, #9c40ff, transparent); offset-anchor: 90% 50%; offset-path: rect(0 auto auto 0 round 200px);"></div>
+        </div>
+
+        <div>
+          <span class="rounded-full bg-amber-500/10 px-2.5 py-0.5 text-[10px] font-bold text-amber-400 border border-amber-500/20">
+            libraries.dev: border-beam
+          </span>
+          <h3 class="text-base font-bold text-white mt-2">Luminous Border Beam</h3>
+          <p class="text-xs text-slate-400 mt-1">Haz de luz continuo que recorre el perímetro exterior con alta intensidad.</p>
+        </div>
+
+        <div class="my-6 rounded-2xl bg-white/[0.03] p-4 border border-white/5">
+          <div class="text-xs font-mono text-indigo-300">offset-path: rect(...)</div>
+          <div class="text-[11px] text-slate-400 mt-1">Renderizado por GPU mediante animación nativa.</div>
+        </div>
+
+        <button class="w-full rounded-xl bg-white/10 py-2.5 text-xs font-semibold text-white hover:bg-white/15 transition">
+          Tarjeta con Border Beam Activo
+        </button>
+      </div>
+    </div>
+
+    <!-- Liquid Gooey Navigation Demo -->
+    <div class="mt-8 rounded-3xl border border-white/10 bg-[#0f1115] p-6 text-center">
+      <span class="rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[10px] font-bold text-emerald-400 border border-emerald-500/20">
+        libraries.dev: liquid-gooey
+      </span>
+      <h3 class="text-lg font-bold text-white mt-2">Navegación Líquida (Gooey Filter)</h3>
+      <p class="text-xs text-slate-400 max-w-md mx-auto mt-1 mb-6">
+        Filtro SVG que fusiona y estira orgánicamente la masa del indicador activo entre pestañas.
+      </p>
+
+      <svg class="hidden">
+        <defs>
+          <filter id="goo-showcase">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
+            <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+          </filter>
+        </defs>
+      </svg>
+
+      <div class="inline-flex relative items-center gap-2 rounded-full bg-slate-900 p-2" style="filter: url(#goo-showcase);">
+        <div id="gooey-blob" class="absolute h-9 w-24 rounded-full bg-indigo-500 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]" style="left: 8px;"></div>
+        <button onclick="moveGooey(0)" class="relative z-10 h-9 w-24 text-xs font-bold text-white">Overview</button>
+        <button onclick="moveGooey(1)" class="relative z-10 h-9 w-24 text-xs font-bold text-white">Metrics</button>
+        <button onclick="moveGooey(2)" class="relative z-10 h-9 w-24 text-xs font-bold text-white">Security</button>
+        <button onclick="moveGooey(3)" class="relative z-10 h-9 w-24 text-xs font-bold text-white">Billing</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 2: RARE UI SUITE                                     -->
+  <!-- ============================================================ -->
+  <section id="rare-ui" class="mx-auto max-w-6xl px-6 py-16 border-b border-white/10">
+    <div class="mb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-400">
+        <span>02</span>
+        <span class="h-1 w-1 rounded-full bg-rose-400"></span>
+        <span>Rare UI Components Suite</span>
+      </div>
+      <h2 class="text-2xl font-bold tracking-tight text-white mt-1">Carpeta 3D, Micro-Interacciones & Controles</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Folder Component -->
+      <div class="flex flex-col items-center justify-between rounded-3xl border border-white/10 bg-[#0f1115] p-6 shadow-2xl">
+        <div class="w-full text-left">
+          <span class="rounded-full bg-rose-500/10 px-2.5 py-0.5 text-[10px] font-bold text-rose-400 border border-rose-500/20">
+            rareui.com: foldercomponent
+          </span>
+          <h3 class="text-base font-bold text-white mt-2">Carpeta 3D con Abanico</h3>
+          <p class="text-xs text-slate-400 mt-1">Pasa el mouse para abanico y haz clic para elevar las fichas.</p>
+        </div>
+
+        <div id="demo-folder" onclick="toggleFolderOpen()" onmouseenter="hoverFolder(true)" onmouseleave="hoverFolder(false)" class="relative my-8 h-40 w-52 cursor-pointer select-none perspective-1000">
+          <div class="absolute inset-0 rounded-2xl bg-indigo-700 shadow-xl">
+            <div class="absolute -top-2.5 left-4 h-4 w-16 rounded-t-lg bg-indigo-700"></div>
+          </div>
+          <div id="folder-card-1" class="absolute inset-x-2 top-3 h-24 rounded-xl bg-sky-500 p-2.5 text-white shadow-md transition-all duration-300">
+            <div class="text-[9px] font-bold opacity-80">API CORE</div>
+            <div class="text-xs font-bold mt-1">GraphQL Schema</div>
+          </div>
+          <div id="folder-card-2" class="absolute inset-x-2 top-3 h-24 rounded-xl bg-emerald-500 p-2.5 text-white shadow-md transition-all duration-300">
+            <div class="text-[9px] font-bold opacity-80">DESIGN</div>
+            <div class="text-xs font-bold mt-1">Bento & Tokens</div>
+          </div>
+          <div id="folder-flap" class="absolute inset-x-0 bottom-0 h-28 rounded-2xl bg-indigo-600 p-3 shadow-2xl transition-transform duration-500 ease-out border-t border-white/20 origin-bottom flex flex-col justify-between text-white">
+            <div class="h-1 w-8 rounded-full bg-white/30"></div>
+            <div class="text-xs font-bold">Proyectos SaaS 📁</div>
+          </div>
+        </div>
+
+        <span id="folder-status-text" class="text-[11px] text-slate-400">Pasa el mouse para probar el abanico</span>
+      </div>
+
+      <!-- Odometer & In-Place Delete -->
+      <div class="flex flex-col justify-between rounded-3xl border border-white/10 bg-[#0f1115] p-6 shadow-2xl">
+        <div>
+          <span class="rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[10px] font-bold text-emerald-400 border border-emerald-500/20">
+            rareui.com: animatedcounter & deletebutton
+          </span>
+          <h3 class="text-base font-bold text-white mt-2">Contador Odómetro & In-Place Delete</h3>
+          <p class="text-xs text-slate-400 mt-1">Animaciones de rueda numérica y confirmación in-place.</p>
+        </div>
+
+        <div class="my-6 rounded-2xl bg-white/[0.03] p-4 border border-white/5 text-center">
+          <div class="text-xs text-slate-400">Total Usuarios Activos</div>
+          <div id="odometer-val" class="font-mono text-3xl font-extrabold text-white mt-1">14,280</div>
+          <button onclick="randomizeOdometer()" class="mt-3 rounded-lg bg-indigo-600 px-3 py-1 text-xs font-semibold text-white hover:bg-indigo-500 transition active:scale-95">
+            Generar Nueva Cifra ⚡
+          </button>
+        </div>
+
+        <div class="border-t border-white/10 pt-4 flex items-center justify-between">
+          <span class="text-xs text-slate-400">Acción destructiva:</span>
+          <div id="delete-btn-box">
+            <button onclick="showDeleteConfirm()" class="rounded-xl border border-rose-500/30 bg-rose-500/10 px-3 py-1.5 text-xs font-bold text-rose-400 hover:bg-rose-500/20 transition">
+              Eliminar Recurso
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Emoji Reactions & Bell -->
+      <div class="flex flex-col justify-between rounded-3xl border border-white/10 bg-[#0f1115] p-6 shadow-2xl">
+        <div>
+          <span class="rounded-full bg-indigo-500/10 px-2.5 py-0.5 text-[10px] font-bold text-indigo-400 border border-indigo-500/20">
+            rareui.com: emojireaction & notificationbell
+          </span>
+          <h3 class="text-base font-bold text-white mt-2">Reacciones Apple & Campana iOS</h3>
+          <p class="text-xs text-slate-400 mt-1">Pulsación con oscilación física y partículas flotantes.</p>
+        </div>
+
+        <div class="my-6 rounded-2xl bg-white/[0.03] p-4 border border-white/5 flex flex-col items-center gap-4 relative">
+          <div id="floating-emojis-anchor" class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2"></div>
+
+          <div class="flex items-center gap-4">
+            <button id="bell-demo-btn" onclick="ringBell()" class="relative flex h-11 w-11 items-center justify-center rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition">
+              <svg id="bell-svg" class="h-5 w-5 text-slate-300 origin-top" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+              </svg>
+              <span id="bell-badge" class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-rose-500 text-[10px] font-bold text-white animate-pulse">4</span>
+            </button>
+            <span class="text-xs text-slate-400">Pulsa la campana</span>
+          </div>
+
+          <div class="flex items-center gap-1 rounded-full bg-black/40 p-1.5 border border-white/10">
+            <button onclick="triggerEmoji('❤️')" class="h-8 w-8 rounded-full hover:scale-125 transition active:scale-95">❤️</button>
+            <button onclick="triggerEmoji('🔥')" class="h-8 w-8 rounded-full hover:scale-125 transition active:scale-95">🔥</button>
+            <button onclick="triggerEmoji('🚀')" class="h-8 w-8 rounded-full hover:scale-125 transition active:scale-95">🚀</button>
+            <button onclick="triggerEmoji('🎉')" class="h-8 w-8 rounded-full hover:scale-125 transition active:scale-95">🎉</button>
+          </div>
+        </div>
+
+        <div class="border-t border-white/10 pt-4 text-xs text-slate-400 text-center">
+          Efectos hápticos amortiguados
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 3: ÁGORA UI PRIMITIVES                               -->
+  <!-- ============================================================ -->
+  <section id="agora-primitives" class="mx-auto max-w-6xl px-6 py-16 border-b border-white/10">
+    <div class="mb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-indigo-400">
+        <span>03</span>
+        <span class="h-1 w-1 rounded-full bg-indigo-400"></span>
+        <span>Ágora Primitives (Epistia Agora UI-01 to UI-12)</span>
+      </div>
+      <h2 class="text-2xl font-bold tracking-tight text-white mt-1">Acordeón Accesible, Pestañas, Stepper & Switches</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Accessible Accordion (UI-01) -->
+      <div class="rounded-3xl border border-white/10 bg-[#0f1115] p-6 shadow-2xl">
+        <span class="text-xs font-bold uppercase tracking-wider text-indigo-400">Ágora UI-01</span>
+        <h3 class="text-lg font-bold text-white mt-1 mb-4">Acordeón con WAI-ARIA</h3>
+
+        <div class="divide-y divide-white/10 rounded-2xl border border-white/10 bg-[#12141a]">
+          <div class="p-4">
+            <button onclick="toggleAccordion('acc-1')" class="flex w-full items-center justify-between text-xs font-bold text-white">
+              <span>¿Cómo se integra este sistema con Astro o Next.js?</span>
+              <span id="acc-icon-1" class="transition-transform">▼</span>
+            </button>
+            <div id="acc-1" class="mt-2 hidden text-xs text-slate-400 leading-relaxed">
+              Cada componente está desacoplado de dependencias raras; simplemente copia el archivo TypeScript y tus clases nativas de Tailwind CSS se encargarán del resto.
+            </div>
+          </div>
+          <div class="p-4">
+            <button onclick="toggleAccordion('acc-2')" class="flex w-full items-center justify-between text-xs font-bold text-white">
+              <span>¿Requiere licencia comercial para clientes?</span>
+              <span id="acc-icon-2" class="transition-transform">▼</span>
+            </button>
+            <div id="acc-2" class="mt-2 hidden text-xs text-slate-400 leading-relaxed">
+              No; los componentes implementados aquí han sido construidos desde cero en código limpio para uso libre en tus proyectos y SaaS.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stepper & Switch (UI-05 & UI-06) -->
+      <div class="flex flex-col justify-between rounded-3xl border border-white/10 bg-[#0f1115] p-6 shadow-2xl">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-indigo-400">Ágora UI-05 & UI-06</span>
+          <h3 class="text-lg font-bold text-white mt-1 mb-4">Stepper de Proyecto & Micro-Switch</h3>
+
+          <!-- Stepper -->
+          <div class="flex items-center justify-between my-4 px-2">
+            <div class="flex flex-col items-center">
+              <div class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-xs font-bold text-white">✓</div>
+              <span class="text-[11px] text-white mt-1 font-semibold">Tokens</span>
+            </div>
+            <div class="h-0.5 flex-1 bg-indigo-600 mx-2"></div>
+            <div class="flex flex-col items-center">
+              <div class="flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-500 bg-[#0f1115] text-xs font-bold text-indigo-400 ring-4 ring-indigo-500/20">2</div>
+              <span class="text-[11px] text-indigo-400 mt-1 font-semibold">Librería</span>
+            </div>
+            <div class="h-0.5 flex-1 bg-white/10 mx-2"></div>
+            <div class="flex flex-col items-center">
+              <div class="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-xs font-bold text-slate-500">3</div>
+              <span class="text-[11px] text-slate-500 mt-1">Deploy</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Micro-Switch Controls -->
+        <div class="border-t border-white/10 pt-4 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-300">Modo de Alta Densidad B2B</span>
+            <button onclick="toggleSwitch(this)" class="relative inline-flex h-6 w-11 rounded-full bg-indigo-600 p-0.5 transition-colors">
+              <span class="inline-block h-5 w-5 translate-x-5 rounded-full bg-white shadow-md transition-transform"></span>
+            </button>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-300">Movimiento Reducido Accesible</span>
+            <button onclick="toggleSwitch(this)" class="relative inline-flex h-6 w-11 rounded-full bg-white/20 p-0.5 transition-colors">
+              <span class="inline-block h-5 w-5 translate-x-0 rounded-full bg-white shadow-md transition-transform"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 4: SCROLL STORYTELLING                               -->
+  <!-- ============================================================ -->
+  <section id="scroll-story" class="mx-auto max-w-6xl px-6 py-16 border-b border-white/10">
+    <div class="mb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-400">
+        <span>04</span>
+        <span class="h-1 w-1 rounded-full bg-amber-400"></span>
+        <span>Scroll Storytelling (Ágora SCR-01 a SCR-05)</span>
+      </div>
+      <h2 class="text-2xl font-bold tracking-tight text-white mt-1">Narrativa Cinemática y Parallax de Scroll</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Word Opacity Reveal (SCR-02) -->
+      <div class="rounded-3xl border border-white/10 bg-[#0f1115] p-6 shadow-2xl flex flex-col justify-between">
+        <div>
+          <span class="rounded-full bg-amber-500/10 px-2.5 py-0.5 text-[10px] font-bold text-amber-400 border border-amber-500/20">
+            Ágora SCR-02
+          </span>
+          <h3 class="text-base font-bold text-white mt-2">Lectura que Cobra Vida</h3>
+          <p class="text-xs text-slate-400 mt-1">Palabras con revelado progresivo de opacidad según el avance.</p>
+        </div>
+
+        <div class="my-6 rounded-2xl bg-white/[0.03] p-5 border border-white/5 text-sm sm:text-base font-semibold leading-relaxed">
+          <span class="text-white">Construye interfaces </span>
+          <span class="text-white/80">con cadencia cinemática </span>
+          <span class="text-white/50">y precisión milimétrica </span>
+          <span class="text-white/20">para productos globales.</span>
+        </div>
+
+        <div class="text-[11px] text-slate-400 border-t border-white/10 pt-3">
+          Componente: <code>word-opacity-reveal.tsx</code>
+        </div>
+      </div>
+
+      <!-- Stacking Cards Deck (SCR-05) -->
+      <div class="rounded-3xl border border-white/10 bg-[#0f1115] p-6 shadow-2xl flex flex-col justify-between">
+        <div>
+          <span class="rounded-full bg-amber-500/10 px-2.5 py-0.5 text-[10px] font-bold text-amber-400 border border-amber-500/20">
+            Ágora SCR-05
+          </span>
+          <h3 class="text-base font-bold text-white mt-2">Tarjetas Apilables (Deck)</h3>
+          <p class="text-xs text-slate-400 mt-1">Efecto sticky baraja de cartas acumulativo en scroll continuo.</p>
+        </div>
+
+        <div class="my-4 relative h-32 flex items-center justify-center">
+          <div class="absolute top-2 w-48 h-16 rounded-xl bg-indigo-900/60 border border-indigo-500/30 scale-90 shadow-md"></div>
+          <div class="absolute top-6 w-52 h-16 rounded-xl bg-indigo-800/80 border border-indigo-400/40 scale-95 shadow-lg"></div>
+          <div class="absolute top-10 w-56 h-16 rounded-xl bg-indigo-600 border border-indigo-300/50 shadow-xl flex items-center justify-between px-4 text-xs font-bold text-white">
+            <span>Capa Activa</span>
+            <span>03 / 03</span>
+          </div>
+        </div>
+
+        <div class="text-[11px] text-slate-400 border-t border-white/10 pt-3">
+          Componente: <code>stacking-cards-deck.tsx</code>
+        </div>
+      </div>
+
+      <!-- Depth Mask Parallax (SCR-03) -->
+      <div class="rounded-3xl border border-white/10 bg-[#0f1115] p-6 shadow-2xl flex flex-col justify-between">
+        <div>
+          <span class="rounded-full bg-amber-500/10 px-2.5 py-0.5 text-[10px] font-bold text-amber-400 border border-amber-500/20">
+            Ágora SCR-03
+          </span>
+          <h3 class="text-base font-bold text-white mt-2">Depth Mask Parallax</h3>
+          <p class="text-xs text-slate-400 mt-1">Máscara con reducción de curvatura de esquinas y escala inversa.</p>
+        </div>
+
+        <div class="my-6 relative h-28 w-full overflow-hidden rounded-2xl">
+          <img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=600&q=80" alt="Depth" class="h-full w-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-3 text-xs font-bold text-white">
+            Perspectiva Inmersiva Parallax
+          </div>
+        </div>
+
+        <div class="text-[11px] text-slate-400 border-t border-white/10 pt-3">
+          Componente: <code>depth-mask-reveal.tsx</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 5: DASHBOARDS & TABLAS DENSAS B2B                    -->
+  <!-- ============================================================ -->
+  <section id="dashboards" class="mx-auto max-w-6xl px-6 py-16 border-b border-white/10">
+    <div class="mb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-400">
+        <span>05</span>
+        <span class="h-1 w-1 rounded-full bg-emerald-400"></span>
+        <span>B2B Analytics & Tables</span>
+      </div>
+      <h2 class="text-2xl font-bold tracking-tight text-white mt-1">KPI Metric Cards con Sparkline y Data Table</h2>
+    </div>
+
+    <!-- 2 KPI Cards Row -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <!-- KPI Card 1 -->
+      <div class="rounded-3xl border border-white/10 bg-[#0f1115] p-6 shadow-2xl">
+        <div class="flex items-center justify-between text-xs text-slate-400">
+          <span>Monthly Recurring Revenue (MRR)</span>
+          <span class="rounded bg-emerald-500/10 text-emerald-400 px-2 py-0.5 font-semibold text-[11px]">+18.4% vs mes anterior</span>
+        </div>
+        <div class="mt-3 text-3xl font-bold tracking-tight text-white">$142,850.00</div>
+        
+        <!-- Live SVG Sparkline with Hover -->
+        <div class="relative mt-4 h-16 w-full" id="sparkline-container" onmousemove="handleSparklineHover(event)" onmouseleave="hideSparklineTooltip()">
+          <svg viewBox="0 0 300 60" class="h-full w-full overflow-visible" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="grad-mrr" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#10b981" stop-opacity="0.25"/>
+                <stop offset="100%" stop-color="#10b981" stop-opacity="0.0"/>
+              </linearGradient>
+            </defs>
+            <path d="M 0 45 L 30 38 L 60 42 L 90 28 L 120 32 L 150 20 L 180 25 L 210 14 L 240 18 L 270 8 L 300 4 L 300 60 L 0 60 Z" fill="url(#grad-mrr)"/>
+            <path d="M 0 45 L 30 38 L 60 42 L 90 28 L 120 32 L 150 20 L 180 25 L 210 14 L 240 18 L 270 8 L 300 4" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          <div id="spark-tooltip" class="pointer-events-none absolute -top-5 hidden -translate-x-1/2 rounded bg-white px-1.5 py-0.5 text-[10px] font-bold text-slate-900 shadow">
+            $142.8k
+          </div>
+        </div>
+      </div>
+
+      <!-- KPI Card 2 -->
+      <div class="rounded-3xl border border-white/10 bg-[#0f1115] p-6 shadow-2xl">
+        <div class="flex items-center justify-between text-xs text-slate-400">
+          <span>Active Enterprise Accounts</span>
+          <span class="rounded bg-sky-500/10 text-sky-400 px-2 py-0.5 font-semibold text-[11px]">+32 nuevas cuentas</span>
+        </div>
+        <div class="mt-3 text-3xl font-bold tracking-tight text-white">1,248</div>
+        <div class="relative mt-4 h-16 w-full">
+          <svg viewBox="0 0 300 60" class="h-full w-full overflow-visible" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="grad-users" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.25"/>
+                <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.0"/>
+              </linearGradient>
+            </defs>
+            <path d="M 0 50 L 30 46 L 60 40 L 90 35 L 120 38 L 150 26 L 180 22 L 210 18 L 240 12 L 270 14 L 300 6 L 300 60 L 0 60 Z" fill="url(#grad-users)"/>
+            <path d="M 0 50 L 30 46 L 60 40 L 90 35 L 120 38 L 150 26 L 180 22 L 210 18 L 240 12 L 270 14 L 300 6" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Interactive Data Table -->
+    <div class="overflow-hidden rounded-3xl border border-white/10 bg-[#0c0e12] shadow-2xl">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 p-4">
+        <div class="flex items-center gap-2">
+          <input id="table-search" type="text" oninput="filterTable()" placeholder="Filtrar clientes por nombre o plan..." class="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:border-indigo-500 focus:outline-none w-64">
+        </div>
+        <div id="selection-count" class="text-xs text-indigo-400 font-medium">0 seleccionados</div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-slate-300">
+          <thead class="border-b border-white/10 bg-[#12141a] text-slate-400">
+            <tr>
+              <th class="w-10 px-4 py-3"><input type="checkbox" onchange="toggleSelectAllRows(this)" class="rounded border-white/20 bg-transparent text-indigo-600"></th>
+              <th class="px-4 py-3 font-semibold cursor-pointer hover:text-white" onclick="sortTable('name')">Cliente ⇅</th>
+              <th class="px-4 py-3 font-semibold cursor-pointer hover:text-white" onclick="sortTable('plan')">Plan ⇅</th>
+              <th class="px-4 py-3 font-semibold cursor-pointer hover:text-white" onclick="sortTable('status')">Estado ⇅</th>
+              <th class="px-4 py-3 font-semibold cursor-pointer hover:text-white text-right" onclick="sortTable('amount')">Facturación Anual ⇅</th>
+            </tr>
+          </thead>
+          <tbody id="table-body" class="divide-y divide-white/5">
+            <!-- Rendered dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 6: E-COMMERCE & PRODUCT SHOWCASE                     -->
+  <!-- ============================================================ -->
+  <section id="ecommerce" class="mx-auto max-w-6xl px-6 py-16 border-b border-white/10">
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-400">
+          <span>06</span>
+          <span class="h-1 w-1 rounded-full bg-rose-400"></span>
+          <span>Minimalist E-Commerce</span>
+        </div>
+        <h2 class="text-2xl font-bold tracking-tight text-white mt-1">Catálogo de Productos y Carrito Deslizante</h2>
+      </div>
+      <button onclick="toggleCart()" class="rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold text-white hover:bg-white/10 transition">
+        Ver Carrito Lateral →
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Product Card 1 -->
+      <div class="group relative flex flex-col rounded-3xl border border-white/10 bg-[#0f1115] p-4 shadow-xl hover:shadow-2xl transition-all">
+        <div class="relative aspect-square w-full overflow-hidden rounded-2xl bg-[#15181e]">
+          <img id="product-img-1" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Mechanical Watch">
+          <span class="absolute left-3 top-3 rounded-full bg-emerald-500/90 px-2.5 py-0.5 text-[10px] font-semibold text-white">In Stock</span>
+        </div>
+        <div class="mt-3 flex-1 flex flex-col justify-between">
+          <div>
+            <span class="text-[10px] uppercase font-bold text-slate-500">Hardware</span>
+            <h4 class="text-sm font-semibold text-white">Minimalist Sensor Watch</h4>
+            <div class="mt-1 text-sm font-bold text-white">$249.00</div>
+          </div>
+          <div class="mt-3 flex items-center gap-2">
+            <button onclick="changeProductVariant(1, '#08090a', 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80')" class="h-4 w-4 rounded-full border border-white bg-slate-900 ring-2 ring-indigo-500"></button>
+            <button onclick="changeProductVariant(1, '#64748b', 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&q=80')" class="h-4 w-4 rounded-full border border-transparent bg-slate-500 hover:scale-105 transition"></button>
+          </div>
+          <button onclick="addToBag('Minimalist Sensor Watch', 249.00, this)" class="mt-4 w-full rounded-xl bg-white py-2.5 text-xs font-semibold text-slate-950 hover:bg-slate-200 transition active:scale-95">
+            Add to Bag
+          </button>
+        </div>
+      </div>
+
+      <!-- Product Card 2 -->
+      <div class="group relative flex flex-col rounded-3xl border border-white/10 bg-[#0f1115] p-4 shadow-xl hover:shadow-2xl transition-all">
+        <div class="relative aspect-square w-full overflow-hidden rounded-2xl bg-[#15181e]">
+          <img id="product-img-2" src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600&q=80" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Mechanical Keyboard">
+          <span class="absolute left-3 top-3 rounded-full bg-amber-500/90 px-2.5 py-0.5 text-[10px] font-semibold text-white">Only 3 Left</span>
+        </div>
+        <div class="mt-3 flex-1 flex flex-col justify-between">
+          <div>
+            <span class="text-[10px] uppercase font-bold text-slate-500">Peripherals</span>
+            <h4 class="text-sm font-semibold text-white">OLED Stealth Keyboard</h4>
+            <div class="mt-1 text-sm font-bold text-white">$189.00</div>
+          </div>
+          <div class="mt-3 flex items-center gap-2">
+            <button class="h-4 w-4 rounded-full border border-white bg-black ring-2 ring-indigo-500"></button>
+          </div>
+          <button onclick="addToBag('OLED Stealth Keyboard', 189.00, this)" class="mt-4 w-full rounded-xl bg-white py-2.5 text-xs font-semibold text-slate-950 hover:bg-slate-200 transition active:scale-95">
+            Add to Bag
+          </button>
+        </div>
+      </div>
+
+      <!-- Product Card 3 -->
+      <div class="group relative flex flex-col rounded-3xl border border-white/10 bg-[#0f1115] p-4 shadow-xl hover:shadow-2xl transition-all">
+        <div class="relative aspect-square w-full overflow-hidden rounded-2xl bg-[#15181e]">
+          <img src="https://images.unsplash.com/photo-1616440347437-b1c73416efc2?w=600&q=80" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Merino Desk Mat">
+          <span class="absolute left-3 top-3 rounded-full bg-emerald-500/90 px-2.5 py-0.5 text-[10px] font-semibold text-white">In Stock</span>
+        </div>
+        <div class="mt-3 flex-1 flex flex-col justify-between">
+          <div>
+            <span class="text-[10px] uppercase font-bold text-slate-500">Workspace</span>
+            <h4 class="text-sm font-semibold text-white">Merino Wool Desk Mat</h4>
+            <div class="mt-1 text-sm font-bold text-white">$64.00</div>
+          </div>
+          <div class="mt-3 flex items-center gap-2">
+            <button class="h-4 w-4 rounded-full border border-white bg-stone-700 ring-2 ring-indigo-500"></button>
+          </div>
+          <button onclick="addToBag('Merino Wool Desk Mat', 64.00, this)" class="mt-4 w-full rounded-xl bg-white py-2.5 text-xs font-semibold text-slate-950 hover:bg-slate-200 transition active:scale-95">
+            Add to Bag
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 7: FLUTTER NATIVE MULTIPLATFORM                      -->
+  <!-- ============================================================ -->
+  <section id="flutter" class="mx-auto max-w-6xl px-6 py-16 border-b border-white/10">
+    <div class="mb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-sky-400">
+        <span>07</span>
+        <span class="h-1 w-1 rounded-full bg-sky-400"></span>
+        <span>Flutter Multiplatform Native</span>
+      </div>
+      <h2 class="text-2xl font-bold tracking-tight text-white mt-1">Componentes en Dart Puro con Soporte Háptico</h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+      <!-- Simulated Mobile Phone -->
+      <div class="mx-auto w-full max-w-sm rounded-[36px] border-4 border-slate-700 bg-black p-4 shadow-2xl">
+        <div class="mx-auto mb-4 h-4 w-24 rounded-full bg-slate-800"></div>
+        
+        <!-- Flutter Interactive Bento Card -->
+        <div class="rounded-2xl border border-white/10 bg-[#0F1115] p-5 shadow-lg active:scale-95 transition-transform cursor-pointer">
+          <div class="flex items-center gap-3">
+            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/5 text-indigo-400 font-bold">
+              ⚡
+            </div>
+            <div class="flex-1">
+              <h4 class="text-sm font-semibold text-white">CustomBentoCard.dart</h4>
+              <p class="text-[11px] text-slate-400">Tap para respuesta háptica nativa</p>
+            </div>
+            <span class="rounded-full bg-indigo-500/20 text-indigo-300 text-[10px] px-2 py-0.5">Native</span>
+          </div>
+          <p class="mt-3 text-xs text-slate-400 leading-relaxed">
+            Widget para Flutter optimizado para 120Hz con micro-física de escala y esquinas suavizadas de 20.0px.
+          </p>
+        </div>
+
+        <div class="mt-4">
+          <!-- Flutter Metric Tile -->
+          <div class="rounded-2xl border border-white/10 bg-[#0F1115] p-5 shadow-lg active:scale-95 transition-transform cursor-pointer">
+            <div class="text-xs text-slate-400">InteractiveMetricTile.dart</div>
+            <div class="mt-1 text-2xl font-bold text-white">$48,200.00</div>
+            <div class="mt-2 flex items-center justify-between">
+              <span class="rounded bg-emerald-500/20 text-emerald-400 text-[10px] px-1.5 py-0.5 font-semibold">+24.5%</span>
+              <svg class="h-6 w-20" viewBox="0 0 80 24">
+                <path d="M 0 20 L 20 16 L 40 18 L 60 8 L 80 4" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="mx-auto mt-6 h-1 w-32 rounded-full bg-slate-800"></div>
+      </div>
+
+      <!-- Dart Code Viewer -->
+      <div class="rounded-3xl border border-white/10 bg-[#0d0f14] p-6 font-mono text-xs text-slate-300 overflow-x-auto shadow-2xl">
+        <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-3 text-slate-400">
+          <span>01-components-ui/flutter/custom_bento_card.dart</span>
+          <span class="text-indigo-400">Null-Safe Dart</span>
+        </div>
+        <pre><code>// Pure Flutter Widget with Haptics & Scale Physics
+class CustomBentoCard extends StatefulWidget {
+  final String title;
+  final String? description;
+  final Widget? leadingIcon;
+  final VoidCallback? onTap;
+
+  const CustomBentoCard({
+    Key? key,
+    required this.title,
+    this.description,
+    this.leadingIcon,
+    this.onTap,
+  }) : super(key: key);
+  ...
+  // GestureDetector with HapticFeedback.lightImpact()
+  // and AnimatedScale easeOutCubic!
+}</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 8: ÁGORA COLOR PALETTES                              -->
+  <!-- ============================================================ -->
+  <section id="palettes" class="mx-auto max-w-6xl px-6 py-16">
+    <div class="mb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-400">
+        <span>08</span>
+        <span class="h-1 w-1 rounded-full bg-emerald-400"></span>
+        <span>Tokens de Paleta Oficiales (PAL-01 a PAL-03)</span>
+      </div>
+      <h2 class="text-2xl font-bold tracking-tight text-white mt-1">Sistemas de Color de Ágora & Dark Tech Linear</h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Agora Serena (PAL-01) -->
+      <div class="rounded-3xl border border-white/10 bg-[#0f1115] p-5 shadow-xl">
+        <div class="h-24 w-full rounded-2xl overflow-hidden flex flex-col mb-3">
+          <div class="flex-1 bg-[#2E1A47]"></div>
+          <div class="flex-1 flex">
+            <div class="flex-1 bg-[#BBA6D8]"></div>
+            <div class="flex-1 bg-[#FAF7F2]"></div>
+          </div>
+        </div>
+        <h4 class="text-sm font-bold text-white">Ágora Serena</h4>
+        <p class="text-[11px] text-slate-400 mt-0.5">PAL-01 • #2E1A47, #BBA6D8, #FAF7F2</p>
+      </div>
+
+      <!-- Bosque y Sol (PAL-02) -->
+      <div class="rounded-3xl border border-white/10 bg-[#0f1115] p-5 shadow-xl">
+        <div class="h-24 w-full rounded-2xl overflow-hidden flex flex-col mb-3">
+          <div class="flex-1 bg-[#203E35]"></div>
+          <div class="flex-1 flex">
+            <div class="flex-1 bg-[#F5D66C]"></div>
+            <div class="flex-1 bg-[#FFFDF8]"></div>
+          </div>
+        </div>
+        <h4 class="text-sm font-bold text-white">Bosque y Sol</h4>
+        <p class="text-[11px] text-slate-400 mt-0.5">PAL-02 • #203E35, #F5D66C, #FFFDF8</p>
+      </div>
+
+      <!-- Tinta y Cielo (PAL-03) -->
+      <div class="rounded-3xl border border-white/10 bg-[#0f1115] p-5 shadow-xl">
+        <div class="h-24 w-full rounded-2xl overflow-hidden flex flex-col mb-3">
+          <div class="flex-1 bg-[#142D4E]"></div>
+          <div class="flex-1 flex">
+            <div class="flex-1 bg-[#A8CEF0]"></div>
+            <div class="flex-1 bg-[#F6F8FC]"></div>
+          </div>
+        </div>
+        <h4 class="text-sm font-bold text-white">Tinta y Cielo</h4>
+        <p class="text-[11px] text-slate-400 mt-0.5">PAL-03 • #142D4E, #A8CEF0, #F6F8FC</p>
+      </div>
+
+      <!-- Dark Tech Linear -->
+      <div class="rounded-3xl border border-white/10 bg-[#0f1115] p-5 shadow-xl">
+        <div class="h-24 w-full rounded-2xl overflow-hidden flex flex-col mb-3">
+          <div class="flex-1 bg-[#08090a]"></div>
+          <div class="flex-1 flex">
+            <div class="flex-1 bg-[#5e6ad2]"></div>
+            <div class="flex-1 bg-[#38bdf8]"></div>
+          </div>
+        </div>
+        <h4 class="text-sm font-bold text-white">Dark Tech OLED</h4>
+        <p class="text-[11px] text-slate-400 mt-0.5">Linear / Raycast • #08090a, #5E6AD2</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- MODAL 1: COMMAND MENU (Cmd+K)                                -->
+  <!-- ============================================================ -->
+  <div id="cmd-modal" class="fixed inset-0 z-50 hidden items-start justify-center p-4 pt-20 backdrop-blur-md bg-black/60">
+    <div class="w-full max-w-lg rounded-2xl border border-white/10 bg-[#0d0f14] shadow-2xl overflow-hidden animate-in fade-in">
+      <div class="flex items-center border-b border-white/10 px-4 py-3">
+        <svg class="h-4 w-4 text-slate-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <input id="cmd-input" type="text" placeholder="Escribe un comando o busca en la librería..." class="w-full bg-transparent text-xs text-white placeholder-slate-500 focus:outline-none">
+        <button onclick="closeCmdMenu()" class="rounded bg-white/10 px-1.5 py-0.5 text-[10px] text-slate-400">ESC</button>
+      </div>
+      <div class="max-h-64 overflow-y-auto p-2 text-xs">
+        <div class="px-2 py-1 text-[10px] font-bold uppercase text-slate-500">Navegación Rápida</div>
+        <div onclick="navigateSection('#osmo-suite')" class="cursor-pointer rounded-lg px-3 py-2 text-amber-300 hover:bg-amber-600 hover:text-white flex justify-between font-semibold">
+          <span>✨ OSMO Motion & Physics Suite (Cards, Docks, POS)</span>
+          <kbd class="font-mono text-[10px] opacity-70">G O</kbd>
+        </div>
+        <div onclick="navigateSection('#ai-libraries')" class="cursor-pointer rounded-lg px-3 py-2 text-slate-300 hover:bg-indigo-600 hover:text-white flex justify-between">
+          <span>AI Orbs & Border Beams (libraries.dev)</span>
+          <kbd class="font-mono text-[10px] opacity-70">G A</kbd>
+        </div>
+        <div onclick="navigateSection('#rare-ui')" class="cursor-pointer rounded-lg px-3 py-2 text-slate-300 hover:bg-indigo-600 hover:text-white flex justify-between">
+          <span>Rare UI Suite (Carpeta 3D, sidebars)</span>
+          <kbd class="font-mono text-[10px] opacity-70">G R</kbd>
+        </div>
+        <div onclick="navigateSection('#agora-primitives')" class="cursor-pointer rounded-lg px-3 py-2 text-slate-300 hover:bg-indigo-600 hover:text-white flex justify-between">
+          <span>Ágora Primitives (UI-01 a UI-12)</span>
+          <kbd class="font-mono text-[10px] opacity-70">G P</kbd>
+        </div>
+        <div onclick="navigateSection('#scroll-story')" class="cursor-pointer rounded-lg px-3 py-2 text-slate-300 hover:bg-indigo-600 hover:text-white flex justify-between">
+          <span>Scroll Storytelling & Parallax</span>
+          <kbd class="font-mono text-[10px] opacity-70">G S</kbd>
+        </div>
+        <div onclick="navigateSection('#dashboards')" class="cursor-pointer rounded-lg px-3 py-2 text-slate-300 hover:bg-indigo-600 hover:text-white flex justify-between">
+          <span>Dashboards & Data Table</span>
+          <kbd class="font-mono text-[10px] opacity-70">G D</kbd>
+        </div>
+        <div onclick="navigateSection('#ecommerce')" class="cursor-pointer rounded-lg px-3 py-2 text-slate-300 hover:bg-indigo-600 hover:text-white flex justify-between">
+          <span>E-Commerce & Carrito</span>
+          <kbd class="font-mono text-[10px] opacity-70">G E</kbd>
+        </div>
+        <div onclick="navigateSection('#flutter')" class="cursor-pointer rounded-lg px-3 py-2 text-slate-300 hover:bg-indigo-600 hover:text-white flex justify-between">
+          <span>Flutter Nativo (Móvil / Desktop)</span>
+          <kbd class="font-mono text-[10px] opacity-70">G F</kbd>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODAL 2: SLIDE-OVER CART DRAWER                              -->
+  <!-- ============================================================ -->
+  <div id="cart-drawer-backdrop" onclick="toggleCart()" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm transition-opacity"></div>
+  <div id="cart-drawer" class="fixed inset-y-0 right-0 z-50 hidden w-full max-w-md border-l border-white/10 bg-[#0c0e12] p-6 shadow-2xl flex-col justify-between transition-transform">
+    <div>
+      <div class="flex items-center justify-between border-b border-white/10 pb-4">
+        <div class="flex items-center gap-2">
+          <h3 class="text-base font-semibold text-white">Shopping Bag</h3>
+          <span id="cart-item-count" class="rounded-full bg-white/10 px-2 py-0.5 text-xs text-white">2</span>
+        </div>
+        <button onclick="toggleCart()" class="text-slate-400 hover:text-white">✕</button>
+      </div>
+
+      <div class="my-4 rounded-xl bg-white/5 p-3">
+        <div class="flex justify-between text-xs text-slate-300">
+          <span>Envío Gratis Desbloqueado 🎉</span>
+          <span>100%</span>
+        </div>
+        <div class="mt-2 h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
+          <div class="h-full bg-indigo-500 rounded-full w-full"></div>
+        </div>
+      </div>
+
+      <div id="cart-items-list" class="space-y-4 max-h-80 overflow-y-auto pr-1"></div>
+    </div>
+
+    <div class="border-t border-white/10 pt-4">
+      <div class="flex justify-between text-xs text-slate-400">
+        <span>Subtotal</span>
+        <span id="cart-subtotal">$438.00</span>
+      </div>
+      <div class="flex justify-between text-xs text-slate-400 mt-1">
+        <span>Envío</span>
+        <span class="text-emerald-400">Gratis</span>
+      </div>
+      <div class="flex justify-between text-sm font-bold text-white mt-2 border-t border-white/5 pt-2">
+        <span>Total</span>
+        <span id="cart-total">$438.00</span>
+      </div>
+      <button onclick="alert('¡Checkout completado en modo demo!')" class="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 py-3 text-xs font-semibold text-white shadow-lg shadow-indigo-600/30 hover:bg-indigo-500 active:scale-95 transition">
+        🔒 Completar Checkout Seguro
+      </button>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT MASTER SHOWCASE ENGINE -->
+  <script>
+
+    // ============================================================
+    // 0. OSMO & ADVANCED PHYSICS ENGINE
+
+    // F. Spatial Cards Slider Logic
+    let spatialIdx = 1;
+    function shiftSpatial(delta) {
+      spatialIdx = (spatialIdx + delta + 3) % 3;
+      setSpatialActive(spatialIdx);
+    }
+    function setSpatialActive(idx) {
+      spatialIdx = idx;
+      const cards = document.querySelectorAll('.spatial-card');
+      cards.forEach((c, i) => {
+        if (i === idx) {
+          c.style.transform = 'rotateY(0deg) scale(1.05)';
+          c.style.opacity = '1';
+        } else if (i < idx) {
+          c.style.transform = 'rotateY(25deg) scale(0.85)';
+          c.style.opacity = '0.5';
+        } else {
+          c.style.transform = 'rotateY(-25deg) scale(0.85)';
+          c.style.opacity = '0.5';
+        }
+      });
+    }
+
+    // G. Expanding Feature Pills Logic
+    function toggleFeaturePill(id) {
+      const body = document.getElementById('pill-body-' + id);
+      const icon = document.getElementById('pill-icon-' + id);
+      if (!body || !icon) return;
+      if (body.classList.contains('hidden')) {
+        body.classList.remove('hidden');
+        icon.innerText = '✕';
+        icon.style.transform = 'rotate(90deg)';
+      } else {
+        body.classList.add('hidden');
+        icon.innerText = '＋';
+        icon.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    // ============================================================
+
+    // A. Dropping Cards Stack Logic
+    const OSMO_STACK_CARDS = [
+      { id: 'b', title: 'Branding & Identity.', bg: '#f3b755', text: '#111827', tags: ['Brand Strategy', 'Logo Design', 'Visual Identity'] },
+      { id: 'm', title: 'Marketing.', bg: '#ffffff', text: '#111827', tags: ['Ads Creation', 'SEO Setup', 'Email Marketing'] },
+      { id: 'u', title: 'UX Strategy.', bg: '#7a52e0', text: '#ffffff', tags: ['UX Audits', 'Wireframes', 'User Testing'] },
+      { id: 'd', title: 'Web & App Dev.', bg: '#caaefc', text: '#1e1b4b', tags: ['Fullstack Next.js', 'Mobile Flutter', 'Fast APIs'] }
+    ];
+    let osmoStackDeck = [0, 1, 2, 3];
+    let osmoStackBusy = false;
+
+    function renderOsmoDroppingStack(anim = null) {
+      const vp = document.getElementById('osmo-dropping-viewport');
+      const ind = document.getElementById('dropping-card-indicator');
+      if (!vp) return;
+      vp.innerHTML = '';
+      if (ind) ind.innerText = (osmoStackDeck[0] + 1) + ' / ' + OSMO_STACK_CARDS.length;
+
+      for (let pos = Math.min(3, osmoStackDeck.length - 1); pos >= 0; pos--) {
+        const cIdx = osmoStackDeck[pos];
+        const card = OSMO_STACK_CARDS[cIdx];
+        const cardEl = document.createElement('div');
+        cardEl.className = 'absolute left-0 top-0 w-[calc(100%-40px)] h-[240px] rounded-3xl p-5 shadow-2xl flex flex-col justify-between overflow-hidden cursor-pointer border border-black/5 transition-all duration-300';
+        cardEl.style.backgroundColor = card.bg;
+        cardEl.style.color = card.text;
+        cardEl.style.zIndex = 30 - pos * 5;
+
+        const offX = pos * 15;
+        const offY = pos * 12;
+
+        if (pos === 0 && anim === 'drop') {
+          cardEl.classList.add('card-drop-anim');
+        } else if (pos === 0 && anim === 'return') {
+          cardEl.classList.add('card-return-anim');
+        } else {
+          cardEl.style.transform = 'translate(' + offX + 'px, ' + offY + 'px)';
+        }
+
+        if (pos === 0) {
+          cardEl.onclick = nextDroppingCard;
+        }
+
+        const tagsHtml = card.tags.map(function(t) {
+          return '<span class="text-[10px] font-semibold tracking-tight block opacity-85">' + t + '</span>';
+        }).join('');
+
+        cardEl.innerHTML = 
+          '<div class="flex justify-between items-start">' +
+            '<div class="w-20 h-14 rounded-xl bg-black/10 flex items-center justify-center font-bold text-xs opacity-60">PROJ</div>' +
+            '<div class="text-right">' + tagsHtml + '</div>' +
+          '</div>' +
+          '<div>' +
+            '<h4 class="text-2xl font-black tracking-tight leading-none">' + card.title + '</h4>' +
+          '</div>';
+        vp.appendChild(cardEl);
+      }
+    }
+
+    function nextDroppingCard() {
+      if (osmoStackBusy) return;
+      osmoStackBusy = true;
+      renderOsmoDroppingStack('drop');
+      setTimeout(function() {
+        osmoStackDeck.push(osmoStackDeck.shift());
+        renderOsmoDroppingStack();
+        osmoStackBusy = false;
+      }, 420);
+    }
+
+    function prevDroppingCard() {
+      if (osmoStackBusy) return;
+      osmoStackBusy = true;
+      osmoStackDeck.unshift(osmoStackDeck.pop());
+      renderOsmoDroppingStack('return');
+      setTimeout(function() {
+        renderOsmoDroppingStack();
+        osmoStackBusy = false;
+      }, 420);
+    }
+
+    // B. Thermal Receipt Printer Simulation
+    let isPrinting = false;
+    function triggerPrintSimulation() {
+      if (isPrinting) return;
+      isPrinting = true;
+      const paper = document.getElementById('printer-paper');
+      const lcd = document.getElementById('pos-lcd-text');
+      const btn = document.getElementById('btn-print-receipt');
+      if (lcd) lcd.innerText = 'IMPRIMIENDO RECIBO...';
+      if (btn) btn.disabled = true;
+
+      if (paper) {
+        paper.classList.remove('hidden');
+        paper.classList.remove('printer-paper-roll');
+        void paper.offsetWidth;
+        paper.classList.add('printer-paper-roll');
+      }
+
+      setTimeout(function() {
+        if (lcd) lcd.innerText = 'IMPRESIÓN EXITOSA ✓';
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = '<span>✓</span> <span>Recibo Cortado</span>';
+        }
+        setTimeout(function() {
+          if (lcd) lcd.innerText = 'LISTO: $41.00 USD';
+          if (btn) btn.innerHTML = '<span>🖨️</span> <span>Imprimir Comprobante</span>';
+          if (paper) paper.classList.add('hidden');
+          isPrinting = false;
+        }, 3000);
+      }, 1500);
+    }
+
+    // C. Rotating Text Flipper Logic
+    const ROTATING_WORDS = ['velocidad', 'precisión', 'estética', 'claridad', 'impacto'];
+    let rotatingWordIdx = 0;
+    setInterval(function() {
+      const el = document.getElementById('rotating-text-word');
+      if (!el) return;
+      el.style.transform = 'rotateX(90deg)';
+      el.style.opacity = '0';
+      setTimeout(function() {
+        rotatingWordIdx = (rotatingWordIdx + 1) % ROTATING_WORDS.length;
+        el.innerText = ROTATING_WORDS[rotatingWordIdx];
+        el.style.transform = 'rotateX(0deg)';
+        el.style.opacity = '1';
+      }, 250);
+    }, 2500);
+
+    // D. Liquid Fluid Tab Bar Logic
+    function selectFluidTab(idx) {
+      const pill = document.getElementById('fluid-hill-pill');
+      const btns = document.querySelectorAll('.fluid-tab-btn');
+      if (pill) {
+        pill.style.transform = 'translateX(' + (idx * 68) + 'px)';
+      }
+      btns.forEach(function(b, i) {
+        if (i === idx) {
+          b.classList.remove('text-slate-400');
+          b.classList.add('text-white');
+        } else {
+          b.classList.remove('text-white');
+          b.classList.add('text-slate-400');
+        }
+      });
+    }
+
+    // E. Section Anchor Dock Logic
+    let anchorMenuOpen = false;
+    function toggleAnchorMenu() {
+      const m = document.getElementById('anchor-dock-menu');
+      anchorMenuOpen = !anchorMenuOpen;
+      if (m) {
+        if (anchorMenuOpen) m.classList.remove('hidden');
+        else m.classList.add('hidden');
+      }
+    }
+    function setAnchorSection(label) {
+      const txt = document.getElementById('anchor-current-text');
+      if (txt) txt.innerText = label;
+      toggleAnchorMenu();
+    }
+
+    // 1. Hero Spotlight
+    function updateHeroSpotlight(e) {
+      const x = e.clientX;
+      const y = e.clientY;
+      const el = document.getElementById('hero-spotlight');
+      if (el) {
+        el.style.background = `radial-gradient(420px circle at ${x}px ${y}px, rgba(99, 102, 241, 0.2), transparent 80%)`;
+      }
+    }
+
+    // 2. Thinking Orb Canvas Simulation
+    let orbState = "thinking";
+    function setOrbState(s) {
+      orbState = s;
+    }
+    (function initThinkingOrb() {
+      const canvas = document.getElementById("thinking-orb-canvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      let t = 0;
+
+      function draw() {
+        t += orbState === "thinking" ? 0.05 : orbState === "speaking" ? 0.08 : 0.02;
+        ctx.clearRect(0, 0, 180, 180);
+
+        const cx = 90, cy = 90, baseR = 54;
+        let c1 = "rgba(99, 102, 241, 0.9)";
+        let c2 = "rgba(56, 189, 248, 0.8)";
+        if (orbState === "listening") { c1 = "rgba(16, 185, 129, 0.9)"; c2 = "rgba(52, 211, 153, 0.8)"; }
+        else if (orbState === "speaking") { c1 = "rgba(244, 63, 94, 0.9)"; c2 = "rgba(251, 146, 60, 0.8)"; }
+
+        const hg = ctx.createRadialGradient(cx, cy, 20, cx, cy, 80);
+        hg.addColorStop(0, c1);
+        hg.addColorStop(1, "transparent");
+        ctx.fillStyle = hg;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 80, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.beginPath();
+        for (let i = 0; i <= 360; i += 10) {
+          const a = (i * Math.PI) / 180;
+          const r = baseR + Math.sin(a * 3 + t) * 8 + Math.cos(a * 5 - t) * 4;
+          const x = cx + Math.cos(a) * r;
+          const y = cy + Math.sin(a) * r;
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        const bg = ctx.createLinearGradient(30, 30, 150, 150);
+        bg.addColorStop(0, c1);
+        bg.addColorStop(1, c2);
+        ctx.fillStyle = bg;
+        ctx.fill();
+
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+    // 3. Matrix Orb Canvas Simulation
+    (function initMatrixOrb() {
+      const canvas = document.getElementById("matrix-orb-canvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      let angle = 0;
+      const points = [];
+      const num = 140;
+      const phi = Math.PI * (3 - Math.sqrt(5));
+      for (let i = 0; i < num; i++) {
+        const y = 1 - (i / (num - 1)) * 2;
+        const rAtY = Math.sqrt(1 - y * y);
+        const theta = phi * i;
+        points.push({ x: Math.cos(theta) * rAtY * 58, y: y * 58, z: Math.sin(theta) * rAtY * 58 });
+      }
+
+      function draw() {
+        angle += 0.02;
+        ctx.clearRect(0, 0, 180, 180);
+        const cos = Math.cos(angle), sin = Math.sin(angle);
+        const cx = 90, cy = 90;
+
+        points.forEach(p => {
+          const xRot = p.x * cos + p.z * sin;
+          const zRot = -p.x * sin + p.z * cos;
+          const depth = (zRot + 60) / 120;
+          ctx.fillStyle = "#38bdf8";
+          ctx.globalAlpha = Math.max(0.15, Math.min(1, depth));
+          ctx.beginPath();
+          ctx.arc(cx + xRot, cy + p.y, Math.max(1, depth * 2.5), 0, Math.PI * 2);
+          ctx.fill();
+        });
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+    // 4. Folder Component Logic
+    let folderOpen = false;
+    function hoverFolder(h) {
+      if (folderOpen) return;
+      const c1 = document.getElementById("folder-card-1");
+      const c2 = document.getElementById("folder-card-2");
+      const flap = document.getElementById("folder-flap");
+      if (h) {
+        c1.style.transform = "translateY(-16px) rotate(-8deg)";
+        c2.style.transform = "translateY(-28px) rotate(8deg)";
+        flap.style.transform = "rotateX(-34deg) scaleY(0.92)";
+      } else {
+        c1.style.transform = "translateY(0px) rotate(0deg)";
+        c2.style.transform = "translateY(0px) rotate(0deg)";
+        flap.style.transform = "rotateX(0deg)";
+      }
+    }
+    function toggleFolderOpen() {
+      folderOpen = !folderOpen;
+      const c1 = document.getElementById("folder-card-1");
+      const c2 = document.getElementById("folder-card-2");
+      const flap = document.getElementById("folder-flap");
+      const txt = document.getElementById("folder-status-text");
+      if (folderOpen) {
+        c1.style.transform = "translateY(-60px) rotate(-14deg)";
+        c2.style.transform = "translateY(-85px) rotate(14deg)";
+        flap.style.transform = "rotateX(-45deg) scaleY(0.9)";
+        txt.innerText = "¡Fichas abiertas! Clic para cerrar";
+      } else {
+        hoverFolder(false);
+        txt.innerText = "Pasa el mouse para probar el abanico";
+      }
+    }
+
+    // 5. Gooey Nav
+    function moveGooey(idx) {
+      const blob = document.getElementById("gooey-blob");
+      blob.style.left = `${8 + idx * 104}px`;
+    }
+
+    // 6. Odometer & In-place Delete
+    function randomizeOdometer() {
+      const el = document.getElementById("odometer-val");
+      const target = Math.floor(Math.random() * 40000) + 10000;
+      el.innerText = target.toLocaleString();
+    }
+    function showDeleteConfirm() {
+      const box = document.getElementById("delete-btn-box");
+      box.innerHTML = `
+        <div class="flex items-center gap-1.5 rounded-xl border border-rose-400 bg-rose-600 p-1 text-xs text-white">
+          <span class="px-2 font-bold">¿Seguro?</span>
+          <button onclick="confirmDelete()" class="rounded-lg bg-white px-2 py-0.5 font-bold text-rose-600 hover:bg-rose-50">Sí</button>
+          <button onclick="cancelDelete()" class="rounded-lg bg-black/20 px-2 py-0.5 font-bold">✕</button>
+        </div>
+      `;
+    }
+    function confirmDelete() {
+      const box = document.getElementById("delete-btn-box");
+      box.innerHTML = `<span class="text-xs text-emerald-400 font-bold">¡Borrado con éxito ✓!</span>`;
+      setTimeout(cancelDelete, 1600);
+    }
+    function cancelDelete() {
+      const box = document.getElementById("delete-btn-box");
+      box.innerHTML = `
+        <button onclick="showDeleteConfirm()" class="rounded-xl border border-rose-500/30 bg-rose-500/10 px-3 py-1.5 text-xs font-bold text-rose-400 hover:bg-rose-500/20 transition">
+          Eliminar Recurso
+        </button>
+      `;
+    }
+
+    // 7. Emojis & Bell
+    function triggerEmoji(emoji) {
+      const anchor = document.getElementById("floating-emojis-anchor");
+      const span = document.createElement("span");
+      span.className = "absolute -translate-x-1/2 text-3xl animate-[float-up_1.2s_ease-out_forwards]";
+      span.innerText = emoji;
+      anchor.appendChild(span);
+      setTimeout(() => span.remove(), 1200);
+    }
+    function ringBell() {
+      const svg = document.getElementById("bell-svg");
+      const badge = document.getElementById("bell-badge");
+      svg.classList.add("animate-[bell-swing_0.8s_ease-in-out]");
+      setTimeout(() => svg.classList.remove("animate-[bell-swing_0.8s_ease-in-out]"), 800);
+      if (badge) badge.remove();
+    }
+
+    // 8. Accordion & Switches
+    function toggleAccordion(id) {
+      const el = document.getElementById(id);
+      const icon = document.getElementById('acc-icon-' + id.split('-')[1]);
+      const isHidden = el.classList.contains('hidden');
+      if (isHidden) {
+        el.classList.remove('hidden');
+        if (icon) icon.style.transform = 'rotate(180deg)';
+      } else {
+        el.classList.add('hidden');
+        if (icon) icon.style.transform = 'rotate(0deg)';
+      }
+    }
+    function toggleSwitch(btn) {
+      const span = btn.querySelector('span');
+      const isChecked = span.classList.contains('translate-x-5');
+      if (isChecked) {
+        span.classList.remove('translate-x-5');
+        span.classList.add('translate-x-0');
+        btn.classList.remove('bg-indigo-600');
+        btn.classList.add('bg-white/20');
+      } else {
+        span.classList.remove('translate-x-0');
+        span.classList.add('translate-x-5');
+        btn.classList.remove('bg-white/20');
+        btn.classList.add('bg-indigo-600');
+      }
+    }
+
+    // 9. Data Table State & Functions
+    const tableData = [
+      { id: 1, name: "Acme Corp", plan: "Enterprise", status: "Active", amount: "$38,400" },
+      { id: 2, name: "Linear Labs", plan: "Pro Scale", status: "Active", amount: "$14,200" },
+      { id: 3, name: "Stripe Sub", plan: "Enterprise", status: "Active", amount: "$62,000" },
+      { id: 4, name: "Vercel Edge", plan: "Developer", status: "Trial", amount: "$2,400" },
+      { id: 5, name: "Raycast Ltd", plan: "Pro Scale", status: "Active", amount: "$18,900" },
+    ];
+    let selectedRowIds = new Set();
+
+    function renderTable(rows) {
+      const tbody = document.getElementById('table-body');
+      if (!tbody) return;
+      tbody.innerHTML = rows.map(r => `
+        <tr class="hover:bg-white/[0.02] transition ${selectedRowIds.has(r.id) ? 'bg-indigo-500/10' : ''}">
+          <td class="px-4 py-3"><input type="checkbox" ${selectedRowIds.has(r.id) ? 'checked' : ''} onchange="toggleRowSelection(${r.id})" class="rounded border-white/20 bg-transparent text-indigo-600"></td>
+          <td class="px-4 py-3 font-medium text-white">${r.name}</td>
+          <td class="px-4 py-3"><span class="rounded bg-white/10 px-2 py-0.5 text-[10px] text-slate-300">${r.plan}</span></td>
+          <td class="px-4 py-3"><span class="inline-flex items-center gap-1 text-emerald-400"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>${r.status}</span></td>
+          <td class="px-4 py-3 text-right font-mono font-semibold text-white">${r.amount}</td>
+        </tr>
+      `).join('');
+    }
+
+    function toggleRowSelection(id) {
+      if (selectedRowIds.has(id)) selectedRowIds.delete(id);
+      else selectedRowIds.add(id);
+      document.getElementById('selection-count').innerText = `${selectedRowIds.size} seleccionados`;
+      filterTable();
+    }
+
+    function toggleSelectAllRows(cb) {
+      if (cb.checked) {
+        selectedRowIds = new Set(tableData.map(r => r.id));
+      } else {
+        selectedRowIds.clear();
+      }
+      document.getElementById('selection-count').innerText = `${selectedRowIds.size} seleccionados`;
+      filterTable();
+    }
+
+    function filterTable() {
+      const searchEl = document.getElementById('table-search');
+      if (!searchEl) return;
+      const query = searchEl.value.toLowerCase();
+      const filtered = tableData.filter(r => r.name.toLowerCase().includes(query) || r.plan.toLowerCase().includes(query));
+      renderTable(filtered);
+    }
+
+    let sortDir = 1;
+    function sortTable(key) {
+      sortDir = -sortDir;
+      tableData.sort((a, b) => (a[key] > b[key] ? sortDir : -sortDir));
+      filterTable();
+    }
+
+    // 10. Cart Drawer
+    let cartItems = [
+      { id: 1, title: "Minimalist Sensor Watch", price: 249.00, qty: 1 },
+      { id: 2, title: "OLED Stealth Keyboard", price: 189.00, qty: 1 }
+    ];
+
+    function toggleCart() {
+      const backdrop = document.getElementById('cart-drawer-backdrop');
+      const drawer = document.getElementById('cart-drawer');
+      if (!drawer || !backdrop) return;
+      const isHidden = drawer.classList.contains('hidden');
+      if (isHidden) {
+        backdrop.classList.remove('hidden');
+        drawer.classList.remove('hidden');
+        drawer.classList.add('flex');
+        renderCart();
+      } else {
+        backdrop.classList.add('hidden');
+        drawer.classList.add('hidden');
+        drawer.classList.remove('flex');
+      }
+    }
+
+    function renderCart() {
+      const list = document.getElementById('cart-items-list');
+      if (!list) return;
+      const count = cartItems.reduce((s, i) => s + i.qty, 0);
+      document.getElementById('cart-item-count').innerText = count;
+      document.getElementById('nav-cart-badge').innerText = count;
+
+      list.innerHTML = cartItems.map(item => `
+        <div class="flex items-center justify-between rounded-xl bg-white/5 p-3 text-xs">
+          <div>
+            <div class="font-semibold text-white">${item.title}</div>
+            <div class="text-slate-400 mt-0.5">$${item.price.toFixed(2)} c/u</div>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="flex items-center rounded-lg border border-white/10">
+              <button onclick="changeQty(${item.id}, -1)" class="px-2 py-0.5 text-slate-400 hover:text-white">-</button>
+              <span class="px-2 text-white font-medium">${item.qty}</span>
+              <button onclick="changeQty(${item.id}, 1)" class="px-2 py-0.5 text-slate-400 hover:text-white">+</button>
+            </div>
+            <span class="font-semibold text-white">$${(item.price * item.qty).toFixed(2)}</span>
+          </div>
+        </div>
+      `).join('');
+
+      const subtotal = cartItems.reduce((s, i) => s + i.price * i.qty, 0);
+      document.getElementById('cart-subtotal').innerText = `$${subtotal.toFixed(2)}`;
+      document.getElementById('cart-total').innerText = `$${subtotal.toFixed(2)}`;
+    }
+
+    function changeQty(id, delta) {
+      cartItems = cartItems.map(i => {
+        if (i.id === id) return { ...i, qty: Math.max(0, i.qty + delta) };
+        return i;
+      }).filter(i => i.qty > 0);
+      renderCart();
+    }
+
+    function addToBag(title, price, btn) {
+      const existing = cartItems.find(i => i.title === title);
+      if (existing) existing.qty += 1;
+      else cartItems.push({ id: Date.now(), title, price, qty: 1 });
+
+      const oldText = btn.innerText;
+      btn.innerText = "Added to Bag ✓";
+      btn.classList.add("bg-emerald-500", "text-white");
+      setTimeout(() => {
+        btn.innerText = oldText;
+        btn.classList.remove("bg-emerald-500", "text-white");
+      }, 1200);
+
+      renderCart();
+    }
+
+    function changeProductVariant(id, hex, imgUrl) {
+      const img = document.getElementById(`product-img-${id}`);
+      if (img) img.src = imgUrl;
+    }
+
+    function handleSparklineHover(e) {
+      const tt = document.getElementById('spark-tooltip');
+      const container = document.getElementById('sparkline-container');
+      if (!tt || !container) return;
+      const rect = container.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      tt.style.left = `${x}px`;
+      tt.classList.remove('hidden');
+    }
+
+    function hideSparklineTooltip() {
+      const tt = document.getElementById('spark-tooltip');
+      if (tt) tt.classList.add('hidden');
+    }
+
+    // 11. Command Menu
+    function openCmdMenu() {
+      const m = document.getElementById('cmd-modal');
+      if (m) {
+        m.classList.remove('hidden');
+        m.classList.add('flex');
+        document.getElementById('cmd-input')?.focus();
+      }
+    }
+    function closeCmdMenu() {
+      const m = document.getElementById('cmd-modal');
+      if (m) {
+        m.classList.add('hidden');
+        m.classList.remove('flex');
+      }
+    }
+    function navigateSection(sel) {
+      closeCmdMenu();
+      const el = document.querySelector(sel);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        openCmdMenu();
+      } else if (e.key === 'Escape') {
+        closeCmdMenu();
+      }
+    });
+
+    // Initial render
+    renderTable(tableData);
+    renderCart();
+    renderOsmoDroppingStack();
+  </script>
+</body>
+</html>

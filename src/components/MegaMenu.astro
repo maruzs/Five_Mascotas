@@ -1,0 +1,59 @@
+---
+import { navigationCategories } from '../data/pim/navigation';
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '' } = Astro.props;
+---
+
+<nav class="five-mega-navbar" aria-label="Navegación principal de departamentos">
+  <div class="five-wrap five-mega-inner">
+    <ul class="five-mega-list">
+      {navigationCategories.map((item) => {
+        const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+        return (
+          <li class={`five-mega-item ${item.hasDropdown ? 'has-dropdown' : ''}`}>
+            <a
+              href={item.href}
+              class={`five-mega-link ${isActive ? 'is-active' : ''} ${item.name === 'Ofertas' ? 'is-sale' : ''}`}
+              data-department-link={item.name}
+            >
+              <span>{item.name}</span>
+              {item.hasDropdown && (
+                <svg class="five-dropdown-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              )}
+            </a>
+
+            {item.hasDropdown && item.sections && (
+              <div class="five-mega-dropdown" role="region" aria-label={`Subcategorías de ${item.name}`}>
+                <div class="five-wrap five-mega-dropdown-grid">
+                  {item.sections.map((section) => (
+                    <div class="five-mega-col">
+                      <a href={section.href} class="five-mega-col-title">
+                        {section.title}
+                      </a>
+                      <ul class="five-mega-sublinks">
+                        {section.items.map((sub) => (
+                          <li>
+                            <a href={sub.href} class="five-mega-sublink">
+                              {sub.label}
+                              {sub.badge && <span class="five-sublink-badge">{sub.badge}</span>}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</nav>

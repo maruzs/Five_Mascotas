@@ -6,7 +6,7 @@ services:
     container_name: five_mascotas_web
     restart: unless-stopped
     ports:
-      - "8082:80"
+      - "3004:80"
     environment:
       TZ: America/Santiago
     security_opt:

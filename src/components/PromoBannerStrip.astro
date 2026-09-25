@@ -1,0 +1,50 @@
+---
+import type { PromoBanner } from '../data/pim/types';
+import { promoBanners } from '../data/pim/navigation';
+
+interface Props {
+  bannerId?: string;
+  tag?: string;
+  title?: string;
+  subtitle?: string;
+  ctaText?: string;
+  ctaHref?: string;
+}
+
+const {
+  bannerId,
+  tag,
+  title,
+  subtitle,
+  ctaText,
+  ctaHref
+} = Astro.props;
+
+// Pick banner by ID or fall back to default
+const banner: Partial<PromoBanner> = bannerId
+  ? promoBanners.find((b) => b.id === bannerId) || promoBanners[0]
+  : {
+      tag: tag || '¡SOLO X EL FINDE!',
+      title: title || '2x1 Todo camas, mantas y ropa perro y gato',
+      subtitle: subtitle || '¡Combínalas como quieras! Descuento automático al carrito',
+      ctaText: ctaText || 'Ver Promoción ↗',
+      ctaHref: ctaHref || '/ofertas',
+    };
+---
+
+<section class="five-promo-strip" aria-label="Campaña promocional destacada">
+  <div class="five-wrap five-promo-strip-inner">
+    <div class="five-promo-tag">
+      <span class="five-promo-pill">{tag || banner.tag || 'PROMO FIVE'}</span>
+    </div>
+    <div class="five-promo-content">
+      <h2 class="five-promo-title">{title || banner.title}</h2>
+      <p class="five-promo-sub">{subtitle || banner.subtitle}</p>
+    </div>
+    <div class="five-promo-action">
+      <a href={ctaHref || banner.ctaHref || '/ofertas'} class="five-promo-cta">
+        {ctaText || banner.ctaText || 'Aprovechar'}
+      </a>
+    </div>
+  </div>
+</section>

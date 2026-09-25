@@ -1,0 +1,400 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { products, formatMoney } from '../../data/pim/catalog';
+---
+
+<AdminLayout title="FIVE Admin — Catálogo PIM" activeNav="pim" breadcrumbTitle="Gestor de Productos (PIM)">
+  <div class="admin-page-header">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+      <div>
+        <h1>Catálogo de Productos (PIM)</h1>
+        <p>Gestiona precios, atributos, marcas y fichas técnicas de la tienda.</p>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <button type="button" class="admin-btn secondary" id="admin-export-btn">
+          <span>Exportar JSON</span> 📥
+        </button>
+        <button type="button" class="admin-btn secondary" id="admin-reset-btn" title="Restaurar a catálogo predeterminado">
+          <span>Restablecer</span> ↺
+        </button>
+        <button type="button" class="admin-btn primary" id="admin-new-prod-btn">
+          <span>+ Nuevo Producto</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter & Search Toolbar -->
+  <div class="admin-card" style="margin-bottom:24px; padding:16px 20px;">
+    <div class="admin-toolbar" style="margin-bottom:0;">
+      <div class="admin-toolbar-left">
+        <input
+          type="search"
+          id="pim-search"
+          class="admin-search-input"
+          placeholder="Buscar por nombre, marca o formato..."
+        />
+        <select id="pim-pet-select" class="admin-select">
+          <option value="Todos">Todas las mascotas</option>
+          <option value="Perros">Perros</option>
+          <option value="Gatos">Gatos</option>
+        </select>
+        <select id="pim-cat-select" class="admin-select">
+          <option value="Todos">Todas las categorías</option>
+          <option value="Alimentos">Alimentos</option>
+          <option value="Farmacia">Farmacia</option>
+          <option value="Accesorios">Accesorios</option>
+          <option value="Higiene">Higiene</option>
+          <option value="Snacks">Snacks</option>
+        </select>
+      </div>
+      <div>
+        <span id="pim-count-badge" style="font-size:13px; color:#6c757d; font-weight:600;">
+          {products.length} productos cargados
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Products Data Table -->
+  <div class="admin-card" style="padding:0; overflow:hidden;">
+    <div class="admin-table-container" style="border:0; border-radius:0;">
+      <table class="admin-table" id="pim-table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Mascota</th>
+            <th>Marca</th>
+            <th>Categoría</th>
+            <th>Formato</th>
+            <th>Precio Venta</th>
+            <th>Precio Oferta</th>
+            <th>Badge</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="pim-tbody">
+          {products.map((p) => (
+            <tr data-pim-row data-id={p.id} data-search={`${p.name} ${p.brand} ${p.format} ${p.category} ${p.pet}`.toLowerCase()} data-pet={p.pet} data-category={p.category}>
+              <td>
+                <div class="admin-product-cell">
+                  <img src={p.image} alt="" class="admin-product-thumb" />
+                  <div class="admin-product-meta-col">
+                    <strong>{p.name}</strong>
+                    <small>{p.subcategory}</small>
+                  </div>
+                </div>
+              </td>
+              <td>{p.pet}</td>
+              <td><strong>{p.brand}</strong></td>
+              <td>{p.category}</td>
+              <td>{p.format}</td>
+              <td><strong class="pim-price-val">{formatMoney(p.price)}</strong></td>
+              <td>
+                {p.oldPrice > 0 ? (
+                  <span style="color:#e74c3c; font-weight:700;">{formatMoney(p.oldPrice)}</span>
+                ) : (
+                  <span style="color:#adb5bd;">-</span>
+                )}
+              </td>
+              <td>
+                {p.badge ? (
+                  <span class="admin-badge-trend up">{p.badge}</span>
+                ) : (
+                  <span style="color:#adb5bd;">-</span>
+                )}
+              </td>
+              <td>
+                <div style="display:flex; gap:6px;">
+                  <button type="button" class="admin-btn secondary" data-edit-id={p.id} style="padding:5px 10px; font-size:12px;">
+                    Editar
+                  </button>
+                  <button type="button" class="admin-btn danger" data-delete-id={p.id} style="padding:5px 10px; font-size:12px;">
+                    Eliminar
+                  </button>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Product Edit/Create Modal Backdrop -->
+  <div id="pim-modal" class="admin-modal-backdrop" hidden>
+    <div class="admin-modal" role="dialog" aria-modal="true" aria-labelledby="pim-modal-title">
+      <div class="admin-modal-head">
+        <h3 id="pim-modal-title">Editar Producto PIM</h3>
+        <button type="button" id="pim-modal-close" style="font-size:24px; color:#6c757d;">&times;</button>
+      </div>
+
+      <form id="pim-form">
+        <div class="admin-modal-body">
+          <input type="hidden" id="form-id" name="id" />
+
+          <div class="admin-form-group">
+            <label for="form-name">Nombre Comercial del Producto *</label>
+            <input type="text" id="form-name" name="name" required />
+          </div>
+
+          <div class="admin-form-row">
+            <div class="admin-form-group">
+              <label for="form-pet">Mascota Destino *</label>
+              <select id="form-pet" name="pet" required>
+                <option value="Perros">Perros</option>
+                <option value="Gatos">Gatos</option>
+                <option value="Perros Gatos">Perros y Gatos</option>
+              </select>
+            </div>
+            <div class="admin-form-group">
+              <label for="form-brand">Marca *</label>
+              <input type="text" id="form-brand" name="brand" required placeholder="ej: Wellness Core, Nath" />
+            </div>
+          </div>
+
+          <div class="admin-form-row">
+            <div class="admin-form-group">
+              <label for="form-category">Categoría Principal *</label>
+              <select id="form-category" name="category" required>
+                <option value="Alimentos">Alimentos</option>
+                <option value="Farmacia">Farmacia</option>
+                <option value="Accesorios">Accesorios</option>
+                <option value="Higiene">Higiene</option>
+                <option value="Snacks">Snacks</option>
+              </select>
+            </div>
+            <div class="admin-form-group">
+              <label for="form-subcategory">Subcategoría</label>
+              <input type="text" id="form-subcategory" name="subcategory" placeholder="ej: Alimentos seco, Camas y mantas" />
+            </div>
+          </div>
+
+          <div class="admin-form-row">
+            <div class="admin-form-group">
+              <label for="form-format">Formato / Peso</label>
+              <input type="text" id="form-format" name="format" placeholder="ej: 15 kg, 650 ml, Pack 10 un" />
+            </div>
+            <div class="admin-form-group">
+              <label for="form-lifestage">Etapa / Edad</label>
+              <select id="form-lifestage" name="lifeStage">
+                <option value="Todas las edades">Todas las edades</option>
+                <option value="Cachorro">Cachorro</option>
+                <option value="Adulto">Adulto</option>
+                <option value="Senior">Senior</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="admin-form-row">
+            <div class="admin-form-group">
+              <label for="form-price">Precio Normal (CLP) *</label>
+              <input type="number" id="form-price" name="price" required min="100" />
+            </div>
+            <div class="admin-form-group">
+              <label for="form-oldprice">Precio Anterior / Oferta (0 si no aplica)</label>
+              <input type="number" id="form-oldprice" name="oldPrice" min="0" value="0" />
+            </div>
+          </div>
+
+          <div class="admin-form-row">
+            <div class="admin-form-group">
+              <label for="form-badge">Badge Promocional</label>
+              <input type="text" id="form-badge" name="badge" placeholder="ej: Liquidación, 15% Dcto, Top Ventas" />
+            </div>
+            <div class="admin-form-group">
+              <label for="form-image">Ruta de Imagen</label>
+              <input type="text" id="form-image" name="image" value="/five-mascotas/alimento-0.svg" />
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-modal-foot">
+          <button type="button" class="admin-btn secondary" id="pim-modal-cancel">Cancelar</button>
+          <button type="submit" class="admin-btn primary">Guardar Producto</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Client Script for Interactive PIM CRUD and Reactive Sync -->
+  <script>
+    import { AdminStoreService } from '../../scripts/admin-store';
+    import { formatMoney } from '../../data/pim/catalog';
+    import type { Product } from '../../data/pim/types';
+
+    const modal = document.querySelector<HTMLElement>('#pim-modal')!;
+    const form = document.querySelector<HTMLFormElement>('#pim-form')!;
+    const modalTitle = document.querySelector('#pim-modal-title')!;
+    const tbody = document.querySelector('#pim-tbody')!;
+    const countBadge = document.querySelector('#pim-count-badge')!;
+
+    // Initial render from storage
+    const renderTable = () => {
+      const items = AdminStoreService.getProducts();
+      countBadge.textContent = `${items.length} productos cargados`;
+      tbody.innerHTML = '';
+
+      items.forEach((p) => {
+        const tr = document.createElement('tr');
+        tr.dataset.pimRow = 'true';
+        tr.dataset.id = p.id;
+        tr.dataset.search = `${p.name} ${p.brand} ${p.format} ${p.category} ${p.pet}`.toLowerCase();
+        tr.dataset.pet = p.pet;
+        tr.dataset.category = p.category;
+
+        tr.innerHTML = `
+          <td>
+            <div class="admin-product-cell">
+              <img src="${p.image}" alt="" class="admin-product-thumb" />
+              <div class="admin-product-meta-col">
+                <strong>${p.name}</strong>
+                <small>${p.subcategory || p.detail}</small>
+              </div>
+            </div>
+          </td>
+          <td>${p.pet}</td>
+          <td><strong>${p.brand}</strong></td>
+          <td>${p.category}</td>
+          <td>${p.format}</td>
+          <td><strong class="pim-price-val">${formatMoney(p.price)}</strong></td>
+          <td>
+            ${p.oldPrice > 0 ? `<span style="color:#e74c3c; font-weight:700;">${formatMoney(p.oldPrice)}</span>` : `<span style="color:#adb5bd;">-</span>`}
+          </td>
+          <td>
+            ${p.badge ? `<span class="admin-badge-trend up">${p.badge}</span>` : `<span style="color:#adb5bd;">-</span>`}
+          </td>
+          <td>
+            <div style="display:flex; gap:6px;">
+              <button type="button" class="admin-btn secondary" data-edit-id="${p.id}" style="padding:5px 10px; font-size:12px;">
+                Editar
+              </button>
+              <button type="button" class="admin-btn danger" data-delete-id="${p.id}" style="padding:5px 10px; font-size:12px;">
+                Eliminar
+              </button>
+            </div>
+          </td>
+        `;
+        tbody.append(tr);
+      });
+      attachRowEvents();
+    };
+
+    const attachRowEvents = () => {
+      document.querySelectorAll('[data-edit-id]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = (btn as HTMLElement).dataset.editId!;
+          const product = AdminStoreService.getProducts().find((x) => x.id === id);
+          if (!product) return;
+          modalTitle.textContent = 'Editar Producto PIM';
+          (document.querySelector('#form-id') as HTMLInputElement).value = product.id;
+          (document.querySelector('#form-name') as HTMLInputElement).value = product.name;
+          (document.querySelector('#form-pet') as HTMLSelectElement).value = product.pet;
+          (document.querySelector('#form-brand') as HTMLInputElement).value = product.brand;
+          (document.querySelector('#form-category') as HTMLSelectElement).value = product.category;
+          (document.querySelector('#form-subcategory') as HTMLInputElement).value = product.subcategory || '';
+          (document.querySelector('#form-format') as HTMLInputElement).value = product.format;
+          (document.querySelector('#form-lifestage') as HTMLSelectElement).value = product.lifeStage || 'Todas las edades';
+          (document.querySelector('#form-price') as HTMLInputElement).value = String(product.price);
+          (document.querySelector('#form-oldprice') as HTMLInputElement).value = String(product.oldPrice || 0);
+          (document.querySelector('#form-badge') as HTMLInputElement).value = product.badge || '';
+          (document.querySelector('#form-image') as HTMLInputElement).value = product.image;
+          modal.hidden = false;
+        });
+      });
+
+      document.querySelectorAll('[data-delete-id]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = (btn as HTMLElement).dataset.deleteId!;
+          if (confirm('¿Seguro que deseas eliminar este producto del catálogo?')) {
+            AdminStoreService.deleteProduct(id);
+            renderTable();
+          }
+        });
+      });
+    };
+
+    // Open new product modal
+    document.querySelector('#admin-new-prod-btn')?.addEventListener('click', () => {
+      modalTitle.textContent = 'Crear Nuevo Producto PIM';
+      form.reset();
+      (document.querySelector('#form-id') as HTMLInputElement).value = `prod-${Date.now()}`;
+      modal.hidden = false;
+    });
+
+    const closeModal = () => {
+      modal.hidden = true;
+    };
+
+    document.querySelector('#pim-modal-close')?.addEventListener('click', closeModal);
+    document.querySelector('#pim-modal-cancel')?.addEventListener('click', closeModal);
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const updated: Product = {
+        id: formData.get('id') as string,
+        name: formData.get('name') as string,
+        pet: formData.get('pet') as any,
+        brand: formData.get('brand') as string,
+        category: formData.get('category') as any,
+        subcategory: (formData.get('subcategory') as string) || 'General',
+        detail: `${formData.get('brand')} · ${formData.get('format')}`,
+        format: formData.get('format') as string,
+        lifeStage: formData.get('lifeStage') as any,
+        price: Number(formData.get('price')),
+        oldPrice: Number(formData.get('oldPrice')),
+        badge: formData.get('badge') as string,
+        color: 'violet',
+        image: (formData.get('image') as string) || '/five-mascotas/alimento-0.svg',
+      };
+
+      AdminStoreService.saveProduct(updated);
+      closeModal();
+      renderTable();
+    });
+
+    // Reset button
+    document.querySelector('#admin-reset-btn')?.addEventListener('click', () => {
+      if (confirm('¿Restablecer todo el catálogo a sus valores originales?')) {
+        AdminStoreService.resetProducts();
+        renderTable();
+      }
+    });
+
+    // Export JSON
+    document.querySelector('#admin-export-btn')?.addEventListener('click', () => {
+      AdminStoreService.exportJSON();
+    });
+
+    // Filter and search
+    const searchInput = document.querySelector<HTMLInputElement>('#pim-search')!;
+    const petSelect = document.querySelector<HTMLSelectElement>('#pim-pet-select')!;
+    const catSelect = document.querySelector<HTMLSelectElement>('#pim-cat-select')!;
+
+    const filterRows = () => {
+      const q = searchInput.value.toLowerCase().trim();
+      const pet = petSelect.value;
+      const cat = catSelect.value;
+
+      document.querySelectorAll<HTMLElement>('[data-pim-row]').forEach((row) => {
+        const text = row.dataset.search || '';
+        const rowPet = row.dataset.pet || '';
+        const rowCat = row.dataset.category || '';
+
+        const matchesQ = !q || text.includes(q);
+        const matchesPet = pet === 'Todos' || rowPet.includes(pet);
+        const matchesCat = cat === 'Todos' || rowCat === cat;
+
+        row.hidden = !(matchesQ && matchesPet && matchesCat);
+      });
+    };
+
+    searchInput.addEventListener('input', filterRows);
+    petSelect.addEventListener('change', filterRows);
+    catSelect.addEventListener('change', filterRows);
+
+    // Initial load
+    renderTable();
+  </script>
+</AdminLayout>

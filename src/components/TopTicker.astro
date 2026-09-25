@@ -1,0 +1,23 @@
+---
+import { announcementTicker } from '../data/pim/navigation';
+---
+
+{announcementTicker.active && (
+  <aside class="five-top-ticker" aria-label="Aviso promocional superior">
+    <div class="five-wrap five-ticker-inner">
+      <div class="five-ticker-item">
+        <span class="five-ticker-bold">{announcementTicker.text}</span>
+        {announcementTicker.couponCode && (
+          <span class="five-ticker-pill">
+            usa el código <strong>{announcementTicker.couponCode}</strong>
+          </span>
+        )}
+      </div>
+      {announcementTicker.extraInfo && (
+        <div class="five-ticker-extra">
+          <span>{announcementTicker.extraInfo}</span>
+        </div>
+      )}
+    </div>
+  </aside>
+)}

@@ -1,0 +1,71 @@
+/**
+ * 🖤 Dark Tech / OLED Palette (Linear & Raycast Inspired)
+ *
+ * Designed for developer tools, high-craft SaaS dashboards, and modern technical products.
+ * High-contrast dark mode with pure blacks, translucent glass panels, and neon micro-accents.
+ */
+
+:root {
+  /* Surface Layers (OLED Depth Hierarchy) */
+  --bg-canvas: #08090a;
+  --bg-subtle: #0f1115;
+  --bg-surface: #15181e;
+  --bg-surface-hover: #1c2028;
+  --bg-surface-active: #242934;
+  --bg-glass: rgba(15, 17, 21, 0.75);
+  --bg-glass-elevated: rgba(21, 24, 30, 0.85);
+
+  /* Hairline Borders & Dividers */
+  --border-hairline: rgba(255, 255, 255, 0.07);
+  --border-subtle: rgba(255, 255, 255, 0.12);
+  --border-focus: rgba(99, 102, 241, 0.6);
+  --border-highlight: rgba(255, 255, 255, 0.2);
+
+  /* Typography / Foreground */
+  --text-primary: #f2f5f8;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-faint: #475569;
+  --text-inverse: #08090a;
+
+  /* Brand Accents (Linear Indigo & Electric Violet) */
+  --brand-primary: #5e6ad2;
+  --brand-primary-hover: #6d78df;
+  --brand-primary-glow: rgba(94, 106, 210, 0.35);
+  --brand-cyan: #38bdf8;
+  --brand-emerald: #34d399;
+  --brand-amber: #fbbf24;
+  --brand-rose: #f43f5e;
+
+  /* Status Colors */
+  --status-success: #10b981;
+  --status-success-bg: rgba(16, 185, 129, 0.12);
+  --status-warning: #f59e0b;
+  --status-warning-bg: rgba(245, 158, 11, 0.12);
+  --status-error: #ef4444;
+  --status-error-bg: rgba(239, 68, 68, 0.12);
+  --status-info: #3b82f6;
+  --status-info-bg: rgba(59, 130, 246, 0.12);
+
+  /* Elevation & Multi-layer Shadows */
+  --shadow-subtle: 0 1px 2px 0 rgba(0, 0, 0, 0.45);
+  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--border-hairline);
+  --shadow-overlay: 0 20px 40px -8px rgba(0, 0, 0, 0.8), 0 0 0 1px var(--border-subtle);
+  --shadow-glow: 0 0 24px -4px var(--brand-primary-glow);
+
+  /* Radii */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+}
+
+/* Dark theme body application */
+body.dark-tech,
+.dark-tech {
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  color-scheme: dark;
+}

@@ -1,0 +1,46 @@
+---
+// CartDrawer.astro
+---
+
+<dialog class="five-cart-dialog" aria-labelledby="five-cart-title" id="five-cart-modal">
+  <div class="five-dialog-heading">
+    <div class="five-dialog-title-wrap">
+      <h2 id="five-cart-title">Tu Carrito FIVE</h2>
+      <span class="five-dialog-subtitle">Productos seleccionados</span>
+    </div>
+    <button data-close class="five-dialog-close" aria-label="Cerrar carrito">&times;</button>
+  </div>
+
+  <div class="five-dialog-body">
+    <div class="five-cart-notice">
+      <span>🚚 <strong>Envío gratis</strong> por compras sobre $35.000</span>
+    </div>
+
+    <ul id="five-cart-items" class="five-cart-list">
+      <!-- Items dynamically injected by store/cart script -->
+    </ul>
+  </div>
+
+  <div class="five-dialog-foot">
+    <div class="five-cart-subtotals">
+      <div class="five-cart-row">
+        <span>Subtotal</span>
+        <strong id="five-total">$0</strong>
+      </div>
+      <div class="five-cart-row shipping">
+        <span>Despacho</span>
+        <span class="five-free-text">Por calcular en checkout</span>
+      </div>
+    </div>
+
+    <div class="five-dialog-actions">
+      <button class="five-button five-checkout-btn" id="five-checkout-btn">
+        Continuar al pago <span>🔒</span>
+      </button>
+      <button class="five-text-btn" data-close>
+        Seguir comprando
+      </button>
+    </div>
+    <p class="five-cart-disclaimer">Propuesta visual e-commerce FIVE Mascotas. Catálogo demostrativo.</p>
+  </div>
+</dialog>

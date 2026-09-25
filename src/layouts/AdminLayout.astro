@@ -1,0 +1,114 @@
+---
+import '@fontsource-variable/dm-sans';
+import '../styles/admin.css';
+
+interface Props {
+  title?: string;
+  activeNav?: 'dashboard' | 'pim' | 'cms' | 'categorias';
+  breadcrumbTitle?: string;
+}
+
+const {
+  title = 'FIVE Mascotas — Panel de Administración',
+  activeNav = 'dashboard',
+  breadcrumbTitle = 'Dashboard General',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es-CL">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>{title}</title>
+  </head>
+  <body class="admin-body">
+    <!-- Admin Sidebar -->
+    <aside class="admin-sidebar" aria-label="Navegación del panel de control">
+      <div class="admin-sidebar-brand">
+        <a href="/admin">
+          <img src="/five-mascotas/logo.png" alt="FIVE" width="100" height="50" />
+        </a>
+        <span class="admin-badge-role">Backoffice</span>
+      </div>
+
+      <nav class="admin-nav">
+        <a href="/admin" class={`admin-nav-item ${activeNav === 'dashboard' ? 'is-active' : ''}`}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="/admin/pim" class={`admin-nav-item ${activeNav === 'pim' ? 'is-active' : ''}`}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span>Catálogo PIM</span>
+        </a>
+
+        <a href="/admin/cms" class={`admin-nav-item ${activeNav === 'cms' ? 'is-active' : ''}`}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+          </svg>
+          <span>CMS Banners</span>
+        </a>
+
+        <a href="/admin/categorias" class={`admin-nav-item ${activeNav === 'categorias' ? 'is-active' : ''}`}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"></line>
+            <line x1="8" y1="12" x2="21" y2="12"></line>
+            <line x1="8" y1="18" x2="21" y2="18"></line>
+            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+          </svg>
+          <span>Mega-Menú</span>
+        </a>
+      </nav>
+
+      <div class="admin-sidebar-footer">
+        <a href="/" target="_blank" class="admin-view-store-btn" title="Abrir tienda en nueva pestaña">
+          <span>Ver Tienda Pública</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Admin Main Body -->
+    <div class="admin-main-wrap">
+      <!-- Topbar -->
+      <header class="admin-topbar">
+        <div class="admin-breadcrumbs">
+          <a href="/admin">FIVE Admin</a>
+          <span>/</span>
+          <strong>{breadcrumbTitle}</strong>
+        </div>
+
+        <div class="admin-topbar-actions">
+          <div class="admin-status-pill">
+            <span class="admin-status-dot"></span>
+            <span>PIM Conectado</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content Area -->
+      <main class="admin-content">
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>
