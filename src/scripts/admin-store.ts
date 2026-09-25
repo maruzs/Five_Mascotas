@@ -4,7 +4,7 @@ import { announcementTickers as defaultTickers, promoBanners as defaultBanners, 
 import { defaultShippingRates, type ShippingCityRate } from '../data/pim/shipping';
 import { defaultBankAccount, type BankAccountConfig, BANK_STORAGE_KEY } from '../data/pim/bank';
 
-export const PIM_STORAGE_KEY = 'five_pim_products_v2';
+export const PIM_STORAGE_KEY = 'five_pim_products_v3';
 export const CMS_STORAGE_KEY = 'five_cms_state_v2';
 export const SHIPPING_STORAGE_KEY = 'five_shipping_rates_v1';
 export const ORDERS_STORAGE_KEY = 'five_orders_v1';

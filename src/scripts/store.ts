@@ -363,7 +363,7 @@ class StoreManager {
       const activeProducts = (() => {
         try {
           if (typeof localStorage !== 'undefined') {
-            const saved = localStorage.getItem('five_pim_products_v1');
+            const saved = localStorage.getItem('five_pim_products_v3');
             if (saved) return JSON.parse(saved);
           }
         } catch {
