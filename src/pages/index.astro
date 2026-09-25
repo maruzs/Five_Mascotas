@@ -4,16 +4,16 @@ import PromoBannerStrip from '../components/PromoBannerStrip.astro';
 import HeroCarousel from '../components/HeroCarousel.astro';
 
 const products = [
-  { name: 'Alimento para perro adulto', pet: 'Perros', detail: 'Pollo y arroz · 15 kg', price: 32990, color: 'violet', type: 'Alimentos', image: '/five-mascotas/alimento-0.svg', oldPrice: 36990, badge: 'Liquidación' },
-  { name: 'Alimento para gato adulto', pet: 'Gatos', detail: 'Salmón · 7,5 kg', price: 24990, color: 'green', type: 'Alimentos', image: '/five-mascotas/alimento-1.svg', oldPrice: 0, badge: 'SuperPrecios' },
-  { name: 'Alimento para cachorros', pet: 'Perros', detail: 'Pollo · 10 kg', price: 28990, color: 'peach', type: 'Alimentos', image: '/five-mascotas/alimento-2.svg', oldPrice: 0, badge: '15% Dcto' },
-  { name: 'Alimento para gato esterilizado', pet: 'Gatos', detail: 'Pollo · 7,5 kg', price: 26990, color: 'lavender', type: 'Alimentos', image: '/five-mascotas/alimento-3.svg', oldPrice: 29990, badge: '30% en 2da' },
-  { name: 'Kit de primeros auxilios', pet: 'Perros Gatos', detail: 'Estuche de cuidado · Ejemplo', price: 15990, color: 'green', type: 'Farmacia', image: '/five-mascotas/botiquin.svg', oldPrice: 0, badge: 'Salud' },
-  { name: 'Gasas de cuidado', pet: 'Perros Gatos', detail: 'Pack de 10 unidades · Ejemplo', price: 3990, color: 'lavender', type: 'Farmacia', image: '/five-mascotas/gasas.svg', oldPrice: 0, badge: '' },
-  { name: 'Plato de cerámica', pet: 'Perros Gatos', detail: '650 ml · Oliva', price: 9990, color: 'green', type: 'Accesorios', image: '/demos/miga/plato.svg', oldPrice: 11990, badge: 'Oferta' },
-  { name: 'Pelota con textura', pet: 'Perros', detail: 'Tamaño M · Naranja', price: 4990, color: 'peach', type: 'Accesorios', image: '/demos/miga/pelota.svg', oldPrice: 0, badge: '' },
-  { name: 'Arena aglomerante', pet: 'Gatos', detail: 'Sin aroma · 4 kg', price: 11990, color: 'lavender', type: 'Higiene', image: '/demos/miga/arena.svg', oldPrice: 0, badge: 'Top Ventas' },
-  { name: 'Bocados para premiar', pet: 'Perros', detail: 'Snack · 100 g', price: 3990, color: 'peach', type: 'Snacks', image: '/demos/miga/snack.svg', oldPrice: 4990, badge: 'Oferta' },
+  { name: 'Amici Adulto Mix', pet: 'Perros', detail: 'Carne y cereales · 22 kg', price: 32990, color: 'violet', type: 'Alimentos', image: '/five-mascotas/alimento-0.svg', oldPrice: 36990, badge: 'Liquidación', brand: 'Amici' },
+  { name: '9 Lives Adulto Pescado', pet: 'Gatos', detail: 'Pescado y arroz · 8 kg', price: 24990, color: 'green', type: 'Alimentos', image: '/five-mascotas/alimento-1.svg', oldPrice: 0, badge: 'SuperPrecios', brand: '9 Lives' },
+  { name: 'Ganacan Cachorro', pet: 'Perros', detail: 'Receta crecimiento · 10 kg', price: 28990, color: 'peach', type: 'Alimentos', image: '/five-mascotas/alimento-2.svg', oldPrice: 0, badge: '15% Dcto', brand: 'Ganacan' },
+  { name: 'Josicat Esterilizado Classic', pet: 'Gatos', detail: 'Esterilizado control peso · 1,9 kg', price: 26990, color: 'lavender', type: 'Alimentos', image: '/five-mascotas/alimento-3.svg', oldPrice: 29990, badge: '30% en 2da', brand: 'Josi' },
+  { name: 'Frontline Spray Perros y Gatos', pet: 'Perros Gatos', detail: 'Antiparasitario externo · 250 ml', price: 15990, color: 'green', type: 'Farmacia', image: '/five-mascotas/botiquin.svg', oldPrice: 0, badge: 'Salud', brand: 'Frontline' },
+  { name: 'Frontline Plus Gatos 0,5 ml', pet: 'Gatos', detail: 'Pipeta antiparasitaria · 1 dosis', price: 3990, color: 'lavender', type: 'Farmacia', image: '/five-mascotas/gasas.svg', oldPrice: 0, badge: '', brand: 'Frontline' },
+  { name: 'Plato de cerámica pesado antideslizante', pet: 'Perros Gatos', detail: '650 ml · Acabado mate', price: 9990, color: 'green', type: 'Accesorios', image: '/demos/miga/plato.svg', oldPrice: 11990, badge: 'Oferta', brand: 'Zee.Dog' },
+  { name: 'Pelota con textura TPR resistente', pet: 'Perros', detail: 'Tamaño M · Caucho alta densidad', price: 4990, color: 'peach', type: 'Accesorios', image: '/demos/miga/pelota.svg', oldPrice: 0, badge: '', brand: 'Kong' },
+  { name: 'Arena Stay Happy Café', pet: 'Gatos', detail: 'Aglomerante aroma café · 10 kg', price: 11990, color: 'lavender', type: 'Higiene', image: '/demos/miga/arena.svg', oldPrice: 0, badge: 'Top Ventas', brand: 'Stay Happy' },
+  { name: 'Rahue Fémur Vacuno Gigante', pet: 'Perros', detail: 'Snack hueso natural · 1 un', price: 3990, color: 'peach', type: 'Snacks', image: '/demos/miga/snack.svg', oldPrice: 4990, badge: 'Oferta', brand: 'Rahue' },
 ];
 
 const categoryIcons = [
@@ -154,7 +154,7 @@ const money = (n: number) =>
           data-type={p.type}
           data-category={p.type}
           data-offer={p.oldPrice > 0 ? "true" : "false"}
-          data-search={`${p.name} ${p.detail} ${p.type} ${p.pet}`}
+          data-search={`${p.name} ${p.brand || ''} ${p.detail} ${p.type} ${p.pet}`}
         >
           <div class={`five-product-image-box ${p.color}`}>
             <span class="five-product-pet-tag">
@@ -170,7 +170,7 @@ const money = (n: number) =>
           </div>
 
           <div class="five-product-details">
-            <span class="five-product-brand">{p.type.toUpperCase()}</span>
+            <span class="five-product-brand">{(p.brand || p.type).toUpperCase()}</span>
             <h3 class="five-product-title">{p.name}</h3>
             <span class="five-product-meta">{p.detail}</span>
 
@@ -333,6 +333,56 @@ const money = (n: number) =>
     .five-benefits-bar {
       grid-template-columns: 1fr;
       gap: 16px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .five-products-section {
+      padding-block: 24px 40px;
+    }
+    .five-section-heading-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .five-filters {
+      width: 100%;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .five-filters button {
+      flex: 1;
+      padding: 7px 14px;
+      font-size: 12.5px;
+      white-space: nowrap;
+      text-align: center;
+    }
+    .five-catalog-tools {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+      padding: 12px 14px;
+    }
+    .five-catalog-tools label {
+      width: 100%;
+      justify-content: space-between;
+    }
+    .five-catalog-tools select {
+      flex: 1;
+      max-width: 200px;
+    }
+    .five-catalog-tools > span {
+      margin-left: 0;
+      text-align: right;
+    }
+    .five-social-proof-section {
+      padding-bottom: 24px;
+    }
+    .five-benefits-bar {
+      padding: 18px 16px;
     }
   }
 </style>
