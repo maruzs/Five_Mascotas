@@ -1,33 +1,37 @@
 ---
 import { announcementTickers } from '../data/pim/navigation';
 
-const initialTickers = announcementTickers.filter(t => t.active);
-const initial = initialTickers[0] || announcementTickers[0];
+const initialTickers = announcementTickers.filter((t) => t.active);
 ---
 
 <aside class="five-top-ticker" id="five-top-ticker" aria-label="Aviso promocional superior">
-  <div class="five-wrap five-ticker-inner" id="five-ticker-inner">
-    <div class="five-ticker-item" id="five-ticker-main">
-      <span class="five-ticker-bold" id="five-ticker-text">{initial.text}</span>
-      {initial.couponCode ? (
-        <span class="five-ticker-pill" id="five-ticker-pill">
-          {initial.couponText || 'Usa el código'} <strong>{initial.couponCode}</strong>
-        </span>
-      ) : (
-        <span class="five-ticker-pill" id="five-ticker-pill" style="display: none;"></span>
-      )}
+  <div class="five-wrap" style="position: relative;">
+    <div class="five-ticker-viewport" id="five-ticker-viewport">
+      {initialTickers.map((t, idx) => (
+        <div class={`five-ticker-slide-item ${idx === 0 ? 'is-active' : ''}`} data-ticker-slide={idx}>
+          <span class="five-ticker-bold">{t.text}</span>
+          {t.couponCode && (
+            <span class="five-ticker-pill">
+              {t.couponText || 'Usa el código'} <strong>{t.couponCode}</strong>
+            </span>
+          )}
+          {t.extraInfo && (
+            <span class="five-ticker-extra five-hide-mobile">· {t.extraInfo}</span>
+          )}
+        </div>
+      ))}
     </div>
 
-    <div style="display: flex; align-items: center; gap: 12px;">
-      <div class="five-ticker-extra" id="five-ticker-extra">
-        {initial.extraInfo && <span>{initial.extraInfo}</span>}
-      </div>
-
-      <div class="five-ticker-nav" id="five-ticker-controls" style={initialTickers.length > 1 ? "display: flex; align-items: center; gap: 6px;" : "display: none;"}>
-        <button type="button" class="five-ticker-btn" id="five-ticker-prev" aria-label="Aviso anterior" style="background:rgba(255,255,255,0.15); border:none; color:#fff; border-radius:4px; padding:1px 6px; cursor:pointer; font-size:11px;">‹</button>
-        <span id="five-ticker-counter" style="font-size:10px; opacity:0.8; font-weight:600;">1/{initialTickers.length}</span>
-        <button type="button" class="five-ticker-btn" id="five-ticker-next" aria-label="Aviso siguiente" style="background:rgba(255,255,255,0.15); border:none; color:#fff; border-radius:4px; padding:1px 6px; cursor:pointer; font-size:11px;">›</button>
-      </div>
+    <!-- Subtle carousel indicator dots (sin flechitas) -->
+    <div class="five-ticker-dots-nav" id="five-ticker-dots" style={initialTickers.length > 1 ? "display: flex;" : "display: none;"}>
+      {initialTickers.map((_, idx) => (
+        <button
+          type="button"
+          class={`five-ticker-dot ${idx === 0 ? 'is-active' : ''}`}
+          data-dot={idx}
+          aria-label={`Ver aviso ${idx + 1}`}
+        />
+      ))}
     </div>
   </div>
 </aside>
@@ -36,125 +40,152 @@ const initial = initialTickers[0] || announcementTickers[0];
   import { AdminStoreService } from '../scripts/admin-store';
   import type { AnnouncementTicker } from '../data/pim/types';
 
-  const tickerContainer = document.querySelector<HTMLElement>('#five-top-ticker');
-  const tickerText = document.querySelector<HTMLElement>('#five-ticker-text');
-  const tickerPill = document.querySelector<HTMLElement>('#five-ticker-pill');
-  const tickerExtra = document.querySelector<HTMLElement>('#five-ticker-extra');
-  const tickerControls = document.querySelector<HTMLElement>('#five-ticker-controls');
-  const tickerCounter = document.querySelector<HTMLElement>('#five-ticker-counter');
-  const prevBtn = document.querySelector<HTMLButtonElement>('#five-ticker-prev');
-  const nextBtn = document.querySelector<HTMLButtonElement>('#five-ticker-next');
+  const container = document.querySelector<HTMLElement>('#five-top-ticker');
+  const viewport = document.querySelector<HTMLElement>('#five-ticker-viewport');
+  const dotsContainer = document.querySelector<HTMLElement>('#five-ticker-dots');
 
   let activeTickers: AnnouncementTicker[] = [];
   let currentIndex = 0;
-  let rotationTimer: any = null;
+  let timer: any = null;
   let isPaused = false;
 
-  const renderCurrentTicker = () => {
-    if (!tickerContainer || !tickerText) return;
+  const renderSlides = () => {
+    if (!viewport || !dotsContainer) return;
     if (activeTickers.length === 0) {
-      tickerContainer.style.display = 'none';
+      if (container) container.style.display = 'none';
       return;
     }
-    tickerContainer.style.display = 'block';
+    if (container) container.style.display = 'block';
 
-    const t = activeTickers[currentIndex];
-    if (!t) return;
+    viewport.innerHTML = '';
+    dotsContainer.innerHTML = '';
 
-    // Smooth transition
-    tickerText.style.opacity = '0';
-    setTimeout(() => {
-      tickerText.textContent = t.text;
-      tickerText.style.opacity = '1';
+    activeTickers.forEach((t, idx) => {
+      // Slide element
+      const slide = document.createElement('div');
+      slide.className = `five-ticker-slide-item ${idx === currentIndex ? 'is-active' : ''}`;
+      slide.dataset.tickerSlide = String(idx);
 
-      if (tickerPill) {
-        if (t.couponCode) {
-          tickerPill.style.display = 'inline-block';
-          tickerPill.innerHTML = `${t.couponText || 'Usa el código'} <strong>${t.couponCode}</strong>`;
-        } else {
-          tickerPill.style.display = 'none';
-        }
+      const pillHtml = t.couponCode
+        ? `<span class="five-ticker-pill">${t.couponText || 'Usa el código'} <strong>${t.couponCode}</strong></span>`
+        : '';
+      const extraHtml = t.extraInfo
+        ? `<span class="five-ticker-extra five-hide-mobile">· ${t.extraInfo}</span>`
+        : '';
+
+      slide.innerHTML = `
+        <span class="five-ticker-bold">${t.text}</span>
+        ${pillHtml}
+        ${extraHtml}
+      `;
+      viewport.appendChild(slide);
+
+      // Dot element (only if multiple tickers)
+      if (activeTickers.length > 1) {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = `five-ticker-dot ${idx === currentIndex ? 'is-active' : ''}`;
+        dot.setAttribute('aria-label', `Ver aviso ${idx + 1}`);
+        dot.addEventListener('click', () => {
+          goToSlide(idx);
+        });
+        dotsContainer.appendChild(dot);
       }
+    });
 
-      if (tickerExtra) {
-        tickerExtra.innerHTML = t.extraInfo ? `<span>${t.extraInfo}</span>` : '';
-      }
-
-      if (tickerControls && tickerCounter) {
-        if (activeTickers.length > 1) {
-          tickerControls.style.display = 'flex';
-          tickerCounter.textContent = `${currentIndex + 1}/${activeTickers.length}`;
-        } else {
-          tickerControls.style.display = 'none';
-        }
-      }
-    }, 150);
+    dotsContainer.style.display = activeTickers.length > 1 ? 'flex' : 'none';
   };
 
-  const nextTicker = () => {
+  const goToSlide = (index: number) => {
     if (activeTickers.length <= 1) return;
-    currentIndex = (currentIndex + 1) % activeTickers.length;
-    renderCurrentTicker();
+    currentIndex = (index + activeTickers.length) % activeTickers.length;
+
+    const slides = viewport?.querySelectorAll('.five-ticker-slide-item');
+    slides?.forEach((s, idx) => {
+      s.classList.toggle('is-active', idx === currentIndex);
+    });
+
+    const dots = dotsContainer?.querySelectorAll('.five-ticker-dot');
+    dots?.forEach((d, idx) => {
+      d.classList.toggle('is-active', idx === currentIndex);
+    });
   };
 
-  const prevTicker = () => {
-    if (activeTickers.length <= 1) return;
-    currentIndex = (currentIndex - 1 + activeTickers.length) % activeTickers.length;
-    renderCurrentTicker();
+  const nextSlide = () => {
+    goToSlide(currentIndex + 1);
+  };
+
+  const prevSlide = () => {
+    goToSlide(currentIndex - 1);
   };
 
   const startTimer = () => {
     stopTimer();
     if (activeTickers.length > 1) {
-      rotationTimer = setInterval(() => {
+      timer = setInterval(() => {
         if (!isPaused) {
-          nextTicker();
+          nextSlide();
         }
-      }, 5000);
+      }, 4500);
     }
   };
 
   const stopTimer = () => {
-    if (rotationTimer) {
-      clearInterval(rotationTimer);
-      rotationTimer = null;
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
     }
   };
 
   const refreshTickers = () => {
-    const all = AdminStoreService.getTickers();
-    activeTickers = all.filter((t) => t.active);
+    const list = AdminStoreService.getTickers();
+    activeTickers = list.filter((t) => t.active);
     if (currentIndex >= activeTickers.length) {
       currentIndex = 0;
     }
-    renderCurrentTicker();
+    renderSlides();
     startTimer();
   };
 
-  // Event handlers
-  prevBtn?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    prevTicker();
-  });
-
-  nextBtn?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    nextTicker();
-  });
-
-  tickerContainer?.addEventListener('mouseenter', () => {
+  // Pause on hover
+  container?.addEventListener('mouseenter', () => {
     isPaused = true;
   });
 
-  tickerContainer?.addEventListener('mouseleave', () => {
+  container?.addEventListener('mouseleave', () => {
     isPaused = false;
   });
 
-  // Reactive updates from CMS changes (Multi-device sync)
+  // Mobile swipe support
+  let touchStartX = 0;
+  let touchStartY = 0;
+  container?.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+    isPaused = true;
+  }, { passive: true });
+
+  container?.addEventListener('touchend', (e) => {
+    const touchEndX = e.changedTouches[0].screenX;
+    const touchEndY = e.changedTouches[0].screenY;
+    const diffX = touchStartX - touchEndX;
+    const diffY = touchStartY - touchEndY;
+
+    // Horizontal swipe or vertical swipe
+    if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
+      if (diffX > 0) nextSlide();
+      else prevSlide();
+    } else if (Math.abs(diffY) > 30) {
+      if (diffY > 0) nextSlide();
+      else prevSlide();
+    }
+
+    isPaused = false;
+  }, { passive: true });
+
+  // Reactive sync with CMS
   window.addEventListener('five:cms-updated', refreshTickers);
 
   // Initial load
-  AdminStoreService.init().then(() => {
-    refreshTickers();
-  });
+  AdminStoreService.init().then(refreshTickers);
 </script>

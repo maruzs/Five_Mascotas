@@ -99,32 +99,49 @@ img {
 }
 
 /* ==========================================================================
-   TOP TICKER ANNOUNCEMENT (Foto 4)
+   TOP TICKER ANNOUNCEMENT (Foto 4) - CAROUSEL MODE
    ========================================================================== */
 .five-top-ticker {
-  background: #571b86;
+  background: #3c105e;
   color: #ffffff;
   font-size: 12.5px;
-  padding-block: 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
 }
 
-.five-ticker-inner {
+.five-ticker-viewport {
+  position: relative;
+  overflow: hidden;
+  height: 38px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.five-ticker-slide-item {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 12px;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+  padding-inline: 16px;
 }
 
-.five-ticker-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.five-ticker-slide-item.is-active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .five-ticker-bold {
-  font-weight: 600;
+  font-weight: 650;
   letter-spacing: 0.2px;
 }
 
@@ -145,12 +162,40 @@ img {
   color: rgba(255, 255, 255, 0.85);
 }
 
+.five-ticker-dots-nav {
+  position: absolute;
+  right: clamp(12px, 3vw, 24px);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 5;
+}
+
+.five-ticker-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.five-ticker-dot.is-active {
+  background: var(--lime);
+  width: 16px;
+  border-radius: 4px;
+}
+
 /* ==========================================================================
-   MAIN HEADER (Foto 4)
+   MAIN HEADER (Foto 2) - DARK PALETTE
    ========================================================================== */
 .five-main-header {
-  background: #ffffff;
-  border-bottom: 1px solid var(--border-color);
+  background: #111113;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   padding-block: 16px;
   position: sticky;
   top: 0;
@@ -167,7 +212,7 @@ img {
 .five-mobile-menu-btn {
   display: none;
   padding: 8px;
-  color: var(--primary);
+  color: #ffffff;
 }
 
 .five-logo {
@@ -178,17 +223,9 @@ img {
 }
 
 .five-logo img {
-  width: 130px;
+  width: 125px;
   height: auto;
   display: block;
-}
-
-.five-logo-sub {
-  font-size: 9px;
-  letter-spacing: 5px;
-  font-weight: 800;
-  color: var(--primary);
-  margin-top: -2px;
 }
 
 /* Search Bar & Predictive Dropdown */
@@ -205,32 +242,50 @@ img {
   border: 2px solid var(--primary);
   border-radius: 30px;
   overflow: hidden;
-  transition: box-shadow 0.2s;
+  height: 48px;
+  transition: box-shadow 0.2s, border-color 0.2s;
 }
 
 .five-search:focus-within {
-  box-shadow: 0 0 0 3px rgba(112, 37, 168, 0.2);
+  box-shadow: 0 0 0 3px rgba(148, 249, 99, 0.35);
+  border-color: #94f963;
 }
 
 .five-search input {
   flex: 1;
   border: 0;
-  padding: 12px 20px;
+  padding: 0 20px;
   font-size: 14px;
   outline: none;
   min-width: 0;
-  color: var(--text-main);
+  color: #111111;
+  background: transparent;
+  height: 100%;
 }
 
 .five-search button {
-  padding: 10px 20px;
+  padding: 0 22px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--primary);
-  color: #fff;
+  color: #ffffff;
   border: 0;
   height: 100%;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.five-search button:hover {
+  background: var(--primary-hover);
+}
+
+.five-search button svg {
+  width: 20px;
+  height: 20px;
+  stroke: #ffffff;
+  display: block;
 }
 
 .five-search-dropdown {
@@ -314,16 +369,22 @@ img {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: var(--text-main);
+  color: #ffffff;
+  text-decoration: none;
   transition: color 0.2s;
 }
 
 .five-header-action-item:hover {
-  color: var(--primary);
+  color: var(--lime);
 }
 
 .five-header-action-item svg {
-  color: var(--primary);
+  color: #ffffff;
+  transition: color 0.2s;
+}
+
+.five-header-action-item:hover svg {
+  color: var(--lime);
 }
 
 .five-header-action-item span {
@@ -334,32 +395,41 @@ img {
 
 .five-header-action-item small {
   font-size: 10.5px;
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.65);
 }
 
 .five-header-action-item strong {
   font-size: 12.5px;
   font-weight: 650;
+  color: #ffffff;
 }
 
 .five-basket {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 8px 14px;
-  background: var(--primary-soft);
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 25px;
-  transition: background 0.2s;
+  transition: all 0.2s;
+  cursor: pointer;
+  color: #ffffff;
 }
 
 .five-basket:hover {
-  background: #edd8fa;
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .five-basket-icon-wrap {
   position: relative;
   display: flex;
   align-items: center;
+}
+
+.five-basket-icon-wrap img {
+  filter: brightness(0) invert(1);
 }
 
 .five-cart-badge {
@@ -376,7 +446,7 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .five-basket-text {
@@ -388,13 +458,13 @@ img {
 
 .five-basket-text small {
   font-size: 10px;
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.65);
 }
 
 .five-basket-text strong {
   font-size: 13px;
-  color: var(--primary);
-  font-weight: 700;
+  font-weight: 750;
+  color: #ffffff;
 }
 
 /* ==========================================================================
