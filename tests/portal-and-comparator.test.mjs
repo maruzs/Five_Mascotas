@@ -78,6 +78,19 @@ import { Window } from 'happy-dom';
   for (const svgPath of brandSvgs) {
     assert.ok(existsSync(svgPath), `El packshot ${svgPath} debe existir en el sistema`);
   }
+
+  // Validar fotos reales oficiales de productos
+  const realPhotos = [
+    'public/five-mascotas/products/fit-formula-perro-adulto.png',
+    'public/five-mascotas/products/purina-proplan-adulto.png',
+    'public/five-mascotas/products/nomade-perro-adulto.png',
+    'public/five-mascotas/products/farmina-nd-adulto.png',
+    'public/five-mascotas/products/champion-cat-pollo.png',
+    'public/five-mascotas/products/champion-dog-adulto.webp',
+  ];
+  for (const photo of realPhotos) {
+    assert.ok(existsSync(photo), `La foto real oficial ${photo} debe existir`);
+  }
 }
 
 console.log('PASS PORTAL & COMPARATOR: Customer portal, live tracking, food comparator and brand packshots verified.');
