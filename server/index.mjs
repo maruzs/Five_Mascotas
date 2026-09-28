@@ -446,7 +446,7 @@ const server = http.createServer(async (req, res) => {
     // GET /api/orders?code=... (Public order tracking by code or phone)
     if (req.method === 'GET') {
       try {
-        const queryCode = url.searchParams.get('code') || subAction;
+        const queryCode = parsedUrl.searchParams.get('code') || subAction;
         const data = await readJsonFile(ordersFilePath, getDefaultOrders);
 
         if (queryCode) {
