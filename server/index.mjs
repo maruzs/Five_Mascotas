@@ -21,6 +21,9 @@ if (!fs.existsSync(dataDir)) {
 const cmsFilePath = path.join(dataDir, 'cms.json');
 const pimFilePath = path.join(dataDir, 'pim.json');
 const usersFilePath = path.join(dataDir, 'users.json');
+const ordersFilePath = path.join(dataDir, 'orders.json');
+
+const getDefaultOrders = () => ({ orders: [] });
 
 // In-memory session store (sessionId -> { userId, email, role, name, expiresAt })
 const sessionStore = new Map();
@@ -430,6 +433,171 @@ const server = http.createServer(async (req, res) => {
 
     res.statusCode = 404;
     res.end(JSON.stringify({ ok: false, error: 'Auth action not found' }));
+    return;
+  }
+
+  // API ROUTE: /api/orders (Orders tracking, user orders history, and sync)
+  if (pathname === '/api/orders' || pathname.startsWith('/api/orders/')) {
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+
+    const subAction = pathname.replace('/api/orders', '').replace(/^\//, '');
+
+    // GET /api/orders?code=... (Public order tracking by code or phone)
+    if (req.method === 'GET') {
+      try {
+        const queryCode = url.searchParams.get('code') || subAction;
+        const data = await readJsonFile(ordersFilePath, getDefaultOrders);
+
+        if (queryCode) {
+          const cleanCode = queryCode.trim().toUpperCase();
+          const order = data.orders.find((o) =>
+            o.code?.toUpperCase() === cleanCode || (o.phone && o.phone.includes(cleanCode))
+          );
+          if (!order) {
+            res.statusCode = 404;
+            res.end(JSON.stringify({ ok: false, error: 'Pedido no encontrado' }));
+            return;
+          }
+          res.statusCode = 200;
+          res.end(JSON.stringify({ ok: true, order }));
+          return;
+        }
+
+        // Without query code -> Requires authenticated session
+        const session = getSessionFromReq(req);
+        if (!session) {
+          res.statusCode = 401;
+          res.end(JSON.stringify({ ok: false, error: 'Autenticación requerida para ver tus pedidos' }));
+          return;
+        }
+
+        // Admin can see all orders, regular client only their own orders
+        const userOrders = session.role === 'admin'
+          ? data.orders
+          : data.orders.filter((o) => o.email && o.email.toLowerCase() === session.email.toLowerCase());
+
+        res.statusCode = 200;
+        res.end(JSON.stringify({ ok: true, orders: userOrders }));
+      } catch (err) {
+        res.statusCode = 500;
+        res.end(JSON.stringify({ ok: false, error: err.message }));
+      }
+      return;
+    }
+
+    // POST /api/orders (Create/Save new order)
+    if (req.method === 'POST' && (!subAction || subAction === 'create')) {
+      try {
+        const body = await parseBody(req);
+        if (!body.code || !body.items) {
+          res.statusCode = 400;
+          res.end(JSON.stringify({ ok: false, error: 'Datos de orden incompletos' }));
+          return;
+        }
+
+        const data = await readJsonFile(ordersFilePath, getDefaultOrders);
+        const idx = data.orders.findIndex((o) => o.code === body.code);
+        if (idx >= 0) {
+          data.orders[idx] = { ...data.orders[idx], ...body, updatedAt: new Date().toISOString() };
+        } else {
+          data.orders.unshift({
+            ...body,
+            createdAt: body.createdAt || new Date().toISOString(),
+          });
+        }
+        await writeJsonFile(ordersFilePath, data);
+
+        res.statusCode = 201;
+        res.end(JSON.stringify({ ok: true, order: body }));
+      } catch (err) {
+        res.statusCode = 500;
+        res.end(JSON.stringify({ ok: false, error: err.message }));
+      }
+      return;
+    }
+
+    // POST /api/orders/link (Link guest order to authenticated user email)
+    if (req.method === 'POST' && subAction === 'link') {
+      try {
+        const session = getSessionFromReq(req);
+        if (!session) {
+          res.statusCode = 401;
+          res.end(JSON.stringify({ ok: false, error: 'Inicia sesión para vincular pedidos a tu cuenta' }));
+          return;
+        }
+
+        const body = await parseBody(req);
+        const code = (body.code || '').trim().toUpperCase();
+        if (!code) {
+          res.statusCode = 400;
+          res.end(JSON.stringify({ ok: false, error: 'Ingresa un código de pedido válido' }));
+          return;
+        }
+
+        const data = await readJsonFile(ordersFilePath, getDefaultOrders);
+        const order = data.orders.find((o) => o.code?.toUpperCase() === code);
+        if (!order) {
+          res.statusCode = 404;
+          res.end(JSON.stringify({ ok: false, error: 'No se encontró un pedido con ese código' }));
+          return;
+        }
+
+        order.email = session.email;
+        order.linkedToUserId = session.userId;
+        order.updatedAt = new Date().toISOString();
+        await writeJsonFile(ordersFilePath, data);
+
+        res.statusCode = 200;
+        res.end(JSON.stringify({ ok: true, order }));
+      } catch (err) {
+        res.statusCode = 500;
+        res.end(JSON.stringify({ ok: false, error: err.message }));
+      }
+      return;
+    }
+
+    // PUT /api/orders/status (Update order status - Admin only)
+    if (req.method === 'PUT' && subAction === 'status') {
+      try {
+        const session = getSessionFromReq(req);
+        if (!session || session.role !== 'admin') {
+          res.statusCode = 403;
+          res.end(JSON.stringify({ ok: false, error: 'Acceso restringido a administradores' }));
+          return;
+        }
+
+        const body = await parseBody(req);
+        const { code, status } = body;
+        if (!code || !status) {
+          res.statusCode = 400;
+          res.end(JSON.stringify({ ok: false, error: 'code y status son requeridos' }));
+          return;
+        }
+
+        const data = await readJsonFile(ordersFilePath, getDefaultOrders);
+        const order = data.orders.find((o) => o.code === code);
+        if (!order) {
+          res.statusCode = 404;
+          res.end(JSON.stringify({ ok: false, error: 'Pedido no encontrado' }));
+          return;
+        }
+
+        order.status = status;
+        order.statusUpdatedAt = new Date().toISOString();
+        await writeJsonFile(ordersFilePath, data);
+
+        res.statusCode = 200;
+        res.end(JSON.stringify({ ok: true, order }));
+      } catch (err) {
+        res.statusCode = 500;
+        res.end(JSON.stringify({ ok: false, error: err.message }));
+      }
+      return;
+    }
+
+    res.statusCode = 405;
+    res.end(JSON.stringify({ ok: false, error: 'Method Not Allowed' }));
     return;
   }
 

@@ -346,6 +346,25 @@ export class AdminStoreService {
     return [];
   }
 
+  public static async fetchOrdersFromServer(): Promise<any[]> {
+    try {
+      const res = await fetch('/api/orders');
+      if (res.ok) {
+        const json = await res.json();
+        if (json?.ok && Array.isArray(json.orders)) {
+          if (typeof localStorage !== 'undefined') {
+            localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(json.orders));
+            window.dispatchEvent(new CustomEvent('five:orders-updated', { detail: json.orders }));
+          }
+          return json.orders;
+        }
+      }
+    } catch {
+      // Offline fallback
+    }
+    return this.getOrders();
+  }
+
   public static saveOrder(order: any): void {
     const list = this.getOrders();
     const idx = list.findIndex((o) => o.code === order.code);
@@ -358,11 +377,45 @@ export class AdminStoreService {
       localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(list));
       window.dispatchEvent(new CustomEvent('five:orders-updated', { detail: list }));
     }
+
+    // Background sync to server
+    try {
+      fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(order),
+      }).catch(() => {});
+    } catch {}
   }
 
   public static getOrderByCode(code: string): any | null {
     const clean = code.trim().toUpperCase();
     const list = this.getOrders();
     return list.find((o) => o.code.toUpperCase() === clean || o.phone?.includes(clean)) || null;
+  }
+
+  public static async linkOrderToUser(code: string, email: string): Promise<boolean> {
+    const clean = code.trim().toUpperCase();
+    const list = this.getOrders();
+    const order = list.find((o) => o.code.toUpperCase() === clean);
+
+    if (order) {
+      order.email = email;
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(list));
+        window.dispatchEvent(new CustomEvent('five:orders-updated', { detail: list }));
+      }
+    }
+
+    try {
+      const res = await fetch('/api/orders/link', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: clean }),
+      });
+      return res.ok;
+    } catch {
+      return !!order;
+    }
   }
 }

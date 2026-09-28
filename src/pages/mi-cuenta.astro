@@ -41,11 +41,72 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
       </div>
 
-      <!-- Customer Tabs -->
+      <!-- Customer KPIs / Summary Row -->
+      <div class="five-portal-kpis-grid" style="margin-top:20px;">
+        <div class="five-portal-kpi-card">
+          <span class="five-kpi-icon">📦</span>
+          <div class="five-kpi-info">
+            <span class="five-kpi-label">Pedidos Realizados</span>
+            <strong id="kpi-orders-count" class="five-kpi-value">0</strong>
+          </div>
+        </div>
+
+        <div class="five-portal-kpi-card">
+          <span class="five-kpi-icon">🚚</span>
+          <div class="five-kpi-info">
+            <span class="five-kpi-label">En Curso / Reparto</span>
+            <strong id="kpi-orders-active" class="five-kpi-value" style="color:#7025a8;">0</strong>
+          </div>
+        </div>
+
+        <div class="five-portal-kpi-card">
+          <span class="five-kpi-icon">💰</span>
+          <div class="five-kpi-info">
+            <span class="five-kpi-label">Ahorro Transferencia</span>
+            <strong id="kpi-orders-savings" class="five-kpi-value" style="color:#276717;">$0</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Link Guest Order Box -->
+      <div class="five-link-order-card" style="margin-top:20px;">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+          <span style="font-size:18px;">🔗</span>
+          <h3 style="font-size:14px; font-weight:800; margin:0; color:#111827;">¿Realizaste una compra como invitado?</h3>
+        </div>
+        <p style="font-size:12.5px; color:#6b7280; margin:0 0 10px;">
+          Ingresa tu código de seguimiento oficial (ej: <code>FIVE-TRK-8492</code>) para vincularlo a tu historial permanente.
+        </p>
+        <form id="form-link-order" style="display:flex; gap:8px; flex-wrap:wrap;">
+          <input
+            type="text"
+            id="link-order-input"
+            class="five-input"
+            placeholder="FIVE-TRK-XXXX"
+            style="flex:1; min-width:200px; text-transform:uppercase; font-family:monospace; padding:8px 12px; font-size:13px;"
+            required
+          />
+          <button type="submit" class="five-button" style="padding:8px 18px; font-size:13px;">
+            Vincular Pedido
+          </button>
+        </form>
+        <div id="link-order-alert" style="font-size:12px; margin-top:8px; display:none;"></div>
+      </div>
+
+      <!-- Customer Orders Section with Status Filter -->
       <div style="margin-top:28px;">
-        <h2 style="font-size:18px; font-weight:850; margin-bottom:14px; color:#111827; display:flex; align-items:center; gap:8px;">
-          <span>📦</span> Mis Pedidos y Compras Recientes
-        </h2>
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:14px;">
+          <h2 style="font-size:18px; font-weight:850; margin:0; color:#111827; display:flex; align-items:center; gap:8px;">
+            <span>📦</span> Mis Pedidos y Compras Recientes
+          </h2>
+
+          <!-- Filter Pills -->
+          <div class="five-orders-filter-bar" role="tablist">
+            <button type="button" class="five-order-filter-pill is-active" data-order-filter="all">Todos</button>
+            <button type="button" class="five-order-filter-pill" data-order-filter="active">En Curso</button>
+            <button type="button" class="five-order-filter-pill" data-order-filter="delivered">Entregados</button>
+          </div>
+        </div>
 
         <div id="portal-orders-list" class="five-portal-orders-list">
           <!-- Dynamically populated or empty message -->
@@ -155,6 +216,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     const logoutBtn = document.querySelector<HTMLButtonElement>('#portal-logout-btn')!;
     const ordersList = document.querySelector<HTMLElement>('#portal-orders-list')!;
 
+    // KPI & Filter elements
+    const kpiCountEl = document.querySelector<HTMLElement>('#kpi-orders-count')!;
+    const kpiActiveEl = document.querySelector<HTMLElement>('#kpi-orders-active')!;
+    const kpiSavingsEl = document.querySelector<HTMLElement>('#kpi-orders-savings')!;
+    const filterPills = document.querySelectorAll<HTMLButtonElement>('.five-order-filter-pill');
+    const formLinkOrder = document.querySelector<HTMLFormElement>('#form-link-order');
+    const linkOrderInput = document.querySelector<HTMLInputElement>('#link-order-input');
+    const linkOrderAlert = document.querySelector<HTMLElement>('#link-order-alert');
+
+    let currentUser: any = null;
+    let currentFilter: 'all' | 'active' | 'delivered' = 'all';
+
     const showAlert = (msg: string, isError = true) => {
       alertBox.textContent = msg;
       alertBox.style.background = isError ? '#fdeeed' : '#edf8e8';
@@ -163,7 +236,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       alertBox.hidden = false;
     };
 
-    // Tab switching
+    // Tab switching (Login vs Register)
     tabLogin.addEventListener('click', () => {
       tabLogin.classList.add('is-active');
       tabRegister.classList.remove('is-active');
@@ -180,8 +253,178 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       alertBox.hidden = true;
     });
 
-    // Render Portal with orders
-    const renderPortal = (user: any) => {
+    // Helper: Step index
+    const getStepIndex = (status: string) => {
+      if (status === 'Pago Confirmado') return 1;
+      if (status === 'En Reparto') return 2;
+      if (status === 'Entregado') return 3;
+      return 0; // Recibido
+    };
+
+    const getStatusBadge = (status: string) => {
+      if (status === 'Pago Confirmado') {
+        return `<span class="five-badge-pill violet">● Pago Confirmado</span>`;
+      }
+      if (status === 'En Reparto') {
+        return `<span class="five-badge-pill blue">● En Reparto</span>`;
+      }
+      if (status === 'Entregado') {
+        return `<span class="five-badge-pill green">✓ Entregado</span>`;
+      }
+      return `<span class="five-badge-pill amber">⏳ Recibido (Validando)</span>`;
+    };
+
+    // Render Orders List according to active filter
+    const renderOrdersList = (orders: any[]) => {
+      let filtered = orders;
+      if (currentFilter === 'active') {
+        filtered = orders.filter((o) => o.status !== 'Entregado');
+      } else if (currentFilter === 'delivered') {
+        filtered = orders.filter((o) => o.status === 'Entregado');
+      }
+
+      if (!filtered.length) {
+        const msg = currentFilter === 'all'
+          ? 'Aún no tienes pedidos registrados con esta cuenta.'
+          : currentFilter === 'active'
+            ? 'No tienes pedidos en curso actualmente.'
+            : 'No tienes pedidos entregados aún.';
+
+        ordersList.innerHTML = `
+          <div class="five-empty-state" style="padding:32px 20px; background:#ffffff; border:1px solid var(--border-color); border-radius:16px; text-align:center;">
+            <span style="font-size:32px; display:block; margin-bottom:8px;">📦</span>
+            <p style="color:#6b7280; font-size:13.5px; margin:0 0 14px;">${msg}</p>
+            <a href="/alimentos" class="five-button" style="font-size:13px; padding:8px 18px; text-decoration:none;">Explorar Catálogo ➔</a>
+          </div>
+        `;
+        return;
+      }
+
+      const stepsDef = [
+        { label: 'Recibido', sub: 'Pendiente pago' },
+        { label: 'Confirmado', sub: 'Pago validado' },
+        { label: 'En Reparto', sub: 'En camino' },
+        { label: 'Entregado', sub: 'Finalizado' },
+      ];
+
+      ordersList.innerHTML = filtered.map((o) => {
+        const stepIdx = getStepIndex(o.status || 'Recibido');
+        const transferTotal = o.totalTransfer || o.total || 0;
+        const savings = Math.max(0, (o.totalNormal || Math.round(transferTotal / 0.95)) - transferTotal);
+        const orderDate = new Date(o.createdAt || Date.now()).toLocaleDateString('es-CL', {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+        });
+
+        const itemsHtml = (o.items || []).map((it: any) => `
+          <div class="five-portal-item-line">
+            <span class="five-portal-item-name"><strong>${it.quantity}x</strong> ${it.name}</span>
+            <span class="five-portal-item-price">${formatMoney(it.price * it.quantity)}</span>
+          </div>
+        `).join('');
+
+        const isPendingPayment = !o.status || o.status === 'Recibido';
+        const waProofMsg = encodeURIComponent(
+          `Hola FIVE Mascotas, envío mi comprobante de transferencia para el pedido ${o.code} por valor de ${formatMoney(transferTotal)}. Mi nombre es ${currentUser?.name || o.customerName || 'Cliente'}.`
+        );
+
+        return `
+          <div class="five-portal-order-card">
+            <!-- Card Header -->
+            <div class="five-order-card-header">
+              <div class="five-order-code-group">
+                <span class="five-order-code">${o.code}</span>
+                <button
+                  type="button"
+                  class="five-portal-copy-btn"
+                  data-copy-code="${o.code}"
+                  title="Copiar código de seguimiento"
+                >
+                  📋 Copiar
+                </button>
+                <span class="five-order-date">Fecha: ${orderDate}</span>
+              </div>
+              <div class="five-order-status-badge">
+                ${getStatusBadge(o.status || 'Recibido')}
+              </div>
+            </div>
+
+            <!-- Stepper Progress Bar -->
+            <div class="five-portal-stepper" aria-label="Progreso del pedido">
+              ${stepsDef.map((st, idx) => {
+                const isDone = idx < stepIdx;
+                const isCurrent = idx === stepIdx;
+                const stateClass = isDone ? 'is-done' : isCurrent ? 'is-current' : 'is-pending';
+                return `
+                  <div class="five-stepper-step ${stateClass}">
+                    <div class="five-stepper-dot">
+                      ${isDone ? '✓' : idx + 1}
+                    </div>
+                    <span class="five-stepper-label">${st.label}</span>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+
+            <!-- Items Breakdown -->
+            <div class="five-portal-items-list">
+              ${itemsHtml}
+            </div>
+
+            <!-- Destination & Shipping -->
+            <div class="five-portal-destination-row">
+              <span class="five-portal-dest-info">
+                📍 <strong>Despacho a:</strong> ${o.address || 'Dirección registrada'}, ${o.city || 'Comuna'}
+              </span>
+              <span class="five-portal-shipping-cost">
+                Envío: ${formatMoney(o.shippingFee || 1500)}
+              </span>
+            </div>
+
+            <!-- Financials & Actions Footer -->
+            <div class="five-portal-order-footer">
+              <div class="five-portal-totals-block">
+                <div class="five-portal-final-price">
+                  <span class="five-price-label">Total Transferencia:</span>
+                  <strong class="five-price-amount">${formatMoney(transferTotal)}</strong>
+                </div>
+                ${savings > 0 ? `
+                  <span class="five-portal-savings-tag">
+                    🎉 Ahorro 5% transferencia: ${formatMoney(savings)}
+                  </span>
+                ` : ''}
+              </div>
+
+              <div class="five-portal-actions-block">
+                ${isPendingPayment ? `
+                  <a
+                    href="https://wa.me/56912345678?text=${waProofMsg}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="five-portal-wa-btn"
+                  >
+                    💬 Enviar Comprobante
+                  </a>
+                ` : ''}
+                <a
+                  href="/rastreo?codigo=${encodeURIComponent(o.code)}"
+                  class="five-button five-portal-track-btn"
+                >
+                  Ver Seguimiento en Vivo ➔
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    };
+
+    // Render Portal with orders and KPIs
+    const renderPortal = async (user: any) => {
+      currentUser = user;
       guestView.hidden = true;
       portalView.hidden = false;
 
@@ -195,46 +438,102 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         adminLink.hidden = true;
       }
 
-      // Load user orders
-      const allOrders = AdminStoreService.getOrders();
+      // Fetch latest orders from server to synchronize
+      const allOrders = await AdminStoreService.fetchOrdersFromServer();
       const userOrders = allOrders.filter(
         (o) => (o.email && o.email.toLowerCase() === user.email.toLowerCase()) || user.role === 'admin'
       );
 
-      if (!userOrders.length) {
-        ordersList.innerHTML = `
-          <div class="five-empty-state" style="padding:28px; background:#ffffff; border:1px solid var(--border-color); border-radius:14px;">
-            <p style="color:#6b7280; font-size:13.5px; margin:0 0 12px;">Aún no tienes pedidos registrados con esta cuenta.</p>
-            <a href="/alimentos" class="five-button" style="font-size:12.5px; padding:8px 16px;">Explorar Catálogo ➔</a>
-          </div>
-        `;
-      } else {
-        ordersList.innerHTML = userOrders.map((o) => `
-          <div class="five-order-row-item">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
-              <div>
-                <strong style="color:#7025a8; font-family:monospace; font-size:16px;">${o.code}</strong>
-                <span style="display:block; font-size:11.5px; color:#6b7280;">Fecha: ${new Date(o.createdAt || Date.now()).toLocaleDateString('es-CL')}</span>
-              </div>
-              <span class="five-badge-pill green" style="font-size:11px;">
-                ● ${o.status || 'Recibido'}
-              </span>
-            </div>
+      // Calculate KPIs
+      const totalCount = userOrders.length;
+      const activeCount = userOrders.filter((o) => o.status !== 'Entregado').length;
+      const totalSavings = userOrders.reduce((sum, o) => {
+        const transferTotal = o.totalTransfer || o.total || 0;
+        const normal = o.totalNormal || Math.round(transferTotal / 0.95);
+        return sum + Math.max(0, normal - transferTotal);
+      }, 0);
 
-            <div style="font-size:13px; color:#374151; margin-bottom:8px;">
-              ${(o.items || []).map((it: any) => `${it.quantity}x ${it.name}`).join(' · ')}
-            </div>
+      kpiCountEl.textContent = String(totalCount);
+      kpiActiveEl.textContent = String(activeCount);
+      kpiSavingsEl.textContent = formatMoney(totalSavings);
 
-            <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid #f3f4f6; padding-top:8px;">
-              <span style="font-size:13.5px; font-weight:800; color:#276717;">Total: ${formatMoney(o.totalTransfer || 0)}</span>
-              <a href="/rastreo?codigo=${o.code}" class="five-text-btn" style="font-weight:750; color:#7025a8; font-size:12px;">
-                Ver Seguimiento ↗
-              </a>
-            </div>
-          </div>
-        `).join('');
-      }
+      renderOrdersList(userOrders);
     };
+
+    // Filter tabs listener
+    filterPills.forEach((pill) => {
+      pill.addEventListener('click', () => {
+        filterPills.forEach((p) => p.classList.remove('is-active'));
+        pill.classList.add('is-active');
+        currentFilter = (pill.getAttribute('data-order-filter') as any) || 'all';
+
+        const allOrders = AdminStoreService.getOrders();
+        const userOrders = allOrders.filter(
+          (o) => (o.email && o.email.toLowerCase() === currentUser?.email.toLowerCase()) || currentUser?.role === 'admin'
+        );
+        renderOrdersList(userOrders);
+      });
+    });
+
+    // Form: Link Guest Order
+    formLinkOrder?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!linkOrderInput || !currentUser) return;
+      const code = linkOrderInput.value.trim().toUpperCase();
+      if (!code) return;
+
+      if (linkOrderAlert) {
+        linkOrderAlert.style.display = 'block';
+        linkOrderAlert.style.color = '#7025a8';
+        linkOrderAlert.textContent = 'Vinculando pedido...';
+      }
+
+      const success = await AdminStoreService.linkOrderToUser(code, currentUser.email);
+      if (linkOrderAlert) {
+        if (success) {
+          linkOrderAlert.style.color = '#276717';
+          linkOrderAlert.style.fontWeight = '700';
+          linkOrderAlert.textContent = `¡Pedido ${code} vinculado exitosamente a tu cuenta!`;
+          linkOrderInput.value = '';
+          // Refresh orders and KPIs
+          await renderPortal(currentUser);
+        } else {
+          linkOrderAlert.style.color = '#c0392b';
+          linkOrderAlert.style.fontWeight = '700';
+          linkOrderAlert.textContent = 'No se encontró un pedido con ese código o ocurrió un error.';
+        }
+      }
+    });
+
+    // Delegated copy button for order code
+    document.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.five-portal-copy-btn');
+      if (btn) {
+        const code = btn.getAttribute('data-copy-code') || '';
+        if (code) {
+          navigator.clipboard.writeText(code).then(() => {
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '✓ ¡Copiado!';
+            btn.style.color = '#276717';
+            setTimeout(() => {
+              btn.innerHTML = originalText;
+              btn.style.color = '';
+            }, 2000);
+          }).catch(() => {});
+        }
+      }
+    });
+
+    // Listen to real-time order updates
+    window.addEventListener('five:orders-updated', () => {
+      if (currentUser) {
+        const allOrders = AdminStoreService.getOrders();
+        const userOrders = allOrders.filter(
+          (o) => (o.email && o.email.toLowerCase() === currentUser.email.toLowerCase()) || currentUser.role === 'admin'
+        );
+        renderOrdersList(userOrders);
+      }
+    });
 
     // Check existing session on load
     const initSession = async () => {
@@ -243,7 +542,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         if (res.ok) {
           const data = await res.json();
           if (data?.user) {
-            renderPortal(data.user);
+            await renderPortal(data.user);
             return;
           }
         }
@@ -278,7 +577,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           return;
         }
 
-        renderPortal(data.user);
+        await renderPortal(data.user);
       } catch (err) {
         showAlert('Error de conexión con el servidor de autenticación');
       }
@@ -303,7 +602,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           showAlert(data.error || 'Error al crear la cuenta');
           return;
         }
-        renderPortal(data.user);
+        await renderPortal(data.user);
       } catch (err) {
         showAlert('Error al procesar el registro');
       }
@@ -480,19 +779,365 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .five-portal-orders-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
   }
 
-  .five-order-row-item {
+  .five-portal-kpis-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+  }
+
+  .five-portal-kpi-card {
     background: #ffffff;
     border: 1px solid var(--border-color);
-    border-radius: 14px;
+    border-radius: 16px;
     padding: 16px 20px;
-    transition: transform 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    transition: transform 0.15s ease;
   }
 
-  .five-order-row-item:hover {
+  .five-portal-kpi-card:hover {
+    transform: translateY(-2px);
     border-color: #d8b4fe;
+  }
+
+  .five-kpi-icon {
+    font-size: 26px;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: #faf5ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .five-kpi-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .five-kpi-label {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .five-kpi-value {
+    font-size: 22px;
+    font-weight: 850;
+    color: #111827;
+    line-height: 1.2;
+  }
+
+  .five-link-order-card {
+    background: #fdfaff;
+    border: 1.5px dashed #d8b4fe;
+    border-radius: 16px;
+    padding: 18px 22px;
+  }
+
+  .five-orders-filter-bar {
+    display: flex;
+    gap: 6px;
+    background: #f3f4f6;
+    padding: 4px;
+    border-radius: 10px;
+  }
+
+  .five-order-filter-pill {
+    border: none;
+    background: transparent;
+    padding: 6px 14px;
+    border-radius: 7px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .five-order-filter-pill.is-active {
+    background: #ffffff;
+    color: #7025a8;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  }
+
+  .five-portal-order-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+    transition: all 0.15s ease;
+  }
+
+  .five-portal-order-card:hover {
+    border-color: #d8b4fe;
+    box-shadow: 0 6px 20px rgba(112, 37, 168, 0.07);
+  }
+
+  .five-order-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  .five-order-code-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .five-order-code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 18px;
+    font-weight: 850;
+    color: #7025a8;
+    letter-spacing: -0.3px;
+  }
+
+  .five-portal-copy-btn {
+    background: #faf5ff;
+    border: 1px solid #e9d5ff;
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #7025a8;
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+
+  .five-portal-copy-btn:hover {
+    background: #f3e8ff;
+  }
+
+  .five-order-date {
+    font-size: 12px;
+    color: #6b7280;
+    margin-left: 4px;
+  }
+
+  .five-portal-stepper {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin: 18px 0 16px;
+    padding: 0 10px;
+  }
+
+  .five-portal-stepper::before {
+    content: '';
+    position: absolute;
+    top: 14px;
+    left: 40px;
+    right: 40px;
+    height: 3px;
+    background: #e5e7eb;
+    z-index: 1;
+  }
+
+  .five-stepper-step {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+  }
+
+  .five-stepper-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #f3f4f6;
+    border: 2px solid #d1d5db;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 800;
+    transition: all 0.2s ease;
+  }
+
+  .five-stepper-label {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #6b7280;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .five-stepper-step.is-done .five-stepper-dot {
+    background: #276717;
+    border-color: #276717;
+    color: #ffffff;
+  }
+
+  .five-stepper-step.is-done .five-stepper-label {
+    color: #276717;
+  }
+
+  .five-stepper-step.is-current .five-stepper-dot {
+    background: #7025a8;
+    border-color: #7025a8;
+    color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(112, 37, 168, 0.15);
+  }
+
+  .five-stepper-step.is-current .five-stepper-label {
+    color: #7025a8;
+    font-weight: 850;
+  }
+
+  .five-portal-items-list {
+    background: #fdfcff;
+    border: 1px solid #f3ebf9;
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .five-portal-item-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: #374151;
+  }
+
+  .five-portal-item-price {
+    font-weight: 700;
+    color: #111827;
+  }
+
+  .five-portal-destination-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 12.5px;
+    color: #4b5563;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  .five-portal-order-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 14px;
+  }
+
+  .five-portal-totals-block {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .five-portal-final-price {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .five-price-label {
+    font-size: 13px;
+    color: #6b7280;
+    font-weight: 600;
+  }
+
+  .five-price-amount {
+    font-size: 18px;
+    font-weight: 850;
+    color: #276717;
+  }
+
+  .five-portal-savings-tag {
+    font-size: 11.5px;
+    color: #276717;
+    font-weight: 700;
+  }
+
+  .five-portal-actions-block {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .five-portal-wa-btn {
+    background: #25d366;
+    color: #ffffff;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 12.5px;
+    font-weight: 800;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.15s;
+  }
+
+  .five-portal-wa-btn:hover {
+    background: #1eb956;
     transform: translateY(-1px);
+  }
+
+  .five-portal-track-btn {
+    padding: 8px 16px;
+    font-size: 12.5px;
+    text-decoration: none;
+  }
+
+  @media (max-width: 640px) {
+    .five-portal-stepper {
+      flex-direction: column;
+      gap: 12px;
+      padding: 0;
+    }
+    .five-portal-stepper::before {
+      display: none;
+    }
+    .five-stepper-step {
+      flex-direction: row;
+      justify-content: flex-start;
+      gap: 10px;
+    }
+    .five-portal-order-footer {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .five-portal-actions-block {
+      flex-direction: column;
+    }
+    .five-portal-wa-btn, .five-portal-track-btn {
+      width: 100%;
+      justify-content: center;
+      text-align: center;
+    }
   }
 </style>

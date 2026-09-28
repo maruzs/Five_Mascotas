@@ -15,7 +15,7 @@ export const products: Product[] = [
     oldPrice: 0,
     badge: "SuperPrecios",
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/9lives.svg",
     featured: true,
   },
   {
@@ -32,7 +32,7 @@ export const products: Product[] = [
     oldPrice: 0,
     badge: "SuperPrecios",
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/9lives.svg",
     featured: true,
   },
   {
@@ -49,7 +49,7 @@ export const products: Product[] = [
     oldPrice: 0,
     badge: "SuperPrecios",
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/9lives.svg",
     featured: true,
   },
   {
@@ -66,7 +66,7 @@ export const products: Product[] = [
     oldPrice: 0,
     badge: "SuperPrecios",
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/9lives.svg",
     featured: true,
   },
   {
@@ -82,7 +82,7 @@ export const products: Product[] = [
     price: 28000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/9lives.svg",
   },
   {
     id: "prod-5",
@@ -97,7 +97,7 @@ export const products: Product[] = [
     price: 18000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/9lives.svg",
   },
   {
     id: "prod-6",
@@ -881,7 +881,7 @@ export const products: Product[] = [
     price: 26000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/champion.svg",
   },
   {
     id: "prod-58",
@@ -896,7 +896,7 @@ export const products: Product[] = [
     price: 26000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/champion.svg",
   },
   {
     id: "prod-59",
@@ -911,7 +911,7 @@ export const products: Product[] = [
     price: 26000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/champion.svg",
   },
   {
     id: "prod-60",
@@ -926,7 +926,7 @@ export const products: Product[] = [
     price: 26000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/champion.svg",
   },
   {
     id: "prod-61",
@@ -941,7 +941,7 @@ export const products: Product[] = [
     price: 38000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/champion.svg",
   },
   {
     id: "prod-62",
@@ -956,7 +956,7 @@ export const products: Product[] = [
     price: 38000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/champion.svg",
   },
   {
     id: "prod-63",
@@ -1181,7 +1181,7 @@ export const products: Product[] = [
     price: 30000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/kongo-gold.svg",
   },
   {
     id: "prod-78",
@@ -1196,7 +1196,7 @@ export const products: Product[] = [
     price: 25000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/kongo-gold.svg",
   },
   {
     id: "prod-79",
@@ -1211,7 +1211,7 @@ export const products: Product[] = [
     price: 3000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/kongo-gold.svg",
   },
   {
     id: "prod-80",
@@ -1226,7 +1226,7 @@ export const products: Product[] = [
     price: 35000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/kongo-gold.svg",
   },
   {
     id: "prod-81",
@@ -1241,7 +1241,7 @@ export const products: Product[] = [
     price: 27000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/kongo-gold.svg",
   },
   {
     id: "prod-82",
@@ -1256,7 +1256,7 @@ export const products: Product[] = [
     price: 15000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/kongo-gold.svg",
   },
   {
     id: "prod-83",
@@ -1271,7 +1271,7 @@ export const products: Product[] = [
     price: 3000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/kongo-gold.svg",
   },
   {
     id: "prod-84",
@@ -1286,7 +1286,7 @@ export const products: Product[] = [
     price: 26000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/kongo-gold.svg",
   },
   {
     id: "prod-85",
@@ -1301,7 +1301,7 @@ export const products: Product[] = [
     price: 15000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/kongo-gold.svg",
   },
   {
     id: "prod-86",
@@ -1316,7 +1316,7 @@ export const products: Product[] = [
     price: 3000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/kongo-gold.svg",
   },
   {
     id: "prod-87",
@@ -1331,7 +1331,7 @@ export const products: Product[] = [
     price: 35000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/kongo-gold.svg",
   },
   {
     id: "prod-88",
@@ -1347,7 +1347,7 @@ export const products: Product[] = [
     oldPrice: 23000,
     badge: "Promoci\u00f3n",
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/kongo-gold.svg",
   },
   {
     id: "prod-89",
@@ -1362,7 +1362,7 @@ export const products: Product[] = [
     price: 3000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/kongo-gold.svg",
   },
   {
     id: "prod-90",
@@ -1378,7 +1378,7 @@ export const products: Product[] = [
     oldPrice: 23000,
     badge: "Promoci\u00f3n",
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/kongo-gold.svg",
   },
   {
     id: "prod-91",
@@ -1393,7 +1393,7 @@ export const products: Product[] = [
     price: 3000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/kongo-gold.svg",
   },
   {
     id: "prod-92",
@@ -1409,7 +1409,7 @@ export const products: Product[] = [
     oldPrice: 24000,
     badge: "Promoci\u00f3n",
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/kongo-gold.svg",
   },
   {
     id: "prod-93",
@@ -1424,7 +1424,7 @@ export const products: Product[] = [
     price: 3000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/kongo-gold.svg",
   },
   {
     id: "prod-94",
@@ -1439,7 +1439,7 @@ export const products: Product[] = [
     price: 36000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/kongo-gold.svg",
   },
   {
     id: "prod-95",
@@ -1454,7 +1454,7 @@ export const products: Product[] = [
     price: 7000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/kongo-gold.svg",
   },
   {
     id: "prod-96",
@@ -1469,7 +1469,7 @@ export const products: Product[] = [
     price: 38000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/kongo-gold.svg",
   },
   {
     id: "prod-97",
@@ -1484,7 +1484,7 @@ export const products: Product[] = [
     price: 8000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/kongo-gold.svg",
   },
   {
     id: "prod-98",
@@ -1694,7 +1694,7 @@ export const products: Product[] = [
     price: 32000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/nomade.svg",
   },
   {
     id: "prod-112",
@@ -1709,7 +1709,7 @@ export const products: Product[] = [
     price: 23000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/nomade.svg",
   },
   {
     id: "prod-113",
@@ -1724,7 +1724,7 @@ export const products: Product[] = [
     price: 23000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/nomade.svg",
   },
   {
     id: "prod-114",
@@ -1739,7 +1739,7 @@ export const products: Product[] = [
     price: 25000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/nomade.svg",
   },
   {
     id: "prod-115",
@@ -1814,7 +1814,7 @@ export const products: Product[] = [
     price: 18000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-120",
@@ -1829,7 +1829,7 @@ export const products: Product[] = [
     price: 17000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-121",
@@ -1844,7 +1844,7 @@ export const products: Product[] = [
     price: 58000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-122",
@@ -1859,7 +1859,7 @@ export const products: Product[] = [
     price: 18000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-123",
@@ -1874,7 +1874,7 @@ export const products: Product[] = [
     price: 60000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-124",
@@ -1889,7 +1889,7 @@ export const products: Product[] = [
     price: 18000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-125",
@@ -1904,7 +1904,7 @@ export const products: Product[] = [
     price: 60000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-126",
@@ -1919,7 +1919,7 @@ export const products: Product[] = [
     price: 18000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-127",
@@ -1934,7 +1934,7 @@ export const products: Product[] = [
     price: 60000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-128",
@@ -1949,7 +1949,7 @@ export const products: Product[] = [
     price: 17000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-129",
@@ -1964,7 +1964,7 @@ export const products: Product[] = [
     price: 56000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-130",
@@ -1979,7 +1979,7 @@ export const products: Product[] = [
     price: 55000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-131",
@@ -1994,7 +1994,7 @@ export const products: Product[] = [
     price: 57000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-132",
@@ -2009,7 +2009,7 @@ export const products: Product[] = [
     price: 54000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-133",
@@ -2024,7 +2024,7 @@ export const products: Product[] = [
     price: 55000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-134",
@@ -2039,7 +2039,7 @@ export const products: Product[] = [
     price: 31000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-135",
@@ -2054,7 +2054,7 @@ export const products: Product[] = [
     price: 31000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-136",
@@ -2069,7 +2069,7 @@ export const products: Product[] = [
     price: 47000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-137",
@@ -2084,7 +2084,7 @@ export const products: Product[] = [
     price: 31000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-138",
@@ -2099,7 +2099,7 @@ export const products: Product[] = [
     price: 57000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-139",
@@ -2114,7 +2114,7 @@ export const products: Product[] = [
     price: 60000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-140",
@@ -2129,7 +2129,7 @@ export const products: Product[] = [
     price: 68000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-141",
@@ -2144,7 +2144,7 @@ export const products: Product[] = [
     price: 57000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-142",
@@ -2159,7 +2159,7 @@ export const products: Product[] = [
     price: 55000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-143",
@@ -2174,7 +2174,7 @@ export const products: Product[] = [
     price: 55000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-144",
@@ -2189,7 +2189,7 @@ export const products: Product[] = [
     price: 56000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-145",
@@ -2204,7 +2204,7 @@ export const products: Product[] = [
     price: 38500,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-146",
@@ -2219,7 +2219,7 @@ export const products: Product[] = [
     price: 15000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-147",
@@ -2234,7 +2234,7 @@ export const products: Product[] = [
     price: 15000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-148",
@@ -2249,7 +2249,7 @@ export const products: Product[] = [
     price: 38500,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-149",
@@ -2264,7 +2264,7 @@ export const products: Product[] = [
     price: 15000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-150",
@@ -2279,7 +2279,7 @@ export const products: Product[] = [
     price: 38500,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-151",
@@ -2294,7 +2294,7 @@ export const products: Product[] = [
     price: 51000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-152",
@@ -2309,7 +2309,7 @@ export const products: Product[] = [
     price: 51000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-153",
@@ -2324,7 +2324,7 @@ export const products: Product[] = [
     price: 51000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-154",
@@ -2339,7 +2339,7 @@ export const products: Product[] = [
     price: 52000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-155",
@@ -2354,7 +2354,7 @@ export const products: Product[] = [
     price: 42000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/josera.svg",
   },
   {
     id: "prod-156",
@@ -2369,7 +2369,7 @@ export const products: Product[] = [
     price: 64000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/purina-catchow.svg",
   },
   {
     id: "prod-157",
@@ -2384,7 +2384,7 @@ export const products: Product[] = [
     price: 58000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/purina-catchow.svg",
   },
   {
     id: "prod-158",
@@ -2399,7 +2399,7 @@ export const products: Product[] = [
     price: 25000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/purina-catchow.svg",
   },
   {
     id: "prod-159",
@@ -2414,7 +2414,7 @@ export const products: Product[] = [
     price: 13000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/purina-catchow.svg",
   },
   {
     id: "prod-160",
@@ -2429,7 +2429,7 @@ export const products: Product[] = [
     price: 64000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/purina-catchow.svg",
   },
   {
     id: "prod-161",
@@ -2444,7 +2444,7 @@ export const products: Product[] = [
     price: 58000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/purina-catchow.svg",
   },
   {
     id: "prod-162",
@@ -2459,7 +2459,7 @@ export const products: Product[] = [
     price: 25000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/purina-catchow.svg",
   },
   {
     id: "prod-163",
@@ -2474,7 +2474,7 @@ export const products: Product[] = [
     price: 13000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/purina-catchow.svg",
   },
   {
     id: "prod-164",
@@ -2489,7 +2489,7 @@ export const products: Product[] = [
     price: 67000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/purina-catchow.svg",
   },
   {
     id: "prod-165",
@@ -2504,7 +2504,7 @@ export const products: Product[] = [
     price: 60000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/purina-catchow.svg",
   },
   {
     id: "prod-166",
@@ -2519,7 +2519,7 @@ export const products: Product[] = [
     price: 27000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/purina-catchow.svg",
   },
   {
     id: "prod-167",
@@ -2534,7 +2534,7 @@ export const products: Product[] = [
     price: 14000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/purina-catchow.svg",
   },
   {
     id: "prod-168",
@@ -2549,7 +2549,7 @@ export const products: Product[] = [
     price: 66000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/purina-catchow.svg",
   },
   {
     id: "prod-169",
@@ -2564,7 +2564,7 @@ export const products: Product[] = [
     price: 58000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/purina-catchow.svg",
   },
   {
     id: "prod-170",
@@ -2579,7 +2579,7 @@ export const products: Product[] = [
     price: 27000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/purina-catchow.svg",
   },
   {
     id: "prod-171",
@@ -2594,7 +2594,7 @@ export const products: Product[] = [
     price: 13000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/purina-catchow.svg",
   },
   {
     id: "prod-172",
@@ -2609,7 +2609,7 @@ export const products: Product[] = [
     price: 64000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/purina-catchow.svg",
   },
   {
     id: "prod-173",
@@ -2624,7 +2624,7 @@ export const products: Product[] = [
     price: 58000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/purina-catchow.svg",
   },
   {
     id: "prod-174",
@@ -2639,7 +2639,7 @@ export const products: Product[] = [
     price: 25000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/purina-catchow.svg",
   },
   {
     id: "prod-175",
@@ -2654,7 +2654,7 @@ export const products: Product[] = [
     price: 13000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/purina-catchow.svg",
   },
   {
     id: "prod-176",
@@ -2669,7 +2669,7 @@ export const products: Product[] = [
     price: 27500,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-177",
@@ -2684,7 +2684,7 @@ export const products: Product[] = [
     price: 27500,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-178",
@@ -2699,7 +2699,7 @@ export const products: Product[] = [
     price: 27500,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-179",
@@ -2714,7 +2714,7 @@ export const products: Product[] = [
     price: 27500,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-180",
@@ -2729,7 +2729,7 @@ export const products: Product[] = [
     price: 16000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-181",
@@ -2744,7 +2744,7 @@ export const products: Product[] = [
     price: 29000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-182",
@@ -2759,7 +2759,7 @@ export const products: Product[] = [
     price: 29000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-183",
@@ -2774,7 +2774,7 @@ export const products: Product[] = [
     price: 33000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/purina-catchow.svg",
   },
   {
     id: "prod-184",
@@ -2789,7 +2789,7 @@ export const products: Product[] = [
     price: 32000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/purina-catchow.svg",
   },
   {
     id: "prod-185",
@@ -2804,7 +2804,7 @@ export const products: Product[] = [
     price: 26000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-186",
@@ -2819,7 +2819,7 @@ export const products: Product[] = [
     price: 24000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-187",
@@ -2834,7 +2834,7 @@ export const products: Product[] = [
     price: 26000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-188",
@@ -2849,7 +2849,7 @@ export const products: Product[] = [
     price: 26000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-189",
@@ -2864,7 +2864,7 @@ export const products: Product[] = [
     price: 10000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-190",
@@ -2879,7 +2879,7 @@ export const products: Product[] = [
     price: 31000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-191",
@@ -2894,7 +2894,7 @@ export const products: Product[] = [
     price: 53000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-192",
@@ -2909,7 +2909,7 @@ export const products: Product[] = [
     price: 41000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-193",
@@ -2924,7 +2924,7 @@ export const products: Product[] = [
     price: 45000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-194",
@@ -2939,7 +2939,7 @@ export const products: Product[] = [
     price: 48000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-195",
@@ -2954,7 +2954,7 @@ export const products: Product[] = [
     price: 38000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-196",
@@ -2969,7 +2969,7 @@ export const products: Product[] = [
     price: 41000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-197",
@@ -2984,7 +2984,7 @@ export const products: Product[] = [
     price: 37000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-198",
@@ -2999,7 +2999,7 @@ export const products: Product[] = [
     price: 45000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-199",
@@ -3014,7 +3014,7 @@ export const products: Product[] = [
     price: 53000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-200",
@@ -3029,7 +3029,7 @@ export const products: Product[] = [
     price: 45000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-201",
@@ -3044,7 +3044,7 @@ export const products: Product[] = [
     price: 20000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-202",
@@ -3059,7 +3059,7 @@ export const products: Product[] = [
     price: 36000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-203",
@@ -3074,7 +3074,7 @@ export const products: Product[] = [
     price: 36000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-204",
@@ -3089,7 +3089,7 @@ export const products: Product[] = [
     price: 30000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-205",
@@ -3104,7 +3104,7 @@ export const products: Product[] = [
     price: 33000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-206",
@@ -3119,7 +3119,7 @@ export const products: Product[] = [
     price: 33000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-207",
@@ -3134,7 +3134,7 @@ export const products: Product[] = [
     price: 34000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-208",
@@ -3149,7 +3149,7 @@ export const products: Product[] = [
     price: 27500,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-209",
@@ -3164,7 +3164,7 @@ export const products: Product[] = [
     price: 19000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-210",
@@ -3179,7 +3179,7 @@ export const products: Product[] = [
     price: 20000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-211",
@@ -3194,7 +3194,7 @@ export const products: Product[] = [
     price: 20000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-212",
@@ -3209,7 +3209,7 @@ export const products: Product[] = [
     price: 8000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-213",
@@ -3224,7 +3224,7 @@ export const products: Product[] = [
     price: 20000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-214",
@@ -3239,7 +3239,7 @@ export const products: Product[] = [
     price: 48000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-215",
@@ -3254,7 +3254,7 @@ export const products: Product[] = [
     price: 20000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-216",
@@ -3269,7 +3269,7 @@ export const products: Product[] = [
     price: 19000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-217",
@@ -3284,7 +3284,7 @@ export const products: Product[] = [
     price: 20000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-218",
@@ -3299,7 +3299,7 @@ export const products: Product[] = [
     price: 4000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-219",
@@ -3314,7 +3314,7 @@ export const products: Product[] = [
     price: 4000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/purina-proplan.svg",
   },
   {
     id: "prod-220",
@@ -3329,7 +3329,7 @@ export const products: Product[] = [
     price: 22000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/fit-formula.svg",
   },
   {
     id: "prod-221",
@@ -3344,7 +3344,7 @@ export const products: Product[] = [
     price: 38000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/fit-formula.svg",
   },
   {
     id: "prod-222",
@@ -3359,7 +3359,7 @@ export const products: Product[] = [
     price: 10000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/fit-formula.svg",
   },
   {
     id: "prod-223",
@@ -3374,7 +3374,7 @@ export const products: Product[] = [
     price: 35000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/fit-formula.svg",
   },
   {
     id: "prod-224",
@@ -3389,7 +3389,7 @@ export const products: Product[] = [
     price: 21000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/fit-formula.svg",
   },
   {
     id: "prod-225",
@@ -3404,7 +3404,7 @@ export const products: Product[] = [
     price: 10000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/fit-formula.svg",
   },
   {
     id: "prod-226",
@@ -3419,7 +3419,7 @@ export const products: Product[] = [
     price: 42000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/fit-formula.svg",
   },
   {
     id: "prod-227",
@@ -3434,7 +3434,7 @@ export const products: Product[] = [
     price: 25000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/fit-formula.svg",
   },
   {
     id: "prod-228",
@@ -3449,7 +3449,7 @@ export const products: Product[] = [
     price: 11000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/fit-formula.svg",
   },
   {
     id: "prod-229",
@@ -3464,7 +3464,7 @@ export const products: Product[] = [
     price: 24000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/fit-formula.svg",
   },
   {
     id: "prod-230",
@@ -3479,7 +3479,7 @@ export const products: Product[] = [
     price: 41000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/fit-formula.svg",
   },
   {
     id: "prod-231",
@@ -3494,7 +3494,7 @@ export const products: Product[] = [
     price: 25000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/fit-formula.svg",
   },
   {
     id: "prod-232",
@@ -3509,7 +3509,7 @@ export const products: Product[] = [
     price: 29000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/fit-formula.svg",
   },
   {
     id: "prod-233",
@@ -3524,7 +3524,7 @@ export const products: Product[] = [
     price: 8000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/fit-formula.svg",
   },
   {
     id: "prod-234",
@@ -3584,7 +3584,7 @@ export const products: Product[] = [
     price: 28000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/appetit.svg",
   },
   {
     id: "prod-238",
@@ -3599,7 +3599,7 @@ export const products: Product[] = [
     price: 23000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/appetit.svg",
   },
   {
     id: "prod-239",
@@ -3614,7 +3614,7 @@ export const products: Product[] = [
     price: 23000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/appetit.svg",
   },
   {
     id: "prod-240",
@@ -3629,7 +3629,7 @@ export const products: Product[] = [
     price: 17000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/appetit.svg",
   },
   {
     id: "prod-241",
@@ -3644,7 +3644,7 @@ export const products: Product[] = [
     price: 8000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/appetit.svg",
   },
   {
     id: "prod-242",
@@ -3659,7 +3659,7 @@ export const products: Product[] = [
     price: 22000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/appetit.svg",
   },
   {
     id: "prod-243",
@@ -3674,7 +3674,7 @@ export const products: Product[] = [
     price: 8000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/appetit.svg",
   },
   {
     id: "prod-244",
@@ -3854,7 +3854,7 @@ export const products: Product[] = [
     price: 44000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/bokato-gold.svg",
   },
   {
     id: "prod-256",
@@ -3869,7 +3869,7 @@ export const products: Product[] = [
     price: 25000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/bokato-gold.svg",
   },
   {
     id: "prod-257",
@@ -3884,7 +3884,7 @@ export const products: Product[] = [
     price: 46000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/bokato-gold.svg",
   },
   {
     id: "prod-258",
@@ -3899,7 +3899,7 @@ export const products: Product[] = [
     price: 29000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/bokato-gold.svg",
   },
   {
     id: "prod-259",
@@ -3914,7 +3914,7 @@ export const products: Product[] = [
     price: 29000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/bokato-gold.svg",
   },
   {
     id: "prod-260",
@@ -3929,7 +3929,7 @@ export const products: Product[] = [
     price: 50000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/bokato-gold.svg",
   },
   {
     id: "prod-261",
@@ -3944,7 +3944,7 @@ export const products: Product[] = [
     price: 22000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/farmina-nd.svg",
   },
   {
     id: "prod-262",
@@ -3959,7 +3959,7 @@ export const products: Product[] = [
     price: 60000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/farmina-nd.svg",
   },
   {
     id: "prod-263",
@@ -3974,7 +3974,7 @@ export const products: Product[] = [
     price: 60000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/farmina-nd.svg",
   },
   {
     id: "prod-264",
@@ -3989,7 +3989,7 @@ export const products: Product[] = [
     price: 21000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/farmina-nd.svg",
   },
   {
     id: "prod-265",
@@ -4004,7 +4004,7 @@ export const products: Product[] = [
     price: 21000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/farmina-nd.svg",
   },
   {
     id: "prod-266",
@@ -4019,7 +4019,7 @@ export const products: Product[] = [
     price: 22000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/farmina-nd.svg",
   },
   {
     id: "prod-267",
@@ -4034,7 +4034,7 @@ export const products: Product[] = [
     price: 60000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/farmina-nd.svg",
   },
   {
     id: "prod-268",
@@ -4049,7 +4049,7 @@ export const products: Product[] = [
     price: 22000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/farmina-nd.svg",
   },
   {
     id: "prod-269",
@@ -4064,7 +4064,7 @@ export const products: Product[] = [
     price: 60000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/farmina-nd.svg",
   },
   {
     id: "prod-270",
@@ -4079,7 +4079,7 @@ export const products: Product[] = [
     price: 21000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/farmina-nd.svg",
   },
   {
     id: "prod-271",
@@ -4094,7 +4094,7 @@ export const products: Product[] = [
     price: 60000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/farmina-nd.svg",
   },
   {
     id: "prod-272",
@@ -4109,7 +4109,7 @@ export const products: Product[] = [
     price: 2000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/farmina-nd.svg",
   },
   {
     id: "prod-273",
@@ -4124,7 +4124,7 @@ export const products: Product[] = [
     price: 21000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/farmina-nd.svg",
   },
   {
     id: "prod-274",
@@ -4139,7 +4139,7 @@ export const products: Product[] = [
     price: 21000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/farmina-nd.svg",
   },
   {
     id: "prod-275",
@@ -4154,7 +4154,7 @@ export const products: Product[] = [
     price: 60000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/farmina-nd.svg",
   },
   {
     id: "prod-276",
@@ -4169,7 +4169,7 @@ export const products: Product[] = [
     price: 21000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/farmina-nd.svg",
   },
   {
     id: "prod-277",
@@ -4184,7 +4184,7 @@ export const products: Product[] = [
     price: 60000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/farmina-nd.svg",
   },
   {
     id: "prod-278",
@@ -4199,7 +4199,7 @@ export const products: Product[] = [
     price: 2000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/farmina-nd.svg",
   },
   {
     id: "prod-279",
@@ -4214,7 +4214,7 @@ export const products: Product[] = [
     price: 2000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/farmina-nd.svg",
   },
   {
     id: "prod-280",
@@ -4229,7 +4229,7 @@ export const products: Product[] = [
     price: 68000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/farmina-nd.svg",
   },
   {
     id: "prod-281",
@@ -4244,7 +4244,7 @@ export const products: Product[] = [
     price: 57000,
     oldPrice: 0,
     color: "green",
-    image: "/five-mascotas/alimento-1.svg",
+    image: "/five-mascotas/brands/farmina-nd.svg",
   },
   {
     id: "prod-282",
@@ -4259,7 +4259,7 @@ export const products: Product[] = [
     price: 57000,
     oldPrice: 0,
     color: "peach",
-    image: "/five-mascotas/alimento-2.svg",
+    image: "/five-mascotas/brands/farmina-nd.svg",
   },
   {
     id: "prod-283",
@@ -4274,7 +4274,7 @@ export const products: Product[] = [
     price: 57000,
     oldPrice: 0,
     color: "lavender",
-    image: "/five-mascotas/alimento-3.svg",
+    image: "/five-mascotas/brands/farmina-nd.svg",
   },
   {
     id: "prod-284",
@@ -4289,7 +4289,7 @@ export const products: Product[] = [
     price: 20000,
     oldPrice: 0,
     color: "violet",
-    image: "/five-mascotas/alimento-0.svg",
+    image: "/five-mascotas/brands/farmina-nd.svg",
   },
   {
     id: "prod-285",

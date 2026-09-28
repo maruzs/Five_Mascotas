@@ -108,7 +108,7 @@ const initialRight = foodProducts[1] || products[1];
 
   <script>
     import { products, formatMoney } from '../data/pim/catalog';
-    import { defaultFoodNutrition, type FoodNutritionProfile } from '../data/pim/nutrition';
+    import { getProductNutrition, type FoodNutritionProfile } from '../data/pim/nutrition';
 
     const slot1 = document.querySelector<HTMLSelectElement>('#picker-slot-1')!;
     const slot2 = document.querySelector<HTMLSelectElement>('#picker-slot-2')!;
@@ -119,26 +119,7 @@ const initialRight = foodProducts[1] || products[1];
       const ids = [slot1.value, slot2.value, slot3.value].filter(Boolean);
       const items = ids.map((id) => {
         const prod = products.find((p) => p.id === id) || products[0];
-        const nut: FoodNutritionProfile = defaultFoodNutrition[id] || {
-          productId: prod.id,
-          brand: prod.brand,
-          name: prod.name,
-          pet: prod.pet === 'Gatos' ? 'Gatos' : 'Perros',
-          lifeStage: prod.lifeStage,
-          formatWeightKg: parseFloat(prod.format) || 10,
-          proteinPct: 28,
-          fatPct: 15,
-          fiberPct: 3.5,
-          moisturePct: 10,
-          grainFree: false,
-          firstFiveIngredients: ['Carne deshidratada', 'Arroz integral', 'Grasa animal', 'Pulpa de vegetales', 'Vitaminas y minerales'],
-          primaryProteinSource: 'Proteína animal balanceada',
-          hasProbiotics: true,
-          omega3_6: true,
-          qualityRating: 4,
-          caloricDensityKcalKg: 3700,
-          recommendationNote: 'Fórmula nutritiva adecuada para el consumo diario regular.'
-        };
+        const nut: FoodNutritionProfile = getProductNutrition(id, prod);
         const debitPrice = Math.round(prod.price * 1.05);
         const pricePerKg = Math.round(prod.price / (nut.formatWeightKg || 1));
         return { prod, nut, debitPrice, pricePerKg };
