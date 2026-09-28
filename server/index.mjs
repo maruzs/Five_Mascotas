@@ -265,8 +265,8 @@ const server = http.createServer(async (req, res) => {
           res.end(JSON.stringify({ ok: false, error: 'Filename y base64 son requeridos' }));
           return;
         }
-        const uploadsDir = path.join(__dirname, '..', 'public', 'five-mascotas', 'uploads');
-        await fs.promises.mkdir(uploadsDir, { recursive: true });
+        const uploadsDataDir = path.join(dataDir, 'uploads');
+        await fs.promises.mkdir(uploadsDataDir, { recursive: true });
 
         const safeExt = path.extname(body.filename) || '.png';
         const rawBase = path.basename(body.filename, safeExt).replace(/[^a-zA-Z0-9_-]/g, '_').toLowerCase();
@@ -274,7 +274,20 @@ const server = http.createServer(async (req, res) => {
 
         const base64Data = body.base64.replace(/^data:image\/\w+;base64,/, '');
         const buffer = Buffer.from(base64Data, 'base64');
-        await fs.promises.writeFile(path.join(uploadsDir, safeFilename), buffer);
+        await fs.promises.writeFile(path.join(uploadsDataDir, safeFilename), buffer);
+
+        // Also mirror to public/five-mascotas/uploads and dist/five-mascotas/uploads if available
+        try {
+          const publicUploadsDir = path.join(rootDir, 'public', 'five-mascotas', 'uploads');
+          await fs.promises.mkdir(publicUploadsDir, { recursive: true });
+          await fs.promises.writeFile(path.join(publicUploadsDir, safeFilename), buffer);
+        } catch {}
+
+        try {
+          const distUploadsDir = path.join(distDir, 'five-mascotas', 'uploads');
+          await fs.promises.mkdir(distUploadsDir, { recursive: true });
+          await fs.promises.writeFile(path.join(distUploadsDir, safeFilename), buffer);
+        } catch {}
 
         const publicUrl = `/five-mascotas/uploads/${safeFilename}`;
         res.statusCode = 201;
@@ -640,9 +653,19 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // Static File Serving from dist/
+  // Static File Serving from dist/ or dataDir/uploads
   if (req.method === 'GET' || req.method === 'HEAD') {
     let filePath = path.join(distDir, pathname);
+
+    // If requesting an uploaded image, check persistent dataDir/uploads first
+    if (pathname.startsWith('/five-mascotas/uploads/')) {
+      const uploadFilename = path.basename(pathname);
+      const dataUploadPath = path.join(dataDir, 'uploads', uploadFilename);
+      if (fs.existsSync(dataUploadPath)) {
+        filePath = dataUploadPath;
+      }
+    }
+
     let stat;
 
     try {
