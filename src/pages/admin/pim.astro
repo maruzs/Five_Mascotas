@@ -1,6 +1,35 @@
 ---
 import AdminLayout from '../../layouts/AdminLayout.astro';
-import { products, formatMoney } from '../../data/pim/catalog';
+import { products } from '../../data/pim/catalog';
+
+// Standard official photos list for quick one-click assignment in GUI
+const officialPhotos = [
+  { name: 'Fit Fórmula Perro Adulto 20kg', url: '/five-mascotas/products/fit-formula-perro-adulto.png', brand: 'Fit Fórmula' },
+  { name: 'Fit Fórmula Perro Cachorro', url: '/five-mascotas/products/fit-formula-perro-cachorro.png', brand: 'Fit Fórmula' },
+  { name: 'Fit Fórmula Gato Adulto', url: '/five-mascotas/products/fit-formula-gato.png', brand: 'Fit Fórmula' },
+  { name: 'Fit Fórmula Adulto Raza Pequeña', url: '/five-mascotas/products/fit-formula-adulto-pequena.png', brand: 'Fit Fórmula' },
+  { name: 'Purina Pro Plan Adulto Sensitive', url: '/five-mascotas/products/purina-proplan-adulto.png', brand: 'Purina' },
+  { name: 'Purina Pro Plan Puppy Large Breed', url: '/five-mascotas/products/purina-proplan-puppy.png', brand: 'Purina' },
+  { name: 'Purina Dog Chow Adulto', url: '/five-mascotas/products/purina-dogchow-adulto.png', brand: 'Purina' },
+  { name: 'Purina Cat Chow Adulto / Castrados', url: '/five-mascotas/products/purina-catchow-adulto.webp', brand: 'Purina' },
+  { name: 'Farmina N&D Prime Grain-Free', url: '/five-mascotas/products/farmina-nd-adulto.png', brand: 'N&D' },
+  { name: 'Nómade Perro Adulto', url: '/five-mascotas/products/nomade-perro-adulto.png', brand: 'Nomade' },
+  { name: 'Nómade Adulto 3 kg', url: '/five-mascotas/products/nomade-adulto-3kg.png', brand: 'Nomade' },
+  { name: 'Champion Dog Adulto', url: '/five-mascotas/products/champion-dog-adulto.webp', brand: 'Champion' },
+  { name: 'Champion Cat Adulto Pollo', url: '/five-mascotas/products/champion-cat-pollo.png', brand: 'Champion' },
+  { name: 'Champion Cat Adulto Carne', url: '/five-mascotas/products/champion-cat-carne.png', brand: 'Champion' },
+  { name: 'Bokato Gold Super Premium', url: '/five-mascotas/products/bokato-gold-adulto.jpg', brand: 'Bokato' },
+  { name: 'Kongo Gold Adulto', url: '/five-mascotas/products/kongo-gold-adulto.png', brand: 'Kongo' },
+  { name: 'Master Cat Adulto Carne', url: '/five-mascotas/products/master-cat-carne.png', brand: 'Master Cat' },
+  { name: 'Master Cat Adulto Salmón', url: '/five-mascotas/products/master-cat-salmon.png', brand: 'Master Cat' },
+  { name: 'Bravery Salmón Grain-Free', url: '/five-mascotas/products/bravery-salmon.png', brand: 'Bravery' },
+  { name: 'Appetit Perro Adulto', url: '/five-mascotas/products/appetit-adulto.webp', brand: 'Appetit' },
+  { name: '9 Lives Gato Adulto Pescado', url: '/five-mascotas/products/9lives-gato-pescado.png', brand: '9 Lives' },
+  { name: 'Pedigree Perro Adulto Carne', url: '/five-mascotas/products/pedigree-adulto.png', brand: 'Pedigree' },
+  { name: 'Whiskas Gato Adulto Pescado', url: '/five-mascotas/products/whiskas-adulto-pescado.png', brand: 'Whiskas' },
+  { name: 'Josera Naturelle Grain-Free Gato', url: '/five-mascotas/products/josera-naturelle.webp', brand: 'Josera' },
+  { name: 'Josidog Economy Perro Adulto', url: '/five-mascotas/products/josidog-economy.webp', brand: 'Josera' },
+];
 ---
 
 <AdminLayout title="FIVE Admin — Catálogo PIM" activeNav="pim" breadcrumbTitle="Gestor de Productos (PIM)">
@@ -8,7 +37,7 @@ import { products, formatMoney } from '../../data/pim/catalog';
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
       <div>
         <h1>Catálogo de Productos (PIM)</h1>
-        <p>Gestiona precios, atributos, marcas y fichas técnicas de la tienda.</p>
+        <p>Configura precios, especificaciones nutricionales, ingredientes e imágenes oficiales de la tienda.</p>
       </div>
       <div style="display:flex; gap:10px;">
         <button type="button" class="admin-btn secondary" id="admin-export-btn">
@@ -67,55 +96,14 @@ import { products, formatMoney } from '../../data/pim/catalog';
             <th>Marca</th>
             <th>Categoría</th>
             <th>Formato</th>
+            <th>Nutrición (Proteína / Granos)</th>
             <th>Precio Venta</th>
             <th>Precio Oferta</th>
-            <th>Badge</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody id="pim-tbody">
-          {products.map((p) => (
-            <tr data-pim-row data-id={p.id} data-search={`${p.name} ${p.brand} ${p.format} ${p.category} ${p.pet}`.toLowerCase()} data-pet={p.pet} data-category={p.category}>
-              <td>
-                <div class="admin-product-cell">
-                  <img src={p.image} alt="" class="admin-product-thumb" />
-                  <div class="admin-product-meta-col">
-                    <strong>{p.name}</strong>
-                    <small>{p.subcategory}</small>
-                  </div>
-                </div>
-              </td>
-              <td>{p.pet}</td>
-              <td><strong>{p.brand}</strong></td>
-              <td>{p.category}</td>
-              <td>{p.format}</td>
-              <td><strong class="pim-price-val">{formatMoney(p.price)}</strong></td>
-              <td>
-                {p.oldPrice > 0 ? (
-                  <span style="color:#e74c3c; font-weight:700;">{formatMoney(p.oldPrice)}</span>
-                ) : (
-                  <span style="color:#adb5bd;">-</span>
-                )}
-              </td>
-              <td>
-                {p.badge ? (
-                  <span class="admin-badge-trend up">{p.badge}</span>
-                ) : (
-                  <span style="color:#adb5bd;">-</span>
-                )}
-              </td>
-              <td>
-                <div style="display:flex; gap:6px;">
-                  <button type="button" class="admin-btn secondary" data-edit-id={p.id} style="padding:5px 10px; font-size:12px;">
-                    Editar
-                  </button>
-                  <button type="button" class="admin-btn danger" data-delete-id={p.id} style="padding:5px 10px; font-size:12px;">
-                    Eliminar
-                  </button>
-                </div>
-              </td>
-            </tr>
-          ))}
+          <!-- Injected dynamically via client script from AdminStoreService -->
         </tbody>
       </table>
     </div>
@@ -123,95 +111,209 @@ import { products, formatMoney } from '../../data/pim/catalog';
 
   <!-- Product Edit/Create Modal Backdrop -->
   <div id="pim-modal" class="admin-modal-backdrop" hidden style="display:none;">
-    <div class="admin-modal" role="dialog" aria-modal="true" aria-labelledby="pim-modal-title">
+    <div class="admin-modal" role="dialog" aria-modal="true" aria-labelledby="pim-modal-title" style="max-width:760px; width:95%;">
       <div class="admin-modal-head">
         <h3 id="pim-modal-title">Editar Producto PIM</h3>
         <button type="button" id="pim-modal-close" style="font-size:24px; color:#6c757d; cursor:pointer; background:none; border:none; padding:4px 8px; line-height:1;" aria-label="Cerrar modal">&times;</button>
       </div>
 
       <form id="pim-form">
-        <div class="admin-modal-body">
+        <div class="admin-modal-body" style="max-height:75vh; overflow-y:auto; padding:20px 24px;">
           <input type="hidden" id="form-id" name="id" />
 
-          <div class="admin-form-group">
-            <label for="form-name">Nombre Comercial del Producto *</label>
-            <input type="text" id="form-name" name="name" required />
-          </div>
+          <!-- SECCIÓN 1: DATOS BÁSICOS -->
+          <div style="margin-bottom:20px;">
+            <h4 style="font-size:14px; text-transform:uppercase; letter-spacing:0.5px; color:#7025a8; margin:0 0 12px; font-weight:800;">
+              1. Identificación del Producto
+            </h4>
 
-          <div class="admin-form-row">
             <div class="admin-form-group">
-              <label for="form-pet">Mascota Destino *</label>
-              <select id="form-pet" name="pet" required>
-                <option value="Perros">Perros</option>
-                <option value="Gatos">Gatos</option>
-                <option value="Perros Gatos">Perros y Gatos</option>
-              </select>
+              <label for="form-name">Nombre Comercial del Producto *</label>
+              <input type="text" id="form-name" name="name" required placeholder="ej: Fit Fórmula Perro Adulto" />
             </div>
-            <div class="admin-form-group">
-              <label for="form-brand">Marca *</label>
-              <input type="text" id="form-brand" name="brand" required placeholder="ej: Wellness Core, Nath" />
-            </div>
-          </div>
 
-          <div class="admin-form-row">
-            <div class="admin-form-group">
-              <label for="form-category">Categoría Principal *</label>
-              <select id="form-category" name="category" required>
-                <option value="Alimentos">Alimentos</option>
-                <option value="Farmacia">Farmacia</option>
-                <option value="Accesorios">Accesorios</option>
-                <option value="Higiene">Higiene</option>
-                <option value="Snacks">Snacks</option>
-              </select>
+            <div class="admin-form-row">
+              <div class="admin-form-group">
+                <label for="form-pet">Mascota Destino *</label>
+                <select id="form-pet" name="pet" required>
+                  <option value="Perros">Perros</option>
+                  <option value="Gatos">Gatos</option>
+                  <option value="Perros Gatos">Perros y Gatos</option>
+                </select>
+              </div>
+              <div class="admin-form-group">
+                <label for="form-brand">Marca *</label>
+                <input type="text" id="form-brand" name="brand" required placeholder="ej: Fit Fórmula, Purina, N&D" />
+              </div>
             </div>
-            <div class="admin-form-group">
-              <label for="form-subcategory">Subcategoría</label>
-              <input type="text" id="form-subcategory" name="subcategory" placeholder="ej: Alimentos seco, Camas y mantas" />
-            </div>
-          </div>
 
-          <div class="admin-form-row">
-            <div class="admin-form-group">
-              <label for="form-format">Formato / Peso</label>
-              <input type="text" id="form-format" name="format" placeholder="ej: 15 kg, 650 ml, Pack 10 un" />
+            <div class="admin-form-row">
+              <div class="admin-form-group">
+                <label for="form-category">Categoría Principal *</label>
+                <select id="form-category" name="category" required>
+                  <option value="Alimentos">Alimentos</option>
+                  <option value="Farmacia">Farmacia</option>
+                  <option value="Accesorios">Accesorios</option>
+                  <option value="Higiene">Higiene</option>
+                  <option value="Snacks">Snacks</option>
+                </select>
+              </div>
+              <div class="admin-form-group">
+                <label for="form-subcategory">Subcategoría</label>
+                <input type="text" id="form-subcategory" name="subcategory" placeholder="ej: Alimento seco, Dietas veterinarias" />
+              </div>
             </div>
-            <div class="admin-form-group">
-              <label for="form-lifestage">Etapa / Edad</label>
-              <select id="form-lifestage" name="lifeStage">
-                <option value="Todas las edades">Todas las edades</option>
-                <option value="Cachorro">Cachorro</option>
-                <option value="Adulto">Adulto</option>
-                <option value="Senior">Senior</option>
-              </select>
-            </div>
-          </div>
 
-          <div class="admin-form-row">
-            <div class="admin-form-group">
-              <label for="form-price">Precio Normal (CLP) *</label>
-              <input type="number" id="form-price" name="price" required min="100" />
+            <div class="admin-form-row">
+              <div class="admin-form-group">
+                <label for="form-format">Formato / Peso *</label>
+                <input type="text" id="form-format" name="format" required placeholder="ej: 15 kg, 20 kg, 3 kg" />
+              </div>
+              <div class="admin-form-group">
+                <label for="form-lifestage">Etapa / Edad</label>
+                <select id="form-lifestage" name="lifeStage">
+                  <option value="Adulto">Adulto</option>
+                  <option value="Cachorro">Cachorro / Gatito</option>
+                  <option value="Senior">Senior</option>
+                  <option value="Todas las edades">Todas las edades</option>
+                </select>
+              </div>
             </div>
-            <div class="admin-form-group">
-              <label for="form-oldprice">Precio Anterior / Oferta (0 si no aplica)</label>
-              <input type="number" id="form-oldprice" name="oldPrice" min="0" value="0" />
-            </div>
-          </div>
 
-          <div class="admin-form-row">
+            <div class="admin-form-row">
+              <div class="admin-form-group">
+                <label for="form-price">Precio Normal (CLP) *</label>
+                <input type="number" id="form-price" name="price" required min="100" />
+              </div>
+              <div class="admin-form-group">
+                <label for="form-oldprice">Precio Anterior / Oferta (0 si no aplica)</label>
+                <input type="number" id="form-oldprice" name="oldPrice" min="0" value="0" />
+              </div>
+            </div>
+
             <div class="admin-form-group">
               <label for="form-badge">Badge Promocional</label>
-              <input type="text" id="form-badge" name="badge" placeholder="ej: Liquidación, 15% Dcto, Top Ventas" />
+              <input type="text" id="form-badge" name="badge" placeholder="ej: Más Vendido, 15% Dcto, Nuevo" />
             </div>
+          </div>
+
+          <!-- SECCIÓN 2: INFORMACIÓN NUTRICIONAL CONFIGURABLE -->
+          <div style="margin-bottom:24px; padding-top:16px; border-top:1px solid #e9ecef;">
+            <h4 style="font-size:14px; text-transform:uppercase; letter-spacing:0.5px; color:#276717; margin:0 0 12px; font-weight:800; display:flex; align-items:center; gap:8px;">
+              <span>🥩</span> 2. Perfil Nutricional (Para el Comparador)
+            </h4>
+
+            <div class="admin-form-row">
+              <div class="admin-form-group">
+                <label for="form-protein">% Proteína Bruta (Mínimo)</label>
+                <input type="number" id="form-protein" name="proteinPct" min="0" max="100" step="0.5" placeholder="ej: 28" />
+              </div>
+              <div class="admin-form-group">
+                <label for="form-fat">% Grasa Bruta</label>
+                <input type="number" id="form-fat" name="fatPct" min="0" max="100" step="0.5" placeholder="ej: 14" />
+              </div>
+            </div>
+
+            <div class="admin-form-row">
+              <div class="admin-form-group">
+                <label for="form-grainfree">¿Libre de Granos (Grain-Free)?</label>
+                <select id="form-grainfree" name="grainFree">
+                  <option value="false">No (Contiene cereales seleccionados)</option>
+                  <option value="true">Sí (100% Grain-Free • Cero Granos)</option>
+                </select>
+              </div>
+              <div class="admin-form-group">
+                <label for="form-breedsize">Tamaño de Raza Recomendado</label>
+                <select id="form-breedsize" name="breedSize">
+                  <option value="Todas las Razas">Todas las Razas</option>
+                  <option value="Raza Pequeña">Raza Pequeña (Mini)</option>
+                  <option value="Raza Mediana">Raza Mediana</option>
+                  <option value="Raza Grande">Raza Grande (Maxi)</option>
+                </select>
+              </div>
+            </div>
+
             <div class="admin-form-group">
-              <label for="form-image">Ruta de Imagen</label>
-              <input type="text" id="form-image" name="image" value="/five-mascotas/alimento-0.svg" />
+              <label for="form-ingredients">
+                Ingredientes Oficiales 
+                <small style="color:#6c757d; font-weight:normal;">(Separados por coma en orden de mayor concentración por peso)</small>
+              </label>
+              <textarea 
+                id="form-ingredients" 
+                name="ingredients" 
+                rows="3" 
+                placeholder="ej: Carne fresca de pollo, harina de salmón, arroz integral, grasa de ave, pulpa de remolacha, aceite de pescado (Omega 3 y 6), vitaminas y minerales..."
+                style="width:100%; border-radius:8px; border:1px solid #ced4da; padding:10px; font-size:13px; line-height:1.5;"
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- SECCIÓN 3: GESTOR VISUAL DE IMÁGENES (GUI) -->
+          <div style="padding-top:16px; border-top:1px solid #e9ecef;">
+            <h4 style="font-size:14px; text-transform:uppercase; letter-spacing:0.5px; color:#0369a1; margin:0 0 12px; font-weight:800; display:flex; align-items:center; gap:8px;">
+              <span>🖼️</span> 3. Gestor de Imagen de Producto (GUI)
+            </h4>
+
+            <div style="display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap; background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:16px;">
+              <!-- Image Thumbnail Preview -->
+              <div style="position:relative; width:130px; height:130px; background:#ffffff; border:1px solid #cbd5e1; border-radius:12px; display:flex; align-items:center; justify-content:center; overflow:hidden; flex-shrink:0;">
+                <img id="pim-image-preview" src="/five-mascotas/alimento-0.svg" alt="Preview" style="max-width:115px; max-height:115px; object-fit:contain;" />
+                <span id="pim-image-status" style="position:absolute; bottom:4px; right:4px; font-size:10px; background:rgba(0,0,0,0.6); color:#fff; padding:2px 6px; border-radius:4px;">Vista</span>
+              </div>
+
+              <!-- Controls / Buttons -->
+              <div style="flex:1; min-width:240px; display:flex; flex-direction:column; gap:10px;">
+                <!-- Hidden file input for native file browser -->
+                <input type="file" id="pim-file-picker" accept="image/png, image/jpeg, image/webp" style="display:none;" />
+
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                  <button type="button" class="admin-btn primary" id="btn-upload-image" style="font-size:12.5px; padding:7px 12px;">
+                    📁 Subir Imagen desde el Equipo...
+                  </button>
+                  <button type="button" class="admin-btn secondary" id="btn-gallery-image" style="font-size:12.5px; padding:7px 12px;">
+                    🖼️ Galería de Fotos Oficiales
+                  </button>
+                  <button type="button" class="admin-btn danger" id="btn-remove-image" style="font-size:12.5px; padding:7px 12px;">
+                    🗑️ Quitar
+                  </button>
+                </div>
+
+                <!-- One-click official photos selector -->
+                <div id="gallery-select-wrapper" style="display:none; background:#ffffff; border:1px solid #cbd5e1; border-radius:8px; padding:10px; margin-top:4px;">
+                  <label for="official-photo-select" style="font-size:12px; font-weight:700; color:#334155; display:block; margin-bottom:4px;">
+                    Seleccionar Packshot Oficial Disponible:
+                  </label>
+                  <select id="official-photo-select" class="admin-select" style="width:100%;">
+                    <option value="">-- Elige una foto oficial --</option>
+                    {officialPhotos.map((photo) => (
+                      <option value={photo.url}>
+                        [{photo.brand}] {photo.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <!-- URL text input fallback -->
+                <div>
+                  <label for="form-image" style="font-size:11.5px; color:#64748b; font-weight:600; display:block; margin-bottom:3px;">
+                    Ruta o URL de Imagen:
+                  </label>
+                  <input 
+                    type="text" 
+                    id="form-image" 
+                    name="image" 
+                    value="/five-mascotas/alimento-0.svg" 
+                    style="width:100%; font-size:12.5px; padding:6px 10px; border-radius:6px; border:1px solid #cbd5e1; background:#ffffff;"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="admin-modal-foot">
           <button type="button" class="admin-btn secondary" id="pim-modal-cancel">Cancelar</button>
-          <button type="submit" class="admin-btn primary">Guardar Producto</button>
+          <button type="submit" class="admin-btn primary">Guardar Cambios en PIM</button>
         </div>
       </form>
     </div>
@@ -229,6 +331,17 @@ import { products, formatMoney } from '../../data/pim/catalog';
     const tbody = document.querySelector('#pim-tbody')!;
     const countBadge = document.querySelector('#pim-count-badge')!;
 
+    // Image GUI elements
+    const filePicker = document.querySelector<HTMLInputElement>('#pim-file-picker')!;
+    const btnUpload = document.querySelector<HTMLButtonElement>('#btn-upload-image')!;
+    const btnGallery = document.querySelector<HTMLButtonElement>('#btn-gallery-image')!;
+    const btnRemove = document.querySelector<HTMLButtonElement>('#btn-remove-image')!;
+    const galleryWrapper = document.querySelector<HTMLElement>('#gallery-select-wrapper')!;
+    const officialSelect = document.querySelector<HTMLSelectElement>('#official-photo-select')!;
+    const imageInput = document.querySelector<HTMLInputElement>('#form-image')!;
+    const imagePreview = document.querySelector<HTMLImageElement>('#pim-image-preview')!;
+    const imageStatus = document.querySelector<HTMLElement>('#pim-image-status')!;
+
     // Initial render from storage
     const renderTable = () => {
       const items = AdminStoreService.getProducts();
@@ -243,10 +356,13 @@ import { products, formatMoney } from '../../data/pim/catalog';
         tr.dataset.pet = p.pet;
         tr.dataset.category = p.category;
 
+        const proteinInfo = p.proteinPct ? `<strong style="color:#7025a8;">${p.proteinPct}%</strong>` : '<span style="color:#adb5bd;">Std</span>';
+        const grainInfo = p.grainFree ? '<span class="admin-badge-trend up" style="font-size:10.5px;">Grain-Free</span>' : '';
+
         tr.innerHTML = `
           <td>
             <div class="admin-product-cell">
-              <img src="${p.image}" alt="" class="admin-product-thumb" />
+              <img src="${p.image}" alt="" class="admin-product-thumb" style="object-fit:contain;" />
               <div class="admin-product-meta-col">
                 <strong>${p.name}</strong>
                 <small>${p.subcategory || p.detail}</small>
@@ -257,12 +373,15 @@ import { products, formatMoney } from '../../data/pim/catalog';
           <td><strong>${p.brand}</strong></td>
           <td>${p.category}</td>
           <td>${p.format}</td>
+          <td>
+            <div style="display:flex; align-items:center; gap:6px;">
+              ${proteinInfo}
+              ${grainInfo}
+            </div>
+          </td>
           <td><strong class="pim-price-val">${formatMoney(p.price)}</strong></td>
           <td>
             ${p.oldPrice > 0 ? `<span style="color:#e74c3c; font-weight:700;">${formatMoney(p.oldPrice)}</span>` : `<span style="color:#adb5bd;">-</span>`}
-          </td>
-          <td>
-            ${p.badge ? `<span class="admin-badge-trend up">${p.badge}</span>` : `<span style="color:#adb5bd;">-</span>`}
           </td>
           <td>
             <div style="display:flex; gap:6px;">
@@ -284,6 +403,7 @@ import { products, formatMoney } from '../../data/pim/catalog';
       modalTitle.textContent = title;
       modal.hidden = false;
       modal.style.display = 'flex';
+      galleryWrapper.style.display = 'none';
       document.body.classList.add('overflow-hidden');
     };
 
@@ -293,12 +413,79 @@ import { products, formatMoney } from '../../data/pim/catalog';
       document.body.classList.remove('overflow-hidden');
     };
 
+    // Update image input and preview simultaneously
+    const setProductImage = (url: string, label = 'Activa') => {
+      imageInput.value = url;
+      imagePreview.src = url;
+      imageStatus.textContent = label;
+    };
+
+    // Wire up Image Manager GUI
+    imageInput.addEventListener('input', () => {
+      imagePreview.src = imageInput.value;
+    });
+
+    btnUpload.addEventListener('click', () => {
+      filePicker.click();
+    });
+
+    btnGallery.addEventListener('click', () => {
+      galleryWrapper.style.display = galleryWrapper.style.display === 'none' ? 'block' : 'none';
+    });
+
+    officialSelect.addEventListener('change', () => {
+      if (officialSelect.value) {
+        setProductImage(officialSelect.value, 'Oficial');
+      }
+    });
+
+    btnRemove.addEventListener('click', () => {
+      setProductImage('/five-mascotas/alimento-0.svg', 'Por defecto');
+    });
+
+    // File Upload Handler
+    filePicker.addEventListener('change', async () => {
+      const file = filePicker.files?.[0];
+      if (!file) return;
+
+      imageStatus.textContent = 'Subiendo...';
+      const reader = new FileReader();
+
+      reader.onload = async () => {
+        const base64 = reader.result as string;
+
+        try {
+          const res = await fetch('/api/upload', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ filename: file.name, base64 }),
+          });
+
+          if (res.ok) {
+            const data = await res.json();
+            if (data.url) {
+              setProductImage(data.url, 'Subida');
+              return;
+            }
+          }
+        } catch (err) {
+          console.warn('[PIM Image] Upload error, falling back to data URL:', err);
+        }
+
+        // Offline or fallback to data URL directly
+        setProductImage(base64, 'Local');
+      };
+
+      reader.readAsDataURL(file);
+    });
+
     const attachRowEvents = () => {
       document.querySelectorAll('[data-edit-id]').forEach((btn) => {
         btn.addEventListener('click', () => {
           const id = (btn as HTMLElement).dataset.editId!;
           const product = AdminStoreService.getProducts().find((x) => x.id === id);
           if (!product) return;
+
           (document.querySelector('#form-id') as HTMLInputElement).value = product.id;
           (document.querySelector('#form-name') as HTMLInputElement).value = product.name;
           (document.querySelector('#form-pet') as HTMLSelectElement).value = product.pet;
@@ -306,12 +493,21 @@ import { products, formatMoney } from '../../data/pim/catalog';
           (document.querySelector('#form-category') as HTMLSelectElement).value = product.category;
           (document.querySelector('#form-subcategory') as HTMLInputElement).value = product.subcategory || '';
           (document.querySelector('#form-format') as HTMLInputElement).value = product.format;
-          (document.querySelector('#form-lifestage') as HTMLSelectElement).value = product.lifeStage || 'Todas las edades';
+          (document.querySelector('#form-lifestage') as HTMLSelectElement).value = product.lifeStage || 'Adulto';
           (document.querySelector('#form-price') as HTMLInputElement).value = String(product.price);
           (document.querySelector('#form-oldprice') as HTMLInputElement).value = String(product.oldPrice || 0);
           (document.querySelector('#form-badge') as HTMLInputElement).value = product.badge || '';
-          (document.querySelector('#form-image') as HTMLInputElement).value = product.image;
-          openModal('Editar Producto PIM');
+
+          // Nutritional fields
+          (document.querySelector('#form-protein') as HTMLInputElement).value = product.proteinPct !== undefined ? String(product.proteinPct) : '';
+          (document.querySelector('#form-fat') as HTMLInputElement).value = product.fatPct !== undefined ? String(product.fatPct) : '';
+          (document.querySelector('#form-grainfree') as HTMLSelectElement).value = product.grainFree ? 'true' : 'false';
+          (document.querySelector('#form-breedsize') as HTMLSelectElement).value = product.breedSize || 'Todas las Razas';
+          (document.querySelector('#form-ingredients') as HTMLTextAreaElement).value = product.ingredients || '';
+
+          // Image GUI
+          setProductImage(product.image || '/five-mascotas/alimento-0.svg', 'Guardada');
+          openModal(`Editar Producto — ${product.name}`);
         });
       });
 
@@ -330,29 +526,29 @@ import { products, formatMoney } from '../../data/pim/catalog';
     document.querySelector('#admin-new-prod-btn')?.addEventListener('click', () => {
       form.reset();
       (document.querySelector('#form-id') as HTMLInputElement).value = `prod-${Date.now()}`;
+      setProductImage('/five-mascotas/alimento-0.svg', 'Nuevo');
       openModal('Crear Nuevo Producto PIM');
     });
 
     document.querySelector('#pim-modal-close')?.addEventListener('click', closeModal);
     document.querySelector('#pim-modal-cancel')?.addEventListener('click', closeModal);
 
-    // Close on backdrop click (clicking outside the modal container)
     modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        closeModal();
-      }
+      if (e.target === modal) closeModal();
     });
 
-    // Close on ESC key
     window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !modal.hidden) {
-        closeModal();
-      }
+      if (e.key === 'Escape' && !modal.hidden) closeModal();
     });
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const formData = new FormData(form);
+
+      const proteinRaw = formData.get('proteinPct') as string;
+      const fatRaw = formData.get('fatPct') as string;
+      const ingredientsRaw = formData.get('ingredients') as string;
+
       const updated: Product = {
         id: formData.get('id') as string,
         name: formData.get('name') as string,
@@ -368,6 +564,12 @@ import { products, formatMoney } from '../../data/pim/catalog';
         badge: formData.get('badge') as string,
         color: 'violet',
         image: (formData.get('image') as string) || '/five-mascotas/alimento-0.svg',
+        // New nutritional attributes saved to PIM
+        proteinPct: proteinRaw ? parseFloat(proteinRaw) : undefined,
+        fatPct: fatRaw ? parseFloat(fatRaw) : undefined,
+        grainFree: formData.get('grainFree') === 'true',
+        breedSize: (formData.get('breedSize') as string) || 'Todas las Razas',
+        ingredients: ingredientsRaw?.trim() ? ingredientsRaw.trim() : undefined,
       };
 
       AdminStoreService.saveProduct(updated);

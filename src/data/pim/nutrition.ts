@@ -952,11 +952,31 @@ export function getProductNutrition(productId: string, product?: any): FoodNutri
   const proteinBonus = isPuppy ? 3 : 0;
   const fatBonus = isPuppy ? 2 : 0;
 
-  const proteinPct = (isCat ? spec.catProtein : spec.dogProtein) + proteinBonus;
-  const fatPct = (isCat ? spec.catFat : spec.dogFat) + fatBonus;
+  // Prioritize custom PIM product values if configured by admin
+  const proteinPct = product?.proteinPct !== undefined && product?.proteinPct !== null && !isNaN(Number(product.proteinPct))
+    ? Number(product.proteinPct)
+    : (isCat ? spec.catProtein : spec.dogProtein) + proteinBonus;
 
-  const firstFiveIngredients = isCat ? spec.catIngredients : spec.dogIngredients;
-  const primaryProteinSource = isCat ? spec.primaryProteinCat : spec.primaryProteinDog;
+  const fatPct = product?.fatPct !== undefined && product?.fatPct !== null && !isNaN(Number(product.fatPct))
+    ? Number(product.fatPct)
+    : (isCat ? spec.catFat : spec.dogFat) + fatBonus;
+
+  const customIngredients = typeof product?.ingredients === 'string' && product.ingredients.trim().length > 0
+    ? product.ingredients.split(',').map((s: string) => s.trim()).filter(Boolean)
+    : null;
+
+  const firstFiveIngredients = customIngredients && customIngredients.length > 0
+    ? customIngredients.slice(0, 5)
+    : (isCat ? spec.catIngredients : spec.dogIngredients);
+
+  const primaryProteinSource = customIngredients && customIngredients.length > 0
+    ? customIngredients[0]
+    : (isCat ? spec.primaryProteinCat : spec.primaryProteinDog);
+
+  const grainFree = product?.grainFree !== undefined && product?.grainFree !== null
+    ? Boolean(product.grainFree)
+    : spec.grainFree;
+
   const recommendationNote = isCat ? spec.verdictCat : spec.verdictDog;
   const caloricDensityKcalKg = Math.round((proteinPct * 35) + (fatPct * 85) + 1800);
 
@@ -969,9 +989,9 @@ export function getProductNutrition(productId: string, product?: any): FoodNutri
     formatWeightKg,
     proteinPct,
     fatPct,
-    fiberPct: spec.fiber,
-    moisturePct: spec.moisture,
-    grainFree: spec.grainFree,
+    fiberPct: product?.fiberPct !== undefined ? Number(product.fiberPct) : spec.fiber,
+    moisturePct: product?.moisturePct !== undefined ? Number(product.moisturePct) : spec.moisture,
+    grainFree,
     firstFiveIngredients,
     primaryProteinSource,
     hasProbiotics: spec.hasProbiotics,

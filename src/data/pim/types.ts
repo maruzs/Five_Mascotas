@@ -24,7 +24,16 @@ export interface Product {
   badge?: string;
   color: 'violet' | 'green' | 'peach' | 'lavender';
   image: string;
+  images?: string[];
   featured?: boolean;
+  // Nutritional attributes configurable from PIM
+  proteinPct?: number;
+  fatPct?: number;
+  fiberPct?: number;
+  moisturePct?: number;
+  ingredients?: string; // Comma-separated list of ingredients
+  grainFree?: boolean;
+  breedSize?: string; // Pequeña, Mediana, Grande, Todas las Razas
 }
 
 export interface MegaMenuItem {

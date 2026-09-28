@@ -7,14 +7,29 @@ import { defaultFoodNutrition } from '../data/pim/nutrition';
 // Filter products that belong to food categories
 const foodProducts = products.filter((p) => p.category === 'Alimentos' || defaultFoodNutrition[p.id]);
 
-// Initial 2 items to compare (e.g. Fit Formula vs Purina Pro Plan or Farmina)
-const initialLeft = foodProducts.find((p) => p.brand.includes('Fit')) || foodProducts[0] || products[0];
-const initialRight = foodProducts.find((p) => p.brand.includes('Purina') || p.brand.includes('N&D')) || foodProducts[1] || products[1];
+// Initial 2 items to compare (both Dog Adult by default)
+const initialLeft = foodProducts.find((p) => p.brand.includes('Fit') && !p.name.includes('Gato') && !p.name.includes('Cachorro')) || foodProducts[0] || products[0];
+const initialRight = foodProducts.find((p) => p.brand.includes('Purina') && !p.name.includes('Gato') && !p.name.includes('Puppy') && p.id !== initialLeft.id) || foodProducts[1] || products[1];
+
+// Helper to determine pet, stage, and breed tags for data attributes
+const getPetType = (p: any) => (p.pet === 'Gatos' || p.name.toLowerCase().includes('gato') || p.name.toLowerCase().includes('kitten') || p.name.toLowerCase().includes('cat') ? 'gato' : 'perro');
+const getStageType = (p: any) => {
+  const n = (p.name || '').toLowerCase();
+  if (n.includes('cachorro') || n.includes('puppy') || n.includes('gatito') || n.includes('kitten')) return 'cachorro';
+  if (n.includes('senior') || n.includes('mature') || n.includes('edad avanzada')) return 'senior';
+  return 'adulto';
+};
+const getBreedType = (p: any) => {
+  const n = (p.name || '').toLowerCase();
+  if (n.includes('pequeñ') || n.includes('small') || n.includes('mini') || n.includes('toy')) return 'pequena';
+  if (n.includes('grande') || n.includes('maxi') || n.includes('large')) return 'grande';
+  return 'todas';
+};
 ---
 
 <BaseLayout
   title="Comparador Nutricional de Alimentos — FIVE Mascotas"
-  description="Compara lado a lado el porcentaje de proteína, calidad de ingredientes, fuentes cárnicas reales y precio por kilo de los mejores alimentos para perros y gatos en Chile."
+  description="Compara lado a lado el porcentaje de proteína, ingredientes, granos y costo por kilo entre alimentos de la misma categoría para perros y gatos."
 >
   <div class="five-wrap five-comparator-page" style="padding-block: 24px 70px;">
     <!-- Breadcrumbs -->
@@ -25,28 +40,48 @@ const initialRight = foodProducts.find((p) => p.brand.includes('Purina') || p.br
       </ol>
     </nav>
 
-    <!-- Header Section with Vet Badge -->
+    <!-- Header Section -->
     <header class="comp-header">
       <div class="comp-badge-pill">
         <span class="comp-badge-dot"></span>
-        <span>Herramienta Nutricional Clínica</span>
+        <span>Análisis Nutricional Objetivo</span>
       </div>
-      <h1 class="comp-title">Comparador Inteligente de Alimentos</h1>
+      <h1 class="comp-title">Comparador de Alimentos e Ingredientes</h1>
       <p class="comp-subtitle">
-        Analiza lado a lado el % de proteína bruta, las fuentes cárnicas reales, si la fórmula es libre de granos (<em>Grain-Free</em>) y el costo exacto por kilo antes de comprar.
+        Compara fórmulas de la <strong>misma categoría y etapa de vida</strong> (adulto con adulto, cachorro con cachorro, gato con gato) para evaluar objetivamente proteína bruta, ingredientes reales y costo por kilo sin sesgos.
       </p>
 
-      <!-- Quick Animal Filter Tabs -->
-      <div class="comp-filter-tabs" role="tablist" aria-label="Filtrar por especie">
-        <button type="button" class="comp-tab-btn active" data-filter="all">
-          Todos los Alimentos ({foodProducts.length})
-        </button>
-        <button type="button" class="comp-tab-btn" data-filter="perro">
-          🐶 Solo Perros
-        </button>
-        <button type="button" class="comp-tab-btn" data-filter="gato">
-          🐱 Solo Gatos
-        </button>
+      <!-- Category & Stage Filter Toolbar -->
+      <div class="comp-filter-toolbar">
+        <!-- Especie -->
+        <div class="comp-filter-group">
+          <span class="comp-filter-group-label">Especie:</span>
+          <div class="comp-filter-pills" id="pet-filters">
+            <button type="button" class="comp-pill-btn active" data-pet="perro">🐶 Perros</button>
+            <button type="button" class="comp-pill-btn" data-pet="gato">🐱 Gatos</button>
+          </div>
+        </div>
+
+        <!-- Etapa de Vida -->
+        <div class="comp-filter-group">
+          <span class="comp-filter-group-label">Etapa de Vida:</span>
+          <div class="comp-filter-pills" id="stage-filters">
+            <button type="button" class="comp-pill-btn active" data-stage="adulto">Adultos</button>
+            <button type="button" class="comp-pill-btn" data-stage="cachorro">Cachorros / Gatitos</button>
+            <button type="button" class="comp-pill-btn" data-stage="senior">Senior (+7 años)</button>
+            <button type="button" class="comp-pill-btn" data-stage="all">Todas las etapas</button>
+          </div>
+        </div>
+
+        <!-- Tamaño de Raza (Solo para perros) -->
+        <div class="comp-filter-group" id="breed-group">
+          <span class="comp-filter-group-label">Raza:</span>
+          <div class="comp-filter-pills" id="breed-filters">
+            <button type="button" class="comp-pill-btn active" data-breed="all">Todas las razas</button>
+            <button type="button" class="comp-pill-btn" data-breed="pequena">Raza Pequeña (Mini)</button>
+            <button type="button" class="comp-pill-btn" data-breed="grande">Raza Grande / Maxi</button>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -56,7 +91,7 @@ const initialRight = foodProducts.find((p) => p.brand.includes('Purina') || p.br
       <div class="comp-slot-card" id="slot-card-1">
         <div class="comp-slot-header">
           <span class="comp-slot-tag tag-a">Alimento 1</span>
-          <span class="comp-slot-brand" id="slot-1-brand-badge">Fit Fórmula</span>
+          <span class="comp-slot-brand" id="slot-1-brand-badge">{initialLeft.brand}</span>
         </div>
         <div class="comp-slot-picker-wrap">
           <label for="picker-slot-1" class="comp-slot-label">Selecciona el primer producto:</label>
@@ -65,7 +100,9 @@ const initialRight = foodProducts.find((p) => p.brand.includes('Purina') || p.br
               <option 
                 value={p.id} 
                 selected={p.id === initialLeft.id}
-                data-pet={p.name.toLowerCase().includes('gato') || p.name.toLowerCase().includes('kitten') || p.name.toLowerCase().includes('cat') ? 'gato' : 'perro'}
+                data-pet={getPetType(p)}
+                data-stage={getStageType(p)}
+                data-breed={getBreedType(p)}
               >
                 {p.brand} — {p.name} ({p.format})
               </option>
@@ -83,16 +120,18 @@ const initialRight = foodProducts.find((p) => p.brand.includes('Purina') || p.br
       <div class="comp-slot-card" id="slot-card-2">
         <div class="comp-slot-header">
           <span class="comp-slot-tag tag-b">Alimento 2</span>
-          <span class="comp-slot-brand" id="slot-2-brand-badge">Purina Pro Plan</span>
+          <span class="comp-slot-brand" id="slot-2-brand-badge">{initialRight.brand}</span>
         </div>
         <div class="comp-slot-picker-wrap">
-          <label for="picker-slot-2" class="comp-slot-label">Selecciona el segundo producto:</label>
+          <label for="picker-slot-2" class="comp-slot-label">Selecciona el segundo producto (Misma categoría):</label>
           <select id="picker-slot-2" class="comp-select" aria-label="Alimento 2">
             {foodProducts.map((p) => (
               <option 
                 value={p.id} 
                 selected={p.id === initialRight.id}
-                data-pet={p.name.toLowerCase().includes('gato') || p.name.toLowerCase().includes('kitten') || p.name.toLowerCase().includes('cat') ? 'gato' : 'perro'}
+                data-pet={getPetType(p)}
+                data-stage={getStageType(p)}
+                data-breed={getBreedType(p)}
               >
                 {p.brand} — {p.name} ({p.format})
               </option>
@@ -114,7 +153,9 @@ const initialRight = foodProducts.find((p) => p.brand.includes('Purina') || p.br
             {foodProducts.map((p) => (
               <option 
                 value={p.id}
-                data-pet={p.name.toLowerCase().includes('gato') || p.name.toLowerCase().includes('kitten') || p.name.toLowerCase().includes('cat') ? 'gato' : 'perro'}
+                data-pet={getPetType(p)}
+                data-stage={getStageType(p)}
+                data-breed={getBreedType(p)}
               >
                 {p.brand} — {p.name} ({p.format})
               </option>
@@ -132,35 +173,35 @@ const initialRight = foodProducts.find((p) => p.brand.includes('Purina') || p.br
     <!-- Educational Guide Card -->
     <section class="comp-guide-card five-education-card" aria-label="Guía de nutrición veterinaria">
       <div class="comp-guide-header">
-        <span class="comp-guide-icon">🩺</span>
+        <span class="comp-guide-icon">💡</span>
         <div>
-          <h2 class="comp-guide-title">¿Cómo interpretar las etiquetas según el equipo veterinario de FIVE?</h2>
-          <p class="comp-guide-desc">Criterios fundamentales para evaluar un alimento comercial sin caer en trucos de marketing.</p>
+          <h2 class="comp-guide-title">¿Cómo evaluar objetivamente la etiqueta de un alimento?</h2>
+          <p class="comp-guide-desc">Criterios técnicos para analizar las opciones y decidir la mejor nutrición para tu mascota.</p>
         </div>
       </div>
 
       <div class="comp-guide-grid">
         <div class="comp-guide-item">
           <div class="comp-guide-item-num">01</div>
-          <h3>La Ley del Primer Ingrediente</h3>
+          <h3>La Regla del Primer Ingrediente</h3>
           <p>
-            Los ingredientes deben declararse en orden estricto de peso. El primer ítem debe ser <strong>carne fresca deshuesada</strong> o <strong>harina de carne deshidratada pura</strong>, nunca maíz, subproductos no identificados o trigo.
+            Los ingredientes se ordenan por su peso antes de la cocción. Un buen alimento debe tener como primer ingrediente <strong>carne fresca</strong> o <strong>harina de carne deshidratada pura</strong>, evitando que el primer componente sea maíz o trigo.
           </p>
         </div>
 
         <div class="comp-guide-item">
           <div class="comp-guide-item-num">02</div>
-          <h3>Grain-Free vs Granos Nobles</h3>
+          <h3>Fórmulas Grain-Free vs Cereales</h3>
           <p>
-            Las fórmulas <strong>Grain-Free</strong> reemplazan el trigo y la soya por legumbres nobles (arvejas, garbanzos) o tubérculos (camote, calabaza), ofreciendo mayor biodisponibilidad y reduciendo problemas dérmicos.
+            Las fórmulas <strong>Grain-Free</strong> sustituyen los cereales por legumbres nobles (arvejas, lentejas) o tubérculos (calabaza, camote), ofreciendo un índice glucémico controlado y minimizando alergias alimentarias.
           </p>
         </div>
 
         <div class="comp-guide-item">
           <div class="comp-guide-item-num">03</div>
-          <h3>Densidad Proteica y Grasa</h3>
+          <h3>Proteína y Grasa según Etapa</h3>
           <p>
-            En perros adultos recomendamos entre un <strong>24% y 30%</strong> de proteína bruta. En gatos (carnívoros estrictos), busca siempre superar el <strong>32% al 44%</strong> con taurina garantizada para su salud cardíaca y ocular.
+            Los cachorros en crecimiento y los gatos (carnívoros estrictos) requieren mayores porcentajes de proteína y taurina. En adultos con actividad regular, prioriza una buena digestibilidad y balance de ácidos grasos Omega 3 y 6.
           </p>
         </div>
       </div>
@@ -168,42 +209,120 @@ const initialRight = foodProducts.find((p) => p.brand.includes('Purina') || p.br
   </div>
 
   <script>
-    import { products, formatMoney } from '../data/pim/catalog';
+    import { products as defaultProducts, formatMoney } from '../data/pim/catalog';
     import { getProductNutrition, type FoodNutritionProfile } from '../data/pim/nutrition';
+    import { AdminStoreService } from '../scripts/admin-store';
+    import type { Product } from '../data/pim/types';
 
     const slot1 = document.querySelector<HTMLSelectElement>('#picker-slot-1')!;
     const slot2 = document.querySelector<HTMLSelectElement>('#picker-slot-2')!;
     const slot3 = document.querySelector<HTMLSelectElement>('#picker-slot-3')!;
     const container = document.querySelector<HTMLElement>('#comparison-table-container')!;
-    const tabButtons = document.querySelectorAll<HTMLButtonElement>('.comp-tab-btn');
     const brandBadge1 = document.querySelector<HTMLElement>('#slot-1-brand-badge');
     const brandBadge2 = document.querySelector<HTMLElement>('#slot-2-brand-badge');
+    const breedGroup = document.querySelector<HTMLElement>('#breed-group');
 
-    // Animal Filter Tabs handler
-    tabButtons.forEach((btn) => {
+    // Get live products list from PIM or fallback
+    const getLiveProducts = (): Product[] => {
+      try {
+        const live = AdminStoreService.getProducts();
+        if (live && live.length) return live;
+      } catch {
+        // Fallback
+      }
+      return defaultProducts;
+    };
+
+    // Filter state
+    let activePet = 'perro';
+    let activeStage = 'adulto';
+    let activeBreed = 'all';
+
+    const filterOptions = () => {
+      if (breedGroup) {
+        breedGroup.style.display = activePet === 'gato' ? 'none' : 'flex';
+      }
+
+      [slot1, slot2, slot3].forEach((select) => {
+        const validOptions = Array.from(select.options).filter((opt) => opt.value);
+        let firstMatch: HTMLOptionElement | undefined = undefined;
+        let currentSelectedStillValid = false;
+
+        for (const opt of validOptions) {
+          const pet = opt.dataset.pet;
+          const stage = opt.dataset.stage;
+          const breed = opt.dataset.breed;
+
+          const matchPet = pet === activePet;
+          const matchStage = activeStage === 'all' || stage === activeStage;
+          const matchBreed = activeBreed === 'all' || breed === activeBreed || breed === 'todas';
+
+          if (matchPet && matchStage && matchBreed) {
+            opt.hidden = false;
+            if (!firstMatch) firstMatch = opt;
+            if (opt.selected) currentSelectedStillValid = true;
+          } else {
+            opt.hidden = true;
+          }
+        }
+
+        // If currently selected product no longer matches filter, pick the first valid matching product
+        if (!currentSelectedStillValid && firstMatch) {
+          firstMatch.selected = true;
+        }
+      });
+
+      renderComparison();
+    };
+
+    // Wire up filter pills
+    document.querySelectorAll('#pet-filters .comp-pill-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
-        tabButtons.forEach((b) => b.classList.remove('active'));
+        document.querySelectorAll('#pet-filters .comp-pill-btn').forEach((b) => b.classList.remove('active'));
         btn.classList.add('active');
-        const filter = btn.dataset.filter || 'all';
-
-        [slot1, slot2, slot3].forEach((select) => {
-          Array.from(select.options).forEach((opt) => {
-            if (!opt.value) return; // keep empty option in slot 3
-            const pet = opt.dataset.pet || 'perro';
-            if (filter === 'all' || filter === pet) {
-              opt.hidden = false;
-            } else {
-              opt.hidden = true;
-            }
-          });
-        });
+        activePet = (btn as HTMLElement).dataset.pet || 'perro';
+        filterOptions();
       });
     });
 
-    const renderComparison = () => {
+    document.querySelectorAll('#stage-filters .comp-pill-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#stage-filters .comp-pill-btn').forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeStage = (btn as HTMLElement).dataset.stage || 'all';
+        filterOptions();
+      });
+    });
+
+    document.querySelectorAll('#breed-filters .comp-pill-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#breed-filters .comp-pill-btn').forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeBreed = (btn as HTMLElement).dataset.breed || 'all';
+        filterOptions();
+      });
+    });
+
+    // When Slot 1 is changed, adapt Slot 2 if needed
+    slot1.addEventListener('change', () => {
+      const selectedOpt = slot1.selectedOptions[0];
+      if (selectedOpt && slot2.selectedOptions[0]?.value === slot1.value) {
+        // Avoid selecting the exact same product in slot 1 and slot 2
+        const nextOpt = Array.from(slot2.options).find((opt) => !opt.hidden && opt.value && opt.value !== slot1.value);
+        if (nextOpt) nextOpt.selected = true;
+      }
+      renderComparison();
+    });
+
+    slot2.addEventListener('change', renderComparison);
+    slot3.addEventListener('change', renderComparison);
+
+    function renderComparison() {
+      const allProds = getLiveProducts();
       const ids = [slot1.value, slot2.value, slot3.value].filter(Boolean);
+
       const items = ids.map((id) => {
-        const prod = products.find((p) => p.id === id) || products[0];
+        const prod = allProds.find((p) => p.id === id) || defaultProducts.find((p) => p.id === id) || defaultProducts[0];
         const nut: FoodNutritionProfile = getProductNutrition(id, prod);
         const debitPrice = Math.round(prod.price * 1.05);
         const pricePerKg = Math.round(prod.price / (nut.formatWeightKg || 1));
@@ -434,27 +553,23 @@ const initialRight = foodProducts.find((p) => p.brand.includes('Purina') || p.br
             `).join('')}
           </div>
 
-          <!-- 9. VET VERDICT & STARS ROW -->
-          <div class="comp-row comp-verdict-row">
+          <!-- 9. ENERGY & FIBER METRICS ROW (OBJECTIVE DATA ONLY, NO SUBJECTIVE VERDICT) -->
+          <div class="comp-row">
             <div class="comp-col-label">
-              <span class="comp-label-title">Veredicto Nutricional FIVE</span>
-              <span class="comp-label-desc">Evaluación veterinaria experta</span>
+              <span class="comp-label-title">Energía y Fibra</span>
+              <span class="comp-label-desc">Aporte calórico estimado y digestibilidad</span>
             </div>
             ${items.map((item) => `
-              <div class="comp-col-data comp-verdict-data">
-                <div class="comp-verdict-card">
-                  <div class="comp-stars-row">
-                    <span class="comp-stars">${'★'.repeat(item.nut.qualityRating)}${'☆'.repeat(5 - item.nut.qualityRating)}</span>
-                    <span class="comp-rating-label">
-                      ${item.nut.qualityRating === 5 ? 'Ultra Premium' : item.nut.qualityRating === 4 ? 'Super Premium' : 'Premium Estándar'}
-                    </span>
+              <div class="comp-col-data">
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                  <div style="background:#faf8fb; border:1px solid #ede4f2; border-radius:10px; padding:10px 14px;">
+                    <span style="font-size:11.5px; color:#6b7280; display:block;">🔥 Densidad Calórica:</span>
+                    <strong style="font-size:15px; color:#7025a8;">~${item.nut.caloricDensityKcalKg} kcal/kg</strong>
                   </div>
-                  <p class="comp-verdict-text">
-                    "${item.nut.recommendationNote}"
-                  </p>
-                  <div class="comp-caloric-badge">
-                    <span>🔥 Densidad calórica:</span>
-                    <strong>~${item.nut.caloricDensityKcalKg} kcal/kg</strong>
+                  <div style="display:flex; gap:10px; font-size:12px; color:#4b5563;">
+                    <span>🌾 Fibra Máx: <strong>${item.nut.fiberPct}%</strong></span>
+                    <span>•</span>
+                    <span>💧 Humedad Máx: <strong>${item.nut.moisturePct}%</strong></span>
                   </div>
                 </div>
               </div>
@@ -490,15 +605,10 @@ const initialRight = foodProducts.find((p) => p.brand.includes('Purina') || p.br
           }, 1800);
         });
       });
-    };
+    }
 
-    // Re-render upon select changes
-    slot1.addEventListener('change', renderComparison);
-    slot2.addEventListener('change', renderComparison);
-    slot3.addEventListener('change', renderComparison);
-
-    // Initial render
-    renderComparison();
+    // Filter and run
+    filterOptions();
   </script>
 </BaseLayout>
 
@@ -555,33 +665,58 @@ const initialRight = foodProducts.find((p) => p.brand.includes('Purina') || p.br
     margin: 0 0 20px;
   }
 
-  /* Filter Tabs */
-  .comp-filter-tabs {
+  /* Categorization Toolbar */
+  .comp-filter-toolbar {
     display: flex;
-    gap: 8px;
     flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #e5dde9;
+    border-radius: 16px;
+    padding: 16px 20px;
     margin-top: 14px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
   }
 
-  .comp-tab-btn {
-    padding: 8px 16px;
+  .comp-filter-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .comp-filter-group-label {
+    font-size: 12.5px;
+    font-weight: 800;
+    color: #374151;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .comp-filter-pills {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .comp-pill-btn {
+    padding: 6px 14px;
     border-radius: 9999px;
-    font-size: 13.5px;
-    font-weight: 650;
+    font-size: 12.5px;
+    font-weight: 700;
     border: 1px solid #e5e7eb;
-    background: #ffffff;
+    background: #f9fafb;
     color: #4b5563;
     cursor: pointer;
     transition: all 0.15s ease-in-out;
   }
 
-  .comp-tab-btn:hover {
-    background: #f9fafb;
-    border-color: #d1d5db;
+  .comp-pill-btn:hover {
+    background: #f3f4f6;
     color: #111827;
   }
 
-  .comp-tab-btn.active {
+  .comp-pill-btn.active {
     background: #7025a8;
     color: #ffffff;
     border-color: #7025a8;
@@ -1137,58 +1272,6 @@ const initialRight = foodProducts.find((p) => p.brand.includes('Purina') || p.br
   .comp-additive-chip.inactive {
     background: #f3f4f6;
     color: #6b7280;
-  }
-
-  /* Vet Verdict Card */
-  .comp-verdict-card {
-    background: #faf5ff;
-    border: 1px solid #e9d5ff;
-    border-radius: 14px;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .comp-stars-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .comp-stars {
-    color: #f59e0b;
-    font-size: 16px;
-    letter-spacing: 2px;
-  }
-
-  .comp-rating-label {
-    font-size: 12px;
-    font-weight: 800;
-    color: #7025a8;
-    background: #ffffff;
-    border: 1px solid #e9d5ff;
-    padding: 2px 8px;
-    border-radius: 9999px;
-  }
-
-  .comp-verdict-text {
-    font-size: 12.5px;
-    color: #374151;
-    font-style: italic;
-    line-height: 1.5;
-    margin: 0;
-  }
-
-  .comp-caloric-badge {
-    font-size: 11.5px;
-    color: #6b7280;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    border-top: 1px dashed #e9d5ff;
-    padding-top: 6px;
-    margin-top: 2px;
   }
 
   /* Educational Guide Section */

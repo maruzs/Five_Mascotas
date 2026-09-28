@@ -252,6 +252,45 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // API ROUTE: /api/upload (Image upload handler for PIM / CMS)
+  if (pathname === '/api/upload') {
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+
+    if (req.method === 'POST') {
+      try {
+        const body = await parseBody(req);
+        if (!body.base64 || !body.filename) {
+          res.statusCode = 400;
+          res.end(JSON.stringify({ ok: false, error: 'Filename y base64 son requeridos' }));
+          return;
+        }
+        const uploadsDir = path.join(__dirname, '..', 'public', 'five-mascotas', 'uploads');
+        await fs.promises.mkdir(uploadsDir, { recursive: true });
+
+        const safeExt = path.extname(body.filename) || '.png';
+        const rawBase = path.basename(body.filename, safeExt).replace(/[^a-zA-Z0-9_-]/g, '_').toLowerCase();
+        const safeFilename = `${rawBase}-${Date.now().toString(36)}${safeExt}`;
+
+        const base64Data = body.base64.replace(/^data:image\/\w+;base64,/, '');
+        const buffer = Buffer.from(base64Data, 'base64');
+        await fs.promises.writeFile(path.join(uploadsDir, safeFilename), buffer);
+
+        const publicUrl = `/five-mascotas/uploads/${safeFilename}`;
+        res.statusCode = 201;
+        res.end(JSON.stringify({ ok: true, url: publicUrl, filename: safeFilename }));
+      } catch (err) {
+        res.statusCode = 500;
+        res.end(JSON.stringify({ ok: false, error: err.message }));
+      }
+      return;
+    }
+
+    res.statusCode = 405;
+    res.end(JSON.stringify({ ok: false, error: 'Method Not Allowed' }));
+    return;
+  }
+
   // Helper to parse cookies from request header
   const getCookies = (req) => {
     const header = req.headers.cookie || '';
