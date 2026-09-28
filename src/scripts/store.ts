@@ -845,6 +845,59 @@ class StoreManager {
 
     backBtn?.addEventListener('click', () => showStep(1));
 
+    // Helper to update mini summary dynamically
+    const updateMiniSummary = () => {
+      if (!miniSummary) return;
+      let count = 0;
+      let total = 0;
+      this.cart.forEach((item) => {
+        count += item.quantity;
+        total += item.price * item.quantity;
+      });
+
+      const chkCitySelect = chkModal.querySelector<HTMLSelectElement>('#chk-city');
+      const shipFee = chkCitySelect?.selectedOptions[0]
+        ? Number(chkCitySelect.selectedOptions[0].dataset.price) || 1500
+        : 1500;
+
+      miniSummary.innerHTML = `
+        <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+          <span>Productos (${count} unidades):</span>
+          <strong>${formatMoney(total)}</strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+          <span>Tarifa Plana Despacho:</span>
+          <strong style="color:#7025a8;">${formatMoney(shipFee)}</strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; border-top:1px dashed #e5dde9; padding-top:6px; margin-top:4px;">
+          <span style="font-weight:800; color:#111827;">Total Transferencia:</span>
+          <strong style="font-size:16px; color:#276717;">${formatMoney(total + shipFee)}</strong>
+        </div>
+      `;
+    };
+
+    // Live update when city changes in checkout
+    const chkCitySelect = chkModal.querySelector<HTMLSelectElement>('#chk-city');
+    chkCitySelect?.addEventListener('change', () => {
+      updateMiniSummary();
+    });
+
+    // Check if customer is already logged in to prefill form
+    const prefillUserSession = async () => {
+      try {
+        const res = await fetch('/api/auth/me');
+        if (res.ok) {
+          const data = await res.json();
+          if (data?.user) {
+            const nameInput = chkModal.querySelector<HTMLInputElement>('#chk-name');
+            const emailInput = chkModal.querySelector<HTMLInputElement>('#chk-email');
+            if (nameInput && !nameInput.value) nameInput.value = data.user.name || '';
+            if (emailInput && !emailInput.value) emailInput.value = data.user.email || '';
+          }
+        }
+      } catch {}
+    };
+
     // Handle Cart Drawer Checkout Button click -> Open Checkout Modal
     const cartCheckoutBtn = document.querySelector<HTMLElement>('#five-checkout-btn');
     if (cartCheckoutBtn) {
@@ -859,43 +912,16 @@ class StoreManager {
             cartDialog.close();
           }
 
-          // Populate step 1 mini summary
-          let count = 0;
-          let total = 0;
-          this.cart.forEach((item) => {
-            count += item.quantity;
-            total += item.price * item.quantity;
-          });
-
           // Sync shipping city from cart select if available
           const cartCitySelect = document.querySelector<HTMLSelectElement>('#cart-city-select');
-          const chkCitySelect = chkModal.querySelector<HTMLSelectElement>('#chk-city');
           if (cartCitySelect && chkCitySelect) {
             chkCitySelect.value = cartCitySelect.value;
           }
 
-          const shipFee = chkCitySelect?.selectedOptions[0]
-            ? Number(chkCitySelect.selectedOptions[0].dataset.price) || 1500
-            : 1500;
-
-          if (miniSummary) {
-            miniSummary.innerHTML = `
-              <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                <span>Productos (${count} unidades):</span>
-                <strong>${formatMoney(total)}</strong>
-              </div>
-              <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                <span>Tarifa Plana Despacho:</span>
-                <strong style="color:#7025a8;">${formatMoney(shipFee)}</strong>
-              </div>
-              <div style="display:flex; justify-content:space-between; border-top:1px dashed #e5dde9; padding-top:6px; margin-top:4px;">
-                <span style="font-weight:800; color:#111827;">Total Transferencia:</span>
-                <strong style="font-size:16px; color:#276717;">${formatMoney(total + shipFee)}</strong>
-              </div>
-            `;
-          }
-
+          updateMiniSummary();
+          prefillUserSession();
           showStep(1);
+
           if (typeof chkModal.showModal === 'function') {
             chkModal.showModal();
           }
@@ -910,9 +936,9 @@ class StoreManager {
       const name = (chkModal.querySelector('#chk-name') as HTMLInputElement).value;
       const phone = (chkModal.querySelector('#chk-phone') as HTMLInputElement).value;
       const email = (chkModal.querySelector('#chk-email') as HTMLInputElement).value;
-      const chkCitySelect = chkModal.querySelector<HTMLSelectElement>('#chk-city')!;
-      const city = chkCitySelect.selectedOptions[0]?.dataset.city || chkCitySelect.value;
-      const shipFee = Number(chkCitySelect.selectedOptions[0]?.dataset.price) || 1500;
+      const chkCity = chkModal.querySelector<HTMLSelectElement>('#chk-city')!;
+      const city = chkCity.selectedOptions[0]?.dataset.city || chkCity.value;
+      const shipFee = Number(chkCity.selectedOptions[0]?.dataset.price) || 1500;
       const address = (chkModal.querySelector('#chk-address') as HTMLInputElement).value;
       const notes = (chkModal.querySelector('#chk-notes') as HTMLTextAreaElement).value;
 
@@ -957,16 +983,41 @@ class StoreManager {
       showStep(2);
     });
 
-    // Copy bank data button
+    // Helper for per-field copy buttons
+    chkModal.querySelectorAll<HTMLButtonElement>('.five-mini-copy-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const targetSelector = btn.getAttribute('data-copy-target');
+        if (!targetSelector) return;
+        const targetEl = chkModal.querySelector<HTMLElement>(targetSelector);
+        if (!targetEl) return;
+
+        const textToCopy = (targetEl.textContent || '').trim();
+        if (!textToCopy) return;
+
+        navigator.clipboard?.writeText(textToCopy);
+        const originalHtml = btn.innerHTML;
+        btn.classList.add('is-copied');
+        btn.innerHTML = '<span>✓ Copiado</span>';
+
+        setTimeout(() => {
+          btn.classList.remove('is-copied');
+          btn.innerHTML = originalHtml;
+        }, 1800);
+      });
+    });
+
+    // Copy all bank data button (Master button)
     copyDataBtn?.addEventListener('click', () => {
       const bankConfig = AdminStoreService.getBankAccount();
       const payload = formatBankTransferPayload(bankConfig, currentOrder.code, currentOrder.totalTransfer);
       navigator.clipboard?.writeText(payload);
       const origText = copyDataBtn.innerHTML;
-      copyDataBtn.innerHTML = '<span>✓ ¡Datos copiados al portapapeles!</span>';
+      copyDataBtn.classList.add('is-copied');
+      copyDataBtn.innerHTML = '<span>✓ ¡Todos los datos copiados al portapapeles!</span>';
       setTimeout(() => {
+        copyDataBtn.classList.remove('is-copied');
         copyDataBtn.innerHTML = origText;
-      }, 2000);
+      }, 2200);
     });
 
     // Step 2 Confirm Payment -> Save Order & Show Step 3 (Tracking code)
@@ -986,7 +1037,7 @@ class StoreManager {
         `📍 Entrega en: ${currentOrder.address}, ${currentOrder.city}`,
         `💰 Monto Transferido: ${formatMoney(currentOrder.totalTransfer)}`,
         '',
-        `Adjunto comprobante de transferencia para confirmación. ¡Muchas gracias!`,
+        `Adjunto mi comprobante de transferencia para confirmación. ¡Muchas gracias!`,
       ];
       if (waProofBtn) {
         waProofBtn.href = `https://wa.me/56912345678?text=${encodeURIComponent(lines.join('\n'))}`;

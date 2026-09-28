@@ -122,42 +122,83 @@ import { formatMoney } from '../data/pim/catalog';
           <!-- Bank Details text card -->
           <div class="five-bank-details-card">
             <div class="five-bank-row">
-              <span class="five-bank-label">Banco:</span>
-              <strong id="chk-bank-name" class="five-bank-val">{defaultBankAccount.bankName}</strong>
+              <div class="five-bank-text-wrap">
+                <span class="five-bank-label">Banco:</span>
+                <strong id="chk-bank-name" class="five-bank-val">{defaultBankAccount.bankName}</strong>
+              </div>
+              <button type="button" class="five-mini-copy-btn" data-copy-target="#chk-bank-name" aria-label="Copiar Banco">
+                <span>📋 Copiar</span>
+              </button>
             </div>
+
             <div class="five-bank-row">
-              <span class="five-bank-label">Tipo de Cuenta:</span>
-              <strong id="chk-bank-type" class="five-bank-val">{defaultBankAccount.accountType}</strong>
+              <div class="five-bank-text-wrap">
+                <span class="five-bank-label">Tipo de Cuenta:</span>
+                <strong id="chk-bank-type" class="five-bank-val">{defaultBankAccount.accountType}</strong>
+              </div>
+              <button type="button" class="five-mini-copy-btn" data-copy-target="#chk-bank-type" aria-label="Copiar Tipo de Cuenta">
+                <span>📋 Copiar</span>
+              </button>
             </div>
+
+            <div class="five-bank-row highlight-row">
+              <div class="five-bank-text-wrap">
+                <span class="five-bank-label">Número de Cuenta:</span>
+                <strong id="chk-bank-number" class="five-bank-val" style="color:#7025a8; font-size:15px; font-family:monospace;">{defaultBankAccount.accountNumber}</strong>
+              </div>
+              <button type="button" class="five-mini-copy-btn prominent" data-copy-target="#chk-bank-number" aria-label="Copiar Número de Cuenta">
+                <span>📋 Copiar Cuenta</span>
+              </button>
+            </div>
+
+            <div class="five-bank-row highlight-row">
+              <div class="five-bank-text-wrap">
+                <span class="five-bank-label">RUT:</span>
+                <strong id="chk-bank-rut" class="five-bank-val" style="font-family:monospace;">{defaultBankAccount.holderRut}</strong>
+              </div>
+              <button type="button" class="five-mini-copy-btn prominent" data-copy-target="#chk-bank-rut" aria-label="Copiar RUT">
+                <span>📋 Copiar RUT</span>
+              </button>
+            </div>
+
             <div class="five-bank-row">
-              <span class="five-bank-label">Número de Cuenta:</span>
-              <strong id="chk-bank-number" class="five-bank-val" style="color:#7025a8; font-size:15px;">{defaultBankAccount.accountNumber}</strong>
+              <div class="five-bank-text-wrap">
+                <span class="five-bank-label">Titular:</span>
+                <strong id="chk-bank-holder" class="five-bank-val">{defaultBankAccount.holderName}</strong>
+              </div>
+              <button type="button" class="five-mini-copy-btn" data-copy-target="#chk-bank-holder" aria-label="Copiar Titular">
+                <span>📋 Copiar</span>
+              </button>
             </div>
+
             <div class="five-bank-row">
-              <span class="five-bank-label">RUT:</span>
-              <strong id="chk-bank-rut" class="five-bank-val">{defaultBankAccount.holderRut}</strong>
+              <div class="five-bank-text-wrap">
+                <span class="five-bank-label">Correo para Comprobante:</span>
+                <strong id="chk-bank-email" class="five-bank-val">{defaultBankAccount.email}</strong>
+              </div>
+              <button type="button" class="five-mini-copy-btn" data-copy-target="#chk-bank-email" aria-label="Copiar Correo">
+                <span>📋 Copiar</span>
+              </button>
             </div>
-            <div class="five-bank-row">
-              <span class="five-bank-label">Titular:</span>
-              <strong id="chk-bank-holder" class="five-bank-val">{defaultBankAccount.holderName}</strong>
-            </div>
-            <div class="five-bank-row">
-              <span class="five-bank-label">Correo para Comprobante:</span>
-              <strong id="chk-bank-email" class="five-bank-val">{defaultBankAccount.email}</strong>
-            </div>
-            <div class="five-bank-row" style="border-top:1px dashed #d1d5db; padding-top:8px; margin-top:6px;">
-              <span class="five-bank-label" style="font-weight:800; color:#111827;">Monto Exacto:</span>
-              <strong id="chk-bank-amount" class="five-bank-val" style="font-size:17px; color:#276717;">$0</strong>
+
+            <div class="five-bank-row total-row">
+              <div class="five-bank-text-wrap">
+                <span class="five-bank-label" style="font-weight:800; color:#111827;">Monto Exacto a Transferir:</span>
+                <strong id="chk-bank-amount" class="five-bank-val" style="font-size:17px; color:#276717;">$0</strong>
+              </div>
+              <button type="button" class="five-mini-copy-btn prominent green" data-copy-target="#chk-bank-amount" aria-label="Copiar Monto Exacto">
+                <span>📋 Copiar Monto</span>
+              </button>
             </div>
 
             <button type="button" class="five-copy-data-btn" id="chk-copy-btn">
-              <span>📋 Copiar todos los datos de transferencia</span>
+              <span>📋 Copiar todos los datos de transferencia juntos</span>
             </button>
           </div>
         </div>
 
         <div class="five-cart-notice" style="margin-block:14px 10px; font-size:11.5px; background:#faf5ff; border:1px solid #e9d5ff; color:#6b21a8;">
-          💡 <strong>Nota:</strong> Una vez transferido, haz clic en "Confirmar Transferencia" para generar tu código de seguimiento y enviar tu comprobante a nuestro WhatsApp de atención.
+          💡 <strong>Importante:</strong> Al transferir, escribe tu código de pedido en el asunto/comentario de la transferencia. Luego pulsa "Ya Transferí / Confirmar Pedido" para enviarnos tu comprobante por WhatsApp.
         </div>
 
         <div style="display:flex; justify-content:space-between; margin-top:12px;">
@@ -174,13 +215,18 @@ import { formatMoney } from '../data/pim/catalog';
           <div style="font-size:42px; margin-bottom:8px;">🎉</div>
           <h3 style="font-size:20px; font-weight:850; color:#111827; margin:0 0 6px;">¡Tu pedido ha sido registrado con éxito!</h3>
           <p style="color:#4b5563; font-size:13.5px; margin:0;">
-            Hemos generado tu orden y reservado tu compra. Guarda tu código de seguimiento:
+            Hemos registrado tu orden y reservado tus productos. Guarda tu código de seguimiento oficial:
           </p>
 
           <!-- Tracking Code Hero Box -->
           <div class="five-tracking-code-hero">
             <span style="font-size:11px; text-transform:uppercase; letter-spacing:0.8px; color:#6b7280; font-weight:700;">Código de Rastreo Oficial</span>
-            <strong id="chk-tracking-code" class="five-tracking-code-text">FIVE-TRK-8492</strong>
+            <div style="display:flex; align-items:center; justify-content:center; gap:10px; margin-block:4px;">
+              <strong id="chk-tracking-code" class="five-tracking-code-text">FIVE-TRK-8492</strong>
+              <button type="button" class="five-mini-copy-btn prominent" id="chk-copy-track-code" data-copy-target="#chk-tracking-code" aria-label="Copiar código de seguimiento">
+                <span>📋 Copiar</span>
+              </button>
+            </div>
             <small style="color:#276717; font-weight:600; font-size:11.5px;">Estado: 🕒 Pendiente de confirmación de transferencia</small>
           </div>
 
@@ -194,11 +240,10 @@ import { formatMoney } from '../data/pim/catalog';
             </small>
           </div>
 
-          <div style="margin-top:24px; display:flex; justify-content:center; gap:12px;">
-            <a href="/rastreo" id="chk-go-track-btn" class="five-text-btn" style="font-weight:750; color:#7025a8;">
+          <div style="margin-top:24px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+            <a href="/rastreo" id="chk-go-track-btn" class="five-button" style="background:#7025a8; font-size:13px; padding:9px 18px;">
               🔍 Ir a Rastrear este Pedido
             </a>
-            <span style="color:#d1d5db;">|</span>
             <button type="button" class="five-text-btn" data-chk-close>
               Continuar comprando
             </button>
@@ -367,34 +412,111 @@ import { formatMoney } from '../data/pim/catalog';
     justify-content: space-between;
     align-items: center;
     font-size: 12.5px;
+    padding: 4px 6px;
+    border-radius: 6px;
+    transition: background 0.15s ease;
+  }
+
+  .five-bank-row:hover {
+    background: #f3f4f6;
+  }
+
+  .five-bank-row.highlight-row {
+    background: #fbf8fe;
+    border-left: 3px solid #a855f7;
+    padding-left: 8px;
+  }
+
+  .five-bank-row.total-row {
+    border-top: 1px dashed #d1d5db;
+    padding-top: 10px;
+    margin-top: 6px;
+    background: #f0fdf4;
+    border-radius: 8px;
+    padding: 8px 10px;
+  }
+
+  .five-bank-text-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
   }
 
   .five-bank-label {
     color: #6b7280;
+    font-size: 11px;
   }
 
   .five-bank-val {
     color: #111827;
+    font-size: 13px;
+  }
+
+  .five-mini-copy-btn {
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 4px 9px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #4b5563;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .five-mini-copy-btn:hover {
+    border-color: #7025a8;
+    color: #7025a8;
+    background: #faf5ff;
+  }
+
+  .five-mini-copy-btn.prominent {
+    border-color: #c084fc;
+    color: #7025a8;
+    background: #fdf4ff;
+  }
+
+  .five-mini-copy-btn.prominent.green {
+    border-color: #86efac;
+    color: #166534;
+    background: #f0fdf4;
+  }
+
+  .five-mini-copy-btn.is-copied {
+    border-color: #22c55e !important;
+    background: #22c55e !important;
+    color: #ffffff !important;
   }
 
   .five-copy-data-btn {
     margin-top: 10px;
     background: #ffffff;
-    border: 1px solid #d1d5db;
+    border: 1.5px solid #d1d5db;
     border-radius: 8px;
-    padding: 7px 12px;
-    font-size: 12px;
-    font-weight: 700;
+    padding: 9px 14px;
+    font-size: 12.5px;
+    font-weight: 750;
     color: #374151;
     cursor: pointer;
     transition: all 0.15s;
     text-align: center;
+    width: 100%;
   }
 
   .five-copy-data-btn:hover {
     border-color: #7025a8;
     color: #7025a8;
     background: #faf5ff;
+  }
+
+  .five-copy-data-btn.is-copied {
+    background: #276717 !important;
+    border-color: #276717 !important;
+    color: #ffffff !important;
   }
 
   .five-tracking-code-hero {

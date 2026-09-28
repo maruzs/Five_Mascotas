@@ -10,7 +10,7 @@
     "start": "node server/index.mjs",
     "build": "astro check && astro build",
     "preview": "astro preview --host 127.0.0.1",
-    "test": "npm run build && node tests/five-mascotas.mjs"
+    "test": "npm run build && node tests/five-mascotas.mjs && node tests/checkout.test.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
