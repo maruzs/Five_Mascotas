@@ -268,12 +268,30 @@ const server = http.createServer(async (req, res) => {
         const uploadsDataDir = path.join(dataDir, 'uploads');
         await fs.promises.mkdir(uploadsDataDir, { recursive: true });
 
-        const safeExt = path.extname(body.filename) || '.png';
-        const rawBase = path.basename(body.filename, safeExt).replace(/[^a-zA-Z0-9_-]/g, '_').toLowerCase();
-        const safeFilename = `${rawBase}-${Date.now().toString(36)}${safeExt}`;
+        const rawExt = path.extname(body.filename || '').toLowerCase();
+        const ALLOWED_EXTS = ['.png', '.jpg', '.jpeg', '.webp'];
+        if (!ALLOWED_EXTS.includes(rawExt)) {
+          res.statusCode = 400;
+          res.end(JSON.stringify({ ok: false, error: 'Formato no permitido. Solo se aceptan imágenes PNG, JPG o WEBP' }));
+          return;
+        }
 
         const base64Data = body.base64.replace(/^data:image\/\w+;base64,/, '');
         const buffer = Buffer.from(base64Data, 'base64');
+
+        // Magic bytes check (defense-in-depth against malicious file disguise)
+        const isPng = buffer[0] === 0x89 && buffer[1] === 0x50 && buffer[2] === 0x4e && buffer[3] === 0x47;
+        const isJpg = buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff;
+        const isWebp = buffer.slice(0, 4).toString('ascii') === 'RIFF' && buffer.slice(8, 12).toString('ascii') === 'WEBP';
+
+        if (!isPng && !isJpg && !isWebp) {
+          res.statusCode = 400;
+          res.end(JSON.stringify({ ok: false, error: 'El archivo enviado no corresponde a una imagen válida' }));
+          return;
+        }
+
+        const rawBase = path.basename(body.filename, rawExt).replace(/[^a-zA-Z0-9_-]/g, '_').toLowerCase();
+        const safeFilename = `${rawBase || 'producto'}-${Date.now().toString(36)}${rawExt}`;
         await fs.promises.writeFile(path.join(uploadsDataDir, safeFilename), buffer);
 
         // Also mirror to public/five-mascotas/uploads and dist/five-mascotas/uploads if available
