@@ -248,66 +248,64 @@ const officialPhotos = [
             </div>
           </div>
 
-          <!-- SECCIÓN 3: GESTOR VISUAL DE IMÁGENES (GUI) -->
+          <!-- SECCIÓN 3: GESTOR DE IMÁGENES MULTI-FOTO (HASTA 5 IMÁGENES) -->
           <div style="padding-top:16px; border-top:1px solid #e9ecef;">
-            <h4 style="font-size:14px; text-transform:uppercase; letter-spacing:0.5px; color:#0369a1; margin:0 0 12px; font-weight:800; display:flex; align-items:center; gap:8px;">
-              <span>🖼️</span> 3. Gestor de Imagen de Producto (GUI)
-            </h4>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h4 style="font-size:14px; text-transform:uppercase; letter-spacing:0.5px; color:#0369a1; margin:0; font-weight:800; display:flex; align-items:center; gap:8px;">
+                <span>🖼️</span> 3. Galería de Imágenes del Producto (Máx. 5 Fotos)
+              </h4>
+              <span id="pim-images-count-badge" style="font-size:11.5px; background:#e0f2fe; color:#0369a1; font-weight:750; padding:2px 8px; border-radius:6px;">
+                0 / 5 Fotos
+              </span>
+            </div>
+            <p style="font-size:12px; color:#6b7280; margin:0 0 12px;">
+              La primera imagen será la foto de portada del catálogo. Puedes subir hasta 5 fotografías reales o packshots oficiales.
+            </p>
 
-            <div style="display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap; background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:16px;">
-              <!-- Image Thumbnail Preview -->
-              <div style="position:relative; width:130px; height:130px; background:#ffffff; border:1px solid #cbd5e1; border-radius:12px; display:flex; align-items:center; justify-content:center; overflow:hidden; flex-shrink:0;">
-                <img id="pim-image-preview" src="/five-mascotas/alimento-0.svg" alt="Preview" style="max-width:115px; max-height:115px; object-fit:contain;" />
-                <span id="pim-image-status" style="position:absolute; bottom:4px; right:4px; font-size:10px; background:rgba(0,0,0,0.6); color:#fff; padding:2px 6px; border-radius:4px;">Vista</span>
-              </div>
+            <!-- Multi-Image Thumbnails Grid (Up to 5 slots) -->
+            <div id="pim-gallery-container" style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:14px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:14px; min-height:105px; align-items:center;">
+              <!-- Dynamically populated up to 5 image cards -->
+            </div>
 
-              <!-- Controls / Buttons -->
-              <div style="flex:1; min-width:240px; display:flex; flex-direction:column; gap:10px;">
-                <!-- Hidden file input for native file browser -->
-                <input type="file" id="pim-file-picker" accept="image/png, image/jpeg, image/webp" style="display:none;" />
+            <!-- Upload / Add Actions -->
+            <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+              <!-- Hidden multi-file input -->
+              <input type="file" id="pim-file-picker" accept="image/png, image/jpeg, image/webp" multiple style="display:none;" />
 
-                <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                  <button type="button" class="admin-btn primary" id="btn-upload-image" style="font-size:12.5px; padding:7px 12px;">
-                    📁 Subir Imagen desde el Equipo...
-                  </button>
-                  <button type="button" class="admin-btn secondary" id="btn-gallery-image" style="font-size:12.5px; padding:7px 12px;">
-                    🖼️ Galería de Fotos Oficiales
-                  </button>
-                  <button type="button" class="admin-btn danger" id="btn-remove-image" style="font-size:12.5px; padding:7px 12px;">
-                    🗑️ Quitar
-                  </button>
-                </div>
+              <button type="button" class="admin-btn primary" id="btn-upload-image" style="font-size:12.5px; padding:7px 12px;">
+                📁 Subir Fotos desde mi PC (Máx. 5)...
+              </button>
+              <button type="button" class="admin-btn secondary" id="btn-gallery-image" style="font-size:12.5px; padding:7px 12px;">
+                🖼️ Packshots Oficiales
+              </button>
+              <button type="button" class="admin-btn danger" id="btn-clear-images" style="font-size:12.5px; padding:7px 12px;">
+                🗑️ Limpiar Galería
+              </button>
+            </div>
 
-                <!-- One-click official photos selector -->
-                <div id="gallery-select-wrapper" style="display:none; background:#ffffff; border:1px solid #cbd5e1; border-radius:8px; padding:10px; margin-top:4px;">
-                  <label for="official-photo-select" style="font-size:12px; font-weight:700; color:#334155; display:block; margin-bottom:4px;">
-                    Seleccionar Packshot Oficial Disponible:
-                  </label>
-                  <select id="official-photo-select" class="admin-select" style="width:100%;">
-                    <option value="">-- Elige una foto oficial --</option>
-                    {officialPhotos.map((photo) => (
-                      <option value={photo.url}>
-                        [{photo.brand}] {photo.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <!-- URL text input fallback -->
-                <div>
-                  <label for="form-image" style="font-size:11.5px; color:#64748b; font-weight:600; display:block; margin-bottom:3px;">
-                    Ruta o URL de Imagen:
-                  </label>
-                  <input 
-                    type="text" 
-                    id="form-image" 
-                    name="image" 
-                    value="/five-mascotas/alimento-0.svg" 
-                    style="width:100%; font-size:12.5px; padding:6px 10px; border-radius:6px; border:1px solid #cbd5e1; background:#ffffff;"
-                  />
-                </div>
+            <!-- Dropdown for official packshots selection -->
+            <div id="gallery-select-wrapper" style="display:none; background:#ffffff; border:1px solid #cbd5e1; border-radius:8px; padding:10px; margin-top:10px;">
+              <label for="official-photo-select" style="font-size:12px; font-weight:700; color:#334155; display:block; margin-bottom:4px;">
+                Agregar Packshot Oficial a la Galería:
+              </label>
+              <div style="display:flex; gap:8px;">
+                <select id="official-photo-select" class="admin-select" style="flex:1;">
+                  <option value="">-- Elige una foto oficial --</option>
+                  {officialPhotos.map((photo) => (
+                    <option value={photo.url}>
+                      [{photo.brand}] {photo.name}
+                    </option>
+                  ))}
+                </select>
+                <button type="button" class="admin-btn primary" id="btn-add-official-photo" style="font-size:12px; padding:6px 12px;">
+                  + Añadir a Galería
+                </button>
               </div>
             </div>
+
+            <!-- Hidden inputs to store serialized values -->
+            <input type="hidden" id="form-image" name="image" value="" />
+            <input type="hidden" id="form-images-json" name="imagesJson" value="[]" />
           </div>
         </div>
 
@@ -331,21 +329,39 @@ const officialPhotos = [
     const tbody = document.querySelector('#pim-tbody')!;
     const countBadge = document.querySelector('#pim-count-badge')!;
 
-    // Image GUI elements
+    // Multi-Image Gallery elements
     const filePicker = document.querySelector<HTMLInputElement>('#pim-file-picker')!;
     const btnUpload = document.querySelector<HTMLButtonElement>('#btn-upload-image')!;
     const btnGallery = document.querySelector<HTMLButtonElement>('#btn-gallery-image')!;
-    const btnRemove = document.querySelector<HTMLButtonElement>('#btn-remove-image')!;
+    const btnClearImages = document.querySelector<HTMLButtonElement>('#btn-clear-images')!;
     const galleryWrapper = document.querySelector<HTMLElement>('#gallery-select-wrapper')!;
     const officialSelect = document.querySelector<HTMLSelectElement>('#official-photo-select')!;
-    const imageInput = document.querySelector<HTMLInputElement>('#form-image')!;
-    const imagePreview = document.querySelector<HTMLImageElement>('#pim-image-preview')!;
-    const imageStatus = document.querySelector<HTMLElement>('#pim-image-status')!;
+    const btnAddOfficial = document.querySelector<HTMLButtonElement>('#btn-add-official-photo')!;
+    const galleryContainer = document.querySelector('#pim-gallery-container')!;
+    const countImagesBadge = document.querySelector('#pim-images-count-badge')!;
+    const formImageInput = document.querySelector<HTMLInputElement>('#form-image')!;
+    const formImagesJsonInput = document.querySelector<HTMLInputElement>('#form-images-json')!;
+
+    let currentImages: string[] = [];
+
+    const openModal = (title: string) => {
+      modalTitle.textContent = title;
+      modal.hidden = false;
+      modal.style.display = 'flex';
+      if (galleryWrapper) galleryWrapper.style.display = 'none';
+      document.body.classList.add('overflow-hidden');
+    };
+
+    const closeModal = () => {
+      modal.hidden = true;
+      modal.style.display = 'none';
+      document.body.classList.remove('overflow-hidden');
+    };
 
     // Initial render from storage
     const renderTable = () => {
       const items = AdminStoreService.getProducts();
-      countBadge.textContent = `${items.length} productos cargados`;
+      if (countBadge) countBadge.textContent = `${items.length} productos cargados`;
       tbody.innerHTML = '';
 
       items.forEach((p) => {
@@ -399,62 +415,120 @@ const officialPhotos = [
       attachRowEvents();
     };
 
-    const openModal = (title: string) => {
-      modalTitle.textContent = title;
-      modal.hidden = false;
-      modal.style.display = 'flex';
-      galleryWrapper.style.display = 'none';
-      document.body.classList.add('overflow-hidden');
+    const syncImagesState = () => {
+      formImageInput.value = currentImages[0] || '';
+      formImagesJsonInput.value = JSON.stringify(currentImages.slice(0, 5));
+      if (countImagesBadge) {
+        countImagesBadge.textContent = `${currentImages.length} / 5 Fotos`;
+      }
     };
 
-    const closeModal = () => {
-      modal.hidden = true;
-      modal.style.display = 'none';
-      document.body.classList.remove('overflow-hidden');
+    const renderGallery = () => {
+      galleryContainer.innerHTML = '';
+      syncImagesState();
+
+      if (currentImages.length === 0) {
+        galleryContainer.innerHTML = `
+          <div style="flex:1; text-align:center; padding:16px; color:#6b7280; font-size:12.5px;">
+            📷 Sin fotos asignadas aún. Sube hasta 5 imágenes desde tu equipo o selecciona fotos oficiales.
+          </div>
+        `;
+        return;
+      }
+
+      currentImages.forEach((url, idx) => {
+        const card = document.createElement('div');
+        card.style.cssText = `
+          position: relative;
+          width: 90px;
+          height: 90px;
+          background: #ffffff;
+          border: 2px solid ${idx === 0 ? '#7025a8' : '#cbd5e1'};
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        `;
+
+        card.innerHTML = `
+          <img src="${url}" alt="Foto ${idx + 1}" style="max-width:80px; max-height:80px; object-fit:contain;" />
+          <span style="position:absolute; bottom:2px; left:2px; font-size:9px; background:${idx === 0 ? '#7025a8' : 'rgba(0,0,0,0.6)'}; color:#fff; padding:1px 5px; border-radius:4px; font-weight:750;">
+            ${idx === 0 ? '★ Portada' : `#${idx + 1}`}
+          </span>
+          <button 
+            type="button" 
+            class="del-img-btn" 
+            data-idx="${idx}" 
+            title="Quitar esta imagen"
+            style="position:absolute; top:2px; right:2px; width:20px; height:20px; background:#ef4444; color:#fff; border:none; border-radius:50%; font-size:11px; font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1;"
+          >×</button>
+        `;
+        galleryContainer.appendChild(card);
+      });
+
+      // Bind delete buttons
+      galleryContainer.querySelectorAll<HTMLButtonElement>('.del-img-btn').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const removeIdx = parseInt(btn.dataset.idx || '0', 10);
+          currentImages.splice(removeIdx, 1);
+          renderGallery();
+        });
+      });
     };
 
-    // Update image input and preview simultaneously
-    const setProductImage = (url: string, label = 'Activa') => {
-      imageInput.value = url;
-      imagePreview.src = url;
-      imageStatus.textContent = label;
+    const addProductImage = (url: string) => {
+      if (!url) return;
+      if (currentImages.length >= 5) {
+        alert('Este producto ya tiene el límite máximo de 5 fotografías.');
+        return;
+      }
+      if (!currentImages.includes(url)) {
+        currentImages.push(url);
+        renderGallery();
+      }
     };
 
-    // Wire up Image Manager GUI
-    imageInput.addEventListener('input', () => {
-      imagePreview.src = imageInput.value;
-    });
-
-    btnUpload.addEventListener('click', () => {
-      filePicker.click();
-    });
-
-    btnGallery.addEventListener('click', () => {
+    btnUpload?.addEventListener('click', () => filePicker.click());
+    btnGallery?.addEventListener('click', () => {
       galleryWrapper.style.display = galleryWrapper.style.display === 'none' ? 'block' : 'none';
     });
-
-    officialSelect.addEventListener('change', () => {
+    btnAddOfficial?.addEventListener('click', () => {
       if (officialSelect.value) {
-        setProductImage(officialSelect.value, 'Oficial');
+        addProductImage(officialSelect.value);
+      }
+    });
+    btnClearImages?.addEventListener('click', () => {
+      if (confirm('¿Deseas quitar todas las imágenes de este producto?')) {
+        currentImages = [];
+        renderGallery();
       }
     });
 
-    btnRemove.addEventListener('click', () => {
-      setProductImage('/five-mascotas/alimento-0.svg', 'Por defecto');
-    });
+    // File Upload Handler (Supports multiple files up to 5)
+    filePicker?.addEventListener('change', async () => {
+      const files = Array.from(filePicker.files || []);
+      if (!files.length) return;
 
-    // File Upload Handler
-    filePicker.addEventListener('change', async () => {
-      const file = filePicker.files?.[0];
-      if (!file) return;
+      const availableSlots = 5 - currentImages.length;
+      if (availableSlots <= 0) {
+        alert('Este producto ya alcanzó el límite máximo de 5 fotos.');
+        return;
+      }
 
-      imageStatus.textContent = 'Subiendo...';
-      const reader = new FileReader();
+      const uploadBatch = files.slice(0, availableSlots);
 
-      reader.onload = async () => {
-        const base64 = reader.result as string;
-
+      for (const file of uploadBatch) {
         try {
+          const base64 = await new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+          });
+
           const res = await fetch('/api/upload', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -464,22 +538,21 @@ const officialPhotos = [
           if (res.ok) {
             const data = await res.json();
             if (data.url) {
-              setProductImage(data.url, 'Subida');
-              return;
+              addProductImage(data.url);
+              continue;
             }
           }
+          // Fallback
+          addProductImage(base64);
         } catch (err) {
-          console.warn('[PIM Image] Upload error, falling back to data URL:', err);
+          console.error('[PIM Upload Error]', err);
         }
+      }
 
-        // Offline or fallback to data URL directly
-        setProductImage(base64, 'Local');
-      };
-
-      reader.readAsDataURL(file);
+      filePicker.value = '';
     });
 
-    const attachRowEvents = () => {
+    function attachRowEvents() {
       document.querySelectorAll('[data-edit-id]').forEach((btn) => {
         btn.addEventListener('click', () => {
           const id = (btn as HTMLElement).dataset.editId!;
@@ -505,8 +578,11 @@ const officialPhotos = [
           (document.querySelector('#form-breedsize') as HTMLSelectElement).value = product.breedSize || 'Todas las Razas';
           (document.querySelector('#form-ingredients') as HTMLTextAreaElement).value = product.ingredients || '';
 
-          // Image GUI
-          setProductImage(product.image || '/five-mascotas/alimento-0.svg', 'Guardada');
+          // Multi-Image Gallery setup
+          currentImages = (Array.isArray(product.images) && product.images.length > 0)
+            ? [...product.images.filter(Boolean)]
+            : (product.image ? [product.image] : []);
+          renderGallery();
           openModal(`Editar Producto — ${product.name}`);
         });
       });
@@ -526,7 +602,8 @@ const officialPhotos = [
     document.querySelector('#admin-new-prod-btn')?.addEventListener('click', () => {
       form.reset();
       (document.querySelector('#form-id') as HTMLInputElement).value = `prod-${Date.now()}`;
-      setProductImage('/five-mascotas/alimento-0.svg', 'Nuevo');
+      currentImages = [];
+      renderGallery();
       openModal('Crear Nuevo Producto PIM');
     });
 
@@ -549,6 +626,13 @@ const officialPhotos = [
       const fatRaw = formData.get('fatPct') as string;
       const ingredientsRaw = formData.get('ingredients') as string;
 
+      let imagesList: string[] = [];
+      try {
+        imagesList = JSON.parse((formData.get('imagesJson') as string) || '[]');
+      } catch {}
+
+      const primaryImg = imagesList[0] || (formData.get('image') as string) || '/five-mascotas/products/fit-formula-perro-adulto.png';
+
       const updated: Product = {
         id: formData.get('id') as string,
         name: formData.get('name') as string,
@@ -563,7 +647,8 @@ const officialPhotos = [
         oldPrice: Number(formData.get('oldPrice')),
         badge: formData.get('badge') as string,
         color: 'violet',
-        image: (formData.get('image') as string) || '/five-mascotas/alimento-0.svg',
+        image: primaryImg,
+        images: imagesList.slice(0, 5),
         // New nutritional attributes saved to PIM
         proteinPct: proteinRaw ? parseFloat(proteinRaw) : undefined,
         fatPct: fatRaw ? parseFloat(fatRaw) : undefined,

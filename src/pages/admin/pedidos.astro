@@ -1,0 +1,359 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="Control de Pedidos y Despacho | FIVE Mascotas Admin" activeNav="pedidos" breadcrumbTitle="Control de Pedidos">
+  <div class="admin-page-header">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+      <div>
+        <h1 style="display:flex; align-items:center; gap:10px;">
+          <span>Control de Pedidos y Despacho</span>
+          <span style="font-size:12px; background:#dcfce7; color:#166534; padding:3px 10px; border-radius:9999px; font-weight:750;">
+            ● En Vivo
+          </span>
+        </h1>
+        <p>Gestión en tiempo real de órdenes de compra, control de repartos locales y actualización de estados para clientes.</p>
+      </div>
+
+      <div style="display:flex; gap:10px; align-items:center;">
+        <span id="live-clock" style="font-size:12.5px; color:#6b7280; font-weight:600;"></span>
+        <button type="button" class="admin-btn secondary" id="btn-refresh-orders" style="font-size:13px;">
+          <span>🔄 Refrescar Pedidos</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Operational KPIs Bar -->
+  <section class="admin-kpi-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom:24px;">
+    <div class="admin-kpi-card" style="padding:16px 20px;">
+      <span class="admin-kpi-title" style="font-size:12px;">Total de Órdenes</span>
+      <div class="admin-kpi-value" id="stat-total-orders" style="font-size:24px; margin:4px 0 2px;">0</div>
+      <span style="font-size:11.5px; color:#6b7280;">Registradas en el sistema</span>
+    </div>
+
+    <div class="admin-kpi-card" style="padding:16px 20px;">
+      <span class="admin-kpi-title" style="font-size:12px;">Por Confirmar / Recibidos</span>
+      <div class="admin-kpi-value" id="stat-pending-orders" style="font-size:24px; margin:4px 0 2px; color:#b45309;">0</div>
+      <span style="font-size:11.5px; color:#6b7280;">Pendientes de verificación</span>
+    </div>
+
+    <div class="admin-kpi-card" style="padding:16px 20px;">
+      <span class="admin-kpi-title" style="font-size:12px;">En Ruta de Reparto</span>
+      <div class="admin-kpi-value" id="stat-dispatching-orders" style="font-size:24px; margin:4px 0 2px; color:#0369a1;">0</div>
+      <span style="font-size:11.5px; color:#6b7280;">Camión / motorista asignado</span>
+    </div>
+
+    <div class="admin-kpi-card" style="padding:16px 20px;">
+      <span class="admin-kpi-title" style="font-size:12px;">Entregados con Éxito</span>
+      <div class="admin-kpi-value" id="stat-delivered-orders" style="font-size:24px; margin:4px 0 2px; color:#166534;">0</div>
+      <span style="font-size:11.5px; color:#6b7280;">Completados satisfactoriamente</span>
+    </div>
+
+    <div class="admin-kpi-card" style="padding:16px 20px;">
+      <span class="admin-kpi-title" style="font-size:12px;">Monto Total Facturado</span>
+      <div class="admin-kpi-value" id="stat-total-revenue" style="font-size:24px; margin:4px 0 2px; color:#7025a8;">$0</div>
+      <span style="font-size:11.5px; color:#6b7280;">Venta neta acumulada</span>
+    </div>
+  </section>
+
+  <!-- Filter & Search Toolbar -->
+  <section class="admin-card" style="padding:16px 20px; margin-bottom:20px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;">
+      <div style="display:flex; gap:8px; flex-wrap:wrap;" id="status-filter-pills">
+        <button type="button" class="admin-btn secondary is-active filter-pill" data-status="all" style="font-size:12px; padding:6px 14px;">
+          Todos (<span id="count-pill-all">0</span>)
+        </button>
+        <button type="button" class="admin-btn secondary filter-pill" data-status="recibido" style="font-size:12px; padding:6px 14px;">
+          ⏳ Recibidos (<span id="count-pill-recibido">0</span>)
+        </button>
+        <button type="button" class="admin-btn secondary filter-pill" data-status="confirmado" style="font-size:12px; padding:6px 14px;">
+          ✓ Confirmados (<span id="count-pill-confirmado">0</span>)
+        </button>
+        <button type="button" class="admin-btn secondary filter-pill" data-status="en_reparto" style="font-size:12px; padding:6px 14px;">
+          🚚 En Reparto (<span id="count-pill-en_reparto">0</span>)
+        </button>
+        <button type="button" class="admin-btn secondary filter-pill" data-status="entregado" style="font-size:12px; padding:6px 14px;">
+          ✅ Entregados (<span id="count-pill-entregado">0</span>)
+        </button>
+      </div>
+
+      <div style="flex:1; min-width:240px; max-width:380px;">
+        <input 
+          type="text" 
+          id="orders-search-input" 
+          class="admin-input" 
+          placeholder="🔍 Buscar por código, cliente o teléfono..." 
+          style="width:100%; font-size:13px; padding:8px 12px;"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Orders Master Table -->
+  <section class="admin-card" style="padding:0; overflow:hidden;">
+    <div class="admin-table-container" style="border:0; border-radius:0;">
+      <table class="admin-table" id="orders-table">
+        <thead>
+          <tr>
+            <th>Código de Orden</th>
+            <th>Fecha / Hora</th>
+            <th>Cliente y Contacto</th>
+            <th>Comuna / Entrega</th>
+            <th>Productos y Formatos</th>
+            <th>Total CLP</th>
+            <th>Medio de Pago</th>
+            <th>Estado de Despacho</th>
+          </tr>
+        </thead>
+        <tbody id="orders-tbody">
+          <tr>
+            <td colspan="8" style="text-align:center; padding:32px; color:#6b7280;">
+              Cargando lista de órdenes...
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Empty State Container -->
+    <div id="orders-empty-state" style="display:none; padding:48px 24px; text-align:center;">
+      <div style="font-size:40px; margin-bottom:12px;">📦</div>
+      <h3 style="font-size:17px; font-weight:800; color:#111827; margin:0 0 6px;">No se encontraron pedidos</h3>
+      <p style="font-size:13.5px; color:#6b7280; max-width:480px; margin:0 auto 16px;">
+        Los pedidos que realicen los clientes en el checkout de la tienda se registrarán aquí en vivo para su preparación y despacho.
+      </p>
+    </div>
+  </section>
+
+  <!-- Script for Live Order Management -->
+  <script>
+    import { formatMoney } from '../../data/pim/catalog';
+
+    // Live clock
+    const clockEl = document.querySelector('#live-clock');
+    if (clockEl) {
+      const updateClock = () => {
+        clockEl.textContent = new Date().toLocaleString('es-CL', {
+          weekday: 'short',
+          day: 'numeric',
+          month: 'short',
+          hour: '2-digit',
+          minute: '2-digit',
+        });
+      };
+      updateClock();
+      setInterval(updateClock, 30000);
+    }
+
+    let allOrders: any[] = [];
+    let activeFilter = 'all';
+    let searchQuery = '';
+
+    const ordersTbody = document.querySelector('#orders-tbody')!;
+    const emptyState = document.querySelector('#orders-empty-state') as HTMLElement;
+    const refreshBtn = document.querySelector('#btn-refresh-orders')!;
+    const searchInput = document.querySelector('#orders-search-input') as HTMLInputElement;
+
+    const statTotal = document.querySelector('#stat-total-orders')!;
+    const statPending = document.querySelector('#stat-pending-orders')!;
+    const statDispatching = document.querySelector('#stat-dispatching-orders')!;
+    const statDelivered = document.querySelector('#stat-delivered-orders')!;
+    const statRevenue = document.querySelector('#stat-total-revenue')!;
+
+    const pillAll = document.querySelector('#count-pill-all')!;
+    const pillRecibido = document.querySelector('#count-pill-recibido')!;
+    const pillConfirmado = document.querySelector('#count-pill-confirmado')!;
+    const pillReparto = document.querySelector('#count-pill-en_reparto')!;
+    const pillEntregado = document.querySelector('#count-pill-entregado')!;
+
+    const fetchOrders = async () => {
+      try {
+        const res = await fetch('/api/orders');
+        if (res.ok) {
+          const json = await res.json();
+          if (Array.isArray(json.orders)) {
+            allOrders = json.orders;
+            updateStatsAndPills();
+            renderTable();
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn('[Orders] Error loading orders from API:', err);
+      }
+      allOrders = [];
+      updateStatsAndPills();
+      renderTable();
+    };
+
+    const updateStatsAndPills = () => {
+      const total = allOrders.length;
+      const recibidos = allOrders.filter((o) => !o.status || o.status === 'recibido').length;
+      const confirmados = allOrders.filter((o) => o.status === 'confirmado').length;
+      const enReparto = allOrders.filter((o) => o.status === 'en_reparto').length;
+      const entregados = allOrders.filter((o) => o.status === 'entregado').length;
+      const totalRev = allOrders.reduce((sum, o) => sum + (Number(o.total) || 0), 0);
+
+      statTotal.textContent = String(total);
+      statPending.textContent = String(recibidos);
+      statDispatching.textContent = String(enReparto);
+      statDelivered.textContent = String(entregados);
+      statRevenue.textContent = formatMoney(totalRev);
+
+      pillAll.textContent = String(total);
+      pillRecibido.textContent = String(recibidos);
+      pillConfirmado.textContent = String(confirmados);
+      pillReparto.textContent = String(enReparto);
+      pillEntregado.textContent = String(entregados);
+    };
+
+    const renderTable = () => {
+      let filtered = allOrders;
+
+      if (activeFilter !== 'all') {
+        filtered = filtered.filter((o) => (o.status || 'recibido') === activeFilter);
+      }
+
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase().trim();
+        filtered = filtered.filter((o) => {
+          const codeMatch = (o.code || '').toLowerCase().includes(q);
+          const nameMatch = (o.customerName || o.name || '').toLowerCase().includes(q);
+          const phoneMatch = (o.phone || '').toLowerCase().includes(q);
+          const cityMatch = (o.city || o.comuna || '').toLowerCase().includes(q);
+          return codeMatch || nameMatch || phoneMatch || cityMatch;
+        });
+      }
+
+      if (!filtered.length) {
+        ordersTbody.innerHTML = '';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+      ordersTbody.innerHTML = '';
+
+      filtered.forEach((ord) => {
+        const tr = document.createElement('tr');
+        const itemsList = Array.isArray(ord.items)
+          ? ord.items.map((it: any) => `${it.qty || 1}x ${it.title || it.name}`).join('<br>')
+          : '1x Alimento';
+
+        const dateStr = ord.createdAt
+          ? new Date(ord.createdAt).toLocaleDateString('es-CL', {
+              day: '2-digit',
+              month: 'short',
+              hour: '2-digit',
+              minute: '2-digit',
+            })
+          : '—';
+
+        const phoneClean = (ord.phone || '').replace(/[^0-9]/g, '');
+        const waLink = phoneClean.length >= 8 ? `https://wa.me/${phoneClean.startsWith('56') ? phoneClean : '56' + phoneClean}` : null;
+
+        tr.innerHTML = `
+          <td>
+            <a href="/rastreo?code=${ord.code}" target="_blank" style="font-family:monospace; font-weight:800; color:#7025a8; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
+              ${ord.code || 'SIN CÓDIGO'} ↗
+            </a>
+          </td>
+          <td style="font-size:12.5px; color:#4b5563; white-space:nowrap;">
+            ${dateStr}
+          </td>
+          <td>
+            <strong style="color:#111827; display:block;">${ord.customerName || ord.name || 'Cliente Particular'}</strong>
+            ${
+              waLink
+                ? `<a href="${waLink}" target="_blank" style="font-size:12px; color:#16a34a; text-decoration:none; display:inline-flex; align-items:center; gap:3px;">
+                     💬 ${ord.phone}
+                   </a>`
+                : `<span style="font-size:12px; color:#6b7280;">${ord.phone || 'Sin teléfono'}</span>`
+            }
+          </td>
+          <td style="font-size:12.5px;">
+            <strong>${ord.city || ord.comuna || 'Talca'}</strong>
+            <small style="display:block; color:#6b7280;">${ord.address || 'Despacho a Domicilio'}</small>
+          </td>
+          <td style="font-size:12.5px; color:#374151; max-width:240px;">
+            ${itemsList}
+          </td>
+          <td>
+            <strong style="font-size:14px; color:#111827;">${formatMoney(Number(ord.total) || 0)}</strong>
+          </td>
+          <td>
+            <span style="font-size:12px; font-weight:600; color:#4b5563; display:inline-block; background:#f3f4f6; padding:3px 8px; border-radius:6px;">
+              ${ord.paymentMethod === 'transfer' ? 'Transferencia (5% OFF)' : 'Tarjeta de Débito'}
+            </span>
+          </td>
+          <td>
+            <select class="admin-select order-status-select" data-code="${ord.code}" style="font-size:12px; padding:4px 8px; border-radius:6px; font-weight:700;">
+              <option value="recibido" ${(!ord.status || ord.status === 'recibido') ? 'selected' : ''}>⏳ Recibido</option>
+              <option value="confirmado" ${ord.status === 'confirmado' ? 'selected' : ''}>✓ Confirmado</option>
+              <option value="en_reparto" ${ord.status === 'en_reparto' ? 'selected' : ''}>🚚 En Reparto</option>
+              <option value="entregado" ${ord.status === 'entregado' ? 'selected' : ''}>✅ Entregado</option>
+            </select>
+          </td>
+        `;
+
+        ordersTbody.appendChild(tr);
+      });
+
+      // Bind status dropdowns
+      document.querySelectorAll<HTMLSelectElement>('.order-status-select').forEach((sel) => {
+        sel.addEventListener('change', async (e) => {
+          const target = e.target as HTMLSelectElement;
+          const code = target.dataset.code;
+          const newStatus = target.value;
+          if (!code || !newStatus) return;
+
+          const originalBg = target.style.backgroundColor;
+          target.style.backgroundColor = '#fef08a';
+
+          try {
+            const res = await fetch('/api/orders/status', {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ code, status: newStatus }),
+            });
+
+            if (res.ok) {
+              const ord = allOrders.find((o) => o.code === code);
+              if (ord) ord.status = newStatus;
+              updateStatsAndPills();
+              target.style.backgroundColor = '#bbf7d0';
+              setTimeout(() => { target.style.backgroundColor = originalBg; }, 1200);
+              return;
+            }
+          } catch (err) {
+            console.error('[Orders] Failed to update status:', err);
+          }
+
+          target.style.backgroundColor = '#fecaca';
+        });
+      });
+    };
+
+    // Filter pills event listeners
+    document.querySelectorAll<HTMLButtonElement>('.filter-pill').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-pill').forEach((b) => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        activeFilter = btn.dataset.status || 'all';
+        renderTable();
+      });
+    });
+
+    // Search input listener
+    searchInput?.addEventListener('input', () => {
+      searchQuery = searchInput.value;
+      renderTable();
+    });
+
+    refreshBtn?.addEventListener('click', fetchOrders);
+
+    // Initial load
+    fetchOrders();
+  </script>
+</AdminLayout>

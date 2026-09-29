@@ -27,12 +27,10 @@ const discountPercent = product.oldPrice > product.price
 
 const cleanId = product.id.replace('prod-', '');
 
-// Mock alternate gallery images for switching
-const galleryImages = [
-  { url: product.image, label: 'Vista Frontal' },
-  { url: '/demos/miga/plato.svg', label: 'Presentación y Servido' },
-  { url: '/five-mascotas/alimento-0.svg', label: 'Empaque Posterior' },
-];
+// Product gallery: only real images configured for this product (max 5)
+const galleryImages = (Array.isArray(product.images) && product.images.length > 0)
+  ? product.images.filter(Boolean).slice(0, 5)
+  : [product.image].filter(Boolean);
 ---
 
 <BaseLayout
@@ -52,7 +50,7 @@ const galleryImages = [
 
     <!-- Main PDP Grid: Gallery (Left) + Buy Box (Right) -->
     <div class="five-pdp-layout">
-      <!-- 1. Interactive Image Gallery (Las imágenes deben poder cambiarse) -->
+      <!-- 1. Interactive Image Gallery (Solo fotos reales del producto) -->
       <section class="five-pdp-gallery-col" aria-label="Galería de imágenes">
         <div class="five-pdp-main-image-box">
           {discountPercent > 0 && (
@@ -68,19 +66,21 @@ const galleryImages = [
           />
         </div>
 
-        <!-- Thumbnails Gallery Strip -->
-        <div class="five-pdp-thumbs-row" role="tablist" aria-label="Vistas del producto">
-          {galleryImages.map((img, idx) => (
-            <button
-              type="button"
-              class={`five-pdp-thumb-btn ${idx === 0 ? 'is-active' : ''}`}
-              data-thumb-src={img.url}
-              aria-label={`Ver imagen ${img.label}`}
-            >
-              <img src={img.url} alt="" width="70" height="70" />
-            </button>
-          ))}
-        </div>
+        <!-- Thumbnails Gallery Strip (Solo si el producto tiene más de 1 imagen) -->
+        {galleryImages.length > 1 && (
+          <div class="five-pdp-thumbs-row" role="tablist" aria-label="Vistas del producto">
+            {galleryImages.map((imgUrl, idx) => (
+              <button
+                type="button"
+                class={`five-pdp-thumb-btn ${idx === 0 ? 'is-active' : ''}`}
+                data-thumb-src={imgUrl}
+                aria-label={`Ver foto ${idx + 1}`}
+              >
+                <img src={imgUrl} alt="" width="70" height="70" />
+              </button>
+            ))}
+          </div>
+        )}
       </section>
 
       <!-- 2. Buy Box & Product Info (Dual Pricing exacto a la foto de referencia) -->
