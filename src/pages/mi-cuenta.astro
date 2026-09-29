@@ -2,6 +2,8 @@
 // src/pages/mi-cuenta.astro
 // Portal Unificado de Usuario: Inicio de Sesión, Registro, Historial de Pedidos y Acceso de Administradores
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { defaultShippingRates } from '../data/pim/shipping';
+import { formatMoney } from '../data/pim/catalog';
 ---
 
 <BaseLayout
@@ -41,75 +43,151 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
       </div>
 
-      <!-- Customer KPIs / Summary Row -->
-      <div class="five-portal-kpis-grid" style="margin-top:20px;">
-        <div class="five-portal-kpi-card">
-          <span class="five-kpi-icon">📦</span>
-          <div class="five-kpi-info">
-            <span class="five-kpi-label">Pedidos Realizados</span>
-            <strong id="kpi-orders-count" class="five-kpi-value">0</strong>
+      <!-- Navigation Tabs: Mis Pedidos vs Mi Dirección -->
+      <div class="five-portal-tabs-nav" role="tablist">
+        <button type="button" id="tab-portal-orders" class="five-portal-nav-btn is-active">
+          <span>📦</span> Mis Pedidos y Seguimiento
+        </button>
+        <button type="button" id="tab-portal-profile" class="five-portal-nav-btn">
+          <span>📍</span> Mi Dirección de Despacho y Contacto
+        </button>
+      </div>
+
+      <!-- Tab Content 1: Orders and Tracking -->
+      <div id="portal-tab-pane-orders">
+        <!-- Customer KPIs / Summary Row -->
+        <div class="five-portal-kpis-grid" style="margin-top:20px;">
+          <div class="five-portal-kpi-card">
+            <span class="five-kpi-icon">📦</span>
+            <div class="five-kpi-info">
+              <span class="five-kpi-label">Pedidos Realizados</span>
+              <strong id="kpi-orders-count" class="five-kpi-value">0</strong>
+            </div>
+          </div>
+
+          <div class="five-portal-kpi-card">
+            <span class="five-kpi-icon">🚚</span>
+            <div class="five-kpi-info">
+              <span class="five-kpi-label">En Curso / Reparto</span>
+              <strong id="kpi-orders-active" class="five-kpi-value" style="color:#7025a8;">0</strong>
+            </div>
+          </div>
+
+          <div class="five-portal-kpi-card">
+            <span class="five-kpi-icon">💰</span>
+            <div class="five-kpi-info">
+              <span class="five-kpi-label">Ahorro Transferencia</span>
+              <strong id="kpi-orders-savings" class="five-kpi-value" style="color:#276717;">$0</strong>
+            </div>
           </div>
         </div>
 
-        <div class="five-portal-kpi-card">
-          <span class="five-kpi-icon">🚚</span>
-          <div class="five-kpi-info">
-            <span class="five-kpi-label">En Curso / Reparto</span>
-            <strong id="kpi-orders-active" class="five-kpi-value" style="color:#7025a8;">0</strong>
+        <!-- Link Guest Order Box -->
+        <div class="five-link-order-card" style="margin-top:20px;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+            <span style="font-size:18px;">🔗</span>
+            <h3 style="font-size:14px; font-weight:800; margin:0; color:#111827;">¿Realizaste una compra como invitado?</h3>
           </div>
+          <p style="font-size:12.5px; color:#6b7280; margin:0 0 10px;">
+            Ingresa tu código de seguimiento oficial (ej: <code>FIVE-TRK-8492</code>) para vincularlo a tu historial permanente.
+          </p>
+          <form id="form-link-order" style="display:flex; gap:8px; flex-wrap:wrap;">
+            <input
+              type="text"
+              id="link-order-input"
+              class="five-input"
+              placeholder="FIVE-TRK-XXXX"
+              style="flex:1; min-width:200px; text-transform:uppercase; font-family:monospace; padding:8px 12px; font-size:13px;"
+              required
+            />
+            <button type="submit" class="five-button" style="padding:8px 18px; font-size:13px;">
+              Vincular Pedido
+            </button>
+          </form>
+          <div id="link-order-alert" style="font-size:12px; margin-top:8px; display:none;"></div>
         </div>
 
-        <div class="five-portal-kpi-card">
-          <span class="five-kpi-icon">💰</span>
-          <div class="five-kpi-info">
-            <span class="five-kpi-label">Ahorro Transferencia</span>
-            <strong id="kpi-orders-savings" class="five-kpi-value" style="color:#276717;">$0</strong>
+        <!-- Customer Orders Section with Status Filter -->
+        <div style="margin-top:28px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:14px;">
+            <h2 style="font-size:18px; font-weight:850; margin:0; color:#111827; display:flex; align-items:center; gap:8px;">
+              <span>📦</span> Mis Pedidos y Compras Recientes
+            </h2>
+
+            <!-- Filter Pills -->
+            <div class="five-orders-filter-bar" role="tablist">
+              <button type="button" class="five-order-filter-pill is-active" data-order-filter="all">Todos</button>
+              <button type="button" class="five-order-filter-pill" data-order-filter="active">En Curso</button>
+              <button type="button" class="five-order-filter-pill" data-order-filter="delivered">Entregados</button>
+            </div>
+          </div>
+
+          <div id="portal-orders-list" class="five-portal-orders-list">
+            <!-- Dynamically populated or empty message -->
           </div>
         </div>
       </div>
 
-      <!-- Link Guest Order Box -->
-      <div class="five-link-order-card" style="margin-top:20px;">
-        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
-          <span style="font-size:18px;">🔗</span>
-          <h3 style="font-size:14px; font-weight:800; margin:0; color:#111827;">¿Realizaste una compra como invitado?</h3>
-        </div>
-        <p style="font-size:12.5px; color:#6b7280; margin:0 0 10px;">
-          Ingresa tu código de seguimiento oficial (ej: <code>FIVE-TRK-8492</code>) para vincularlo a tu historial permanente.
-        </p>
-        <form id="form-link-order" style="display:flex; gap:8px; flex-wrap:wrap;">
-          <input
-            type="text"
-            id="link-order-input"
-            class="five-input"
-            placeholder="FIVE-TRK-XXXX"
-            style="flex:1; min-width:200px; text-transform:uppercase; font-family:monospace; padding:8px 12px; font-size:13px;"
-            required
-          />
-          <button type="submit" class="five-button" style="padding:8px 18px; font-size:13px;">
-            Vincular Pedido
-          </button>
-        </form>
-        <div id="link-order-alert" style="font-size:12px; margin-top:8px; display:none;"></div>
-      </div>
-
-      <!-- Customer Orders Section with Status Filter -->
-      <div style="margin-top:28px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:14px;">
-          <h2 style="font-size:18px; font-weight:850; margin:0; color:#111827; display:flex; align-items:center; gap:8px;">
-            <span>📦</span> Mis Pedidos y Compras Recientes
-          </h2>
-
-          <!-- Filter Pills -->
-          <div class="five-orders-filter-bar" role="tablist">
-            <button type="button" class="five-order-filter-pill is-active" data-order-filter="all">Todos</button>
-            <button type="button" class="five-order-filter-pill" data-order-filter="active">En Curso</button>
-            <button type="button" class="five-order-filter-pill" data-order-filter="delivered">Entregados</button>
+      <!-- Tab Content 2: Profile & Shipping Address -->
+      <div id="portal-tab-pane-profile" hidden style="margin-top:20px;">
+        <div class="five-portal-profile-card">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px; border-bottom:1px solid #f3f4f6; padding-bottom:14px;">
+            <div style="font-size:26px; width:44px; height:44px; border-radius:12px; background:#faf5ff; display:flex; align-items:center; justify-content:center;">📍</div>
+            <div>
+              <h2 style="font-size:17px; font-weight:850; margin:0; color:#111827;">Dirección de Despacho y Contacto Habitual</h2>
+              <p style="font-size:12.5px; color:#6b7280; margin:2px 0 0;">
+                Tus compras en FIVE Mascotas se auto-completarán con estos datos en el Checkout para una entrega más rápida.
+              </p>
+            </div>
           </div>
-        </div>
 
-        <div id="portal-orders-list" class="five-portal-orders-list">
-          <!-- Dynamically populated or empty message -->
+          <form id="form-update-profile" style="display:flex; flex-direction:column; gap:14px;">
+            <div class="five-form-grid-2">
+              <div class="five-form-group">
+                <label for="prof-name" class="five-label">Nombre y Apellido *</label>
+                <input type="text" id="prof-name" class="five-input" required placeholder="ej: Valentina Rojas" />
+              </div>
+              <div class="five-form-group">
+                <label for="prof-phone" class="five-label">Teléfono WhatsApp de Contacto *</label>
+                <input type="tel" id="prof-phone" class="five-input" required placeholder="+56 9 1234 5678" />
+              </div>
+            </div>
+
+            <div class="five-form-grid-2">
+              <div class="five-form-group">
+                <label for="prof-email" class="five-label">Correo Electrónico (Cuenta)</label>
+                <input type="email" id="prof-email" class="five-input" disabled style="background:#f9fafb; color:#6b7280; cursor:not-allowed;" />
+              </div>
+              <div class="five-form-group">
+                <label for="prof-city" class="five-label">Comuna / Sector de Despacho *</label>
+                <select id="prof-city" class="five-select" style="width:100%; border:1.5px solid #d1d5db; border-radius:12px; padding:12px 14px; font-size:14px; outline:none; background:#ffffff;" required>
+                  {defaultShippingRates.map((r) => (
+                    <option value={r.city}>
+                      {r.city} — {formatMoney(r.price)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div class="five-form-group">
+              <label for="prof-address" class="five-label">Dirección Exacta (Calle, Número, Depto/Casa) *</label>
+              <input type="text" id="prof-address" class="five-input" required placeholder="ej: Av. San Miguel 3420, Dpto 402" />
+            </div>
+
+            <div class="five-form-group">
+              <label for="prof-notes" class="five-label">Instrucciones o Referencias de Entrega para el Repartidor</label>
+              <textarea id="prof-notes" class="five-textarea" rows="2" style="border:1.5px solid #d1d5db; border-radius:12px; padding:10px 14px; font-size:13.5px; width:100%; box-sizing:border-box; outline:none;" placeholder="ej: Portón negro, tocar timbre o dejar en conserjería si no responde"></textarea>
+            </div>
+
+            <div id="prof-save-alert" style="display:none; padding:12px 16px; border-radius:10px; font-size:13px; font-weight:700;"></div>
+
+            <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:6px;">
+              <button type="submit" id="prof-save-btn" class="five-button" style="padding:11px 24px; font-size:13.5px;">
+                💾 Guardar Datos de Despacho
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -139,7 +217,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <form id="form-login" class="five-auth-form">
           <div class="five-form-group">
             <label for="login-email" class="five-label">Correo Electrónico *</label>
-            <input type="email" id="login-email" class="five-input" required placeholder="tu@correo.cl o admin@fivemascotas.cl" autocomplete="username" />
+            <input type="email" id="login-email" class="five-input" required placeholder="tu@correo.cl" autocomplete="username" />
           </div>
 
           <div class="five-form-group">
@@ -152,17 +230,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <button type="submit" id="login-submit-btn" class="five-button five-auth-submit-btn">
             Ingresar a mi Cuenta ➔
           </button>
-
-          <!-- Admin Quick Demo Hint -->
-          <div class="five-admin-hint-card">
-            <div style="display:flex; align-items:center; gap:6px; font-weight:750; margin-bottom:4px; font-size:12.5px;">
-              <span>🔑</span> Acceso Administrador Demo:
-            </div>
-            <div style="display:flex; flex-direction:column; gap:3px; font-size:12px;">
-              <div>Usuario: <code class="five-code-pill">admin@fivemascotas.cl</code></div>
-              <div>Contraseña: <code class="five-code-pill">Five2026!Mascotas</code></div>
-            </div>
-          </div>
         </form>
 
         <!-- Form 2: Registro de Cliente -->
@@ -215,6 +282,23 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     const adminLink = document.querySelector<HTMLElement>('#portal-admin-link')!;
     const logoutBtn = document.querySelector<HTMLButtonElement>('#portal-logout-btn')!;
     const ordersList = document.querySelector<HTMLElement>('#portal-orders-list')!;
+
+    // Portal Navigation Tabs & Panes
+    const tabPortalOrders = document.querySelector<HTMLButtonElement>('#tab-portal-orders');
+    const tabPortalProfile = document.querySelector<HTMLButtonElement>('#tab-portal-profile');
+    const panePortalOrders = document.querySelector<HTMLElement>('#portal-tab-pane-orders');
+    const panePortalProfile = document.querySelector<HTMLElement>('#portal-tab-pane-profile');
+
+    // Profile form elements
+    const formProfile = document.querySelector<HTMLFormElement>('#form-update-profile');
+    const profNameInput = document.querySelector<HTMLInputElement>('#prof-name');
+    const profPhoneInput = document.querySelector<HTMLInputElement>('#prof-phone');
+    const profEmailInput = document.querySelector<HTMLInputElement>('#prof-email');
+    const profCitySelect = document.querySelector<HTMLSelectElement>('#prof-city');
+    const profAddressInput = document.querySelector<HTMLInputElement>('#prof-address');
+    const profNotesInput = document.querySelector<HTMLTextAreaElement>('#prof-notes');
+    const profSaveBtn = document.querySelector<HTMLButtonElement>('#prof-save-btn');
+    const profSaveAlert = document.querySelector<HTMLElement>('#prof-save-alert');
 
     // KPI & Filter elements
     const kpiCountEl = document.querySelector<HTMLElement>('#kpi-orders-count')!;
@@ -457,8 +541,84 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       kpiActiveEl.textContent = String(activeCount);
       kpiSavingsEl.textContent = formatMoney(totalSavings);
 
+      // Populate profile form fields
+      if (profNameInput) profNameInput.value = user.name || '';
+      if (profPhoneInput) profPhoneInput.value = user.phone || '';
+      if (profEmailInput) profEmailInput.value = user.email || '';
+      if (profAddressInput) profAddressInput.value = user.address || '';
+      if (profNotesInput) profNotesInput.value = user.notes || '';
+      if (profCitySelect && user.city) {
+        profCitySelect.value = user.city;
+      }
+
       renderOrdersList(userOrders);
     };
+
+    // Portal sub-tabs (Orders vs Profile)
+    tabPortalOrders?.addEventListener('click', () => {
+      tabPortalOrders.classList.add('is-active');
+      tabPortalProfile?.classList.remove('is-active');
+      if (panePortalOrders) panePortalOrders.hidden = false;
+      if (panePortalProfile) panePortalProfile.hidden = true;
+    });
+
+    tabPortalProfile?.addEventListener('click', () => {
+      tabPortalProfile?.classList.add('is-active');
+      tabPortalOrders?.classList.remove('is-active');
+      if (panePortalOrders) panePortalOrders.hidden = true;
+      if (panePortalProfile) panePortalProfile.hidden = false;
+    });
+
+    // Form: Update Profile & Shipping Address
+    formProfile?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!profSaveBtn || !profSaveAlert) return;
+
+      profSaveBtn.disabled = true;
+      profSaveBtn.textContent = 'Guardando...';
+      profSaveAlert.style.display = 'none';
+
+      try {
+        const res = await fetch('/api/auth/profile', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: profNameInput?.value || '',
+            phone: profPhoneInput?.value || '',
+            address: profAddressInput?.value || '',
+            city: profCitySelect?.value || 'Talca',
+            notes: profNotesInput?.value || '',
+          }),
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error || 'Error al guardar los datos');
+        }
+
+        currentUser = { ...currentUser, ...data.user };
+        portalName.textContent = `Hola, ${data.user.name}`;
+
+        profSaveAlert.style.display = 'block';
+        profSaveAlert.style.background = '#edf8e8';
+        profSaveAlert.style.color = '#276717';
+        profSaveAlert.style.border = '1px solid #cce9c2';
+        profSaveAlert.textContent = '✓ ¡Dirección y datos de contacto actualizados exitosamente! Se usarán automáticamente en el checkout.';
+
+        setTimeout(() => {
+          if (profSaveAlert) profSaveAlert.style.display = 'none';
+        }, 5000);
+      } catch (err: any) {
+        profSaveAlert.style.display = 'block';
+        profSaveAlert.style.background = '#fdeeed';
+        profSaveAlert.style.color = '#c0392b';
+        profSaveAlert.style.border = '1px solid #f5c6cb';
+        profSaveAlert.textContent = `Error: ${err.message || 'No se pudieron guardar los datos'}`;
+      } finally {
+        profSaveBtn.disabled = false;
+        profSaveBtn.innerHTML = '💾 Guardar Datos de Despacho';
+      }
+    });
 
     // Filter tabs listener
     filterPills.forEach((pill) => {
@@ -762,6 +922,48 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     border: 1px solid var(--border-color);
     border-radius: 20px;
     padding: 24px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  }
+
+  .five-portal-tabs-nav {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+    border-bottom: 2px solid #f3f4f6;
+    padding-bottom: 4px;
+    flex-wrap: wrap;
+  }
+
+  .five-portal-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    background: transparent;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    font-weight: 750;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .five-portal-nav-btn:hover {
+    color: #7025a8;
+    background: #faf5ff;
+  }
+
+  .five-portal-nav-btn.is-active {
+    background: #f3e8ff;
+    color: #7025a8;
+  }
+
+  .five-portal-profile-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 26px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
   }
 

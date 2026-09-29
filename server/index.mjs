@@ -473,7 +473,7 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
-    // /api/auth/me (Check active session)
+    // /api/auth/me (Check active session & get profile)
     if (authAction === 'me' && req.method === 'GET') {
       const session = getSessionFromReq(req);
       if (!session) {
@@ -481,11 +481,93 @@ const server = http.createServer(async (req, res) => {
         res.end(JSON.stringify({ ok: false, user: null }));
         return;
       }
+      try {
+        const data = await readJsonFile(usersFilePath, getDefaultUsers);
+        const user = data.users.find((u) => u.id === session.userId);
+        if (user) {
+          res.statusCode = 200;
+          res.end(JSON.stringify({
+            ok: true,
+            user: {
+              id: user.id,
+              email: user.email,
+              name: user.name,
+              role: user.role,
+              phone: user.phone || '',
+              address: user.address || '',
+              city: user.city || 'Talca',
+              notes: user.notes || '',
+            },
+          }));
+          return;
+        }
+      } catch {}
+
       res.statusCode = 200;
       res.end(JSON.stringify({
         ok: true,
         user: { id: session.userId, email: session.email, name: session.name, role: session.role },
       }));
+      return;
+    }
+
+    // /api/auth/profile (Update shipping address & contact info)
+    if (authAction === 'profile' && (req.method === 'PUT' || req.method === 'POST')) {
+      const session = getSessionFromReq(req);
+      if (!session) {
+        res.statusCode = 401;
+        res.end(JSON.stringify({ ok: false, error: 'Debes iniciar sesión para actualizar tu perfil' }));
+        return;
+      }
+
+      try {
+        const body = await parseBody(req);
+        const data = await readJsonFile(usersFilePath, getDefaultUsers);
+        const user = data.users.find((u) => u.id === session.userId);
+
+        if (!user) {
+          res.statusCode = 404;
+          res.end(JSON.stringify({ ok: false, error: 'Usuario no encontrado' }));
+          return;
+        }
+
+        if (body.name !== undefined && String(body.name).trim()) {
+          user.name = String(body.name).trim();
+          session.name = user.name;
+        }
+        if (body.phone !== undefined) {
+          user.phone = String(body.phone).trim();
+        }
+        if (body.address !== undefined) {
+          user.address = String(body.address).trim();
+        }
+        if (body.city !== undefined) {
+          user.city = String(body.city).trim();
+        }
+        if (body.notes !== undefined) {
+          user.notes = String(body.notes).trim();
+        }
+
+        await writeJsonFile(usersFilePath, data);
+
+        res.statusCode = 200;
+        res.end(JSON.stringify({
+          ok: true,
+          user: {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            role: user.role,
+            phone: user.phone || '',
+            address: user.address || '',
+            city: user.city || 'Talca',
+            notes: user.notes || '',
+          },
+        }));
+      } catch (err) {
+        res.statusCode = 500;
+        res.end(JSON.stringify({ ok: false, error: err.message }));
+      }
       return;
     }
 

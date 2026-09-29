@@ -889,10 +889,29 @@ class StoreManager {
         if (res.ok) {
           const data = await res.json();
           if (data?.user) {
+            const u = data.user;
             const nameInput = chkModal.querySelector<HTMLInputElement>('#chk-name');
             const emailInput = chkModal.querySelector<HTMLInputElement>('#chk-email');
-            if (nameInput && !nameInput.value) nameInput.value = data.user.name || '';
-            if (emailInput && !emailInput.value) emailInput.value = data.user.email || '';
+            const phoneInput = chkModal.querySelector<HTMLInputElement>('#chk-phone');
+            const addressInput = chkModal.querySelector<HTMLInputElement>('#chk-address');
+            const notesInput = chkModal.querySelector<HTMLTextAreaElement>('#chk-notes');
+            const chkCitySel = chkModal.querySelector<HTMLSelectElement>('#chk-city');
+
+            if (nameInput && (!nameInput.value || nameInput.value.trim() === '')) nameInput.value = u.name || '';
+            if (emailInput && (!emailInput.value || emailInput.value.trim() === '')) emailInput.value = u.email || '';
+            if (phoneInput && (!phoneInput.value || phoneInput.value.trim() === '')) phoneInput.value = u.phone || '';
+            if (addressInput && (!addressInput.value || addressInput.value.trim() === '')) addressInput.value = u.address || '';
+            if (notesInput && (!notesInput.value || notesInput.value.trim() === '')) notesInput.value = u.notes || '';
+
+            if (chkCitySel && u.city) {
+              const matchedOption = Array.from(chkCitySel.options).find(
+                (opt) => opt.value.toLowerCase() === u.city.toLowerCase() || opt.dataset.city?.toLowerCase() === u.city.toLowerCase()
+              );
+              if (matchedOption) {
+                chkCitySel.value = matchedOption.value;
+                updateMiniSummary();
+              }
+            }
           }
         }
       } catch {}
