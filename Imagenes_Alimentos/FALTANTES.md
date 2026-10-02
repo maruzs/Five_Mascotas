@@ -219,19 +219,28 @@ En `data/pim.json` los campos `ingredients` de los 3 Whiskas secos contienen tex
   - `prod-380/381/382/383` (suplementos Omega) ahora tienen su packshot real y composición correcta.
 - **Kongo/Company/Natural Meat/Voraz:** reemplazados los placeholders "Consulte el empaque" por la nómina real de ingredientes de Gorchen.
 
-## 7.3 Pendientes reales (91 productos)
+## 7.3 Tercera Integración — Josera / Josi (2026-10)
+
+- Se descargaron y parsearon las **fichas técnicas PDF de Cooprinsem** (40 productos) y se completó la información con la **web oficial de Josera** cuando el análisis venía como gráfico (JosiDog, JosiCat, Kitten, Culinesse).
+- **36 productos integrados:** ingredientes + proteína/grasa/fibra para toda la línea Josera (Kitten, Dailycat, Marinesse, Naturecat, Naturelle, Culinesse, Kids, Festival, Fiesta Plus, Balance, Mini, Young Star, Duck/Salmon, Light & Vital, Sensiplus, High Protein) y todos los JosiCat/JosiDog.
+- Casos especiales: `Naturelle 10 kg` y `Esterilizado 10 kg` heredan la fórmula de su formato 2 kg / 1,9 kg; `Miniwell` se mapeó a **Mini Adult Chicken & Rice** (misma fórmula, nombre comercial distinto).
+- **No disponible:** `Josera Chicken & Sweet Potato` (análisis en gráfico y sin ficha web activa) y **Bavaro** (PDFs son imágenes sin texto extraíble).
+
+## 7.4 Pendientes reales (55 productos)
 
 | Marca | Nº | Falta | Fuente posible |
 | :--- | :---: | :--- | :--- |
-| Josera + Josi | 37 | Ingredientes y/o proteína | PDFs de ficha técnica en las fichas de Cooprinsem, o web oficial Josera |
 | Gepsa (Compinches, Ganacan, Ganacat, Magnífico, Odwalla, Zimpi) | 12 | Nómina de ingredientes | El fabricante no la publica; solicitar a Gepsa |
 | Allendes (Top One 5, Sabrokan, Sabrocat 2, Canito, Guau Forte, Cachupín 2, Felinnes 2) | 13 | Ingredientes y/o proteína | Sin datos en el sitio; requiere foto de etiqueta/dorso |
+| Purina | 8 | Cat Chow Adulto Carne (dry) y PPVD Canine EN 380 g | Ficha técnica Purina |
+| Superpet (alimentos) | 3 | Todo | El proveedor no publica los alimentos; solo suplementos |
+| Gallina | 4 | Todo | Alimento de granja; contacto con proveedor |
 | N&D | 3 | Todo | Web oficial Farmina (Espirulina Tilapia / Jabalí) |
 | Mastín | 3 | Todo | Líneas Senior/Signature/Raza Pequeña no publicadas por Nutritec |
-| Bavaro | 3 | Proteína | PDFs Cooprinsem |
-| Purina | 8 | Cat Chow Adulto Carne (dry), PPVD Canine EN 380 g | Ficha técnica Purina |
-| Gallina (4), Pionero, Askat, Natural Meat | 7 | Todo | Marcas locales/farm; contacto con proveedor |
+| Bavaro | 3 | Todo | PDFs de Cooprinsem son imágenes |
+| Bokato Lady, Natural Meat, Askat, Pionero, Josera Chicken & Sweet Potato | 5 | Ingredientes o proteína | Ficha física / proveedor |
+| Cachupín, Guau Forte, Canito, Sabrocan/Sabrocat | 4 | Ingredientes o proteína | Ficha física / proveedor |
 
-## 7.4 Imágenes pendientes (8)
+## 7.5 Imágenes pendientes (8)
 
 Cachupín Cachorro, Mastín Senior/Signature/Raza Pequeña, Kongo Gato Pescado 15 kg, N&D Espirulina Tilapia (1,5/7 kg), N&D Jabalí lata, Askat, Pionero y Gallina x4.

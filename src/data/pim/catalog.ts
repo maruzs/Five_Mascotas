@@ -3023,7 +3023,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/297-josera-kitten-grain-free-2-kg-gato-cachorro.html",
     "description": "Alimento completo para gatos adultos de interior y de exterior con deliciosa ave y libre de granos. Sus ingredientes garantizan una piel sana y un pelo brillante, además de evitar la formación de bolas de pelo.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 36,
+    "fatPct": 22,
+    "fiberPct": 2,
+    "ingredients": "Proteína de ave deshidratada; grasa de ave; patata deshidratada; harina de guisante; ﬁbra de remolacha; tapioca deshidratada; proteína de patata; proteína de pescado hidrolizada; hígado de ave deshidratado; aceite de salmón 0,50 %; levadura; minerales; raíz de achicoria molida (fuente natural de inulina)."
   },
   {
     "id": "prod-120",
@@ -3043,7 +3047,11 @@ const fallbackProducts: Product[] = [
     "featured": false,
     "images": [
       "/products/josera-josera-daily-cat-2-kgs-gato-adulto-sensibilidad-digestiva.jpg"
-    ]
+    ],
+    "proteinPct": 33,
+    "fatPct": 16,
+    "fiberPct": 1.25,
+    "ingredients": "proteína de ave de corral seca 39,0 %; batata; harina de guisante; gr asas de aves; pulpa de remolacha; proteína de ave de corral hidrolizada; hígado de ave de corral deshidratado; hierbas, frutas; sustancias minerales. Proteína Grasa 33 /1682% de proteína animal en proporción total de proteína Para gatos adultos Antibolas de peloFácil de digerirSin cereales JOSERA DailyCat es adecuado para la alimentación diaria de gatos de interior y exterior › La ración diaria adicional de deliciosa ave según los gustos de su gato (corresponde a aprox. 130 g de carne fresca por cada 100 g de alimento seco). › Los valiosos ácidos grasos, las vitaminas y los oligoelementos garantizan una piel sana y un pelo brillante. › Las exquisitas hierbas y frutos saludables completan la receta y ofrecen a su gato una deliciosa variedad de sabores. › reduce la formación de bolas de pelo. Formato de 2 kg y 10 kg ¡juego, diversión y delicias, todos los días!"
   },
   {
     "id": "prod-121",
@@ -3063,7 +3071,11 @@ const fallbackProducts: Product[] = [
     "featured": false,
     "images": [
       "/products/josera-josera-daily-cat-10-kgs-gato-adulto-sensibilidad-digestiva.jpg"
-    ]
+    ],
+    "proteinPct": 33,
+    "fatPct": 16,
+    "fiberPct": 1.25,
+    "ingredients": "proteína de ave de corral seca 39,0 %; batata; harina de guisante; gr asas de aves; pulpa de remolacha; proteína de ave de corral hidrolizada; hígado de ave de corral deshidratado; hierbas, frutas; sustancias minerales. Proteína Grasa 33 /1682% de proteína animal en proporción total de proteína Para gatos adultos Antibolas de peloFácil de digerirSin cereales JOSERA DailyCat es adecuado para la alimentación diaria de gatos de interior y exterior › La ración diaria adicional de deliciosa ave según los gustos de su gato (corresponde a aprox. 130 g de carne fresca por cada 100 g de alimento seco). › Los valiosos ácidos grasos, las vitaminas y los oligoelementos garantizan una piel sana y un pelo brillante. › Las exquisitas hierbas y frutos saludables completan la receta y ofrecen a su gato una deliciosa variedad de sabores. › reduce la formación de bolas de pelo. Formato de 2 kg y 10 kg ¡juego, diversión y delicias, todos los días!"
   },
   {
     "id": "prod-122",
@@ -3086,7 +3098,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/289-josera-marinesse-2-kg-gato-adulto-hipoalargenico-salmon.html",
     "description": "Alimento completo para gatos adultos, sus excepcionales ingredientes sólo incluyen proteínas derivadas de sabroso salmón, arroz y patatas, una nutrición perfecta para gatos con aparatos digestivos delicados.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 30,
+    "fatPct": 15,
+    "fiberPct": 2.2,
+    "ingredients": "salmón deshidratado 30,0%; patata deshidratada; grasas de aves; harina de guisante; proteínas de patata; pulpa de remolacha; proteína de pescado hidrolizada; sustancias minerales. Proteína Grasa 30 /15 Para gatos adultos. Formato de 2 kg y 10 kg PH urinario 6.0-6.5Sin cereales Hipoalergénico Marinesse / 24 h 2 – 3 kg 30 – 45 g 3 – 4 kg 45 – 55 g 4 – 5 kg 55 – 70 g 5 – 7 kg 70 – 100 g 7 – 10 kg 100 – 130 g Su mascota debe disponer en todo momento de agua fresca. JOSERA Marinesse con mucho salmón delicioso es perfecto para verdaderos amantes del pescado y para gatos que sufran de intolerancias alimentarias. La receta contiene únicamente proteínas de fácil digestión y no contiene cereales, por lo que es adecuada para gatos sensibles. › Salmón, patata y guisantes como fuentes de proteína seleccionadas para una mejor digestión. › Mucho salmón exquisito (30%) y una receta sin cereales para gatos exigentes. › Ayuda a mantener un valor de pH en la orina entre 6,0 y 6,5 para prevenir la formación de cálculos urinarios. › Hipoalergénico y fácil de digerir. ¿Su gato se deleita con el pescado o tiene intolerancias? de proteína animal en proporción total de proteína 73 %"
   },
   {
     "id": "prod-123",
@@ -3109,7 +3125,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/289-josera-marinesse-2-kg-gato-adulto-hipoalargenico-salmon.html",
     "description": "Alimento completo para gatos adultos, sus excepcionales ingredientes sólo incluyen proteínas derivadas de sabroso salmón, arroz y patatas, una nutrición perfecta para gatos con aparatos digestivos delicados.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 30,
+    "fatPct": 15,
+    "fiberPct": 2.2,
+    "ingredients": "salmón deshidratado 30,0%; patata deshidratada; grasas de aves; harina de guisante; proteínas de patata; pulpa de remolacha; proteína de pescado hidrolizada; sustancias minerales. Proteína Grasa 30 /15 Para gatos adultos. Formato de 2 kg y 10 kg PH urinario 6.0-6.5Sin cereales Hipoalergénico Marinesse / 24 h 2 – 3 kg 30 – 45 g 3 – 4 kg 45 – 55 g 4 – 5 kg 55 – 70 g 5 – 7 kg 70 – 100 g 7 – 10 kg 100 – 130 g Su mascota debe disponer en todo momento de agua fresca. JOSERA Marinesse con mucho salmón delicioso es perfecto para verdaderos amantes del pescado y para gatos que sufran de intolerancias alimentarias. La receta contiene únicamente proteínas de fácil digestión y no contiene cereales, por lo que es adecuada para gatos sensibles. › Salmón, patata y guisantes como fuentes de proteína seleccionadas para una mejor digestión. › Mucho salmón exquisito (30%) y una receta sin cereales para gatos exigentes. › Ayuda a mantener un valor de pH en la orina entre 6,0 y 6,5 para prevenir la formación de cálculos urinarios. › Hipoalergénico y fácil de digerir. ¿Su gato se deleita con el pescado o tiene intolerancias? de proteína animal en proporción total de proteína 73 %"
   },
   {
     "id": "prod-124",
@@ -3132,7 +3152,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/295-josera-naturecat-2-kg-gato-cachorro-adulto-alta-actividad.html",
     "description": "Alimento completo para gatos adultos, libre de granos y con una perfecta combinación de aves de corral y salmón. También es ideal para gatitos a partir de los 6 meses que requieren una dieta sin cereales.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 33,
+    "fatPct": 20,
+    "fiberPct": 1.3,
+    "ingredients": "proteína de ave de corral seca 30,0 %; grasas de aves; batata; patata deshidratada; salmón deshid ratado 10,0 %; harina de guisante; pulpa de r emolacha; pr oteína de ave de corr al hid rolizada; sustancias miner ales; levaduras; polvo de achicoria; hierbas, frutas. Proteína Grasa 33 /20 Formato de 2 kg y 10 kg ¡hoy llegaremos a lo más alto! PH urinario 6-6,5 Antibolas de peloSin cereales de proteína animal en proporción total de proteína 89 % * Para gatos en crecimiento a partir de 6 meses / gatos adultos. NatureCat / 24 h 2 – 3 kg 25 – 35 g 3 – 4 kg 35 – 55 g 4 – 5 kg 55 – 70 g 5 – 7 kg 70 – 95 g 7 – 10 kg 95 – 120 g Su mascota debe disponer en todo momento de agua fresca. JOSERA NatureCat es un verdadero placer para todos los aventureros. Sin cereales y con una porción extra de deliciosa ave y salmón. › Con un 30% de ave deshidratada y un 10% de salmón deshidratado (corresponde a aprox. 130 g de carne fresca por cada 100 g de alimento seco). › Las exquisitas hierbas y frutos sanos completan la receta y ofrecen a su gato una deliciosa variedad de sabores. › Con valiosos ácidos grasos de salmón, así como vitaminas y oligoelementos, para una piel sana y un pelo brillante. › Ayuda a mantener un valor de pH en la orina entre 6,0 y 6,5 para prevenir la formación de cálculos urinarios. Para los espíritus libres y para los que no soportan los cereales."
   },
   {
     "id": "prod-125",
@@ -3155,7 +3179,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/295-josera-naturecat-2-kg-gato-cachorro-adulto-alta-actividad.html",
     "description": "Alimento completo para gatos adultos, libre de granos y con una perfecta combinación de aves de corral y salmón. También es ideal para gatitos a partir de los 6 meses que requieren una dieta sin cereales.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 33,
+    "fatPct": 20,
+    "fiberPct": 1.3,
+    "ingredients": "proteína de ave de corral seca 30,0 %; grasas de aves; batata; patata deshidratada; salmón deshid ratado 10,0 %; harina de guisante; pulpa de r emolacha; pr oteína de ave de corr al hid rolizada; sustancias miner ales; levaduras; polvo de achicoria; hierbas, frutas. Proteína Grasa 33 /20 Formato de 2 kg y 10 kg ¡hoy llegaremos a lo más alto! PH urinario 6-6,5 Antibolas de peloSin cereales de proteína animal en proporción total de proteína 89 % * Para gatos en crecimiento a partir de 6 meses / gatos adultos. NatureCat / 24 h 2 – 3 kg 25 – 35 g 3 – 4 kg 35 – 55 g 4 – 5 kg 55 – 70 g 5 – 7 kg 70 – 95 g 7 – 10 kg 95 – 120 g Su mascota debe disponer en todo momento de agua fresca. JOSERA NatureCat es un verdadero placer para todos los aventureros. Sin cereales y con una porción extra de deliciosa ave y salmón. › Con un 30% de ave deshidratada y un 10% de salmón deshidratado (corresponde a aprox. 130 g de carne fresca por cada 100 g de alimento seco). › Las exquisitas hierbas y frutos sanos completan la receta y ofrecen a su gato una deliciosa variedad de sabores. › Con valiosos ácidos grasos de salmón, así como vitaminas y oligoelementos, para una piel sana y un pelo brillante. › Ayuda a mantener un valor de pH en la orina entre 6,0 y 6,5 para prevenir la formación de cálculos urinarios. Para los espíritus libres y para los que no soportan los cereales."
   },
   {
     "id": "prod-126",
@@ -3178,7 +3206,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/293-josera-naturelle-2-kg-gato-adulto-esterilizado.html",
     "description": "Alimento completo para gatos adultos, libre de granos y con una perfecta combinación de trucha y lentejas. Ideal para gatos de interior y esterilizados por su moderado contenido en grasas.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 35,
+    "fatPct": 12,
+    "fiberPct": 1.15,
+    "ingredients": "proteína de ave de corral seca; harina de guisante; batata; grasas de aves; proteínas de patata; trucha secada 6,0 %; lentejas rojas secas 6,0 %; pulpa de remolacha; patata deshidratada; lignocelulosa; proteína de ave de corral hidrolizada; sustancias minerales (tripolifosfato de sodio 0,33%); levaduras; polvo de achicoria. Proteína Grasa 35 /12 Para gatos adultos. Formato de 2 kg y 10 kg Sin cerealesEsterilizado Naturelle / 24 h 2 – 3 kg 30 – 45 g 3 – 4 kg 45 – 60 g 4 – 5 kg 60 – 80 g 5 – 7 kg 80 – 105 g 7 – 10 kg 105 – 135 g Su mascota debe disponer en todo momento de agua fresca. JOSERA Naturelle con trucha y lentejas ofrece una deliciosa receta sin cereales con un contenido moderado en grasa para alimentar de forma óptima a su mascota. › Con deliciosa trucha y lentejas › Contenido moderado en grasa especialmente adaptado a gatos de interior y esterilizados. › › Ayudaamantener un va lor de pH en la orina entre 6,0 y 6 ,5 para prevenir la formación de cálculos urinarios. ¿Su minino no soporta l os cer eales o tiene unas necesidades energéticas reducidas? 71 % de proteína animal en proporción total de proteína ¡Ven a jugar, ya está todo preparado!"
   },
   {
     "id": "prod-127",
@@ -3201,7 +3233,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/293-josera-naturelle-2-kg-gato-adulto-esterilizado.html",
     "description": "Alimento completo para gatos adultos, libre de granos y con una perfecta combinación de trucha y lentejas. Ideal para gatos de interior y esterilizados por su moderado contenido en grasas.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 35,
+    "fatPct": 12,
+    "fiberPct": 1.15,
+    "ingredients": "proteína de ave de corral seca; harina de guisante; batata; grasas de aves; proteínas de patata; trucha secada 6,0 %; lentejas rojas secas 6,0 %; pulpa de remolacha; patata deshidratada; lignocelulosa; proteína de ave de corral hidrolizada; sustancias minerales (tripolifosfato de sodio 0,33%); levaduras; polvo de achicoria. Proteína Grasa 35 /12 Para gatos adultos. Formato de 2 kg y 10 kg Sin cerealesEsterilizado Naturelle / 24 h 2 – 3 kg 30 – 45 g 3 – 4 kg 45 – 60 g 4 – 5 kg 60 – 80 g 5 – 7 kg 80 – 105 g 7 – 10 kg 105 – 135 g Su mascota debe disponer en todo momento de agua fresca. JOSERA Naturelle con trucha y lentejas ofrece una deliciosa receta sin cereales con un contenido moderado en grasa para alimentar de forma óptima a su mascota. › Con deliciosa trucha y lentejas › Contenido moderado en grasa especialmente adaptado a gatos de interior y esterilizados. › › Ayudaamantener un va lor de pH en la orina entre 6,0 y 6 ,5 para prevenir la formación de cálculos urinarios. ¿Su minino no soporta l os cer eales o tiene unas necesidades energéticas reducidas? 71 % de proteína animal en proporción total de proteína ¡Ven a jugar, ya está todo preparado!"
   },
   {
     "id": "prod-128",
@@ -3224,7 +3260,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/menu-de-productos/21001977-josera-culinesse-2-kgs-gato-adulto-piel-y-pelaje.html",
     "description": "Alimento Super Premium completo con deliciosas proteínas de salmón y ave para auténticos gourmets. Gracias a su receta equilibrada, Josera Culinesse es altamente digerible y especialmente sabroso. Con cuidado del pH urinario, anti bolas de pelo, piel brillante y pelaje sano. Libre de gluten y con sabrosos cereales para mayor palatabilidad. No contiene saborizantes, conservantes ni preservantes artificiales, sin trigo, soja, azúcares ni productos lácteos añadidos. Producto libre de BHT/ Etoxiquinas. Fabricado con ingredientes de calidad aptos para consumo humano. Calidad Alemana.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 31,
+    "fatPct": 13,
+    "fiberPct": 2.2,
+    "ingredients": "proteína de ave de corral seca, arroz, maíz integral, grasas de aves, pulpa de remolacha, chicharrones desecados, proteína de salmón deshidratado 4%, proteína animal hidrolizada, hígado de ave de corral deshidratado, sustancias minerales"
   },
   {
     "id": "prod-129",
@@ -3247,7 +3287,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/menu-de-productos/21001977-josera-culinesse-2-kgs-gato-adulto-piel-y-pelaje.html",
     "description": "Alimento Super Premium completo con deliciosas proteínas de salmón y ave para auténticos gourmets. Gracias a su receta equilibrada, Josera Culinesse es altamente digerible y especialmente sabroso. Con cuidado del pH urinario, anti bolas de pelo, piel brillante y pelaje sano. Libre de gluten y con sabrosos cereales para mayor palatabilidad. No contiene saborizantes, conservantes ni preservantes artificiales, sin trigo, soja, azúcares ni productos lácteos añadidos. Producto libre de BHT/ Etoxiquinas. Fabricado con ingredientes de calidad aptos para consumo humano. Calidad Alemana.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 31,
+    "fatPct": 13,
+    "fiberPct": 2.2,
+    "ingredients": "proteína de ave de corral seca, arroz, maíz integral, grasas de aves, pulpa de remolacha, chicharrones desecados, proteína de salmón deshidratado 4%, proteína animal hidrolizada, hígado de ave de corral deshidratado, sustancias minerales"
   },
   {
     "id": "prod-130",
@@ -3270,7 +3314,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/295-josera-naturecat-2-kg-gato-cachorro-adulto-alta-actividad.html",
     "description": "Alimento completo para gatos adultos, libre de granos y con una perfecta combinación de aves de corral y salmón. También es ideal para gatitos a partir de los 6 meses que requieren una dieta sin cereales.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 25,
+    "fatPct": 12,
+    "fiberPct": 2.3,
+    "ingredients": "proteína de ave de corral deshidratada 27,5 % (de la cual pollo 40,0 %); maíz integral; arroz 25 %; pulpa de remolacha; grasas de aves; proteína de ave de corral hidrolizada; sustancias minerales; aceite de salmón 0,8 %; levaduras; polvo de achicoria; carne deshidratada de mejillón verde de Nueva Zelanda (Perna canaliculus)"
   },
   {
     "id": "prod-131",
@@ -3293,7 +3341,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/299-josera-kids-125-kg-perro-cachorro-raza-mediana-grande.html",
     "description": "Receta Super Premium especial libre gluten para cachorros de razas medianas y grandes. Con aporte energético reducido y contenido moderado de grasas y proteínas, garantiza un ritmo de crecimiento moderado, huesos fuertes y articulaciones sanas. Con L- carnitina y  taurina que favorecen la función cardíaca. Contiene polvo de achicoria (fuente natural de inulina), que posee propiedades  prebiótica que  refuerza la flora intestinal. Su fórmula incluye carne deshidratada  de Mejillón de labios verdes de Nueva Zelanda (Perna canaliculus), un condroprotector natural que ayuda para un correcto desarrollo  óseo y articular. No contiene saborizantes, conservantes ni preservantes artificiales, sin trigo, soja, azúcares ni productos lácteos añadidos. Producto libre de BHT /Etoxiquinas. Calidad Alemana . Josera Kids es una combinación especial para el crecimiento de razas medianas y grandes. Esta receta con aporte energético reducido y contenido moderado de grasas y proteínas garantiza un ritmo de crecimiento moderado, huesos fuertes y articulaciones sanas. Está indicado para cachorros a partir de 8 semanas de edad y es apto para perros de constitución pesada. Favorece las funciones cardiovasculares y el desarrollo del esqueleto.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 26,
+    "fatPct": 16,
+    "fiberPct": 2.5,
+    "ingredients": "proteína de ave de corral seca 26,0 % (de la cual pollo 40,0 %); maíz integral; arroz; grasas de aves; pulpa de remolacha; proteína de salmón deshidratado 4 %; fécula de patata; proteína de ave de corral hidrolizada; proteína vegetal hidrolizada; hígado de ave de corral deshidratado; sustancias minerales; hemoglobina en polvo; polvo de achicoria; carne deshidratada de mejillón verde de Nueva Zelanda (Perna canaliculus)"
   },
   {
     "id": "prod-132",
@@ -3316,7 +3368,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/302-josera-fiesta-plus-125-kg-perro-adulto-raza-mediana-grande.html",
     "description": "Receta Super Premium libre de gluten para perros adultos. Con variedad de colores, las Vital Booster Chips rojas ofrecen un impulso adicional a la vitalidad de las mascotas gracias a las valiosas vitaminas, así como a la taurina y a la L-carnitina.  La vitaminas E y C protegen las células de los radicales libres, la taurina y la L-carnitina apoyan la función cardíaca. Con una sabrosa salsa en polvo para mucho sabor adicional. Valiosos ácidos grasos proporcionan una piel sana y un pelo brillante. Con sabrosas aves de corral y salmón.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 24,
+    "fatPct": 15,
+    "fiberPct": 2.5,
+    "ingredients": "croqueta marrón (proteína de ave de corral seca; maíz integral; arroz; grasas de aves; pulpa de remolacha; proteína de salmón deshidratado 4,5 %; fécula de patata; proteína de ave de corral hidrolizada; proteína vegetal hidrolizada; sustancias minerales; hígado de ave de corral deshidratado; membranas celulares de levadura 0,57 %; hemoglobina en polvo; polvo de achicoria; carne deshidratada de mejillón verde de Nueva Zelanda (Perna canaliculus)); croqueta Vital Booster 12,0 % (maíz integral; grasas de aves; proteína de maíz; remolacha en polvo; proteína animal hidrolizada)"
   },
   {
     "id": "prod-133",
@@ -3339,7 +3395,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/299-josera-kids-125-kg-perro-cachorro-raza-mediana-grande.html",
     "description": "Receta Super Premium especial libre gluten para cachorros de razas medianas y grandes. Con aporte energético reducido y contenido moderado de grasas y proteínas, garantiza un ritmo de crecimiento moderado, huesos fuertes y articulaciones sanas. Con L- carnitina y  taurina que favorecen la función cardíaca. Contiene polvo de achicoria (fuente natural de inulina), que posee propiedades  prebiótica que  refuerza la flora intestinal. Su fórmula incluye carne deshidratada  de Mejillón de labios verdes de Nueva Zelanda (Perna canaliculus), un condroprotector natural que ayuda para un correcto desarrollo  óseo y articular. No contiene saborizantes, conservantes ni preservantes artificiales, sin trigo, soja, azúcares ni productos lácteos añadidos. Producto libre de BHT /Etoxiquinas. Calidad Alemana . Josera Kids es una combinación especial para el crecimiento de razas medianas y grandes. Esta receta con aporte energético reducido y contenido moderado de grasas y proteínas garantiza un ritmo de crecimiento moderado, huesos fuertes y articulaciones sanas. Está indicado para cachorros a partir de 8 semanas de edad y es apto para perros de constitución pesada. Favorece las funciones cardiovasculares y el desarrollo del esqueleto.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 20,
+    "fatPct": 8,
+    "fiberPct": 2.7,
+    "ingredients": ", este pienso para perros bajo en grasas también puede ser una alternativa bien tolerada por los perros menos activos que aún no han alcanzado la tercera edad. Para que tenga buen sabor, la receta contiene delicioso pollo y arroz. Pienso para perros de mayor edad de todas las razas con menor necesidad energética Receta equilibrada y sin gluten con pollo y arroz Pienso para perros bajo en grasas para prevenir la obesidad La L-carnitina y el bajo contenido en grasa favorecen la relación óptima entre el contenido en grasa y la masa muscular La L-carnitina y la taurina apoyan la función cardíaca Pienso para perros bajo en fósforo para aliviar los riñones Nuevo diseño, misma receta Ración diaria recomendada: Peso Actividad/día hasta 1 hora Actividad/día hasta 3 hora 5 kg 90 g 105 g 10 kg 155 g 180 g 20 kg 260 g 300 g 30 kg 350 g 405 g 40 kg 435 g 505 g 60 kg 590 g 680 g 80 kg 730 g 845 g La cantidad recomendada de pienso es por animal y día. Debe reducirse la cantidad de pienso si, por ejemplo, también das tentempiés a tu mascota. Asegúrate de que tu mascota siempre tenga agua fresca. Alimento completo para perros adultos con necesidades energéticas reducidas. Composición: maíz integral; proteína de ave de corral seca 18,5 % (de la cual pollo 40,0 %); arroz 17,5 %; pulpa de remolacha; proteína de ave de corral hidrolizada; grasas de aves; sustancias minerales; polvo de achicoria; carne deshidratada de mejillón verde de Nueva Zelanda (Perna canaliculus)"
   },
   {
     "id": "prod-134",
@@ -3362,7 +3422,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/305-josera-minijunior-45-kg-5-x-900-g-perro-cachorro-raza-pequena.html",
     "description": "Para nuestros jóvenes exploradores, que quieren experimentar grandes cosas y tienen grandes planes. Nuestra fórmula de crecimiento Super Premium especial para cachorros de razas pequeñas contiene los mejores nutrientes para apoyar un desarrolloóptimo y saludable. Acompaña a los cachorros hasta la edad adulta sin necesidad de cambiar su alimentación y evita la formación de sarro desde las primeras semanas de vida. Alimento Super Premium libre de gluten,  especial para cachorros de razas pequeñas a partir de las 3 semanas de vida. Pequeñas y deliciosas croquetas a base de  carne deshidratada de Pato y Salmón aportarán valiosos ácidos grasos para una piel sana y un pelaje brillante. Receta altamente digerible para reducir la cantidad de fecas. Contiene Tripolifosfato de sodio que ayuda a reducir  la formación de sarro dental desde las primeras semanas de vida. No contiene saborizantes, conservantes ni preservantes artificiales, sin trigo, soja, azúcares ni productos lácteos añadidos.  Producto libre de BHT/Etoxiquinas. Calidad Alemana.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 29,
+    "fatPct": 18,
+    "fiberPct": 2,
+    "ingredients": "proteína de ave de corral seca (aves 22,0 %, pato 4,0 %); arroz; grasas de aves; patata deshidratada; proteínas de patata; pulpa de remolacha; proteína de salmón deshidratado 4 %; proteína de ave de corral hidrolizada; harina de algarroba; proteína animal hidrolizada; sustancias minerales (tripolifosfato de sodio 0,35%); levaduras; hierbas, frutas 0,1 %; polvo de achicoria; carne deshidratada de mejillón verde de Nueva Zelanda (Perna canaliculus)"
   },
   {
     "id": "prod-135",
@@ -3385,7 +3449,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/305-josera-minijunior-45-kg-5-x-900-g-perro-cachorro-raza-pequena.html",
     "description": "Para nuestros jóvenes exploradores, que quieren experimentar grandes cosas y tienen grandes planes. Nuestra fórmula de crecimiento Super Premium especial para cachorros de razas pequeñas contiene los mejores nutrientes para apoyar un desarrolloóptimo y saludable. Acompaña a los cachorros hasta la edad adulta sin necesidad de cambiar su alimentación y evita la formación de sarro desde las primeras semanas de vida. Alimento Super Premium libre de gluten,  especial para cachorros de razas pequeñas a partir de las 3 semanas de vida. Pequeñas y deliciosas croquetas a base de  carne deshidratada de Pato y Salmón aportarán valiosos ácidos grasos para una piel sana y un pelaje brillante. Receta altamente digerible para reducir la cantidad de fecas. Contiene Tripolifosfato de sodio que ayuda a reducir  la formación de sarro dental desde las primeras semanas de vida. No contiene saborizantes, conservantes ni preservantes artificiales, sin trigo, soja, azúcares ni productos lácteos añadidos.  Producto libre de BHT/Etoxiquinas. Calidad Alemana.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 27,
+    "fatPct": 16,
+    "fiberPct": 2,
+    "ingredients": "como valiosos ácidos grasos, vitaminas, zinc y cobre fomentan una piel bonita y un pelo brillante. Con este pienso para piel y pelo, ¡nuestros pequeños torbellinos no tendrán que esconderse de los grandes!. Nuestro Miniwell se llama ahora Mini Chicken & Rice. Con un nuevo diseño, pero con la misma receta probada. Pienso para perros adultos pequeños con una receta sin gluten Puede prevenir y reducir el sarro Pequeñas y crujientes croquetas para perros pequeños Pienso para perros con pollo y arroz Con un 82 % de proteína animal en la proteína total Con biotina y valiosos ácidos grasos para una piel bonita y un pelo brillante Miniwell se llama ahora Mini Chicken & Rice: nuevo diseño, misma receta Ración diaria recomendada: Peso Actividad/día hasta 1 hora Actividad/día hasta 3 hora 2 kg 40 g 50 g 4 kg 70 g 80 g 6 kg 95 g 110 g 8 kg 115 g 135 g 10 kg 140 g 160 g La cantidad recomendada de pienso es por animal y día. Debe reducirse la cantidad de pienso si, por ejemplo, también das tentempiés a tu mascota. Asegúrate de que tu mascota siempre tenga agua fresca. Pienso completo para perros adultos Composición: proteína de ave de corral seca 31,0 % (de la cual pollo 40,0 %); maíz integral; arroz 15 %; grasas de aves; pulpa de remolacha; proteína de ave de corral hidrolizada; sustancias minerales (tripolifosfato de sodio 0,35%); proteína animal hidrolizada; levaduras; polvo de achicoria"
   },
   {
     "id": "prod-136",
@@ -3402,7 +3470,11 @@ const fallbackProducts: Product[] = [
     "badge": "",
     "color": "violet",
     "image": "/five-mascotas/alimento-0.svg",
-    "featured": false
+    "featured": false,
+    "proteinPct": 27,
+    "fatPct": 16,
+    "fiberPct": 2,
+    "ingredients": "como valiosos ácidos grasos, vitaminas, zinc y cobre fomentan una piel bonita y un pelo brillante. Con este pienso para piel y pelo, ¡nuestros pequeños torbellinos no tendrán que esconderse de los grandes!. Nuestro Miniwell se llama ahora Mini Chicken & Rice. Con un nuevo diseño, pero con la misma receta probada. Pienso para perros adultos pequeños con una receta sin gluten Puede prevenir y reducir el sarro Pequeñas y crujientes croquetas para perros pequeños Pienso para perros con pollo y arroz Con un 82 % de proteína animal en la proteína total Con biotina y valiosos ácidos grasos para una piel bonita y un pelo brillante Miniwell se llama ahora Mini Chicken & Rice: nuevo diseño, misma receta Ración diaria recomendada: Peso Actividad/día hasta 1 hora Actividad/día hasta 3 hora 2 kg 40 g 50 g 4 kg 70 g 80 g 6 kg 95 g 110 g 8 kg 115 g 135 g 10 kg 140 g 160 g La cantidad recomendada de pienso es por animal y día. Debe reducirse la cantidad de pienso si, por ejemplo, también das tentempiés a tu mascota. Asegúrate de que tu mascota siempre tenga agua fresca. Pienso completo para perros adultos Composición: proteína de ave de corral seca 31,0 % (de la cual pollo 40,0 %); maíz integral; arroz 15 %; grasas de aves; pulpa de remolacha; proteína de ave de corral hidrolizada; sustancias minerales (tripolifosfato de sodio 0,35%); proteína animal hidrolizada; levaduras; polvo de achicoria"
   },
   {
     "id": "prod-137",
@@ -3425,7 +3497,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/305-josera-minijunior-45-kg-5-x-900-g-perro-cachorro-raza-pequena.html",
     "description": "Para nuestros jóvenes exploradores, que quieren experimentar grandes cosas y tienen grandes planes. Nuestra fórmula de crecimiento Super Premium especial para cachorros de razas pequeñas contiene los mejores nutrientes para apoyar un desarrolloóptimo y saludable. Acompaña a los cachorros hasta la edad adulta sin necesidad de cambiar su alimentación y evita la formación de sarro desde las primeras semanas de vida. Alimento Super Premium libre de gluten,  especial para cachorros de razas pequeñas a partir de las 3 semanas de vida. Pequeñas y deliciosas croquetas a base de  carne deshidratada de Pato y Salmón aportarán valiosos ácidos grasos para una piel sana y un pelaje brillante. Receta altamente digerible para reducir la cantidad de fecas. Contiene Tripolifosfato de sodio que ayuda a reducir  la formación de sarro dental desde las primeras semanas de vida. No contiene saborizantes, conservantes ni preservantes artificiales, sin trigo, soja, azúcares ni productos lácteos añadidos.  Producto libre de BHT/Etoxiquinas. Calidad Alemana.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 25,
+    "fatPct": 14,
+    "fiberPct": 3,
+    "ingredients": "para que los pequeños aventureros sigan viviendo aventuras. El salmón de alta calidad, como monoproteína al 100 %, es decir, la única fuente de proteína animal, es sabroso y aporta muchos ácidos grasos valiosos. Para una piel bonita y un pelo brillante. La L-carnitina ayuda a prevenir la pérdida muscular relacionada con la edad, mientras que un contenido reducido de fósforo puede apoyar la función renal. Las croquetas extrapequeñas de este pienso para perros garantizan que incluso los perros mayores y pequeños queden satisfechos día tras día. Nuestro Josera IMMUNE PLUS también ayuda a reforzar el sistema inmunitario de nuestros amigos de cuatro patas de mayor edad. *Josera IMMUNE PLUS Las paredes celulares de las levaduras son ricas en glucanos y mananos (MOS), que tienen un efecto prebiótico y pueden, por tanto, apoyar el sistema inmunitario. Valiosos antioxidantes como la vitaminaCyEayudan a proteger de los radicales libres Pienso para perros sénior pequeños a partir de los 8 años Receta sin cereales con croquetas pequeñas Pienso para perros con monoproteína: un 100 % de salmón como única fuente de proteína animal Valiosos antioxidantes como la vitamina E, la vitaminaCyla taurina contrarrestan el envejecimiento celular Con Josera IMMUNE PLUS*: el plus para apoyar a un sistema inmunitario intacto de tu perro Ración diaria recomendada: Peso Actividad/día hasta 1 hora Actividad/día hasta 3 hora 2 kg 45 g 50 g 4 kg 70 g 85 g 6 kg 95 g 115 g 8 kg 120 g 140 g 10 kg 145 g 165 g La cantidad recomendada de pienso es por animal y día. Debe reducirse la cantidad de pienso si, por ejemplo, también das tentempiés a tu mascota. Asegúrate de que tu mascota siempre tenga agua fresca. Pienso completo para perros adultos Composición: proteína de salmón deshidratado 22 %; patata deshidratada; batata deshidratado; grasas de aves; harina de guisante; proteínas de patata; pulpa de remolacha; proteína de pescado hidrolizada; harina de algarroba; fibra de manzana; membranas celulares de levadura 0,5 %; sustancias minerales; polvo de achicoria; hierbas, frutas 0,1 %"
   },
   {
     "id": "prod-138",
@@ -3448,7 +3524,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/295-josera-naturecat-2-kg-gato-cachorro-adulto-alta-actividad.html",
     "description": "Alimento completo para gatos adultos, libre de granos y con una perfecta combinación de aves de corral y salmón. También es ideal para gatitos a partir de los 6 meses que requieren una dieta sin cereales.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 25,
+    "fatPct": 13,
+    "fiberPct": 2,
+    "ingredients": "patata deshidratada 42 %; proteína de ave de corral seca 30,0 % (de la cual pollo 40,0 %); grasas de aves; pulpa de remolacha; harina de algarroba; proteína de ave de corral hidrolizada; levaduras; proteína vegetal hidrolizada; aceite de salmón 0,8 %; sustancias minerales; polvo de achicoria; carne deshidratada de mejillón verde de Nueva Zelanda (Perna canaliculus)"
   },
   {
     "id": "prod-139",
@@ -3471,7 +3551,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/313-josera-ente-kartoffel-125-kg-perro-adulto-monoproteico-pato.html",
     "description": "Receta Hipoalérgenica Super Premium Grain Free especial para perros adultos de todas las razas. Desarrollado con deliciosa carne de pato (como única fuente de proteína animal). Contiene valiosos ácidos grasos y biotina para mantener una piel sana y un pelaje brillante. Contenido energético moderado para perros adultos saludables y sensibles con nivel de actividad normal.Contiene patata deshidratada como única fuente de carbohidratos. No contiene saborizantes, conservantes ni preservantes artificiales, sin trigo, soja, azúcares o productos lácteos añadidos. Producto libre de  BHT/Etoxiquinas. Calidad Alemana.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 24,
+    "fatPct": 14,
+    "fiberPct": 2.4,
+    "ingredients": "cuidadosamente seleccionados, el pienso para perros sin cereales se tolera especialmente bien y se acepta fácilmente en el cuenco. Nuestro Josera IMMUNE PLUS puede apoyar el sistema inmunitario de su perro. Entre otro, el pienso para perros contiene valiosos antioxidantes, como la vitaminaCyE, que tienen un efecto antienvejecimiento en nuestros amigos de cuatro patas. Además, este pienso para perros adultos también contiene las mismas proteínas animales de alta calidad que nuestro pienso de cría Josera Junior Duck & Potato, por lo que es ideal como un pienso de crecimiento para una transición sin problemas a la edad adulta. Nuestro Pato & Patata se llama ahora Duck & Potato. Con el nuevo diseño se añade IMMUNE PLUS a la receta de eficacia probada. *Josera IMMUNE PLUS Las paredes celulares de las levaduras son ricas en glucanos y mananos (MOS), que tienen un efecto prebiótico y pueden, por tanto, apoyar el sistema inmunitario. Valiosos antioxidantes como la vitaminaCyEayudan a proteger de los radicales libres Pienso para perros sin cereales para perros adultos de todas las razas y tamaños Con un 75 % de proteína animal en la proteína total Con biotina y valiosos ácidos grasos para una piel bonita y un pelo brillante Ideal como pienso de crecimiento de Josera Junior Duck & Potato Ahora con Josera IMMUNE PLUS*: el plus para apoyar a un sistema inmunitario intacto de tu perro Pato y Patata se llama ahora Duck & Potato: nuevo diseño, receta probada Ración diaria recomendada: Peso Actividad/día hasta 1 hora Actividad/día hasta 3 hora 5 kg 85 g 100 g 10 kg 145 g 165 g 20 kg 240 g 280 g 30 kg 325 g 380 g 40 kg 405 g 470 g 60 kg 550 g 635 g 80 kg 680 g 790 g La cantidad recomendada de pienso es por animal y día. Debe reducirse la cantidad de pienso si, por ejemplo, también das tentempiés a tu mascota. Asegúrate de que tu mascota siempre tenga agua fresca. Pienso completo para perros adultos Composición: proteína de pato seca 26 %; patata deshidratada 26 %; tapioca seca; grasas de aves; pulpa de remolacha; proteínas de patata; harina de algarroba; proteína de ave de corral hidrolizada; levaduras; proteína vegetal hidrolizada; sustancias minerales; membranas celulares de levadura 0,5 %; polvo de achicoria"
   },
   {
     "id": "prod-140",
@@ -3494,7 +3578,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/289-josera-marinesse-2-kg-gato-adulto-hipoalargenico-salmon.html",
     "description": "Alimento completo para gatos adultos, sus excepcionales ingredientes sólo incluyen proteínas derivadas de sabroso salmón, arroz y patatas, una nutrición perfecta para gatos con aparatos digestivos delicados.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 22,
+    "fatPct": 14,
+    "fiberPct": 2.5,
+    "ingredients": "patata deshidratada 38 %; proteína de salmón deshidratado 19 %; grasas de aves; tapioca seca; proteínas de patata; pulpa de remolacha; harina de algarroba; proteína de pescado hidrolizada; sustancias minerales; polvo de achicoria; hierbas, frutas 0,1 %"
   },
   {
     "id": "prod-141",
@@ -3540,7 +3628,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/320-josera-light-vital-125-kg-perro-adulto-reduccion-de-peso.html",
     "description": "Alimento Super Premium dietético  para perros adultos con sobrepeso o tendencia a la obesidad. Un alto contenido proteico que estimula el metabolismo  de su perro, reducido porcentaje de grasa y mayor aporte de fibra aumenta la sensacion de saciedad. La  L –Carnitina fomenta el metabolismo de las grasas y la Taurina estimulan la buena función cardíaca y aumentan la vitalidad. Ayuda al cuidado oseo y articular gracias al contenido de carne de mejillón de labios verdes de Nueva Zelanda (Condroprotector natural). No contiene saborizantes, conservantes ni preservantes artificiales, sin trigo, soja, azúcares ni productos lácteos añadidos. Producto libre de BHT/Etoxiquinas.  Calidad Alemana.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 29,
+    "fatPct": 7.5,
+    "fiberPct": 7,
+    "ingredients": "proteína de ave de corral seca 29,0 % (de la cual pollo 40,0 %); harina de guisante; cebada; lignocellulosa; pulpa de remolacha; proteína de ave de corral hidrolizada; grasas de aves; harina de algarroba; levadura parcialmente hidrolizada; sustancias minerales; hierbas, frutas; cáscara de semilla de psilio; carne deshidratada de mejillón verde de Nueva Zelanda (Perna canaliculus)"
   },
   {
     "id": "prod-143",
@@ -3563,7 +3655,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/322-josera-sensiplus-125-kg-perro-sensibilidad-digestiva.html",
     "description": "Receta Super Premium libre de gluten para perros sensibles de todas las razas. Formulado para nuestros fieles compañeros con exigencias especiales: un alimento completo liviano, sumamente tolerable con ingredientes seleccionados hace esta fórmula altamente digerible, reduciendo la tensión de un sistema digestivo sensible. Un placer saludable con sabrosa carne de aves y arroz. Contiene vitaminas y ácidos grasos para una piel sana y un pelaje brillante. No contiene saborizantes, conservantes ni preservantes artificiales, sin trigo, soja, azúcares o productos lácteos añadidos. Producto libre de BHT/Etoxiquinas.  Calidad  Alemana.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 24,
+    "fatPct": 12,
+    "fiberPct": 2.3,
+    "ingredients": "de fácil digestión y alta calidad alivian un aparato digestivo sensible. La sabrosa proteína de pato y el arroz hacen que nuestro pienso para perros sensibles fácil de digerir y sin gluten sea todo un placer para todos los días. Además, la valiosa biotina también puede contribuir a una piel bonita y un pelo brillante. Gracias a su valor energético moderado, SensiPlus es ideal para perros con un nivel de actividad normal. Pienso para perros adultos sensibles de todos los tamaños y razas Receta sin gluten: ingredientes transformados de manera cuidadosa y altamente digestible Con un 79 % de proteína animal en la proteína total Con mucha biotina para una piel bonita y un pelo brillante Alta aceptación: también apto para perros quisquillosos Nuevo diseño, misma receta Ración diaria recomendada: Peso Actividad/día hasta 1 hora Actividad/día hasta 3 hora 5 kg 85 g 100 g 10 kg 145 g 170 g 20 kg 245 g 285 g 30 kg 330 g 385 g 40 kg 410 g 475 g 60 kg 555 g 645 g 80 kg 690 g 800 g La cantidad recomendada de pienso es por animal y día. Debe reducirse la cantidad de pienso si, por ejemplo, también das tentempiés a tu mascota. Asegúrate de que tu mascota siempre tenga agua fresca. Pienso completo para perros adultos Composición: proteína de ave de corral seca (aves 24,0 %, pato 4,0 %); maíz integral; arroz; grasas de aves; pulpa de remolacha; proteína de ave de corral hidrolizada; sustancias minerales; polvo de achicoria"
   },
   {
     "id": "prod-144",
@@ -3586,7 +3682,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/menu-de-productos/21002563-josera-high-protein-chicken-125-kg-perro-alto-rendimiento-.html",
     "description": "Alimento Super Premium  para perros adultos activos de todas las razas. Alto en proteínas (30% de proteínas totales). Una delicia libre de gluten para nuestros perros más activos. Alimentación de alto rendimiento para perros en crecimiento, deportistas, hembras gestantes y en lactancia.  Con proteína de aves de corral de alta calidad. Ayuda al cuidado de las articulaciones gracias al contenido de carne de mejillón de labios verdes de Nueva Zelanda (Perna canaliculus). No contiene saborizantes, conservantes ni preservantes artificiales, sin trigo, soja, azúcares o productos lácteos añadidos. Producto libre de BHT/Etoxiquinas. Calidad Alemana.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 30,
+    "fatPct": 21,
+    "fiberPct": 2,
+    "ingredients": "proteína de ave de corral seca 36,0 % (de la cual pollo 40,0 %); maíz integral; grasas de aves; arroz; pulpa de remolacha; proteína de ave de corral hidrolizada; sustancias minerales; aceite de salmón 0,8 %; polvo de achicoria; carne deshidratada de mejillón verde de Nueva Zelanda (Perna canaliculus)"
   },
   {
     "id": "prod-145",
@@ -3609,7 +3709,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/323-josicat-poultry-chicken-10-kg-gato-adulto-aves.html",
     "description": "JosiCat es un alimento completo para gatos adultos, en base a deliciosa carne de aves de corral. Gracias al contenido equilibrado de proteína y grasa es adecuado tanto para gatos con vida indoor como outodoor. Natural, delicioso y saludable. No contiene saborizantes, conservantes ni preservantes artificiales, sin soya, azúcares o productos lácteos añadidos. Producto libre de BHT/ Etoxiquinas. Calidad Alemana",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 28,
+    "fatPct": 9,
+    "fiberPct": 2.6,
+    "ingredients": "cereales; carne y derivados de animales (harina de carne de aves 25,0 %); derivados vegetales; pescado y derivados de pescado; aceites y grasas; minerales."
   },
   {
     "id": "prod-146",
@@ -3632,7 +3736,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/323-josicat-poultry-chicken-10-kg-gato-adulto-aves.html",
     "description": "JosiCat es un alimento completo para gatos adultos, en base a deliciosa carne de aves de corral. Gracias al contenido equilibrado de proteína y grasa es adecuado tanto para gatos con vida indoor como outodoor. Natural, delicioso y saludable. No contiene saborizantes, conservantes ni preservantes artificiales, sin soya, azúcares o productos lácteos añadidos. Producto libre de BHT/ Etoxiquinas. Calidad Alemana",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 32,
+    "fatPct": 18,
+    "fiberPct": 2.1,
+    "ingredients": "Proteína de ave de corral deshidratada, maíz integral, cebada, grasa de ave, proteína de ave de corral hidrolizada, pulpa de remolacha, proteína de animal hidrolizada (ave y pescado), 1% aceite de salmón 1%, minerales. • GERMAN QUALITY • GERMAN QUALITY • GERMAN QUALITY • GERMAN QUALITY • GERMAN QUALITY • 2 3 4 5 6 7 - 12 Las cantidades recomendadas son la ración diaria por animal, en base al peso ideal del animal. Estas son valores orientativos y deben adaptarse a la necesidadde alimentación y la actividad del animal. Siempre mantener agua fresca y limpia a libre disposición.En caso de gatas gestantes: por favor, ten en cuenta que las necesidades alimenticias durante la gestación dependen del número de gatitos. No obstante, debe evitarse a toda costa una sobrealimentación, debido a las posibles dificultades durante el parto y las molestias durante la lactancia.Para gatas lactantes: el alimento puede administrarse libremente («ad libitum») en caso necesario, ya que las necesidades de la gata dependen del número de gatitos y de la producción de leche. Fabricado por Josera petfood GmbH & Co. KG • Importado en Chile por Cooprinsem • Instagram @JoseraChileOficial"
   },
   {
     "id": "prod-147",
@@ -3655,7 +3763,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/323-josicat-poultry-chicken-10-kg-gato-adulto-aves.html",
     "description": "JosiCat es un alimento completo para gatos adultos, en base a deliciosa carne de aves de corral. Gracias al contenido equilibrado de proteína y grasa es adecuado tanto para gatos con vida indoor como outodoor. Natural, delicioso y saludable. No contiene saborizantes, conservantes ni preservantes artificiales, sin soya, azúcares o productos lácteos añadidos. Producto libre de BHT/ Etoxiquinas. Calidad Alemana",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 27,
+    "fatPct": 9,
+    "fiberPct": 2.7,
+    "ingredients": "Cereales; carnes y subproductos animales (proteína de pato seca 4,0%); subproductos de origen vegetal; pescados y subproductos de pescado; aceites y grasa de aves; sustancias minerales ADULTO Disponible en: 1,9Kg, 10 Kg En proporción al total de proteínas • GERMAN QUALITY • GERMAN QUALITY • GERMAN QUALITY • GERMAN QUALITY • GERMAN QUALITY • Peso Cantidad / 24 h 2 - 3 kg 3 - 4 kg 4 - 5 kg 5 - 7 kg Las cantidades recomendadas son la ración diaria por animal, enbase al peso ideal del animal. Estas son valores orientativos ydeben adaptarse a la necesidad de alimentación y la actividad delanimal. Siempre mantener agua fresca y limpia a libredisposición. Fabricado por Josera petfood GmbH & Co. KG • Importado en Chile por Cooprinsem • Instagram @JoseraChileOficial Ración diaria recomendada: Proteína Contenido de grasa Fibra bruta Ceniza bruta Calcio Fósforo Taurina energía metabolizable por kg energía metabolizable por kg % % % % % % mg/kg MJ kcal 27,0 9,0 2,7 7,3 1,55 1,15 1.000 14,6 3.494"
   },
   {
     "id": "prod-148",
@@ -3678,7 +3790,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/323-josicat-poultry-chicken-10-kg-gato-adulto-aves.html",
     "description": "JosiCat es un alimento completo para gatos adultos, en base a deliciosa carne de aves de corral. Gracias al contenido equilibrado de proteína y grasa es adecuado tanto para gatos con vida indoor como outodoor. Natural, delicioso y saludable. No contiene saborizantes, conservantes ni preservantes artificiales, sin soya, azúcares o productos lácteos añadidos. Producto libre de BHT/ Etoxiquinas. Calidad Alemana",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 27,
+    "fatPct": 9,
+    "fiberPct": 2.7,
+    "ingredients": "Cereales; carnes y subproductos animales (proteína de pato seca 4,0%); subproductos de origen vegetal; pescados y subproductos de pescado; aceites y grasa de aves; sustancias minerales ADULTO Disponible en: 1,9Kg, 10 Kg En proporción al total de proteínas • GERMAN QUALITY • GERMAN QUALITY • GERMAN QUALITY • GERMAN QUALITY • GERMAN QUALITY • Peso Cantidad / 24 h 2 - 3 kg 3 - 4 kg 4 - 5 kg 5 - 7 kg Las cantidades recomendadas son la ración diaria por animal, enbase al peso ideal del animal. Estas son valores orientativos ydeben adaptarse a la necesidad de alimentación y la actividad delanimal. Siempre mantener agua fresca y limpia a libredisposición. Fabricado por Josera petfood GmbH & Co. KG • Importado en Chile por Cooprinsem • Instagram @JoseraChileOficial Ración diaria recomendada: Proteína Contenido de grasa Fibra bruta Ceniza bruta Calcio Fósforo Taurina energía metabolizable por kg energía metabolizable por kg % % % % % % mg/kg MJ kcal 27,0 9,0 2,7 7,3 1,55 1,15 1.000 14,6 3.494"
   },
   {
     "id": "prod-149",
@@ -3701,7 +3817,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/323-josicat-poultry-chicken-10-kg-gato-adulto-aves.html",
     "description": "JosiCat es un alimento completo para gatos adultos, en base a deliciosa carne de aves de corral. Gracias al contenido equilibrado de proteína y grasa es adecuado tanto para gatos con vida indoor como outodoor. Natural, delicioso y saludable. No contiene saborizantes, conservantes ni preservantes artificiales, sin soya, azúcares o productos lácteos añadidos. Producto libre de BHT/ Etoxiquinas. Calidad Alemana",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 32,
+    "fatPct": 10,
+    "fiberPct": 4,
+    "ingredients": "Maíz integral, proteína de ave de corral seca, arroz, pulpa de remolacha, chicharrones, grasas de aves, proteína de ave de corral hidrolizada, proteína animal hidrolizada, lignocellulosa, proteína de salmón deshidratado, hígado de ave de corral deshidratado, sustancias minerales, polvo de achicoria"
   },
   {
     "id": "prod-150",
@@ -3724,7 +3844,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/323-josicat-poultry-chicken-10-kg-gato-adulto-aves.html",
     "description": "JosiCat es un alimento completo para gatos adultos, en base a deliciosa carne de aves de corral. Gracias al contenido equilibrado de proteína y grasa es adecuado tanto para gatos con vida indoor como outodoor. Natural, delicioso y saludable. No contiene saborizantes, conservantes ni preservantes artificiales, sin soya, azúcares o productos lácteos añadidos. Producto libre de BHT/ Etoxiquinas. Calidad Alemana",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 32,
+    "fatPct": 10,
+    "fiberPct": 4,
+    "ingredients": "Maíz integral, proteína de ave de corral seca, arroz, pulpa de remolacha, chicharrones, grasas de aves, proteína de ave de corral hidrolizada, proteína animal hidrolizada, lignocellulosa, proteína de salmón deshidratado, hígado de ave de corral deshidratado, sustancias minerales, polvo de achicoria"
   },
   {
     "id": "prod-151",
@@ -3747,7 +3871,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/324-josidog-regular-18-kgs-perro-adulto.html",
     "description": "Es un alimento versátil adecuado para perros adultos de todas las razas con actividad normal. Formulado para mantener al perro en forma y saludable. REGULAR tiene la mejor relación Calidad-Precio de los alimentos de su categoría.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 25,
+    "fatPct": 13,
+    "fiberPct": 2.3,
+    "ingredients": "maíz integral; proteína de ave de corral seca; arroz; grasas de aves; pulpa de remolacha; proteína de ave de corral hidrolizada; sustancias minerales; polvo de achicoria; carne deshidratada de mejillón verde de Nueva Zelanda (Perna canaliculus). Un paquete único de ingredientes activos para apoyar la forma física y el bienesta r de su perro . La cantidad recomendada de comida es por mascota por día. peso del perro adulto. En el perro en crecimiento, se debe buscar una tasa de crecimiento óptima mediante una ingesta de energía moderada. Si su perro es demasiado grande y demasiado pesado para su edad, se recomienda reducir la cantidad de adulto 24h Edad en meses 2 3 4 5 - 6 7-12 13 - 20 5 kg 40 - 60 g 60 - 80 g 90 - 110 g 120 - 130 g 10 kg 100 - 120 g 150 - 170 g 170 - 180 g 180 - 200 g 20 kg 150 - 180 g 250 - 300 g 310 - 390 g 330 - 400 g 320 - 380 g 30 kg 200 - 240 g 300 - 360 g 380 - 460 g 420 - 490 g 390 - 440 g 40 kg 260 - 320 g 400 - 440 g 410 - 530 g 490 - 560 g 480 - 540 g 60 kg 300 - 360 g 490 - 560 g 580 - 720 g 700 - 850 g 780 - 880 g 710 - 800 g 80 kg 410 - 480 g 560 - 660 g 700 - 810 g 840 - 950 g 910 - 1000 g 800 - 890 g Disponible en: 18 kg TAMAÑO ORIGINAL RECETA SIN GLUTENLAS FUENTES DE PROTEÍNAS 09/2019 Fabricado por Josera Petfood GmbH & Co - Importado y distribuido en Chile por Cooprinsem Ltda - www.josera.cl - contacto@josera.cl"
   },
   {
     "id": "prod-152",
@@ -3770,7 +3898,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/324-josidog-regular-18-kgs-perro-adulto.html",
     "description": "Es un alimento versátil adecuado para perros adultos de todas las razas con actividad normal. Formulado para mantener al perro en forma y saludable. REGULAR tiene la mejor relación Calidad-Precio de los alimentos de su categoría.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 25,
+    "fatPct": 15,
+    "fiberPct": 2.6,
+    "ingredients": "maíz integral; proteína de ave de corral seca; grasas de aves; pulpa de remolacha; harina de carne y huesos; proteína animal hidrolizada; sustancias minerales; polvo de achicoria; carne deshidratada de mejillón verde de Nueva Zelanda (Perna canaliculus). Un paquete único de ingredientes activos para apoyar la forma física y el bienesta r de su perro . 80% 20% / 24h de para 5 kg 70 g 100 g 10 kg 110 g 170 g 20 kg 180 g 300 g 30 kg 240 g 390 g 40 kg 300 g 500 g 60 kg 400 g 660 g 80 kg 510 g 810 g Disponible en: 18 kg TAMAÑO ORIGINAL RECETA SIN GLUTEN La cantidad recomendada de comida es por mascota por día. LAS FUENTES DE PROTEÍNAS 09/2019 Fabricado por Josera Petfood GmbH & Co - Importado y distribuido en Chile por Cooprinsem Ltda - www.josera.cl - contacto@josera.cl"
   },
   {
     "id": "prod-153",
@@ -3793,7 +3925,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/324-josidog-regular-18-kgs-perro-adulto.html",
     "description": "Es un alimento versátil adecuado para perros adultos de todas las razas con actividad normal. Formulado para mantener al perro en forma y saludable. REGULAR tiene la mejor relación Calidad-Precio de los alimentos de su categoría.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 29,
+    "fatPct": 17,
+    "fiberPct": 2,
+    "ingredients": "proteína de ave de corral seca; maíz integral; arroz; grasas de aves; pulpa de remolacha; ceite de linaza; proteína de ave de corral hidrolizada; sustancias minerales; polvo de achicoria; carne deshidratada de mejillón verde de Nueva Zelanda (Perna canaliculus). Un paquete único de ingredientes activos para apoyar la forma física y el bienestar de su perro. * La cantidad recomendada de comida es por masc ** Perras lactantes: La alimentación puede estar libremente disponible (ad libitum), ya que la necesidad de la perra depende de la cantidad de cachorros y la producción de leche. Perras en gestación: Tenga en cuenta que en los últimos tercios de la gestación los requisitos d alimentación dependen del tamaño de la raza y el numero de cachorros, sin embargo se debe evitar una sobrealimentación de la perra en relación a cualquier adulto 24h** Perra 6 a 9 semana de embarazo adulto 24h* Cachorro lactado Edad en semanas 3 - 4 5 - 8 >8 5 kg 130 - 140 g 5 kg 20 - 35 g 35 - 55 g JosiDog Junior, JosiDog Junior Sensitive 10 kg 220 - 240 g 10 kg 40 - 80 g 80 - 130 g 20 kg 410 - 430 g 20 kg 60 - 110 g 130 - 220 g 30 kg 570 - 600 g 30 kg 80 - 200 g 200 - 290 g 40 kg 710 - 740 g 40 kg 100 - 250 g 240 - 400 g 60 kg 1000 - 1080 g 60 kg 110 - 270 g 290 - 530 g 80 kg 1190 - 1320 g 80 kg 140 - 330 g 330 - 470 g 75% 25% RECET A SIN GLUTE NLAS FUENTES DE PROTEÍNAS 09/2019 Fabricado por Josera Petfood GmbH & Co - Importado y distribuido en Chile por Cooprinsem Ltda - www.josera.cl - contacto@josera.cl PUPPY TAMAÑO ORIGINAL FAMILY ( 29 / 17) Alimento de alta energía para perra y cachorros Un alto contenido de valio sos antioxidantes apoya a las células en la protección contra los radicales libres La tau rina ayuda a manten er la funci ón cardíaca, visu al y repro ducto ra. La inulina prebiótica promueve la ra intestinal Glucosaminoglicanos (GAG) son un componente natural del cartílago articular"
   },
   {
     "id": "prod-154",
@@ -3816,7 +3952,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/324-josidog-regular-18-kgs-perro-adulto.html",
     "description": "Es un alimento versátil adecuado para perros adultos de todas las razas con actividad normal. Formulado para mantener al perro en forma y saludable. REGULAR tiene la mejor relación Calidad-Precio de los alimentos de su categoría.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 25,
+    "fatPct": 17,
+    "fiberPct": 2,
+    "ingredients": "proteína de ave de corral seca; maíz integral; arroz; grasas de aves; pulpa de remolacha; proteína de ave de corral hidrolizada; sustancias minerales; polvo de achicoria; carne deshidratada de mejillón verde de Nueva Zelanda (Perna canaliculus). Un paquete único de ingredientes activos para apoyar la forma física y el bienesta r de su perro . TAMAÑO ORIGINAL RECETA SIN GLUTEN La cantidad recomendada de comida es por mascota por día. LAS FUENTES DE PROTEÍNAS 09/2019 Fabricado por Josera Petfood GmbH & Co - Importado y distribuido en Chile por Cooprinsem Ltda - www.josera.cl - contacto@josera.cl"
   },
   {
     "id": "prod-155",
@@ -3839,7 +3979,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/324-josidog-regular-18-kgs-perro-adulto.html",
     "description": "Es un alimento versátil adecuado para perros adultos de todas las razas con actividad normal. Formulado para mantener al perro en forma y saludable. REGULAR tiene la mejor relación Calidad-Precio de los alimentos de su categoría.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 21,
+    "fatPct": 8,
+    "fiberPct": 3.3,
+    "ingredients": "activos que favorece la forma física y el bienestar. Betarraga No todos los amigos caninos corren por los campos todo el tiempo, algunos preﬁeren tomárselo con calma. JosiDog Solido está hecho solo para ellos. Una receta equilibrada y sabrosa de composición baja en energía, ideal para perros mayores o con sobrepeso. Alimento completo para perros adultos con niveles bajos de actividad Una receta deliciosamente ligera, equilibrada y bien tolerada El 66 % de la proteína es de origen animal • • • • • • CROQUETA FUENTES DE PROTEÍNA Fabricado por Josera Petfood GmbH & Co • Importado y distribuido en Chile por Cooprinsem Ltda • www.josera.cl • contacto@josera.cl • @JoseraChileOﬁcial"
   },
   {
     "id": "prod-156",
