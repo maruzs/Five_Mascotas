@@ -3,219 +3,911 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
 ---
 
 <AdminLayout title="FIVE Admin — Editor de Imágenes y Fichas" activeNav="imagenes" breadcrumbTitle="Editor de Imágenes y Fichas">
-  <!-- Page Header -->
-  <div class="admin-page-header">
-    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
-      <div>
-        <h1>Editor de Imágenes y Fichas</h1>
-        <p>Corrige imágenes asignadas, la categoría de mascota (Perros/Gatos) y el nombre de cada producto directamente desde aquí.</p>
-      </div>
-      <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <span id="badge-problemas" style="background:#fef3c7; color:#92400e; font-size:12.5px; font-weight:700; padding:5px 12px; border-radius:20px; border:1px solid #fcd34d;">
-          Cargando...
-        </span>
+  <div class="pim-img-editor" id="pim-imagenes-page">
+    <div class="admin-page-header">
+      <div class="pim-header-top">
+        <div>
+          <h1>Editor de Imágenes y Fichas</h1>
+          <p>Corrige la foto asignada y la categoría de mascota de cada producto. Los cambios se acumulan y se guardan en un solo paso.</p>
+        </div>
         <button type="button" class="admin-btn primary" id="btn-guardar-todo" disabled>
-          Guardar todos los cambios
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+            <polyline points="7 3 7 8 15 8"></polyline>
+          </svg>
+          <span id="save-label-header">Guardar cambios</span>
         </button>
       </div>
-    </div>
-  </div>
 
-  <!-- Filters -->
-  <div class="admin-card" style="margin-bottom:20px; padding:14px 20px;">
-    <div style="display:flex; flex-wrap:wrap; gap:12px; align-items:center;">
-      <input type="search" id="filtro-buscar" class="admin-search-input" placeholder="Buscar por nombre, marca..." style="flex:1; min-width:200px;" />
-      <select id="filtro-mascota" class="admin-select">
-        <option value="todos">Todas las mascotas</option>
-        <option value="Perros">Perros</option>
-        <option value="Gatos">Gatos</option>
-        <option value="Perros Gatos">Perros y Gatos</option>
-      </select>
-      <select id="filtro-categoria" class="admin-select">
-        <option value="todos">Todas las categorías</option>
-        <option value="Alimentos">Alimentos</option>
-        <option value="Farmacia">Farmacia</option>
-        <option value="Accesorios">Accesorios</option>
-        <option value="Higiene">Higiene</option>
-        <option value="Snacks">Snacks</option>
-      </select>
-      <select id="filtro-imagen" class="admin-select">
-        <option value="todos">Todas las imágenes</option>
-        <option value="sin-imagen">Sin imagen real (placeholders)</option>
-        <option value="con-imagen">Con imagen asignada</option>
-      </select>
-      <span id="conteo-visibles" style="font-size:13px; color:#6c757d; font-weight:600; white-space:nowrap;">— productos</span>
-    </div>
-  </div>
-
-  <!-- Products Grid -->
-  <div id="grid-productos" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap:16px;">
-    <!-- Populated by JS -->
-  </div>
-
-  <!-- Empty State -->
-  <div id="estado-vacio" style="display:none; text-align:center; padding:60px 20px; color:#6c757d;">
-    <div style="font-size:40px; margin-bottom:12px;">🔍</div>
-    <p style="font-size:15px; font-weight:600;">No se encontraron productos con esos filtros.</p>
-  </div>
-
-  <!-- Skeleton loader -->
-  <div id="skeleton-loader" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap:16px;">
-    {Array.from({ length: 12 }).map(() => (
-      <div style="background:#f1f5f9; border-radius:12px; height:340px; animation: pulse 1.5s ease-in-out infinite;" />
-    ))}
-  </div>
-
-  <!-- IMAGE PICKER MODAL -->
-  <div id="modal-imagen" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:1000; align-items:flex-start; justify-content:center; padding:40px 16px; overflow-y:auto;">
-    <div style="background:#fff; border-radius:16px; width:100%; max-width:900px; box-shadow:0 20px 60px rgba(0,0,0,0.25); overflow:hidden;">
-      <!-- Modal Header -->
-      <div style="padding:20px 24px; border-bottom:1px solid #e9ecef; display:flex; justify-content:space-between; align-items:center;">
-        <div>
-          <h3 style="margin:0; font-size:16px; font-weight:800; color:#1a1a2e;" id="modal-titulo-prod">Seleccionar imagen</h3>
-          <p style="margin:4px 0 0; font-size:12px; color:#6c757d;" id="modal-sub-prod"></p>
+      <div class="pim-stats">
+        <div class="pim-stat">
+          <span class="pim-stat-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+          </span>
+          <span class="pim-stat-text">
+            <strong class="pim-stat-value" id="stat-total-value">—</strong>
+            <span class="pim-stat-label">Productos en catálogo</span>
+          </span>
         </div>
-        <button id="btn-cerrar-modal" style="background:none; border:none; font-size:28px; color:#6c757d; cursor:pointer; line-height:1; padding:4px 8px;">&times;</button>
-      </div>
 
-      <!-- Search + Upload inside modal -->
-      <div style="padding:16px 24px; border-bottom:1px solid #f1f5f9; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-        <input type="search" id="modal-buscar" class="admin-search-input" placeholder="Buscar imagen por nombre..." style="flex:1; min-width:160px;" />
-        <label style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; background:#7025a8; color:#fff; border-radius:8px; cursor:pointer; font-size:12.5px; font-weight:700;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          Subir nueva
-          <input type="file" id="input-upload-nueva" accept="image/png,image/jpeg,image/webp" style="display:none;" />
-        </label>
-      </div>
+        <button type="button" class="pim-stat is-warning is-clickable" id="stat-placeholder" title="Filtrar productos sin foto real">
+          <span class="pim-stat-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+          </span>
+          <span class="pim-stat-text">
+            <strong class="pim-stat-value" id="stat-placeholder-value">—</strong>
+            <span class="pim-stat-label">Sin foto real · clic para filtrar</span>
+          </span>
+        </button>
 
-      <!-- Image Grid inside modal -->
-      <div id="modal-grid-imagenes" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(120px, 1fr)); gap:10px; padding:20px 24px; max-height:480px; overflow-y:auto;">
-        <!-- Populated by JS -->
-      </div>
-
-      <div style="padding:16px 24px; border-top:1px solid #e9ecef; display:flex; justify-content:flex-end; gap:10px;">
-        <button class="admin-btn secondary" id="btn-quitar-imagen">Quitar imagen (dejar vacío)</button>
-        <button class="admin-btn secondary" id="btn-cancelar-modal">Cancelar</button>
+        <div class="pim-stat is-changes">
+          <span class="pim-stat-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+            </svg>
+          </span>
+          <span class="pim-stat-text">
+            <strong class="pim-stat-value" id="stat-changes-value">—</strong>
+            <span class="pim-stat-label">Cambios pendientes</span>
+          </span>
+        </div>
       </div>
     </div>
+
+    <div class="admin-card pim-toolbar-card">
+      <div class="pim-toolbar">
+        <div class="pim-search-wrap">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="search" id="filtro-buscar" class="admin-search-input" placeholder="Buscar por nombre, marca o formato…" autocomplete="off" />
+        </div>
+        <select id="filtro-mascota" class="admin-select" aria-label="Filtrar por mascota">
+          <option value="todos">Todas las mascotas</option>
+          <option value="Perros">Perros</option>
+          <option value="Gatos">Gatos</option>
+          <option value="Perros Gatos">Perros y Gatos</option>
+        </select>
+        <select id="filtro-categoria" class="admin-select" aria-label="Filtrar por categoría">
+          <option value="todos">Todas las categorías</option>
+          <option value="Alimentos">Alimentos</option>
+          <option value="Farmacia">Farmacia</option>
+          <option value="Accesorios">Accesorios</option>
+          <option value="Higiene">Higiene</option>
+          <option value="Snacks">Snacks</option>
+        </select>
+        <select id="filtro-imagen" class="admin-select" aria-label="Filtrar por estado de imagen">
+          <option value="todos">Todas las imágenes</option>
+          <option value="sin-imagen">Sin foto real</option>
+          <option value="con-imagen">Con foto asignada</option>
+        </select>
+        <button type="button" class="admin-btn secondary" id="btn-limpiar-filtros" hidden>Limpiar filtros</button>
+        <span class="pim-toolbar-count" id="conteo-visibles">— productos</span>
+      </div>
+    </div>
+
+    <div id="estado-carga" class="pim-grid" aria-hidden="true">
+      {Array.from({ length: 12 }).map(() => (
+        <div class="pim-skeleton">
+          <div class="pim-skeleton-img"></div>
+          <div class="pim-skeleton-body">
+            <div class="pim-skeleton-line w60"></div>
+            <div class="pim-skeleton-line w90"></div>
+            <div class="pim-skeleton-line w40"></div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div id="estado-error" class="admin-card pim-state" hidden>
+      <span class="pim-state-icon is-error">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </span>
+      <h3>No se pudo cargar el catálogo</h3>
+      <p>Hubo un problema al conectar con el servidor. <span id="error-detalle"></span></p>
+      <button type="button" class="admin-btn primary" id="btn-reintentar">Reintentar</button>
+    </div>
+
+    <div id="estado-vacio" class="admin-card pim-state" hidden>
+      <span class="pim-state-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          <line x1="8" y1="11" x2="14" y2="11"></line>
+        </svg>
+      </span>
+      <h3>Sin resultados</h3>
+      <p>No hay productos que coincidan con los filtros seleccionados.</p>
+      <button type="button" class="admin-btn secondary" id="btn-limpiar-filtros-vacio">Limpiar filtros</button>
+    </div>
+
+    <div id="grid-productos" class="pim-grid" hidden></div>
+
+    <div id="barra-cambios" class="pim-savebar" hidden>
+      <span class="pim-savebar-info">
+        <strong class="pim-savebar-count" id="savebar-count">0</strong>
+        <span id="savebar-text">cambios pendientes</span>
+      </span>
+      <span class="pim-savebar-actions">
+        <button type="button" class="admin-btn secondary" id="btn-descartar">Descartar</button>
+        <button type="button" class="admin-btn primary" id="btn-guardar-savebar"><span id="save-label-bar">Guardar cambios</span></button>
+      </span>
+    </div>
+
+    <div id="modal-imagen" class="admin-modal-backdrop" hidden>
+      <div class="admin-modal pim-modal" role="dialog" aria-modal="true" aria-labelledby="modal-titulo-prod">
+        <div class="admin-modal-head">
+          <div>
+            <h3 id="modal-titulo-prod">Seleccionar imagen</h3>
+            <span class="admin-card-subtitle" id="modal-sub-prod"></span>
+          </div>
+          <button type="button" class="pim-icon-btn" id="btn-cerrar-modal" aria-label="Cerrar">&times;</button>
+        </div>
+
+        <div class="pim-modal-toolbar">
+          <input type="search" id="modal-buscar" class="admin-search-input" placeholder="Buscar packshot por nombre de archivo…" autocomplete="off" />
+          <label class="admin-btn primary pim-upload-label">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            <span id="upload-label-text">Subir imagen</span>
+            <input type="file" id="input-upload-nueva" accept="image/png,image/jpeg,image/webp" hidden />
+          </label>
+        </div>
+
+        <p class="pim-modal-count" id="modal-conteo"></p>
+
+        <div id="modal-grid-imagenes" class="pim-modal-grid"></div>
+
+        <div class="admin-modal-foot">
+          <button type="button" class="admin-btn danger" id="btn-quitar-imagen">Usar imagen genérica</button>
+          <button type="button" class="admin-btn secondary" id="btn-cancelar-modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="pim-toast" class="pim-toast" role="status" aria-live="polite" hidden></div>
   </div>
 
-  <style>
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
+  <style is:global>
+    #pim-imagenes-page {
+      padding-bottom: 90px;
     }
-    .prod-card {
-      background: #fff;
-      border-radius: 12px;
-      border: 1.5px solid #e9ecef;
-      overflow: hidden;
-      transition: box-shadow 0.2s ease, border-color 0.2s ease;
+
+    #pim-imagenes-page .pim-header-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    #pim-imagenes-page .pim-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+      max-width: 780px;
+    }
+
+    #pim-imagenes-page .pim-stat {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: #ffffff;
+      border: 1px solid var(--admin-border);
+      border-radius: 14px;
+      text-align: left;
+      font-family: inherit;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    #pim-imagenes-page .pim-stat.is-clickable {
+      cursor: pointer;
+    }
+
+    #pim-imagenes-page .pim-stat.is-clickable:hover {
+      border-color: #f0b27a;
+      box-shadow: 0 4px 14px rgba(230, 126, 34, 0.1);
+    }
+
+    #pim-imagenes-page .pim-stat.is-warning.is-active {
+      border-color: #f0b27a;
+      box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.14);
+    }
+
+    #pim-imagenes-page .pim-stat-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--admin-bg);
+      color: var(--admin-primary);
+      flex-shrink: 0;
+    }
+
+    #pim-imagenes-page .pim-stat.is-warning .pim-stat-icon {
+      background: var(--admin-accent-orange-soft);
+      color: var(--admin-accent-orange);
+    }
+
+    #pim-imagenes-page .pim-stat.is-changes .pim-stat-icon {
+      background: var(--admin-primary-soft);
+      color: var(--admin-primary);
+    }
+
+    #pim-imagenes-page .pim-stat-text {
       display: flex;
       flex-direction: column;
+      min-width: 0;
     }
-    .prod-card:hover {
-      box-shadow: 0 6px 24px rgba(0,0,0,0.08);
-      border-color: #d0a8f0;
+
+    #pim-imagenes-page .pim-stat-value {
+      font-size: 20px;
+      font-weight: 850;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+      color: var(--admin-text-main);
     }
-    .prod-card.tiene-cambio {
-      border-color: #f59e0b;
-      box-shadow: 0 0 0 2px rgba(245,158,11,0.15);
+
+    #pim-imagenes-page .pim-stat-label {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--admin-text-muted);
+      margin-top: 2px;
     }
-    .prod-img-zone {
+
+    #pim-imagenes-page .pim-toolbar-card {
+      margin-bottom: 20px;
+      padding: 14px 18px;
+    }
+
+    #pim-imagenes-page .pim-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    #pim-imagenes-page .pim-search-wrap {
       position: relative;
-      background: #f8fafc;
+      flex: 1 1 240px;
+      min-width: 190px;
+    }
+
+    #pim-imagenes-page .pim-search-wrap svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #adb5bd;
+      pointer-events: none;
+    }
+
+    #pim-imagenes-page .pim-search-wrap .admin-search-input {
+      padding-left: 38px;
+    }
+
+    #pim-imagenes-page .pim-toolbar .admin-select {
+      min-width: 148px;
+    }
+
+    #pim-imagenes-page .pim-toolbar-count {
+      margin-left: auto;
+      font-size: 12.5px;
+      font-weight: 650;
+      color: var(--admin-text-muted);
+      white-space: nowrap;
+    }
+
+    #pim-imagenes-page .admin-btn {
+      cursor: pointer;
+    }
+
+    #pim-imagenes-page .admin-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    #pim-imagenes-page .pim-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    #pim-imagenes-page .pim-card {
+      background: #ffffff;
+      border: 1.5px solid var(--admin-border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+    }
+
+    #pim-imagenes-page .pim-card:hover {
+      transform: translateY(-2px);
+      border-color: #dcc6ef;
+      box-shadow: 0 10px 26px rgba(17, 24, 39, 0.08);
+    }
+
+    #pim-imagenes-page .pim-card.is-changed {
+      border-color: #f0b429;
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.14);
+    }
+
+    #pim-imagenes-page .pim-card-img {
+      position: relative;
       aspect-ratio: 1 / 1;
+      background: radial-gradient(circle at 50% 38%, #ffffff 0%, #f5f7fa 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       overflow: hidden;
+      outline: none;
     }
-    .prod-img-zone img {
-      max-width: 90%;
-      max-height: 90%;
+
+    #pim-imagenes-page .pim-card-img:focus-visible {
+      box-shadow: inset 0 0 0 3px rgba(112, 37, 168, 0.35);
+    }
+
+    #pim-imagenes-page .pim-card-img img {
+      max-width: 84%;
+      max-height: 84%;
+      width: auto;
+      height: auto;
       object-fit: contain;
-      transition: transform 0.2s ease;
+      transition: transform 0.25s ease;
+      filter: drop-shadow(0 6px 14px rgba(17, 24, 39, 0.1));
     }
-    .prod-img-zone:hover img {
-      transform: scale(1.04);
+
+    #pim-imagenes-page .pim-card:hover .pim-card-img img {
+      transform: scale(1.045);
     }
-    .prod-img-overlay {
+
+    #pim-imagenes-page .pim-card-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(112,37,168,0.7);
-      color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      font-size: 13px;
-      font-weight: 700;
+      gap: 8px;
+      background: rgba(112, 37, 168, 0.78);
+      color: #ffffff;
+      font-size: 12.5px;
+      font-weight: 750;
+      letter-spacing: 0.2px;
       opacity: 0;
-      transition: opacity 0.2s ease;
+      transition: opacity 0.18s ease;
     }
-    .prod-img-zone:hover .prod-img-overlay {
+
+    #pim-imagenes-page .pim-card-img:hover .pim-card-overlay {
       opacity: 1;
     }
-    .badge-placeholder {
+
+    #pim-imagenes-page .pim-badge {
       position: absolute;
-      top: 8px;
-      right: 8px;
-      background: #fee2e2;
-      color: #dc2626;
+      top: 10px;
+      left: 10px;
       font-size: 10px;
       font-weight: 800;
-      padding: 3px 7px;
-      border-radius: 6px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      letter-spacing: 0.2px;
+      backdrop-filter: blur(4px);
+      z-index: 2;
     }
-    .prod-body {
-      padding: 12px 14px;
-      flex: 1;
+
+    #pim-imagenes-page .pim-badge-alert {
+      background: rgba(254, 226, 226, 0.95);
+      color: #dc2626;
+      border: 1px solid #fecaca;
+    }
+
+    #pim-imagenes-page .pim-badge-change {
+      left: auto;
+      right: 10px;
+      background: rgba(254, 243, 199, 0.95);
+      color: #b45309;
+      border: 1px solid #fde68a;
+    }
+
+    #pim-imagenes-page .pim-card-body {
+      padding: 14px 16px 16px;
       display: flex;
       flex-direction: column;
       gap: 8px;
-    }
-    .pet-toggle {
-      display: flex;
-      gap: 4px;
-    }
-    .pet-btn {
       flex: 1;
-      padding: 5px 6px;
-      border-radius: 6px;
-      border: 1.5px solid #e2e8f0;
-      background: #f8fafc;
-      color: #6c757d;
+    }
+
+    #pim-imagenes-page .pim-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    #pim-imagenes-page .pim-card-brand {
+      font-size: 10.5px;
+      font-weight: 800;
+      color: var(--admin-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    #pim-imagenes-page .pim-card-id {
+      font-size: 10px;
+      color: #adb5bd;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      flex-shrink: 0;
+    }
+
+    #pim-imagenes-page .pim-card-name {
+      margin: 0;
+      font-size: 13.5px;
+      font-weight: 750;
+      color: var(--admin-text-main);
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      min-height: 2.7em;
+    }
+
+    #pim-imagenes-page .pim-card-meta {
+      margin: 0;
       font-size: 11.5px;
+      color: var(--admin-text-muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    #pim-imagenes-page .pim-card-meta span {
+      color: #ced4da;
+      margin-inline: 2px;
+    }
+
+    #pim-imagenes-page .pim-pet-toggle {
+      margin-top: auto;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 4px;
+      padding: 4px;
+      background: var(--admin-bg);
+      border: 1px solid var(--admin-border-subtle);
+      border-radius: 10px;
+    }
+
+    #pim-imagenes-page .pim-pet-btn {
+      border: 0;
+      background: transparent;
+      border-radius: 7px;
+      padding: 6px 2px;
+      font-size: 10.5px;
       font-weight: 700;
+      font-family: inherit;
+      color: var(--admin-text-muted);
       cursor: pointer;
-      text-align: center;
+      white-space: nowrap;
       transition: all 0.15s ease;
     }
-    .pet-btn.active-perros { background: #dbeafe; color: #1d4ed8; border-color: #93c5fd; }
-    .pet-btn.active-gatos { background: #f3e8ff; color: #7025a8; border-color: #c4b5fd; }
-    .pet-btn.active-ambos { background: #dcfce7; color: #16a34a; border-color: #86efac; }
-    .modal-img-item {
-      border-radius: 10px;
-      border: 2px solid #e2e8f0;
-      padding: 6px;
-      cursor: pointer;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
-      background: #f8fafc;
+
+    #pim-imagenes-page .pim-pet-btn:hover {
+      background: #ffffff;
+      color: var(--admin-text-main);
+    }
+
+    #pim-imagenes-page .pim-pet-btn.is-active {
+      background: #ffffff;
+      color: var(--admin-primary);
+      box-shadow: 0 1px 4px rgba(17, 24, 39, 0.12);
+    }
+
+    #pim-imagenes-page .pim-skeleton {
+      background: #ffffff;
+      border: 1px solid var(--admin-border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    #pim-imagenes-page .pim-skeleton-img {
+      aspect-ratio: 1 / 1;
+      background: linear-gradient(90deg, #f1f3f5 25%, #e9ecef 37%, #f1f3f5 63%);
+      background-size: 400% 100%;
+      animation: pim-shimmer 1.4s ease infinite;
+    }
+
+    #pim-imagenes-page .pim-skeleton-body {
+      padding: 14px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    #pim-imagenes-page .pim-skeleton-line {
+      height: 11px;
+      border-radius: 6px;
+      background: linear-gradient(90deg, #f1f3f5 25%, #e9ecef 37%, #f1f3f5 63%);
+      background-size: 400% 100%;
+      animation: pim-shimmer 1.4s ease infinite;
+    }
+
+    #pim-imagenes-page .w90 { width: 90%; }
+    #pim-imagenes-page .w60 { width: 60%; }
+    #pim-imagenes-page .w40 { width: 40%; }
+
+    @keyframes pim-shimmer {
+      0% { background-position: 100% 0; }
+      100% { background-position: 0 0; }
+    }
+
+    #pim-imagenes-page .pim-state {
+      padding: 56px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
       text-align: center;
     }
-    .modal-img-item:hover { border-color: #7025a8; box-shadow: 0 2px 8px rgba(112,37,168,0.15); }
-    .modal-img-item.seleccionada { border-color: #7025a8; background: #f3e8ff; box-shadow: 0 0 0 3px rgba(112,37,168,0.2); }
-    .modal-img-item img { width: 100%; aspect-ratio: 1; object-fit: contain; border-radius: 6px; }
-    .modal-img-item span { display: block; font-size: 9px; color: #6c757d; margin-top: 4px; word-break: break-all; line-height: 1.3; }
+
+    #pim-imagenes-page .pim-state-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--admin-bg);
+      color: var(--admin-text-muted);
+      margin-bottom: 6px;
+    }
+
+    #pim-imagenes-page .pim-state-icon.is-error {
+      background: var(--admin-accent-red-soft);
+      color: var(--admin-accent-red);
+    }
+
+    #pim-imagenes-page .pim-state h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    #pim-imagenes-page .pim-state p {
+      margin: 0 0 10px;
+      max-width: 440px;
+      font-size: 13.5px;
+      color: var(--admin-text-muted);
+    }
+
+    #pim-imagenes-page .pim-savebar {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 12px);
+      z-index: 1500;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      padding: 12px 16px 12px 20px;
+      background: #1a1a2e;
+      color: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 18px 40px rgba(17, 24, 39, 0.28);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    #pim-imagenes-page .pim-savebar.is-visible {
+      opacity: 1;
+      transform: translate(-50%, 0);
+      pointer-events: auto;
+    }
+
+    #pim-imagenes-page .pim-savebar-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    #pim-imagenes-page .pim-savebar-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 26px;
+      height: 26px;
+      padding-inline: 6px;
+      border-radius: 999px;
+      background: var(--admin-primary);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    #pim-imagenes-page .pim-savebar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #pim-imagenes-page .pim-savebar .admin-btn.secondary {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+    }
+
+    #pim-imagenes-page .pim-savebar .admin-btn.secondary:hover {
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    #pim-imagenes-page .pim-icon-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      border: 1px solid var(--admin-border);
+      background: #ffffff;
+      color: var(--admin-text-muted);
+      font-size: 20px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    #pim-imagenes-page .pim-icon-btn:hover {
+      background: var(--admin-bg);
+      color: var(--admin-text-main);
+    }
+
+    #pim-imagenes-page .pim-modal {
+      max-width: 980px;
+      height: min(88vh, 780px);
+    }
+
+    #pim-imagenes-page .pim-modal .admin-modal-head {
+      padding: 18px 24px;
+    }
+
+    #pim-imagenes-page .pim-modal-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 14px 24px;
+      background: #fafbfc;
+      border-bottom: 1px solid var(--admin-border-subtle);
+    }
+
+    #pim-imagenes-page .pim-modal-toolbar .admin-search-input {
+      flex: 1 1 220px;
+    }
+
+    #pim-imagenes-page .pim-upload-label {
+      margin-left: auto;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    #pim-imagenes-page .pim-modal-count {
+      margin: 0;
+      padding: 10px 24px 0;
+      font-size: 12px;
+      font-weight: 650;
+      color: var(--admin-text-muted);
+    }
+
+    #pim-imagenes-page .pim-modal-grid {
+      flex: 1;
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+      gap: 12px;
+      align-content: start;
+      padding: 16px 24px 20px;
+    }
+
+    #pim-imagenes-page .pim-modal-empty {
+      grid-column: 1 / -1;
+      margin: 0;
+      padding: 40px 0;
+      text-align: center;
+      font-size: 13px;
+      color: var(--admin-text-muted);
+    }
+
+    #pim-imagenes-page .pim-img-option {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 8px;
+      background: #ffffff;
+      border: 1.5px solid var(--admin-border);
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+    }
+
+    #pim-imagenes-page .pim-img-option:hover {
+      border-color: var(--admin-primary);
+      box-shadow: 0 4px 12px rgba(112, 37, 168, 0.14);
+      transform: translateY(-1px);
+    }
+
+    #pim-imagenes-page .pim-img-option.is-selected {
+      border-color: var(--admin-primary);
+      background: var(--admin-primary-soft);
+      box-shadow: 0 0 0 3px rgba(112, 37, 168, 0.18);
+    }
+
+    #pim-imagenes-page .pim-img-option img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+      background: #ffffff;
+      border-radius: 8px;
+    }
+
+    #pim-imagenes-page .pim-img-option-name {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      font-size: 9.5px;
+      line-height: 1.25;
+      color: var(--admin-text-muted);
+      text-align: center;
+      word-break: break-all;
+    }
+
+    #pim-imagenes-page .pim-img-option-check {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      background: var(--admin-primary);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 900;
+      display: none;
+    }
+
+    #pim-imagenes-page .pim-img-option.is-selected .pim-img-option-check {
+      display: flex;
+    }
+
+    #pim-imagenes-page .pim-modal .admin-modal-foot {
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    #pim-imagenes-page .pim-toast {
+      position: fixed;
+      top: 20px;
+      right: 24px;
+      z-index: 3000;
+      max-width: 380px;
+      padding: 12px 18px;
+      border-radius: 12px;
+      background: #1a1a2e;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 650;
+      box-shadow: 0 14px 34px rgba(17, 24, 39, 0.25);
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+
+    #pim-imagenes-page .pim-toast.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #pim-imagenes-page .pim-toast.is-success { background: #15803d; }
+    #pim-imagenes-page .pim-toast.is-error { background: #b91c1c; }
+
+    @media (hover: none) {
+      #pim-imagenes-page .pim-card-overlay {
+        opacity: 1;
+        justify-content: flex-end;
+        padding-bottom: 14px;
+        background: linear-gradient(180deg, rgba(17, 24, 39, 0) 45%, rgba(17, 24, 39, 0.72) 100%);
+      }
+    }
+
+    @media (max-width: 768px) {
+      #pim-imagenes-page .pim-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        max-width: none;
+      }
+
+      #pim-imagenes-page .pim-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 12px;
+      }
+
+      #pim-imagenes-page .pim-card-name {
+        font-size: 12.5px;
+      }
+
+      #pim-imagenes-page .pim-toolbar-count {
+        margin-left: 0;
+      }
+    }
+
+    @media (max-width: 640px) {
+      #pim-imagenes-page .pim-savebar {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        transform: translateY(12px);
+        justify-content: space-between;
+        gap: 12px;
+        padding: 12px;
+      }
+
+      #pim-imagenes-page .pim-savebar.is-visible {
+        transform: translateY(0);
+      }
+
+      #pim-imagenes-page .pim-toast {
+        left: 12px;
+        right: 12px;
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #pim-imagenes-page .pim-stats {
+        grid-template-columns: 1fr;
+      }
+
+      #pim-imagenes-page .pim-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+    }
   </style>
 
   <script>
-    // ============================================================
-    // TYPES & STATE
-    // ============================================================
     interface Product {
       id: string;
       name: string;
@@ -233,284 +925,486 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
       [key: string]: unknown;
     }
 
+    const FALLBACK_IMAGE = '/five-mascotas/alimento-0.svg';
+
+    const grid = document.getElementById('grid-productos') as HTMLElement;
+    const emptyState = document.getElementById('estado-vacio') as HTMLElement;
+    const loadingState = document.getElementById('estado-carga') as HTMLElement;
+    const errorState = document.getElementById('estado-error') as HTMLElement;
+    const errorDetail = document.getElementById('error-detalle') as HTMLElement;
+    const modal = document.getElementById('modal-imagen') as HTMLElement;
+    const modalGrid = document.getElementById('modal-grid-imagenes') as HTMLElement;
+    const modalSearch = document.getElementById('modal-buscar') as HTMLInputElement;
+    const modalCount = document.getElementById('modal-conteo') as HTMLElement;
+    const modalTitle = document.getElementById('modal-titulo-prod') as HTMLElement;
+    const modalSub = document.getElementById('modal-sub-prod') as HTMLElement;
+    const saveBar = document.getElementById('barra-cambios') as HTMLElement;
+    const saveBarCount = document.getElementById('savebar-count') as HTMLElement;
+    const saveBarText = document.getElementById('savebar-text') as HTMLElement;
+    const btnSaveHeader = document.getElementById('btn-guardar-todo') as HTMLButtonElement;
+    const btnSaveBar = document.getElementById('btn-guardar-savebar') as HTMLButtonElement;
+    const saveLabelHeader = document.getElementById('save-label-header') as HTMLElement;
+    const saveLabelBar = document.getElementById('save-label-bar') as HTMLElement;
+    const searchInput = document.getElementById('filtro-buscar') as HTMLInputElement;
+    const filterPet = document.getElementById('filtro-mascota') as HTMLSelectElement;
+    const filterCategory = document.getElementById('filtro-categoria') as HTMLSelectElement;
+    const filterImage = document.getElementById('filtro-imagen') as HTMLSelectElement;
+    const countLabel = document.getElementById('conteo-visibles') as HTMLElement;
+    const btnClearFilters = document.getElementById('btn-limpiar-filtros') as HTMLButtonElement;
+    const statPlaceholder = document.getElementById('stat-placeholder') as HTMLButtonElement;
+    const statTotalValue = document.getElementById('stat-total-value') as HTMLElement;
+    const statPlaceholderValue = document.getElementById('stat-placeholder-value') as HTMLElement;
+    const statChangesValue = document.getElementById('stat-changes-value') as HTMLElement;
+    const uploadInput = document.getElementById('input-upload-nueva') as HTMLInputElement;
+    const uploadLabelText = document.getElementById('upload-label-text') as HTMLElement;
+    const toastEl = document.getElementById('pim-toast') as HTMLElement;
+
     let allProducts: Product[] = [];
     let allImages: string[] = [];
-    let changes: Record<string, Partial<Product>> = {}; // id -> changed fields
+    let changes: Record<string, Partial<Product>> = {};
     let currentEditId: string | null = null;
+    let toastTimer: number | undefined;
 
-    const isPlaceholder = (url?: string) =>
-      !url || url.includes('/five-mascotas/alimento') || url.includes('placeholder') || url === '/placeholder.svg' || url.includes('/demos/') || url.includes('/botiquin') || url.includes('/snack.svg') || url.includes('/plato.svg') || url.includes('/pelota.svg');
+    const esc = (value: unknown): string =>
+      String(value ?? '').replace(/[&<>"']/g, (char) => {
+        const map: Record<string, string> = {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;',
+        };
+        return map[char] ?? char;
+      });
 
-    // ============================================================
-    // FETCH DATA
-    // ============================================================
-    async function loadData() {
-      const [pimRes, imgRes] = await Promise.all([
-        fetch('/api/pim'),
-        fetch('/api/pim/images'),
-      ]);
-      const pimData = await pimRes.json();
-      const imgData = await imgRes.json();
-      allProducts = pimData.data?.products || [];
-      allImages = imgData.images || [];
-      document.getElementById('skeleton-loader')!.style.display = 'none';
-      renderGrid();
-      updateBadge();
+    const isPlaceholder = (url?: string): boolean =>
+      !url ||
+      url.includes('/five-mascotas/alimento') ||
+      url.includes('placeholder') ||
+      url === '/placeholder.svg' ||
+      url.includes('/demos/') ||
+      url.includes('/botiquin') ||
+      url.includes('/snack.svg') ||
+      url.includes('/plato.svg') ||
+      url.includes('/pelota.svg');
+
+    const getEffective = (product: Product): Product => ({ ...product, ...(changes[product.id] || {}) });
+
+    function setFilterUIState() {
+      const hasFilters =
+        searchInput.value.trim() !== '' ||
+        filterPet.value !== 'todos' ||
+        filterCategory.value !== 'todos' ||
+        filterImage.value !== 'todos';
+
+      btnClearFilters.hidden = !hasFilters;
+      statPlaceholder.classList.toggle('is-active', filterImage.value === 'sin-imagen');
     }
 
-    // ============================================================
-    // RENDER PRODUCT GRID
-    // ============================================================
-    function getEffective(p: Product): Product {
-      return { ...p, ...(changes[p.id] || {}) };
+    function showState(state: 'loading' | 'error' | 'ready') {
+      loadingState.hidden = state !== 'loading';
+      errorState.hidden = state !== 'error';
+      grid.hidden = state !== 'ready';
+      if (state !== 'ready') emptyState.hidden = true;
+    }
+
+    function matchesFilters(product: Product): boolean {
+      const effective = getEffective(product);
+      const search = searchInput.value.trim().toLowerCase();
+
+      if (search && !`${effective.name} ${effective.brand} ${effective.format}`.toLowerCase().includes(search)) return false;
+      if (filterPet.value !== 'todos' && effective.pet !== filterPet.value) return false;
+      if (filterCategory.value !== 'todos' && effective.category !== filterCategory.value) return false;
+      if (filterImage.value === 'sin-imagen' && !isPlaceholder(effective.image)) return false;
+      if (filterImage.value === 'con-imagen' && isPlaceholder(effective.image)) return false;
+      return true;
+    }
+
+    function buildCard(product: Product): string {
+      const effective = getEffective(product);
+      const changed = Boolean(changes[product.id]);
+      const placeholder = isPlaceholder(effective.image);
+      const imageSrc = effective.image || FALLBACK_IMAGE;
+      const pet = effective.pet || '';
+
+      return `
+        <article class="pim-card${changed ? ' is-changed' : ''}" data-id="${esc(product.id)}">
+          <div class="pim-card-img" data-edit="${esc(product.id)}" role="button" tabindex="0" aria-label="Cambiar imagen de ${esc(effective.name)}">
+            <img src="${esc(imageSrc)}" alt="${esc(effective.name)}" loading="lazy" onerror="this.onerror=null;this.src='${FALLBACK_IMAGE}'" />
+            ${placeholder ? '<span class="pim-badge pim-badge-alert">Sin foto real</span>' : ''}
+            ${changed ? '<span class="pim-badge pim-badge-change">Sin guardar</span>' : ''}
+            <span class="pim-card-overlay">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+              </svg>
+              Cambiar imagen
+            </span>
+          </div>
+          <div class="pim-card-body">
+            <div class="pim-card-top">
+              <span class="pim-card-brand">${esc(effective.brand || 'Sin marca')}</span>
+              <span class="pim-card-id">${esc(product.id)}</span>
+            </div>
+            <h3 class="pim-card-name" title="${esc(effective.name)}">${esc(effective.name)}</h3>
+            <p class="pim-card-meta">${esc(effective.format || 'Sin formato')} <span>·</span> ${esc(effective.category || 'Sin categoría')}</p>
+            <div class="pim-pet-toggle" role="group" aria-label="Mascota de ${esc(effective.name)}">
+              <button type="button" class="pim-pet-btn${pet === 'Perros' ? ' is-active' : ''}" data-pet="Perros" aria-pressed="${pet === 'Perros'}">🐶 Perros</button>
+              <button type="button" class="pim-pet-btn${pet === 'Gatos' ? ' is-active' : ''}" data-pet="Gatos" aria-pressed="${pet === 'Gatos'}">🐱 Gatos</button>
+              <button type="button" class="pim-pet-btn${pet === 'Perros Gatos' ? ' is-active' : ''}" data-pet="Perros Gatos" aria-pressed="${pet === 'Perros Gatos'}">🐾 Ambos</button>
+            </div>
+          </div>
+        </article>
+      `;
     }
 
     function renderGrid() {
-      const buscar = (document.getElementById('filtro-buscar') as HTMLInputElement).value.toLowerCase();
-      const mascota = (document.getElementById('filtro-mascota') as HTMLSelectElement).value;
-      const categoria = (document.getElementById('filtro-categoria') as HTMLSelectElement).value;
-      const imagenFiltro = (document.getElementById('filtro-imagen') as HTMLSelectElement).value;
-
-      const filtered = allProducts.filter(p => {
-        const e = getEffective(p);
-        if (buscar && !`${e.name} ${e.brand} ${e.format}`.toLowerCase().includes(buscar)) return false;
-        if (mascota !== 'todos' && e.pet !== mascota) return false;
-        if (categoria !== 'todos' && e.category !== categoria) return false;
-        if (imagenFiltro === 'sin-imagen' && !isPlaceholder(e.image)) return false;
-        if (imagenFiltro === 'con-imagen' && isPlaceholder(e.image)) return false;
-        return true;
-      });
-
-      const grid = document.getElementById('grid-productos')!;
-      const empty = document.getElementById('estado-vacio')!;
-      const conteo = document.getElementById('conteo-visibles')!;
-
-      grid.innerHTML = '';
-      conteo.textContent = `${filtered.length} productos`;
+      const filtered = allProducts.filter(matchesFilters);
+      countLabel.textContent = `${filtered.length} de ${allProducts.length} productos`;
 
       if (filtered.length === 0) {
-        empty.style.display = 'block';
+        grid.innerHTML = '';
+        grid.hidden = true;
+        emptyState.hidden = false;
         return;
       }
-      empty.style.display = 'none';
 
-      filtered.forEach(p => {
-        const e = getEffective(p);
-        const hasChange = !!changes[p.id];
-        const placeholder = isPlaceholder(e.image);
-
-        const card = document.createElement('div');
-        card.className = `prod-card${hasChange ? ' tiene-cambio' : ''}`;
-        card.dataset.id = p.id;
-
-        const imgSrc = e.image || '/five-mascotas/alimento-0.svg';
-        const petLabel = e.pet === 'Perros' ? '🐶 Perros' : e.pet === 'Gatos' ? '🐱 Gatos' : '🐾 Ambos';
-
-        card.innerHTML = `
-          <div class="prod-img-zone" data-edit="${p.id}">
-            <img src="${imgSrc}" alt="${e.name}" loading="lazy"
-              onerror="this.src='/five-mascotas/alimento-0.svg'" />
-            ${placeholder ? '<span class="badge-placeholder">Sin foto real</span>' : ''}
-            <div class="prod-img-overlay">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
-              Cambiar imagen
-            </div>
-          </div>
-          <div class="prod-body">
-            <div style="font-size:10px; font-weight:700; color:#7025a8; text-transform:uppercase; letter-spacing:0.5px;">${e.brand}</div>
-            <div style="font-size:13px; font-weight:700; color:#1a1a2e; line-height:1.3;">${e.name}</div>
-            <div style="font-size:11.5px; color:#6c757d;">${e.format} &middot; <span style="font-weight:600;">${e.category}</span></div>
-            <div style="font-size:10.5px; color:#6c757d; font-family:monospace;">${p.id}</div>
-            <div class="pet-toggle" data-id="${p.id}">
-              <button class="pet-btn ${e.pet === 'Perros' ? 'active-perros' : ''}" data-val="Perros">🐶 Perros</button>
-              <button class="pet-btn ${e.pet === 'Gatos' ? 'active-gatos' : ''}" data-val="Gatos">🐱 Gatos</button>
-              <button class="pet-btn ${e.pet === 'Perros Gatos' ? 'active-ambos' : ''}" data-val="Perros Gatos">🐾 Ambos</button>
-            </div>
-            ${hasChange ? '<div style="font-size:11px; color:#f59e0b; font-weight:700; text-align:right;">● Cambio pendiente</div>' : ''}
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-
-      // Attach events
-      grid.querySelectorAll('.prod-img-zone').forEach(zone => {
-        zone.addEventListener('click', () => {
-          const id = (zone as HTMLElement).dataset.edit!;
-          openImageModal(id);
-        });
-      });
-
-      grid.querySelectorAll('.pet-toggle').forEach(tog => {
-        tog.querySelectorAll('.pet-btn').forEach(btn => {
-          btn.addEventListener('click', () => {
-            const id = (tog as HTMLElement).dataset.id!;
-            const val = (btn as HTMLElement).dataset.val!;
-            applyChange(id, { pet: val });
-          });
-        });
-      });
+      emptyState.hidden = true;
+      grid.hidden = false;
+      grid.innerHTML = filtered.map(buildCard).join('');
     }
 
-    // ============================================================
-    // CHANGE TRACKING
-    // ============================================================
+    function refreshCard(id: string) {
+      const product = allProducts.find((p) => p.id === id);
+      if (!product) return;
+
+      if (!matchesFilters(product)) {
+        renderGrid();
+        return;
+      }
+
+      const card = grid.querySelector(`.pim-card[data-id="${CSS.escape(id)}"]`);
+      if (card) card.outerHTML = buildCard(product);
+    }
+
+    function updateStats() {
+      const placeholders = allProducts.filter((p) => isPlaceholder(getEffective(p).image)).length;
+      const pending = Object.keys(changes).length;
+
+      statTotalValue.textContent = String(allProducts.length);
+      statPlaceholderValue.textContent = String(placeholders);
+      statChangesValue.textContent = String(pending);
+    }
+
+    function updateSaveBar() {
+      const pending = Object.keys(changes).length;
+      saveBarCount.textContent = String(pending);
+      saveBarText.textContent = pending === 1 ? 'cambio pendiente' : 'cambios pendientes';
+      btnSaveHeader.disabled = pending === 0;
+
+      if (pending > 0) {
+        if (saveBar.hidden) {
+          saveBar.hidden = false;
+          requestAnimationFrame(() => saveBar.classList.add('is-visible'));
+        }
+      } else {
+        saveBar.classList.remove('is-visible');
+        window.setTimeout(() => {
+          if (Object.keys(changes).length === 0) saveBar.hidden = true;
+        }, 220);
+      }
+    }
+
     function applyChange(id: string, patch: Partial<Product>) {
-      changes[id] = { ...(changes[id] || {}), ...patch };
-      (document.getElementById('btn-guardar-todo') as HTMLButtonElement).disabled = false;
-      updateBadge();
+      const product = allProducts.find((p) => p.id === id);
+      if (!product) return;
+
+      const next = { ...(changes[id] || {}), ...patch };
+      const isNoop = Object.entries(next).every(
+        ([key, value]) => (product as Record<string, unknown>)[key] === value,
+      );
+
+      if (isNoop) delete changes[id];
+      else changes[id] = next;
+
+      refreshCard(id);
+      updateStats();
+      updateSaveBar();
+    }
+
+    function clearFilters() {
+      searchInput.value = '';
+      filterPet.value = 'todos';
+      filterCategory.value = 'todos';
+      filterImage.value = 'todos';
       renderGrid();
+      setFilterUIState();
     }
 
-    function updateBadge() {
-      const nPlaceholders = allProducts.filter(p => isPlaceholder(getEffective(p).image)).length;
-      const nChanges = Object.keys(changes).length;
-      const badge = document.getElementById('badge-problemas')!;
-      badge.textContent = `${nPlaceholders} sin foto real · ${nChanges} cambio${nChanges !== 1 ? 's' : ''} pendiente${nChanges !== 1 ? 's' : ''}`;
-      badge.style.background = nChanges > 0 ? '#fef3c7' : '#f0fdf4';
-      badge.style.color = nChanges > 0 ? '#92400e' : '#15803d';
+    function toast(message: string, type: 'success' | 'error' | 'info') {
+      toastEl.textContent = message;
+      toastEl.className = `pim-toast is-${type}`;
+      toastEl.hidden = false;
+      requestAnimationFrame(() => toastEl.classList.add('is-visible'));
+      window.clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(() => {
+        toastEl.classList.remove('is-visible');
+        window.setTimeout(() => {
+          toastEl.hidden = true;
+        }, 250);
+      }, 3800);
     }
 
-    // ============================================================
-    // SAVE ALL
-    // ============================================================
-    document.getElementById('btn-guardar-todo')!.addEventListener('click', async () => {
-      const btn = document.getElementById('btn-guardar-todo') as HTMLButtonElement;
-      btn.disabled = true;
-      btn.textContent = 'Guardando...';
+    function setSaving(saving: boolean) {
+      btnSaveHeader.disabled = saving || Object.keys(changes).length === 0;
+      btnSaveBar.disabled = saving;
+      saveLabelHeader.textContent = saving ? 'Guardando…' : 'Guardar cambios';
+      saveLabelBar.textContent = saving ? 'Guardando…' : 'Guardar cambios';
+    }
+
+    async function saveChanges() {
+      const pending = Object.keys(changes).length;
+      if (pending === 0) return;
+
+      setSaving(true);
       try {
-        const merged = allProducts.map(p => ({ ...p, ...(changes[p.id] || {}) }));
+        const merged = allProducts.map((p) => ({ ...p, ...(changes[p.id] || {}) }));
         const res = await fetch('/api/pim', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ products: merged }),
         });
-        const data = await res.json();
-        if (data.ok) {
-          allProducts = merged;
-          changes = {};
-          btn.textContent = '✓ Guardado exitosamente';
-          btn.style.background = '#16a34a';
-          setTimeout(() => {
-            btn.textContent = 'Guardar todos los cambios';
-            btn.style.background = '';
-            btn.disabled = true;
-          }, 2500);
-          updateBadge();
-          renderGrid();
-        } else {
-          throw new Error(data.error || 'Error al guardar');
-        }
-      } catch (err: unknown) {
-        alert('Error al guardar: ' + (err instanceof Error ? err.message : String(err)));
-        btn.disabled = false;
-        btn.textContent = 'Guardar todos los cambios';
-      }
-    });
+        const data = await res.json().catch(() => ({}));
 
-    // ============================================================
-    // IMAGE MODAL
-    // ============================================================
-    function openImageModal(productId: string) {
-      currentEditId = productId;
-      const p = getEffective(allProducts.find(x => x.id === productId)!);
-      const modal = document.getElementById('modal-imagen')!;
-      (document.getElementById('modal-titulo-prod') as HTMLElement).textContent = `Seleccionar imagen para: ${p.name}`;
-      (document.getElementById('modal-sub-prod') as HTMLElement).textContent = `${p.brand} · ${p.format} · ${p.category}`;
-      (document.getElementById('modal-buscar') as HTMLInputElement).value = '';
-      modal.style.display = 'flex';
-      renderModalImages('', p.image);
+        if (!res.ok || !data.ok) {
+          throw new Error(data.error || `HTTP ${res.status}`);
+        }
+
+        allProducts = merged;
+        changes = {};
+        renderGrid();
+        updateStats();
+        updateSaveBar();
+        toast(`Se guardaron ${pending} cambio${pending === 1 ? '' : 's'} correctamente.`, 'success');
+      } catch (err) {
+        toast('No se pudieron guardar los cambios: ' + (err instanceof Error ? err.message : String(err)), 'error');
+        btnSaveHeader.disabled = false;
+      } finally {
+        setSaving(false);
+      }
     }
 
-    function renderModalImages(query: string, currentImg?: string) {
-      const grid = document.getElementById('modal-grid-imagenes')!;
-      const filtered = query
-        ? allImages.filter(img => img.toLowerCase().includes(query.toLowerCase()))
-        : allImages;
-      grid.innerHTML = '';
+    function discardChanges() {
+      const pending = Object.keys(changes).length;
+      if (pending === 0) return;
+      if (!confirm(`¿Descartar ${pending} cambio${pending === 1 ? '' : 's'} sin guardar?`)) return;
+
+      changes = {};
+      renderGrid();
+      updateStats();
+      updateSaveBar();
+      toast('Cambios descartados.', 'info');
+    }
+
+    function renderModalImages(query: string, currentImage?: string) {
+      const term = query.trim().toLowerCase();
+      const filtered = term ? allImages.filter((url) => url.toLowerCase().includes(term)) : allImages;
+
+      modalCount.textContent = `${filtered.length} imagen${filtered.length === 1 ? '' : 'es'} disponible${filtered.length === 1 ? '' : 's'}`;
+
       if (filtered.length === 0) {
-        grid.innerHTML = '<p style="color:#6c757d; font-size:13px; grid-column:1/-1;">No se encontraron imágenes con ese término.</p>';
+        modalGrid.innerHTML = '<p class="pim-modal-empty">No se encontraron imágenes con ese término.</p>';
         return;
       }
-      filtered.forEach(imgUrl => {
-        const item = document.createElement('div');
-        item.className = `modal-img-item${imgUrl === currentImg ? ' seleccionada' : ''}`;
-        const fname = imgUrl.split('/').pop() || imgUrl;
-        item.innerHTML = `
-          <img src="${imgUrl}" alt="${fname}" loading="lazy" onerror="this.src='/five-mascotas/alimento-0.svg'" />
-          <span>${fname}</span>
-        `;
-        item.addEventListener('click', () => {
-          if (currentEditId) applyChange(currentEditId, { image: imgUrl });
-          closeImageModal();
-        });
-        grid.appendChild(item);
-      });
+
+      modalGrid.innerHTML = filtered
+        .map((url) => {
+          const filename = url.split('/').pop() || url;
+          const selected = url === currentImage;
+          return `
+            <button type="button" class="pim-img-option${selected ? ' is-selected' : ''}" data-url="${esc(url)}" title="${esc(filename)}">
+              <img src="${esc(url)}" alt="${esc(filename)}" loading="lazy" onerror="this.onerror=null;this.src='${FALLBACK_IMAGE}'" />
+              <span class="pim-img-option-name">${esc(filename)}</span>
+              <span class="pim-img-option-check">✓</span>
+            </button>
+          `;
+        })
+        .join('');
+    }
+
+    function openImageModal(productId: string) {
+      const product = allProducts.find((p) => p.id === productId);
+      if (!product) return;
+
+      currentEditId = productId;
+      const effective = getEffective(product);
+
+      modalTitle.textContent = 'Seleccionar imagen';
+      modalSub.textContent = `${effective.name} · ${effective.brand} · ${effective.format}`;
+      modalSearch.value = '';
+      modal.hidden = false;
+      document.body.classList.add('overflow-hidden');
+      renderModalImages('', effective.image);
+      window.setTimeout(() => modalSearch.focus(), 60);
     }
 
     function closeImageModal() {
-      document.getElementById('modal-imagen')!.style.display = 'none';
+      modal.hidden = true;
+      document.body.classList.remove('overflow-hidden');
       currentEditId = null;
     }
 
-    document.getElementById('btn-cerrar-modal')!.addEventListener('click', closeImageModal);
-    document.getElementById('btn-cancelar-modal')!.addEventListener('click', closeImageModal);
-    document.getElementById('modal-imagen')!.addEventListener('click', (e) => {
-      if (e.target === document.getElementById('modal-imagen')) closeImageModal();
+    function readFileAsDataURL(file: File): Promise<string> {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result));
+        reader.onerror = () => reject(new Error('No se pudo leer el archivo'));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function loadData() {
+      showState('loading');
+      try {
+        const [pimRes, imagesRes] = await Promise.all([fetch('/api/pim'), fetch('/api/pim/images')]);
+
+        if (!pimRes.ok) throw new Error(`HTTP ${pimRes.status}`);
+
+        const pimData = await pimRes.json();
+        allProducts = pimData?.data?.products || [];
+
+        if (imagesRes.ok) {
+          const imagesData = await imagesRes.json().catch(() => ({}));
+          allImages = imagesData?.images || [];
+        }
+
+        changes = {};
+        renderGrid();
+        updateStats();
+        updateSaveBar();
+        setFilterUIState();
+        showState('ready');
+      } catch (err) {
+        errorDetail.textContent = err instanceof Error ? err.message : String(err);
+        showState('error');
+      }
+    }
+
+    grid.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement;
+
+      const petButton = target.closest<HTMLButtonElement>('.pim-pet-btn');
+      if (petButton) {
+        const card = petButton.closest<HTMLElement>('.pim-card');
+        if (card?.dataset.id && petButton.dataset.pet) {
+          applyChange(card.dataset.id, { pet: petButton.dataset.pet });
+        }
+        return;
+      }
+
+      const imageZone = target.closest<HTMLElement>('.pim-card-img');
+      if (imageZone?.dataset.edit) openImageModal(imageZone.dataset.edit);
     });
 
-    document.getElementById('btn-quitar-imagen')!.addEventListener('click', () => {
-      if (currentEditId) applyChange(currentEditId, { image: '/placeholder.svg' });
+    grid.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      const imageZone = (event.target as HTMLElement).closest<HTMLElement>('.pim-card-img');
+      if (!imageZone?.dataset.edit) return;
+      event.preventDefault();
+      openImageModal(imageZone.dataset.edit);
+    });
+
+    modalGrid.addEventListener('click', (event) => {
+      const option = (event.target as HTMLElement).closest<HTMLButtonElement>('.pim-img-option');
+      if (!option?.dataset.url || !currentEditId) return;
+      applyChange(currentEditId, { image: option.dataset.url });
       closeImageModal();
     });
 
-    document.getElementById('modal-buscar')!.addEventListener('input', (e) => {
-      const q = (e.target as HTMLInputElement).value;
-      const p = currentEditId ? getEffective(allProducts.find(x => x.id === currentEditId)!) : null;
-      renderModalImages(q, p?.image);
+    modalSearch.addEventListener('input', () => {
+      const product = currentEditId ? allProducts.find((p) => p.id === currentEditId) : null;
+      renderModalImages(modalSearch.value, product ? getEffective(product).image : undefined);
     });
 
-    // ============================================================
-    // UPLOAD NEW IMAGE
-    // ============================================================
-    document.getElementById('input-upload-nueva')!.addEventListener('change', async (e) => {
-      const file = (e.target as HTMLInputElement).files?.[0];
+    document.getElementById('btn-cerrar-modal')!.addEventListener('click', closeImageModal);
+    document.getElementById('btn-cancelar-modal')!.addEventListener('click', closeImageModal);
+
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) closeImageModal();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !modal.hidden) closeImageModal();
+    });
+
+    document.getElementById('btn-quitar-imagen')!.addEventListener('click', () => {
+      if (currentEditId) applyChange(currentEditId, { image: FALLBACK_IMAGE });
+      closeImageModal();
+    });
+
+    uploadInput.addEventListener('change', async () => {
+      const file = uploadInput.files?.[0];
       if (!file) return;
-      const reader = new FileReader();
-      reader.onload = async (ev) => {
-        const base64 = ev.target!.result as string;
-        try {
-          const res = await fetch('/api/upload', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ base64, filename: file.name }),
-          });
-          const data = await res.json();
-          if (data.ok && data.url) {
-            allImages.unshift(data.url);
-            if (currentEditId) applyChange(currentEditId, { image: data.url });
-            closeImageModal();
-          } else {
-            alert('Error al subir imagen: ' + (data.error || 'Error desconocido'));
-          }
-        } catch (err: unknown) {
-          alert('Error: ' + (err instanceof Error ? err.message : String(err)));
+
+      if (file.size > 5 * 1024 * 1024) {
+        toast('La imagen no puede superar los 5 MB.', 'error');
+        uploadInput.value = '';
+        return;
+      }
+
+      const previousLabel = uploadLabelText.textContent || 'Subir imagen';
+      uploadLabelText.textContent = 'Subiendo…';
+
+      try {
+        const base64 = await readFileAsDataURL(file);
+        const res = await fetch('/api/upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ base64, filename: file.name }),
+        });
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok || !data.ok || !data.url) {
+          throw new Error(data.error || `HTTP ${res.status}`);
         }
-      };
-      reader.readAsDataURL(file);
-      (e.target as HTMLInputElement).value = '';
+
+        if (!allImages.includes(data.url)) allImages.unshift(data.url);
+        if (currentEditId) applyChange(currentEditId, { image: data.url });
+        closeImageModal();
+        toast('Imagen subida y asignada al producto.', 'success');
+      } catch (err) {
+        toast('No se pudo subir la imagen: ' + (err instanceof Error ? err.message : String(err)), 'error');
+      } finally {
+        uploadLabelText.textContent = previousLabel;
+        uploadInput.value = '';
+      }
     });
 
-    // ============================================================
-    // FILTERS
-    // ============================================================
-    ['filtro-buscar', 'filtro-mascota', 'filtro-categoria', 'filtro-imagen'].forEach(id => {
-      document.getElementById(id)!.addEventListener('input', renderGrid);
-      document.getElementById(id)!.addEventListener('change', renderGrid);
+    [searchInput, filterPet, filterCategory, filterImage].forEach((element) => {
+      element.addEventListener('input', () => {
+        renderGrid();
+        setFilterUIState();
+      });
+      element.addEventListener('change', () => {
+        renderGrid();
+        setFilterUIState();
+      });
     });
 
-    // ============================================================
-    // INIT
-    // ============================================================
+    btnClearFilters.addEventListener('click', clearFilters);
+    document.getElementById('btn-limpiar-filtros-vacio')!.addEventListener('click', clearFilters);
+    document.getElementById('btn-reintentar')!.addEventListener('click', loadData);
+
+    btnSaveHeader.addEventListener('click', saveChanges);
+    btnSaveBar.addEventListener('click', saveChanges);
+    document.getElementById('btn-descartar')!.addEventListener('click', discardChanges);
+
+    statPlaceholder.addEventListener('click', () => {
+      filterImage.value = filterImage.value === 'sin-imagen' ? 'todos' : 'sin-imagen';
+      renderGrid();
+      setFilterUIState();
+    });
+
     loadData();
   </script>
 </AdminLayout>
