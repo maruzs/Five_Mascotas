@@ -101,7 +101,7 @@ const cleanId = product.id.replace('prod-', '');
     <!-- ID and Stock availability row (Foto usuario) -->
     <div class="five-product-sku-row">
       <span class="five-sku-text">ID {cleanId.padStart(5, '0')}</span>
-      <span class="five-stock-badge">+15 Unid.</span>
+      <span class="five-stock-badge">{product.available === undefined ? 'Consultar stock' : `${product.available} Unid.`}</span>
     </div>
 
     <!-- Discount row if on sale (Foto usuario) -->

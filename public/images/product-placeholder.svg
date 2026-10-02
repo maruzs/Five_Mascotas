@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Producto sin fotografía">
+  <rect width="400" height="400" rx="24" fill="#f5f1eb"/>
+  <path d="M125 100h150l20 200H105z" fill="#e4d6c5" stroke="#8b7460" stroke-width="5"/>
+  <path d="M125 100l15 30h120l15-30M120 265h160" fill="none" stroke="#8b7460" stroke-width="5"/>
+  <circle cx="200" cy="200" r="35" fill="#f5f1eb"/>
+  <text x="200" y="345" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#665344">Fotografía pendiente</text>
+</svg>

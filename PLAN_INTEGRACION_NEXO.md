@@ -1,148 +1,62 @@
-# 📋 Plan de Arquitectura e Integración: Nexo + FIVE Mascotas
-> **Módulo de Cotizaciones Formales, Facturación Electrónica Flexible (DTE 33) y PIM Centralizado con Atributos Nutricionales**
+# Integración Nexo + FIVE Mascotas
 
----
+Actualizado el 29 de septiembre de 2026. Los dos documentos originales eran idénticos. Esta versión describe la implementación local y sus límites; sustituye el diseño inicial en ambos repositorios. Guía operativa: `Nexo/GUIA_PRUEBA_CAMARA_FIVE.md`.
 
-## 📌 1. Visión General del Negocio y Objetivos
+## Implementado para pruebas
 
-Este plan formaliza la unión estratégica entre **FIVE Mascotas** (plataforma ecommerce / PIM / catálogo nutricional) y **Nexo** (ERP / POS / Bodegas / Emisión DTE multitenant).
+1. **Lector con cámara** en el POS del teléfono y como lector enlazado a una caja por PIN. Lectura única, sonido, vibración, permiso de cámara y errores comprensibles. El sonido de la modalidad enlazada confirma reenvío del servidor, no cobro ni recepción final del carrito.
+2. **Cotizaciones** multitenant: folio COT-YYYY-000001, vigencia, estados, snapshots comerciales, precios netos/descuentos/impuestos guardados y PDF comercial con tabla y QR cuando se configura PUBLIC_APP_URL. Interfaz en Nexo para crear, imprimir, marcar enviada, cancelar y convertir.
+3. **Conversión transaccional** a pedido confirmado: verifica empresa, sede, cliente, productos activos y stock vendible; reserva exclusivamente al convertir y revierte todo si falla. No reserva stock al cotizar. Repetir la conversión devuelve el pedido existente.
+4. **PIM centralizado**: atributos nutricionales y galería, publicación explícita por producto, catálogo público paginado y solo stock de la sede de despacho configurada. No expone costos, clientes ni existencias de otras bodegas.
+5. **Checkout FIVE → Nexo** mediante servidor de FIVE con token de alcance por tienda almacenado como hash en Nexo y retornado una sola vez al configurar. Descarta importes, descuentos, tenant y pago enviados por el navegador. Idempotencia UUID evita pedidos duplicados en reintentos con la misma clave.
+6. **Compra o cotización desde FIVE**: compra crea pedido confirmado con reserva y pago pendiente; cotización crea oferta enviada sin reserva con PDF descargable. Datos bancarios y QR provienen de configuración de la tienda. No se confirma un pago por mostrar el QR o subir un comprobante.
+7. **Sincronización del catálogo para Astro**: `npm run nexo:sync` y reconstrucción generan páginas/comparador desde productos publicados. Precios y stock se consultan al cargar la web y se verifican de nuevo al enviar; no hay streaming continuo.
+8. **Migración formal aditiva** `202609300001_quotations_storefront` e importador DML separado con simulación predeterminada. No se publican productos de demostración ni se inventan existencias.
 
-El diseño resuelve dos necesidades críticas de operación para FIVE Mascotas, manteniendo al mismo tiempo una arquitectura **transversal y configurable** para cualquier otra empresa registrada en Nexo:
-1. **Respaldo Legal y Trazabilidad de Cotizaciones:** Las cotizaciones dejan de perderse y adquieren validez formal mediante un folio correlativo (`COT-2026-XXXX`), archivo digital en base de datos, PDF oficial con código QR y respeto estricto de precios y descuentos durante su vigencia comercial.
-2. **Facturación Electrónica Flexible (Protección de Precios):** Al emitir una Factura Electrónica (DTE 33), el vendedor puede elegir entre facturar el desglose completo ítem por ítem o emitir una línea consolidada (*"Servicios o insumos según cotización adjunta"*) con doble trazabilidad tributaria ante el SII (etiqueta `<Referencia>` Código 802 con Folio y Fecha).
-3. **PIM Centralizado con Atributos Dinámicos (`custom_fields`):** Nexo se convierte en la Fuente Única de Verdad (Single Source of Truth) para productos, stock y precios. Gracias al modelo de campos personalizados, FIVE Mascotas almacena sus atributos nutricionales (proteína, ingredientes en formato CSV, etapa de vida, fotos de packshots reales) y la web los consume directamente vía API.
+## Corrección tributaria obligatoria
 
----
+El diseño original proponía TpoDocRef 802 para cotizaciones y una referencia CodRef 1. **802 identifica una nota de pedido**, no una cotización. No corresponde usar ese XML como respaldo tributario de la consolidación propuesta. Se eliminó esa receta y el backend rechaza CONSOLIDATED_QUOTATION hasta definir y certificar una representación válida con el SII.
 
-## 🏛️ 2. Diagrama de Flujo y Arquitectura
+Las cotizaciones PDF son ofertas comerciales, no documentos tributarios. El modo ITEMIZED no equivale a una emisión real habilitada: el adaptador fiscal real sigue pendiente. No se añadió un switch de interfaz que prometa una modalidad fiscal inválida.
 
-```mermaid
-flowchart TD
-    subgraph Nexo ["NEXO (ERP / POS / Inventario)"]
-        N1["Catálogo Maestro & Custom Fields<br/>(Proteína, Ingredientes CSV, Fotos)"]
-        N2["Módulo de Cotizaciones<br/>(Folio COT-2026-XXXX + PDF Oficial)"]
-        N3["Pedidos y Validación de Stock<br/>(Congelamiento de precios vigentes)"]
-        N4["Emisor DTE (LibreDTE / SII)<br/>• Desglose completo ítem por ítem<br/>• O Consolidado con Referencia Tipo 802"]
-    end
+Referencia oficial: [formato SII](https://www.sii.cl/factura_electronica/factura_mercado/formato_boletas_elec_202412.pdf).
 
-    subgraph Five ["FIVE MASCOTAS (Ecommerce / Web)"]
-        F1["Vitrina Web & Comparador Nutricional<br/>(Consume API Nexo)"]
-        F2["Carrito de Compras B2C & Mayorista<br/>• Comprar vía Transferencia / QR<br/>• O Solicitar Cotización Formal"]
-        F3["Portal Mi Cuenta / Clientes<br/>(Historial de pedidos y datos de despacho)"]
-    end
+## API final
 
-    N1 -->|API REST Productos & Stock| F1
-    F2 -->|Crear Pedido B2C| N3
-    F2 -->|Solicitar Cotización B2B| N2
-    N2 -->|Al Aprobar Cotización| N3
-    N3 -->|Generar Venta / POS| N4
-```
+Todas las rutas siguientes tienen prefijo `/api/v1`:
 
----
+| Ruta | Acceso y función |
+|---|---|
+| POST /quotations | Sesión, CSRF, orders:manage; crear oferta |
+| GET /quotations | Sesión, orders:view; paginación y filtros |
+| GET /quotations/:id | Sesión, orders:view; empresa y sede autorizadas |
+| GET /quotations/:id/pdf | Sesión, orders:view; PDF desde snapshots |
+| POST /quotations/:id/status | Sesión, CSRF, orders:manage; transición |
+| POST /quotations/:id/convert-to-order | Sesión, CSRF, orders:manage; reserva transaccional |
+| GET /public/quotations/:token/verify | Verificación limitada, sin receptor/precios |
+| POST /storefront/initialize-five | Sesión, CSRF, catalog:manage; campos personalizados |
+| GET /storefront | Sesión, catalog:manage; configuración sin token |
+| PUT /storefront | Sesión, CSRF, roles:manage; configura y rota token |
+| PUT /storefront/products/:id | Sesión, CSRF, catalog:manage; publica y actualiza atributos |
+| GET /public/catalog?store=slug | Solo catálogo publicado y tarifas públicas |
+| POST /integrations/storefront/:slug/checkout | Token servidor e Idempotency-Key UUID v4 |
+| GET /integrations/storefront/:slug/quotations/:key/pdf | Token servidor y clave de solicitud |
 
-## ⚖️ 3. Reglas Técnicas y Legales Acordadas (Fase de Diseño)
+El navegador de FIVE llama a su propio `/api/nexo/checkout`; nunca recibe el secreto ni accede al endpoint administrativo de pedidos. No se utiliza POST /orders desde el navegador para esta integración.
 
-### A. Facturación Electrónica Flexible (DTE 33)
-- **Configuración por Empresa:** Cada empresa define su política predeterminada (Desglosada vs Cotización Adjunta con Folio).
-- **Control en Mostrador / POS:** Al momento de facturar, el vendedor puede alternar entre las dos modalidades según el acuerdo comercial con el cliente.
-- **Doble Trazabilidad Legal SII:**
-  - En el XML del DTE 33 se inyecta la referencia formal:
-    ```xml
-    <Referencia>
-      <NroLinRef>1</NroLinRef>
-      <TpoDocRef>802</TpoDocRef>
-      <FolioRef>COT-2026-0042</FolioRef>
-      <FchRef>2026-09-29</FchRef>
-      <CodRef>1</CodRef>
-      <RazonRef>Detalle en cotización adjunta N° COT-2026-0042</RazonRef>
-    </Referencia>
-    ```
-  - En el detalle impreso/gráfico de la factura se incluye la glosa descriptiva para el receptor.
+## Límites y siguiente fase
 
-### B. Ciclo de Vida y Reserva de Inventario
-- **Cero Compromiso Prematuro de Stock:** La cotización no congela stock físico en bodega mientras se encuentre en estado `DRAFT` o `SENT`.
-- **Precios Congelados:** Los precios unitarios y descuentos pactados se respetan estrictamente durante el plazo de validez de la oferta (ej: 7 días corridos).
-- **Validación al Convertir:** Al momento de que el cliente aprueba la cotización y pasa a `Order` / `Sale`, el sistema verifica la disponibilidad en la bodega correspondiente (`Location`). Si falta inventario, alerta al vendedor para ajustar cantidades o generar entrega parcial.
+- Configurar datos reales, cargar stock, publicar productos y activar el servidor de FIVE. No se hizo despliegue ni migración de producción.
+- Prueba física Android/iOS, cámara, conexión con caja y venta completa con turno abierto.
+- Despacho: se informa y valida una tarifa separada del total de productos, todavía sin línea fiscal de venta. Piloto recomendado con retiro sin cargo; cerrar contabilidad del despacho antes de cobrarlo.
+- Pedidos impagos: vencimiento registrado a 24 horas, sin cancelación automática. Cancelar manualmente para liberar reservas hasta implementar el worker.
+- Portal/historial de clientes y seguimiento web de pedidos Nexo aún pendientes. El checkout evita enlazar al seguimiento local antiguo.
+- Terminales bancarias y conciliación de pago no se implementaron en este cambio.
+- SII: cada empresa debe ser emisora autorizada para sus documentos, con folios y firmante propios. Ser proveedor no habilita a sus clientes. Cambio de software y boletas requieren verificar sus respectivos procedimientos.
+- Factura consolidada solo después de validar el fundamento y los formatos con SII. No usar 802 como cotización.
 
-### C. PDF Oficial con Validez Comercial
-- Estructura obligatoria del PDF:
-  1. Membrete de la empresa emisora con RUT, dirección matriz y datos de contacto.
-  2. Folio correlativo formal: `COT-YYYY-XXXX`.
-  3. Fecha de emisión y Fecha fatal de vencimiento comercial.
-  4. Identificación del cliente (RUT, Razón Social, Teléfono, Comuna de despacho).
-  5. Tabla detallada: Código SKU, Descripción, Cantidad, Precio Unitario Neto, Descuento %, Subtotal.
-  6. Resumen financiero: Subtotal Neto, IVA (19%), Total General.
-  7. Datos bancarios oficiales para pago por transferencia electrónica.
-  8. Código QR de verificación rápida.
-  9. Glosa legal de oferta comercial amparada en el Código de Comercio chileno.
+## Criterio de aceptación del piloto
 
-### D. PIM Centralizado con Atributos Nutricionales Dinámicos
-- Utilización del modelo `CustomFieldDefinition` en Nexo para asociar metadatos a los productos de FIVE Mascotas:
-  - `protein_percentage` (`NUMBER`): % de proteína cruda garantizada.
-  - `ingredients` (`TEXT`): Lista de ingredientes en formato CSV.
-  - `pet_type` (`TEXT`): Perro o Gato.
-  - `life_stage` (`TEXT`): Cachorro, Adulto, Senior.
-  - `breed_size` (`TEXT`): Pequeña, Mediana, Grande, Todas.
-  - `gallery_images` (`JSON`): Array de URLs de hasta 5 imágenes oficiales.
-- Libertad total: Cualquier otra empresa en Nexo puede definir sus propios atributos sin alterar el código fuente.
+Escanear añade una sola línea/cantidad correcta y emite sonido; desconocidos fallan sin añadir. La cotización conserva importes tras cambios del catálogo, no reserva inicialmente y convierte una sola vez con stock suficiente. El catálogo excluye costos y datos privados. Checkout rechaza token inválido, precios manipulados y stock insuficiente; mantiene pago pendiente. Revisar también desconexiones, permiso denegado y operación en teléfono real.
 
----
-
-## 🛠️ 4. Fases de Ejecución Técnica
-
-### Fase 1: Backend Nexo — Módulo de Cotizaciones & Base de Datos
-1. **Modelos en Prisma (`apps/api/prisma/schema.prisma`):**
-   - `Quotation`:
-     - `id`: UUID.
-     - `organizationId`: UUID.
-     - `locationId`: UUID.
-     - `partnerId`: UUID (relación con `CommercialPartner`).
-     - `userId`: UUID (ejecutivo emisor).
-     - `quotationNumber`: `COT-YYYY-XXXX`.
-     - `status`: `DRAFT` | `SENT` | `ACCEPTED` | `CONVERTED_TO_ORDER` | `EXPIRED` | `CANCELLED`.
-     - `validUntil`: Timestamp con zona horaria.
-     - `subtotalNet`: Decimal(14,4).
-     - `taxAmount`: Decimal(14,4).
-     - `total`: Decimal(14,4).
-     - `notes`: Text.
-     - `pdfUrl`: String opcional con archivo generado.
-   - `QuotationItem`:
-     - `quotationId`: UUID.
-     - `variantId`: UUID.
-     - `quantity`: Int.
-     - `unitPriceNet`: Decimal(14,4).
-     - `discountApplied`: Decimal(14,4).
-     - `taxRate`: Decimal(6,4) (0.1900 por defecto).
-     - `subtotal`: Decimal(14,4).
-2. **Endpoints API REST (`apps/api/src/modules/quotations/`):**
-   - `POST /api/v1/quotations`: Crear cotización y asignar correlativo automático.
-   - `GET /api/v1/quotations`: Listado paginado con filtros por estado, cliente y fechas.
-   - `GET /api/v1/quotations/:id/pdf`: Render y descarga de PDF oficial con membrete y QR.
-   - `POST /api/v1/quotations/:id/convert-to-order`: Valida stock y transforma a Pedido para despacho o POS.
-
----
-
-### Fase 2: Facturación DTE con Modo Desglosado vs Cotización Adjunta
-1. **Extensión en Servicio LibreDTE / DTE Service (`apps/api/src/modules/dte/`):**
-   - Incorporar bandera `invoiceDetailMode`:
-     - `ITEMIZED`: Factura normal con desglose de ítems.
-     - `CONSOLIDATED_QUOTATION`: Factura con ítem consolidado y bloque `<Referencia>` (código `802`).
-2. **Interfaz en Nexo App (Flutter / Web POS):**
-   - Switch visual en la pantalla de cobro: *"Facturar con Detalle Completo"* vs *"Facturar con Cotización Adjunta"*.
-
----
-
-### Fase 3: PIM Centralizado y Endpoint de Catálogo Público
-1. **Configuración de Custom Fields en Nexo:**
-   - Script de inicialización de atributos para la organización FIVE Mascotas.
-2. **Endpoint Seguro para Tienda Web:**
-   - `GET /api/v1/public/catalog`: Retorna productos activos, variantes, stock consolidado y los `custom_fields` nutricionales.
-
----
-
-### Fase 4: Integración en FIVE Mascotas (Ecommerce & Checkout)
-1. **Cliente API Nexo en FIVE Mascotas (`src/scripts/nexo-client.ts`):**
-   - Consulta el catálogo centralizado de Nexo y sincroniza stock en tiempo real.
-2. **Modal de Checkout y Carrito:**
-   - Compras normales generan pedidos directos en Nexo (`POST /api/v1/orders`).
-   - Opción *"Solicitar Cotización Formal B2B"* para pedidos mayoristas o instituciones, generando automáticamente una cotización con folio oficial en Nexo.
+Se probaron cálculos, concurrencia y aislamiento en PostgreSQL aislado, compilación Android/Web y flujos Playwright con API/cámara de prueba. Esto no sustituye certificación SII ni validación de producción. Ver la guía para comandos, configuración, limitaciones y reversión sin borrar datos.

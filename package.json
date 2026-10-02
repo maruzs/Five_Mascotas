@@ -6,9 +6,10 @@
   "engines": { "node": ">=22.19.0" },
   "scripts": {
     "dev": "astro dev --host 127.0.0.1",
-    "api:dev": "node server/index.mjs",
-    "start": "node server/index.mjs",
+    "api:dev": "node --env-file-if-exists=.env server/index.mjs",
+    "start": "node --env-file-if-exists=.env server/index.mjs",
     "build": "astro check && astro build",
+    "nexo:sync": "node --env-file-if-exists=.env scripts/sync-nexo-catalog.mjs",
     "preview": "astro preview --host 127.0.0.1",
     "test": "npm run build && node tests/five-mascotas.mjs && node tests/checkout.test.mjs && node tests/portal-and-comparator.test.mjs"
   },

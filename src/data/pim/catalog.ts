@@ -1,6 +1,7 @@
 import type { Product } from './types';
+import nexoCatalog from './nexo-catalog.json';
 
-export const products: Product[] = [
+const fallbackProducts: Product[] = [
   {
     id: "prod-0",
     name: "9 Lives Adulto Pescado",
@@ -7384,6 +7385,8 @@ export const products: Product[] = [
     featured: true,
   },
 ];
+
+export const products: Product[] = Array.isArray(nexoCatalog) ? nexoCatalog as Product[] : fallbackProducts;
 
 export const formatMoney = (n: number) =>
   new Intl.NumberFormat('es-CL', {

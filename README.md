@@ -4,7 +4,9 @@ Proyecto independiente para la tienda web de FIVE Mascotas, extraído de la demo
 
 ## Estado actual
 
-La interfaz es una propuesta funcional de front-end: incluye portada, categorías, búsqueda, filtros combinados, productos ilustrativos y carrito temporal. Todavía no crea pedidos, no procesa pagos y no consulta existencias reales.
+La interfaz incluye portada, categorías, búsqueda, filtros, comparador y carrito. La integración local con Nexo permite consultar catálogo/stock publicados y crear pedidos o cotizaciones con PDF cuando se configura el servidor. Sin esa configuración sigue usando los productos ilustrativos. No procesa pagos automáticamente ni emite documentos SII.
+
+Consulta [el plan actualizado](PLAN_INTEGRACION_NEXO.md) y [la guía de prueba en Nexo](../Nexo/GUIA_PRUEBA_CAMARA_FIVE.md). Activa credenciales solo en el servidor, sincroniza el catálogo con `npm run nexo:sync` y reconstruye. El historial del portal antiguo todavía no consulta Nexo; el despacho contable y la expiración automática de reservas están pendientes.
 
 Los productos, precios, cobertura, textos legales y datos comerciales deben confirmarse con FIVE antes de publicar. Mientras siga siendo una demostración, la página mantiene `noindex,nofollow`.
 

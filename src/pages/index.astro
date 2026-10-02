@@ -2,8 +2,10 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PromoBannerStrip from '../components/PromoBannerStrip.astro';
 import HeroCarousel from '../components/HeroCarousel.astro';
+import nexoSnapshot from '../data/pim/nexo-catalog.json';
+import type { Product } from '../data/pim/types';
 
-const products = [
+const demoProducts = [
   { name: 'Amici Adulto Mix', pet: 'Perros', detail: 'Carne y cereales · 22 kg', price: 32990, color: 'violet', type: 'Alimentos', image: '/five-mascotas/products/fit-formula-perro-adulto.png', oldPrice: 36990, badge: 'Liquidación', brand: 'Amici' },
   { name: '9 Lives Adulto Pescado', pet: 'Gatos', detail: 'Pescado y arroz · 8 kg', price: 24990, color: 'green', type: 'Alimentos', image: '/five-mascotas/products/9lives-gato-pescado.png', oldPrice: 0, badge: 'SuperPrecios', brand: '9 Lives' },
   { name: 'Ganacan Cachorro', pet: 'Perros', detail: 'Receta crecimiento · 10 kg', price: 28990, color: 'peach', type: 'Alimentos', image: '/five-mascotas/products/purina-proplan-puppy.png', oldPrice: 0, badge: '15% Dcto', brand: 'Ganacan' },
@@ -15,6 +17,8 @@ const products = [
   { name: 'Arena Stay Happy Café', pet: 'Gatos', detail: 'Aglomerante aroma café · 10 kg', price: 11990, color: 'lavender', type: 'Higiene', image: '/five-mascotas/products/arena-stay-happy.jpg', oldPrice: 0, badge: 'Top Ventas', brand: 'Stay Happy' },
   { name: 'Rahue Fémur Vacuno Gigante', pet: 'Perros', detail: 'Snack hueso natural · 1 un', price: 3990, color: 'peach', type: 'Snacks', image: '/five-mascotas/products/bravery-salmon.png', oldPrice: 4990, badge: 'Oferta', brand: 'Rahue' },
 ];
+
+const products = (nexoSnapshot as Product[] | null)?.map(p => ({ ...p, type:p.category })) ?? demoProducts;
 
 const categoryIcons = [
   { name: 'Perros', href: '/perros', icon: '🐶', desc: 'Compañeros fieles' },
@@ -150,6 +154,7 @@ const money = (n: number) =>
         <article
           class="five-product-card"
           data-product
+          data-id={'id' in p ? String(p.id) : String(i)}
           data-pet={p.pet}
           data-type={p.type}
           data-category={p.type}
@@ -183,7 +188,7 @@ const money = (n: number) =>
               </div>
               <button
                 class="five-card-add-btn"
-                data-add={String(i)}
+                data-add={'id' in p ? String(p.id) : String(i)}
                 data-name={p.name}
                 data-price={p.price}
                 aria-label={`Agregar ${p.name} al carrito de muestra`}

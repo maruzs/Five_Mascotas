@@ -2,7 +2,8 @@
 import { products, formatMoney } from '../data/pim/catalog';
 import { defaultShippingRates, type ShippingCityRate } from '../data/pim/shipping';
 import { AdminStoreService } from './admin-store';
-import { formatBankTransferPayload } from '../data/pim/bank';
+import { formatBankTransferPayload, type BankAccountConfig } from '../data/pim/bank';
+import { submitToNexo } from './nexo-client';
 
 interface CartItem {
   id: string;
@@ -16,6 +17,9 @@ const CART_STORAGE_KEY = 'five_cart_v2';
 
 class StoreManager {
   private cart: Map<string, CartItem> = new Map();
+  private nexoState: 'loading' | 'enabled' | 'disabled' | 'error' = 'loading';
+  private nexoProducts = new Map<string, { name: string; price: number; image: string; available: number }>();
+  private nexoShipping: ShippingCityRate[] | null = null;
 
   constructor() {
     this.initShippingSync();
@@ -25,10 +29,58 @@ class StoreManager {
     this.initPLP();
     this.initQuickView();
     this.initCheckout();
+    void this.initNexo();
+  }
+
+  private async initNexo() {
+    try {
+      const status = await fetch('/api/nexo/status', { cache: 'no-store' });
+      if (!status.ok) throw new Error('No se pudo verificar la conexión de la tienda.');
+      const { enabled } = await status.json();
+      if (!enabled) { this.nexoState = 'disabled'; return; }
+      const response = await fetch('/api/pim', { cache: 'no-store' });
+      if (!response.ok) throw new Error('No se pudo actualizar el catálogo.');
+      const { data } = await response.json();
+      this.nexoShipping = Object.entries(data.shippingRates || {}).map(([id, price], index) => ({
+        ...(defaultShippingRates.find(rate => rate.id === id) || { city: id, region: '' }),
+        id, price: Number(price), isDefault: index === 0,
+      }));
+      this.populateShippingDropdowns();
+      for (const p of data.products) this.nexoProducts.set(p.id, p);
+      this.nexoState = 'enabled';
+      document.querySelector<HTMLElement>('#chk-quotation-option')?.removeAttribute('hidden');
+      const email = document.querySelector<HTMLInputElement>('#chk-email');
+      if (email) email.required = true;
+      for (const button of document.querySelectorAll<HTMLButtonElement>('[data-add]')) {
+        const p = this.nexoProducts.get(button.dataset.add || '');
+        button.disabled = !p || p.available < 1;
+        if (p) { button.dataset.price = String(p.price); button.dataset.name = p.name; button.dataset.image = p.image; }
+      }
+      for (const card of document.querySelectorAll<HTMLElement>('[data-product]')) {
+        const p = this.nexoProducts.get(card.dataset.id || '');
+        const stock = card.querySelector('.five-stock-badge');
+        if (stock) stock.textContent = p ? `${p.available} Unid.` : 'No disponible';
+        if (p) {
+          card.dataset.price = String(p.price);
+          const price = card.querySelector('.five-price-hero, .five-current-price');
+          if (price) price.textContent = formatMoney(p.price);
+        }
+      }
+      for (const item of this.cart.values()) {
+        const p = this.nexoProducts.get(item.id);
+        if (p) { item.price = p.price; item.name = p.name; }
+      }
+      this.saveCart(); this.renderCartUI();
+    } catch {
+      this.nexoState = 'error';
+      const status = document.querySelector('#five-status');
+      if (status) status.textContent = 'No se pudo verificar el catálogo. Recarga antes de comprar.';
+    }
   }
 
   // ===================== SHIPPING RATES SYNCHRONIZATION =====================
   public getShippingRates(): ShippingCityRate[] {
+    if (this.nexoShipping !== null) return this.nexoShipping;
     try {
       if (typeof localStorage !== 'undefined') {
         const saved = localStorage.getItem('five_shipping_rates_v1');
@@ -197,6 +249,11 @@ class StoreManager {
   }
 
   public addToCart(id: string, name: string, price: number, image?: string) {
+    if (this.nexoState === 'enabled') {
+      const p = this.nexoProducts.get(id);
+      if (!p || (this.cart.get(id)?.quantity || 0) >= p.available) return;
+      name = p.name; price = p.price; image = p.image;
+    }
     const existing = this.cart.get(id);
     if (existing) {
       if (existing.quantity >= 10) return;
@@ -228,7 +285,9 @@ class StoreManager {
 
         const info = document.createElement('div');
         info.className = 'five-cart-item-info';
-        info.innerHTML = `<strong>${item.name}</strong><span>${item.quantity} × ${formatMoney(item.price)}</span>`;
+        const itemName = document.createElement('strong'); itemName.textContent = item.name;
+        const quantityLabel = document.createElement('span'); quantityLabel.textContent = `${item.quantity} × ${formatMoney(item.price)}`;
+        info.append(itemName, quantityLabel);
 
         const subtotal = document.createElement('span');
         subtotal.className = 'five-cart-item-subtotal';
@@ -272,14 +331,14 @@ class StoreManager {
     const citySelect = document.querySelector<HTMLSelectElement>('#cart-city-select');
     let shipFee = 1500;
     if (citySelect && citySelect.selectedOptions && citySelect.selectedOptions[0]) {
-      shipFee = Number(citySelect.selectedOptions[0].dataset.price) || 1500;
+      shipFee = Number(citySelect.selectedOptions[0].dataset.price) || 0;
     }
 
     const shipFeeEl = document.querySelector('#five-cart-shipping-fee');
     if (shipFeeEl) shipFeeEl.textContent = formatMoney(shipFee);
 
     const grandTotal = count > 0 ? total + shipFee : 0;
-    const debitTotal = count > 0 ? Math.round(grandTotal * 1.05) : 0;
+    const debitTotal = count > 0 ? (this.nexoState === 'enabled' ? grandTotal : Math.round(grandTotal * 1.05)) : 0;
 
     const grandTotalEl = document.querySelector('#five-cart-grand-total');
     if (grandTotalEl) grandTotalEl.textContent = formatMoney(grandTotal);
@@ -388,16 +447,14 @@ class StoreManager {
         const li = document.createElement('li');
         li.className = 'five-search-suggestion';
         const targetHref = p.pet === 'Gatos' ? '/gatos' : '/perros';
-        li.innerHTML = `
-          <a href="${targetHref}">
-            <img src="${p.image}" alt="" width="36" height="36" />
-            <div class="five-suggestion-text">
-              <strong>${p.name}</strong>
-              <small>${p.brand} · ${formatMoney(p.price)}</small>
-            </div>
-            <span class="five-suggestion-arrow">↗</span>
-          </a>
-        `;
+        const link = document.createElement('a'); link.href = targetHref;
+        const image = document.createElement('img'); image.src = p.image; image.alt = ''; image.width = 36; image.height = 36;
+        const text = document.createElement('div'); text.className = 'five-suggestion-text';
+        const name = document.createElement('strong'); name.textContent = p.name;
+        const detail = document.createElement('small'); detail.textContent = `${p.brand} · ${formatMoney(p.price)}`;
+        text.append(name, detail);
+        const arrow = document.createElement('span'); arrow.className = 'five-suggestion-arrow'; arrow.textContent = '↗';
+        link.append(image, text, arrow); li.append(link);
         list.append(li);
       });
 
@@ -825,6 +882,11 @@ class StoreManager {
       status: 'Recibido', // 'Recibido' | 'Pago Confirmado' | 'En Reparto' | 'Entregado'
       createdAt: '',
     };
+    let pendingPayload = '';
+    let requestKey = '';
+    let submitting = false;
+    let sentToNexo = false;
+    let nexoBank: BankAccountConfig | null = null;
 
     const showStep = (step: 1 | 2 | 3) => {
       if (step1Pane) step1Pane.hidden = step !== 1;
@@ -949,15 +1011,29 @@ class StoreManager {
     }
 
     // Step 1 Submit -> Generate order draft and go to Step 2 (QR)
-    formStep1?.addEventListener('submit', (e) => {
+    formStep1?.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (submitting) return;
+      const feedback = chkModal.querySelector<HTMLElement>('#chk-nexo-feedback');
+      const pdfLink = chkModal.querySelector<HTMLAnchorElement>('#chk-quotation-pdf');
+      if (pdfLink) pdfLink.hidden = true;
+      if (waProofBtn) waProofBtn.hidden = false;
+      const proofHelp = chkModal.querySelector<HTMLElement>('#chk-proof-help');
+      if (proofHelp) proofHelp.hidden = false;
+      const resultStatus = chkModal.querySelector<HTMLElement>('#chk-result-status');
+      if (resultStatus) resultStatus.textContent = 'Estado: Pendiente de confirmación de transferencia';
+      if (goTrackBtn) goTrackBtn.hidden = false;
+      if (this.nexoState === 'loading' || this.nexoState === 'error') {
+        if (feedback) feedback.textContent = 'No se ha podido verificar el catálogo. Recarga la página y vuelve a intentar.';
+        return;
+      }
 
       const name = (chkModal.querySelector('#chk-name') as HTMLInputElement).value;
       const phone = (chkModal.querySelector('#chk-phone') as HTMLInputElement).value;
       const email = (chkModal.querySelector('#chk-email') as HTMLInputElement).value;
       const chkCity = chkModal.querySelector<HTMLSelectElement>('#chk-city')!;
       const city = chkCity.selectedOptions[0]?.dataset.city || chkCity.value;
-      const shipFee = Number(chkCity.selectedOptions[0]?.dataset.price) || 1500;
+      const shipFee = Number(chkCity.selectedOptions[0]?.dataset.price) || 0;
       const address = (chkModal.querySelector('#chk-address') as HTMLInputElement).value;
       const notes = (chkModal.querySelector('#chk-notes') as HTMLTextAreaElement).value;
 
@@ -989,13 +1065,59 @@ class StoreManager {
         createdAt: new Date().toISOString(),
       };
 
+      if (this.nexoState === 'enabled') {
+        const kind = chkModal.querySelector<HTMLInputElement>('#chk-quotation')?.checked ? 'QUOTATION' as const : 'ORDER' as const;
+        const rut = chkModal.querySelector<HTMLInputElement>('#chk-rut')?.value.trim();
+        const input = { kind, shippingRateId: chkCity.value, customer: { name, email, phone, city, address, ...(rut ? { rut } : {}) }, notes,
+          items: itemsList.map(i => ({ id: i.id, quantity: i.quantity })) };
+        const serialized = JSON.stringify(input);
+        if (serialized !== pendingPayload) { pendingPayload = serialized; requestKey = crypto.randomUUID(); }
+        submitting = true;
+        const submit = formStep1.querySelector<HTMLButtonElement>('[type="submit"]');
+        if (submit) submit.disabled = true;
+        if (feedback) feedback.textContent = 'Enviando a Nexo…';
+        try {
+          const result = await submitToNexo(input, requestKey);
+          sentToNexo = true;
+          currentOrder.code = result.number;
+          currentOrder.subtotal = Number(result.totalProducts);
+          currentOrder.shippingFee = result.shippingFee;
+          currentOrder.totalTransfer = Number(result.totalDue);
+          currentOrder.totalDebit = Number(result.totalDue);
+          if (result.bankDetails) {
+            nexoBank = { ...result.bankDetails, bankName: result.bankDetails.bankName || '', accountType: result.bankDetails.accountType || '', accountNumber: result.bankDetails.accountNumber || '', holderName: result.bankDetails.holderName || '', holderRut: result.bankDetails.holderRut || '', email: result.bankDetails.email || '', customInstructions:'', active:true };
+            for (const [key, selector] of Object.entries({ bankName: '#chk-bank-name', accountType: '#chk-bank-type', accountNumber: '#chk-bank-number', holderName: '#chk-bank-holder', holderRut: '#chk-bank-rut', email: '#chk-bank-email' })) {
+              const element = chkModal.querySelector(selector);
+              if (element) element.textContent = result.bankDetails[key] || '';
+            }
+          }
+          if (qrImage && result.paymentQr) qrImage.src = result.paymentQr;
+          if (feedback) feedback.textContent = '';
+          if (kind === 'QUOTATION') {
+            if (trackingCodeEl) trackingCodeEl.textContent = result.number;
+            const message = chkModal.querySelector<HTMLElement>('#chk-result-message');
+            if (message) message.textContent = 'Cotización registrada en Nexo. La tienda revisará disponibilidad y condiciones antes de convertirla en pedido. No se ha registrado un pago.';
+            if (goTrackBtn) goTrackBtn.hidden = true;
+            if (waProofBtn) waProofBtn.hidden = true;
+            if (proofHelp) proofHelp.hidden = true;
+            if (resultStatus) resultStatus.textContent = 'Cotización enviada · Sin reserva de stock';
+            const download = chkModal.querySelector<HTMLAnchorElement>('#chk-quotation-pdf');
+            if (download) { download.href = `/api/nexo/quotations/${requestKey}/pdf`; download.hidden = false; }
+            showStep(3); return;
+          }
+        } catch (error) {
+          if (feedback) feedback.textContent = error instanceof Error ? error.message : 'No se pudo enviar. Puedes reintentar.';
+          return;
+        } finally { submitting = false; if (submit) submit.disabled = false; }
+      } else { sentToNexo = false; nexoBank = null; }
+
       // Set Step 2 data
-      if (bankAmountEl) bankAmountEl.textContent = formatMoney(totalTransfer);
+      if (bankAmountEl) bankAmountEl.textContent = formatMoney(currentOrder.totalTransfer);
 
       // Generate QR Code URL with bank details payload
       const bankConfig = AdminStoreService.getBankAccount();
-      const qrPayload = formatBankTransferPayload(bankConfig, code, totalTransfer);
-      if (qrImage) {
+      const qrPayload = formatBankTransferPayload(bankConfig, currentOrder.code, currentOrder.totalTransfer);
+      if (qrImage && !sentToNexo) {
         qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(qrPayload)}`;
       }
 
@@ -1027,7 +1149,7 @@ class StoreManager {
 
     // Copy all bank data button (Master button)
     copyDataBtn?.addEventListener('click', () => {
-      const bankConfig = AdminStoreService.getBankAccount();
+      const bankConfig = nexoBank || AdminStoreService.getBankAccount();
       const payload = formatBankTransferPayload(bankConfig, currentOrder.code, currentOrder.totalTransfer);
       navigator.clipboard?.writeText(payload);
       const origText = copyDataBtn.innerHTML;
@@ -1042,7 +1164,12 @@ class StoreManager {
     // Step 2 Confirm Payment -> Save Order & Show Step 3 (Tracking code)
     confirmPayBtn?.addEventListener('click', () => {
       // Save order to persistent store
-      AdminStoreService.saveOrder(currentOrder);
+      if (!sentToNexo) AdminStoreService.saveOrder(currentOrder);
+      if (sentToNexo) {
+        const message = chkModal.querySelector<HTMLElement>('#chk-result-message');
+        if (message) message.textContent = 'Pedido registrado en Nexo. La transferencia sigue pendiente de verificación por la tienda.';
+        if (goTrackBtn) goTrackBtn.hidden = true;
+      }
 
       // Set Step 3 Tracking info
       if (trackingCodeEl) trackingCodeEl.textContent = currentOrder.code;
@@ -1059,7 +1186,11 @@ class StoreManager {
         `Adjunto mi comprobante de transferencia para confirmación. ¡Muchas gracias!`,
       ];
       if (waProofBtn) {
-        waProofBtn.href = `https://wa.me/56912345678?text=${encodeURIComponent(lines.join('\n'))}`;
+        const supportPhone = sentToNexo ? String((nexoBank as unknown as Record<string,string> | null)?.whatsappPhone || '').replace(/\D/g,'') : '56912345678';
+        waProofBtn.hidden = !supportPhone;
+        const proofHelp = chkModal.querySelector<HTMLElement>('#chk-proof-help');
+        if (proofHelp) proofHelp.hidden = !supportPhone;
+        if (supportPhone) waProofBtn.href = `https://wa.me/${supportPhone}?text=${encodeURIComponent(lines.join('\n'))}`;
       }
 
       if (goTrackBtn) {

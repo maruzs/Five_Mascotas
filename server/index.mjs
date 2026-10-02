@@ -5,6 +5,7 @@ import path from 'node:path';
 import zlib from 'node:zlib';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { nexoEnabled, nexoConfigured, nexoCatalogData, nexoCheckout, nexoRequest } from './nexo.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,6 +28,7 @@ const getDefaultOrders = () => ({ orders: [] });
 
 // In-memory session store (sessionId -> { userId, email, role, name, expiresAt })
 const sessionStore = new Map();
+const checkoutAttempts = new Map();
 
 // MIME types dictionary
 const MIME_TYPES = {
@@ -157,6 +159,48 @@ const server = http.createServer(async (req, res) => {
   const parsedUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
   const pathname = parsedUrl.pathname;
 
+  if (pathname === '/api/nexo/status' && req.method === 'GET') {
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Cache-Control', 'no-store');
+    if (nexoConfigured() && !nexoEnabled()) { res.writeHead(503); res.end(JSON.stringify({ error: 'Integración incompleta.' })); return; }
+    res.end(JSON.stringify({ enabled: nexoEnabled() })); return;
+  }
+  const quotePdf = pathname.match(/^\/api\/nexo\/quotations\/([a-f0-9-]{36})\/pdf$/i);
+  if (quotePdf && req.method === 'GET') {
+    res.setHeader('Cache-Control', 'no-store');
+    // The random checkout key is a document access capability. It is not a public folio.
+    if (!nexoEnabled()) { res.writeHead(503); res.end(); return; }
+    try {
+      const upstream = await nexoRequest(`integrations/storefront/${encodeURIComponent(process.env.NEXO_STORE)}/quotations/${quotePdf[1]}/pdf`);
+      res.setHeader('Content-Type','application/pdf');
+      res.setHeader('Content-Disposition',upstream.headers.get('content-disposition') || 'attachment; filename="cotizacion.pdf"');
+      res.end(Buffer.from(await upstream.arrayBuffer()));
+    } catch (error) { res.writeHead(error.status || 503); res.end('Documento no disponible.'); }
+    return;
+  }
+  if (pathname === '/api/nexo/checkout') {
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Cache-Control', 'no-store');
+    if (!nexoEnabled()) { res.writeHead(503); res.end(JSON.stringify({ error: 'Integración Nexo no configurada.' })); return; }
+    if (req.method !== 'POST') { res.writeHead(405); res.end('{}'); return; }
+    const origin = req.headers.origin;
+    const allowedOrigin = process.env.PUBLIC_SITE_URL || (process.env.NODE_ENV !== 'production' ? `http://${req.headers.host}` : '');
+    if (!origin || origin !== allowedOrigin) { res.writeHead(403); res.end(JSON.stringify({ error: 'Origen no autorizado.' })); return; }
+    if (!/^application\/json\b/.test(req.headers['content-type'] || '')) { res.writeHead(415); res.end('{}'); return; }
+    const now = Date.now(), ip = req.socket.remoteAddress;
+    for (const [address, attempt] of checkoutAttempts) if (attempt.until < now) checkoutAttempts.delete(address);
+    const attempt = checkoutAttempts.get(ip) || { count: 0, until: now+300000 };
+    attempt.count++; checkoutAttempts.set(ip, attempt);
+    if (attempt.count > 60) { res.writeHead(429); res.end(JSON.stringify({ error: 'Demasiadas solicitudes. Intenta en unos minutos.' })); return; }
+    const key = req.headers['idempotency-key'];
+    if (typeof key !== 'string' || !/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i.test(key)) { res.writeHead(400); res.end(JSON.stringify({ error: 'Clave de reintento inválida.' })); return; }
+    try {
+      const result = await nexoCheckout(await parseBody(req), key);
+      res.writeHead(200); res.end(JSON.stringify(result));
+    } catch (error) { res.writeHead(error.status || 503); res.end(JSON.stringify({ error: error.message })); }
+    return;
+  }
+
   // CORS headers for local dev convenience
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -214,6 +258,14 @@ const server = http.createServer(async (req, res) => {
   if (pathname === '/api/pim') {
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
     res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+
+    if (nexoConfigured()) {
+      if (!nexoEnabled()) { res.writeHead(503); res.end(JSON.stringify({ ok: false, error: 'Integración incompleta.' })); return; }
+      if (req.method !== 'GET') { res.writeHead(409); res.end(JSON.stringify({ ok: false, error: 'El catálogo se administra en Nexo.' })); return; }
+      try { res.end(JSON.stringify({ ok: true, data: await nexoCatalogData() })); }
+      catch { res.writeHead(503); res.end(JSON.stringify({ ok: false, error: 'Catálogo Nexo temporalmente no disponible.' })); }
+      return;
+    }
 
     if (req.method === 'GET') {
       try {
@@ -640,6 +692,11 @@ const server = http.createServer(async (req, res) => {
 
     // POST /api/orders (Create/Save new order)
     if (req.method === 'POST' && (!subAction || subAction === 'create')) {
+      if (nexoConfigured()) {
+        res.statusCode = 409;
+        res.end(JSON.stringify({ ok: false, error: 'Los pedidos se crean mediante el checkout de Nexo.' }));
+        return;
+      }
       try {
         const body = await parseBody(req);
         if (!body.code || !body.items) {

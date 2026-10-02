@@ -10,6 +10,9 @@ export type CategoryType =
 export type LifeStage = 'Cachorro' | 'Adulto' | 'Senior' | 'Todas las edades';
 
 export interface Product {
+  nexoVariantId?: string;
+  sku?: string;
+  available?: number;
   id: string;
   name: string;
   pet: PetType;
