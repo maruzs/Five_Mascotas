@@ -253,8 +253,47 @@ const server = http.createServer(async (req, res) => {
     res.end(JSON.stringify({ ok: false, error: 'Method Not Allowed' }));
     return;
   }
+  // API ROUTE: /api/pim/images — list available packshots in public/products/
+  if (pathname === '/api/pim/images') {
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    if (req.method === 'GET') {
+      try {
+        const productsDir = path.join(rootDir, 'public', 'products');
+        const distProductsDir = path.join(distDir, 'products');
+        // Read from both public and dist (prioritize public for dev, dist for prod)
+        const ALLOWED_EXT = ['.png', '.jpg', '.jpeg', '.webp', '.svg'];
+        const readDir = async (dir) => {
+          try {
+            const files = await fsp.readdir(dir);
+            return files.filter(f => ALLOWED_EXT.includes(path.extname(f).toLowerCase()));
+          } catch { return []; }
+        };
+        const [publicFiles, distFiles] = await Promise.all([readDir(productsDir), readDir(distProductsDir)]);
+        const allFiles = [...new Set([...publicFiles, ...distFiles])].sort();
+        const images = allFiles.map(f => `/products/${f}`);
+        // Also include uploaded images
+        const uploadsDir = path.join(dataDir, 'uploads');
+        let uploadedFiles = [];
+        try {
+          const uFiles = await fsp.readdir(uploadsDir);
+          uploadedFiles = uFiles.filter(f => ALLOWED_EXT.includes(path.extname(f).toLowerCase())).map(f => `/five-mascotas/uploads/${f}`);
+        } catch {}
+        res.statusCode = 200;
+        res.end(JSON.stringify({ ok: true, images: [...images, ...uploadedFiles] }));
+      } catch (err) {
+        res.statusCode = 500;
+        res.end(JSON.stringify({ ok: false, error: err.message }));
+      }
+      return;
+    }
+    res.statusCode = 405;
+    res.end(JSON.stringify({ ok: false, error: 'Method Not Allowed' }));
+    return;
+  }
 
   // API ROUTE: /api/pim
+
   if (pathname === '/api/pim') {
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
     res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');

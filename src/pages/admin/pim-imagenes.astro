@@ -1,0 +1,516 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="FIVE Admin — Editor de Imágenes y Fichas" activeNav="imagenes" breadcrumbTitle="Editor de Imágenes y Fichas">
+  <!-- Page Header -->
+  <div class="admin-page-header">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+      <div>
+        <h1>Editor de Imágenes y Fichas</h1>
+        <p>Corrige imágenes asignadas, la categoría de mascota (Perros/Gatos) y el nombre de cada producto directamente desde aquí.</p>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <span id="badge-problemas" style="background:#fef3c7; color:#92400e; font-size:12.5px; font-weight:700; padding:5px 12px; border-radius:20px; border:1px solid #fcd34d;">
+          Cargando...
+        </span>
+        <button type="button" class="admin-btn primary" id="btn-guardar-todo" disabled>
+          Guardar todos los cambios
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="admin-card" style="margin-bottom:20px; padding:14px 20px;">
+    <div style="display:flex; flex-wrap:wrap; gap:12px; align-items:center;">
+      <input type="search" id="filtro-buscar" class="admin-search-input" placeholder="Buscar por nombre, marca..." style="flex:1; min-width:200px;" />
+      <select id="filtro-mascota" class="admin-select">
+        <option value="todos">Todas las mascotas</option>
+        <option value="Perros">Perros</option>
+        <option value="Gatos">Gatos</option>
+        <option value="Perros Gatos">Perros y Gatos</option>
+      </select>
+      <select id="filtro-categoria" class="admin-select">
+        <option value="todos">Todas las categorías</option>
+        <option value="Alimentos">Alimentos</option>
+        <option value="Farmacia">Farmacia</option>
+        <option value="Accesorios">Accesorios</option>
+        <option value="Higiene">Higiene</option>
+        <option value="Snacks">Snacks</option>
+      </select>
+      <select id="filtro-imagen" class="admin-select">
+        <option value="todos">Todas las imágenes</option>
+        <option value="sin-imagen">Sin imagen real (placeholders)</option>
+        <option value="con-imagen">Con imagen asignada</option>
+      </select>
+      <span id="conteo-visibles" style="font-size:13px; color:#6c757d; font-weight:600; white-space:nowrap;">— productos</span>
+    </div>
+  </div>
+
+  <!-- Products Grid -->
+  <div id="grid-productos" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap:16px;">
+    <!-- Populated by JS -->
+  </div>
+
+  <!-- Empty State -->
+  <div id="estado-vacio" style="display:none; text-align:center; padding:60px 20px; color:#6c757d;">
+    <div style="font-size:40px; margin-bottom:12px;">🔍</div>
+    <p style="font-size:15px; font-weight:600;">No se encontraron productos con esos filtros.</p>
+  </div>
+
+  <!-- Skeleton loader -->
+  <div id="skeleton-loader" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap:16px;">
+    {Array.from({ length: 12 }).map(() => (
+      <div style="background:#f1f5f9; border-radius:12px; height:340px; animation: pulse 1.5s ease-in-out infinite;" />
+    ))}
+  </div>
+
+  <!-- IMAGE PICKER MODAL -->
+  <div id="modal-imagen" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:1000; align-items:flex-start; justify-content:center; padding:40px 16px; overflow-y:auto;">
+    <div style="background:#fff; border-radius:16px; width:100%; max-width:900px; box-shadow:0 20px 60px rgba(0,0,0,0.25); overflow:hidden;">
+      <!-- Modal Header -->
+      <div style="padding:20px 24px; border-bottom:1px solid #e9ecef; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <h3 style="margin:0; font-size:16px; font-weight:800; color:#1a1a2e;" id="modal-titulo-prod">Seleccionar imagen</h3>
+          <p style="margin:4px 0 0; font-size:12px; color:#6c757d;" id="modal-sub-prod"></p>
+        </div>
+        <button id="btn-cerrar-modal" style="background:none; border:none; font-size:28px; color:#6c757d; cursor:pointer; line-height:1; padding:4px 8px;">&times;</button>
+      </div>
+
+      <!-- Search + Upload inside modal -->
+      <div style="padding:16px 24px; border-bottom:1px solid #f1f5f9; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+        <input type="search" id="modal-buscar" class="admin-search-input" placeholder="Buscar imagen por nombre..." style="flex:1; min-width:160px;" />
+        <label style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; background:#7025a8; color:#fff; border-radius:8px; cursor:pointer; font-size:12.5px; font-weight:700;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Subir nueva
+          <input type="file" id="input-upload-nueva" accept="image/png,image/jpeg,image/webp" style="display:none;" />
+        </label>
+      </div>
+
+      <!-- Image Grid inside modal -->
+      <div id="modal-grid-imagenes" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(120px, 1fr)); gap:10px; padding:20px 24px; max-height:480px; overflow-y:auto;">
+        <!-- Populated by JS -->
+      </div>
+
+      <div style="padding:16px 24px; border-top:1px solid #e9ecef; display:flex; justify-content:flex-end; gap:10px;">
+        <button class="admin-btn secondary" id="btn-quitar-imagen">Quitar imagen (dejar vacío)</button>
+        <button class="admin-btn secondary" id="btn-cancelar-modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .prod-card {
+      background: #fff;
+      border-radius: 12px;
+      border: 1.5px solid #e9ecef;
+      overflow: hidden;
+      transition: box-shadow 0.2s ease, border-color 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .prod-card:hover {
+      box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+      border-color: #d0a8f0;
+    }
+    .prod-card.tiene-cambio {
+      border-color: #f59e0b;
+      box-shadow: 0 0 0 2px rgba(245,158,11,0.15);
+    }
+    .prod-img-zone {
+      position: relative;
+      background: #f8fafc;
+      aspect-ratio: 1 / 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    .prod-img-zone img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      transition: transform 0.2s ease;
+    }
+    .prod-img-zone:hover img {
+      transform: scale(1.04);
+    }
+    .prod-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(112,37,168,0.7);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .prod-img-zone:hover .prod-img-overlay {
+      opacity: 1;
+    }
+    .badge-placeholder {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #fee2e2;
+      color: #dc2626;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 3px 7px;
+      border-radius: 6px;
+    }
+    .prod-body {
+      padding: 12px 14px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .pet-toggle {
+      display: flex;
+      gap: 4px;
+    }
+    .pet-btn {
+      flex: 1;
+      padding: 5px 6px;
+      border-radius: 6px;
+      border: 1.5px solid #e2e8f0;
+      background: #f8fafc;
+      color: #6c757d;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s ease;
+    }
+    .pet-btn.active-perros { background: #dbeafe; color: #1d4ed8; border-color: #93c5fd; }
+    .pet-btn.active-gatos { background: #f3e8ff; color: #7025a8; border-color: #c4b5fd; }
+    .pet-btn.active-ambos { background: #dcfce7; color: #16a34a; border-color: #86efac; }
+    .modal-img-item {
+      border-radius: 10px;
+      border: 2px solid #e2e8f0;
+      padding: 6px;
+      cursor: pointer;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      background: #f8fafc;
+      text-align: center;
+    }
+    .modal-img-item:hover { border-color: #7025a8; box-shadow: 0 2px 8px rgba(112,37,168,0.15); }
+    .modal-img-item.seleccionada { border-color: #7025a8; background: #f3e8ff; box-shadow: 0 0 0 3px rgba(112,37,168,0.2); }
+    .modal-img-item img { width: 100%; aspect-ratio: 1; object-fit: contain; border-radius: 6px; }
+    .modal-img-item span { display: block; font-size: 9px; color: #6c757d; margin-top: 4px; word-break: break-all; line-height: 1.3; }
+  </style>
+
+  <script>
+    // ============================================================
+    // TYPES & STATE
+    // ============================================================
+    interface Product {
+      id: string;
+      name: string;
+      pet: string;
+      brand: string;
+      category: string;
+      subcategory?: string;
+      detail?: string;
+      format: string;
+      lifeStage?: string;
+      price: number;
+      oldPrice: number;
+      image?: string;
+      images?: string[];
+      [key: string]: unknown;
+    }
+
+    let allProducts: Product[] = [];
+    let allImages: string[] = [];
+    let changes: Record<string, Partial<Product>> = {}; // id -> changed fields
+    let currentEditId: string | null = null;
+
+    const isPlaceholder = (url?: string) =>
+      !url || url.includes('/five-mascotas/alimento') || url.includes('placeholder') || url === '/placeholder.svg' || url.includes('/demos/') || url.includes('/botiquin') || url.includes('/snack.svg') || url.includes('/plato.svg') || url.includes('/pelota.svg');
+
+    // ============================================================
+    // FETCH DATA
+    // ============================================================
+    async function loadData() {
+      const [pimRes, imgRes] = await Promise.all([
+        fetch('/api/pim'),
+        fetch('/api/pim/images'),
+      ]);
+      const pimData = await pimRes.json();
+      const imgData = await imgRes.json();
+      allProducts = pimData.data?.products || [];
+      allImages = imgData.images || [];
+      document.getElementById('skeleton-loader')!.style.display = 'none';
+      renderGrid();
+      updateBadge();
+    }
+
+    // ============================================================
+    // RENDER PRODUCT GRID
+    // ============================================================
+    function getEffective(p: Product): Product {
+      return { ...p, ...(changes[p.id] || {}) };
+    }
+
+    function renderGrid() {
+      const buscar = (document.getElementById('filtro-buscar') as HTMLInputElement).value.toLowerCase();
+      const mascota = (document.getElementById('filtro-mascota') as HTMLSelectElement).value;
+      const categoria = (document.getElementById('filtro-categoria') as HTMLSelectElement).value;
+      const imagenFiltro = (document.getElementById('filtro-imagen') as HTMLSelectElement).value;
+
+      const filtered = allProducts.filter(p => {
+        const e = getEffective(p);
+        if (buscar && !`${e.name} ${e.brand} ${e.format}`.toLowerCase().includes(buscar)) return false;
+        if (mascota !== 'todos' && e.pet !== mascota) return false;
+        if (categoria !== 'todos' && e.category !== categoria) return false;
+        if (imagenFiltro === 'sin-imagen' && !isPlaceholder(e.image)) return false;
+        if (imagenFiltro === 'con-imagen' && isPlaceholder(e.image)) return false;
+        return true;
+      });
+
+      const grid = document.getElementById('grid-productos')!;
+      const empty = document.getElementById('estado-vacio')!;
+      const conteo = document.getElementById('conteo-visibles')!;
+
+      grid.innerHTML = '';
+      conteo.textContent = `${filtered.length} productos`;
+
+      if (filtered.length === 0) {
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+
+      filtered.forEach(p => {
+        const e = getEffective(p);
+        const hasChange = !!changes[p.id];
+        const placeholder = isPlaceholder(e.image);
+
+        const card = document.createElement('div');
+        card.className = `prod-card${hasChange ? ' tiene-cambio' : ''}`;
+        card.dataset.id = p.id;
+
+        const imgSrc = e.image || '/five-mascotas/alimento-0.svg';
+        const petLabel = e.pet === 'Perros' ? '🐶 Perros' : e.pet === 'Gatos' ? '🐱 Gatos' : '🐾 Ambos';
+
+        card.innerHTML = `
+          <div class="prod-img-zone" data-edit="${p.id}">
+            <img src="${imgSrc}" alt="${e.name}" loading="lazy"
+              onerror="this.src='/five-mascotas/alimento-0.svg'" />
+            ${placeholder ? '<span class="badge-placeholder">Sin foto real</span>' : ''}
+            <div class="prod-img-overlay">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
+              Cambiar imagen
+            </div>
+          </div>
+          <div class="prod-body">
+            <div style="font-size:10px; font-weight:700; color:#7025a8; text-transform:uppercase; letter-spacing:0.5px;">${e.brand}</div>
+            <div style="font-size:13px; font-weight:700; color:#1a1a2e; line-height:1.3;">${e.name}</div>
+            <div style="font-size:11.5px; color:#6c757d;">${e.format} &middot; <span style="font-weight:600;">${e.category}</span></div>
+            <div style="font-size:10.5px; color:#6c757d; font-family:monospace;">${p.id}</div>
+            <div class="pet-toggle" data-id="${p.id}">
+              <button class="pet-btn ${e.pet === 'Perros' ? 'active-perros' : ''}" data-val="Perros">🐶 Perros</button>
+              <button class="pet-btn ${e.pet === 'Gatos' ? 'active-gatos' : ''}" data-val="Gatos">🐱 Gatos</button>
+              <button class="pet-btn ${e.pet === 'Perros Gatos' ? 'active-ambos' : ''}" data-val="Perros Gatos">🐾 Ambos</button>
+            </div>
+            ${hasChange ? '<div style="font-size:11px; color:#f59e0b; font-weight:700; text-align:right;">● Cambio pendiente</div>' : ''}
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      // Attach events
+      grid.querySelectorAll('.prod-img-zone').forEach(zone => {
+        zone.addEventListener('click', () => {
+          const id = (zone as HTMLElement).dataset.edit!;
+          openImageModal(id);
+        });
+      });
+
+      grid.querySelectorAll('.pet-toggle').forEach(tog => {
+        tog.querySelectorAll('.pet-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = (tog as HTMLElement).dataset.id!;
+            const val = (btn as HTMLElement).dataset.val!;
+            applyChange(id, { pet: val });
+          });
+        });
+      });
+    }
+
+    // ============================================================
+    // CHANGE TRACKING
+    // ============================================================
+    function applyChange(id: string, patch: Partial<Product>) {
+      changes[id] = { ...(changes[id] || {}), ...patch };
+      (document.getElementById('btn-guardar-todo') as HTMLButtonElement).disabled = false;
+      updateBadge();
+      renderGrid();
+    }
+
+    function updateBadge() {
+      const nPlaceholders = allProducts.filter(p => isPlaceholder(getEffective(p).image)).length;
+      const nChanges = Object.keys(changes).length;
+      const badge = document.getElementById('badge-problemas')!;
+      badge.textContent = `${nPlaceholders} sin foto real · ${nChanges} cambio${nChanges !== 1 ? 's' : ''} pendiente${nChanges !== 1 ? 's' : ''}`;
+      badge.style.background = nChanges > 0 ? '#fef3c7' : '#f0fdf4';
+      badge.style.color = nChanges > 0 ? '#92400e' : '#15803d';
+    }
+
+    // ============================================================
+    // SAVE ALL
+    // ============================================================
+    document.getElementById('btn-guardar-todo')!.addEventListener('click', async () => {
+      const btn = document.getElementById('btn-guardar-todo') as HTMLButtonElement;
+      btn.disabled = true;
+      btn.textContent = 'Guardando...';
+      try {
+        const merged = allProducts.map(p => ({ ...p, ...(changes[p.id] || {}) }));
+        const res = await fetch('/api/pim', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ products: merged }),
+        });
+        const data = await res.json();
+        if (data.ok) {
+          allProducts = merged;
+          changes = {};
+          btn.textContent = '✓ Guardado exitosamente';
+          btn.style.background = '#16a34a';
+          setTimeout(() => {
+            btn.textContent = 'Guardar todos los cambios';
+            btn.style.background = '';
+            btn.disabled = true;
+          }, 2500);
+          updateBadge();
+          renderGrid();
+        } else {
+          throw new Error(data.error || 'Error al guardar');
+        }
+      } catch (err: unknown) {
+        alert('Error al guardar: ' + (err instanceof Error ? err.message : String(err)));
+        btn.disabled = false;
+        btn.textContent = 'Guardar todos los cambios';
+      }
+    });
+
+    // ============================================================
+    // IMAGE MODAL
+    // ============================================================
+    function openImageModal(productId: string) {
+      currentEditId = productId;
+      const p = getEffective(allProducts.find(x => x.id === productId)!);
+      const modal = document.getElementById('modal-imagen')!;
+      (document.getElementById('modal-titulo-prod') as HTMLElement).textContent = `Seleccionar imagen para: ${p.name}`;
+      (document.getElementById('modal-sub-prod') as HTMLElement).textContent = `${p.brand} · ${p.format} · ${p.category}`;
+      (document.getElementById('modal-buscar') as HTMLInputElement).value = '';
+      modal.style.display = 'flex';
+      renderModalImages('', p.image);
+    }
+
+    function renderModalImages(query: string, currentImg?: string) {
+      const grid = document.getElementById('modal-grid-imagenes')!;
+      const filtered = query
+        ? allImages.filter(img => img.toLowerCase().includes(query.toLowerCase()))
+        : allImages;
+      grid.innerHTML = '';
+      if (filtered.length === 0) {
+        grid.innerHTML = '<p style="color:#6c757d; font-size:13px; grid-column:1/-1;">No se encontraron imágenes con ese término.</p>';
+        return;
+      }
+      filtered.forEach(imgUrl => {
+        const item = document.createElement('div');
+        item.className = `modal-img-item${imgUrl === currentImg ? ' seleccionada' : ''}`;
+        const fname = imgUrl.split('/').pop() || imgUrl;
+        item.innerHTML = `
+          <img src="${imgUrl}" alt="${fname}" loading="lazy" onerror="this.src='/five-mascotas/alimento-0.svg'" />
+          <span>${fname}</span>
+        `;
+        item.addEventListener('click', () => {
+          if (currentEditId) applyChange(currentEditId, { image: imgUrl });
+          closeImageModal();
+        });
+        grid.appendChild(item);
+      });
+    }
+
+    function closeImageModal() {
+      document.getElementById('modal-imagen')!.style.display = 'none';
+      currentEditId = null;
+    }
+
+    document.getElementById('btn-cerrar-modal')!.addEventListener('click', closeImageModal);
+    document.getElementById('btn-cancelar-modal')!.addEventListener('click', closeImageModal);
+    document.getElementById('modal-imagen')!.addEventListener('click', (e) => {
+      if (e.target === document.getElementById('modal-imagen')) closeImageModal();
+    });
+
+    document.getElementById('btn-quitar-imagen')!.addEventListener('click', () => {
+      if (currentEditId) applyChange(currentEditId, { image: '/placeholder.svg' });
+      closeImageModal();
+    });
+
+    document.getElementById('modal-buscar')!.addEventListener('input', (e) => {
+      const q = (e.target as HTMLInputElement).value;
+      const p = currentEditId ? getEffective(allProducts.find(x => x.id === currentEditId)!) : null;
+      renderModalImages(q, p?.image);
+    });
+
+    // ============================================================
+    // UPLOAD NEW IMAGE
+    // ============================================================
+    document.getElementById('input-upload-nueva')!.addEventListener('change', async (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = async (ev) => {
+        const base64 = ev.target!.result as string;
+        try {
+          const res = await fetch('/api/upload', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ base64, filename: file.name }),
+          });
+          const data = await res.json();
+          if (data.ok && data.url) {
+            allImages.unshift(data.url);
+            if (currentEditId) applyChange(currentEditId, { image: data.url });
+            closeImageModal();
+          } else {
+            alert('Error al subir imagen: ' + (data.error || 'Error desconocido'));
+          }
+        } catch (err: unknown) {
+          alert('Error: ' + (err instanceof Error ? err.message : String(err)));
+        }
+      };
+      reader.readAsDataURL(file);
+      (e.target as HTMLInputElement).value = '';
+    });
+
+    // ============================================================
+    // FILTERS
+    // ============================================================
+    ['filtro-buscar', 'filtro-mascota', 'filtro-categoria', 'filtro-imagen'].forEach(id => {
+      document.getElementById(id)!.addEventListener('input', renderGrid);
+      document.getElementById(id)!.addEventListener('change', renderGrid);
+    });
+
+    // ============================================================
+    // INIT
+    // ============================================================
+    loadData();
+  </script>
+</AdminLayout>
