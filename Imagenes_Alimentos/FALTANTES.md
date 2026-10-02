@@ -195,3 +195,43 @@ En `data/pim.json` los campos `ingredients` de los 3 Whiskas secos contienen tex
 4. **Juvenia:** verificar si es alimento o suplemento antes de mapear (el reporte lo marca como nutracéutico).
 5. **Imágenes sin fuente:** buscar en Mercado Libre / tiendas oficiales o solicitar foto al proveedor; NO inventar ni reutilizar packshots de otro formato.
 6. **Integración:** todo cambio debe aplicarse en `src/data/pim/catalog.ts` (storefront) **y** `data/pim.json` (runtime) para que no queden desincronizados.
+
+---
+
+# 🚀 7. Segunda Integración Masiva (2026-10)
+
+## 7.1 Datos integrados — 71 productos
+
+| Fuente | Productos | Qué se cargó |
+| :--- | :---: | :--- |
+| `gepsapetfoods.com/cari-amici` (web oficial) | 7 | Ingredientes completos + proteína/grasa/fibra/humedad de toda la línea Amici |
+| Dataset Gepsa (Ganacan, Ganacat, Odwalla, Zimpi, Magnífico, Compinches) | 13 | Análisis garantizado (proteína, grasa, fibra, humedad) |
+| Gorchen/Baires (Kongo, Kongo Gold, Voraz, Company, Natural Meat) | 28 | Ingredientes reales de ficha + % de proteína declarado |
+| Dataset Purina (Cat Chow Gatito, Gati, Felix Megamix, Pro Plan, LiveClear, Excellent, PPVD CN) | 15 | Macros + ingredientes donde existen |
+| PROA (Champion Dog) | 3 | Macros + ingredientes |
+| Bokato / Appetit | 4 | Macros + ingredientes |
+| DragPharma (Superpet Omega) | 4 | Imagen + composición real de suplementos |
+
+## 7.2 Correcciones de integridad
+
+- **37 ingredientes basura eliminados:** el scraping anterior había importado el texto *"Consulte el empaque o especificación técnica del fabricante."* como ingredientes en Josera, Josi y Bavaro.
+- **Superpet (alimentos) corregido:** `prod-234/235/236` tenían imágenes de *fichas técnicas PDF de suplementos* e ingredientes de aceites. Ahora usan placeholder genérico y sin ingredientes falsos.
+  - `prod-380/381/382/383` (suplementos Omega) ahora tienen su packshot real y composición correcta.
+- **Kongo/Company/Natural Meat/Voraz:** reemplazados los placeholders "Consulte el empaque" por la nómina real de ingredientes de Gorchen.
+
+## 7.3 Pendientes reales (91 productos)
+
+| Marca | Nº | Falta | Fuente posible |
+| :--- | :---: | :--- | :--- |
+| Josera + Josi | 37 | Ingredientes y/o proteína | PDFs de ficha técnica en las fichas de Cooprinsem, o web oficial Josera |
+| Gepsa (Compinches, Ganacan, Ganacat, Magnífico, Odwalla, Zimpi) | 12 | Nómina de ingredientes | El fabricante no la publica; solicitar a Gepsa |
+| Allendes (Top One 5, Sabrokan, Sabrocat 2, Canito, Guau Forte, Cachupín 2, Felinnes 2) | 13 | Ingredientes y/o proteína | Sin datos en el sitio; requiere foto de etiqueta/dorso |
+| N&D | 3 | Todo | Web oficial Farmina (Espirulina Tilapia / Jabalí) |
+| Mastín | 3 | Todo | Líneas Senior/Signature/Raza Pequeña no publicadas por Nutritec |
+| Bavaro | 3 | Proteína | PDFs Cooprinsem |
+| Purina | 8 | Cat Chow Adulto Carne (dry), PPVD Canine EN 380 g | Ficha técnica Purina |
+| Gallina (4), Pionero, Askat, Natural Meat | 7 | Todo | Marcas locales/farm; contacto con proveedor |
+
+## 7.4 Imágenes pendientes (8)
+
+Cachupín Cachorro, Mastín Senior/Signature/Raza Pequeña, Kongo Gato Pescado 15 kg, N&D Espirulina Tilapia (1,5/7 kg), N&D Jabalí lata, Askat, Pionero y Gallina x4.

@@ -184,7 +184,12 @@ const fallbackProducts: Product[] = [
       "/products/amici-amici-adulto-mix.png"
     ],
     "originUrl": "https://gepsapetfoods.com/cari-amici/",
-    "supplier": "Gepsa"
+    "supplier": "Gepsa",
+    "proteinPct": 23,
+    "fatPct": 8.5,
+    "fiberPct": 4.5,
+    "moisturePct": 10,
+    "ingredients": "Harina de carne y hueso bovino, harina de carne y hueso porcina, harina de subproductos de pollo (fuente natural de glucosamina), maíz, trigo, gluten de maíz, arroz, salvado de trigo, soja integral, aceite de pollo, harina de pescado (merluza del Atlántico Sur), hidrolizado (líquido y/o polvo) a base de subproductos porcinos y/o vacunos y/o aviares, pulpa de remolacha (fuente de fibras prebióticas), aceite de pescado (fuente natural de DHA y EPA), cloruro de sodio, levadura de cerveza, suplemento de vitaminas (A, D3, E, B3, B5, B1, B2, B6, B9, K3, B7, B12), cloruro de colina; suplemento de minerales (sulfato de zinc, sulfato ferroso, sulfato cúprico, óxido de manganeso, iodato de calcio, sulfato de cobalto, selenito de sodio); DL-metionina, pulpa de tomate (fuente de licopeno), zanahoria deshidratada, espinaca deshidratada, sulfato de condroitina, probióticos: Bacillus subtilis; butirato de calcio, butirato de sodio y aceite de palma; mineral orgánico: proteinato de zinc; colorante natural: caramelo; antioxidantes naturales: tocoferoles, extracto de romero; extracto vegetal de Yucca schidigera."
   },
   {
     "id": "prod-7",
@@ -206,7 +211,12 @@ const fallbackProducts: Product[] = [
       "/products/amici-amici-adulto-carne.png"
     ],
     "originUrl": "https://gepsapetfoods.com/cari-amici/",
-    "supplier": "Gepsa"
+    "supplier": "Gepsa",
+    "proteinPct": 23,
+    "fatPct": 8.5,
+    "fiberPct": 4.5,
+    "moisturePct": 10,
+    "ingredients": "Harina de carne y hueso bovino, harina de carne y hueso porcina, harina de subproductos de pollo (fuente natural de glucosamina), maíz, trigo, gluten de maíz, arroz, salvado de trigo, soja integral, aceite de pollo, harina de pescado (merluza del Atlántico Sur), hidrolizado (líquido y/o polvo) a base de subproductos porcinos y/o vacunos y/o aviares, pulpa de remolacha (fuente de fibras prebióticas), aceite de pescado (fuente natural de DHA y EPA), cloruro de sodio, levadura de cerveza, suplemento de vitaminas (A, D3, E, B3, B5, B1, B2, B6, B9, K3, B7, B12), cloruro de colina; suplemento de minerales (sulfato de zinc, sulfato ferroso, sulfato cúprico, óxido de manganeso, iodato de calcio, sulfato de cobalto, selenito de sodio); DL-metionina, pulpa de tomate (fuente de licopeno), zanahoria deshidratada, espinaca deshidratada, sulfato de condroitina, probióticos: Bacillus subtilis; butirato de calcio, butirato de sodio y aceite de palma; mineral orgánico: proteinato de zinc; colorante natural: caramelo; antioxidantes naturales: tocoferoles, extracto de romero; extracto vegetal de Yucca schidigera."
   },
   {
     "id": "prod-8",
@@ -228,7 +238,12 @@ const fallbackProducts: Product[] = [
       "/products/amici-amici-cachorro.png"
     ],
     "originUrl": "https://gepsapetfoods.com/cari-amici/",
-    "supplier": "Gepsa"
+    "supplier": "Gepsa",
+    "proteinPct": 25,
+    "fatPct": 11,
+    "fiberPct": 4.5,
+    "moisturePct": 10,
+    "ingredients": "Harina de carne y hueso bovino, harina de carne y hueso porcina, harina de subproductos de pollo (fuente natural de glucosamina), maíz, gluten de maíz, trigo, arroz, salvado de trigo, soja integral, harina de pescado (merluza austral), aceite de pollo, leche en polvo, hidrolizado (líquido y/o polvo) a base de subproductos porcinos y/o vacunos y/o aviares, pulpa de remolacha (fuente de fibras prebióticas), aceite de pescado (fuente natural de DHA y EPA), cloruro de sodio, levadura de cerveza, suplemento de vitaminas (A, D3, E, B3, B5, B1, B2, B6, B9, K3, B7, B12), cloruro de colina; suplemento de minerales (sulfato de zinc, sulfato ferroso, sulfato cúprico, óxido de manganeso, iodato de calcio, sulfato de cobalto, selenito de sodio); DL-metionina, probiótico: Bacillus subtilis; butirato de calcio, butirato de sodio y aceite de palma; mineral orgánico: proteinato de zinc; sulfato de condroitina, colorante natural: caramelo; antioxidantes naturales: tocoferoles, extracto de romero, extracto vegetal de Yucca schidigera."
   },
   {
     "id": "prod-9",
@@ -248,7 +263,12 @@ const fallbackProducts: Product[] = [
     "featured": false,
     "images": [
       "/products/cari-amici-premium-gatos-salmon-y-merluza-austral.png"
-    ]
+    ],
+    "proteinPct": 28,
+    "fatPct": 10,
+    "fiberPct": 4.5,
+    "moisturePct": 10,
+    "ingredients": "Harina de subproductos de pollo (fuente natural de glucosamina), harina de pescado (merluza austral), maíz, harina de carne y hueso bovino, trigo, gluten de maíz, arroz, soja integral, aceite de pollo, salvado de trigo, aceite de pescado (fuente natural de DHA y EPA), hidrolizado (líquido y/o polvo) a base de subproductos porcinos, pulpa de remolacha (fuente de fibras prebióticas), harina de salmón, salvado de maíz, harina de Miscanthus (fuente de celulosa); cloruro de sodio, suplemento de vitaminas (A, D3, E, B3, B5, B1, B2, B6, B9, K3, B7, B12), cloruro de colina; suplemento de minerales (sulfato de zinc, sulfato ferroso, sulfato cúprico, óxido de manganeso, iodato de calcio, sulfato de cobalto, selenito de sodio); carbonato de calcio, acidulante: bisulfato de sodio; taurina, L-lisina, DL-metionina; extracto vegetal de Yucca schidigera; butirato de calcio, butirato de sodio y aceite de palma; colorante natural: caramelo, probiótico: Bacillus subtilis; mineral orgánico: proteinato de zinc; antioxidantes naturales: tocoferoles, extracto de romero."
   },
   {
     "id": "prod-10",
@@ -270,7 +290,12 @@ const fallbackProducts: Product[] = [
       "/products/amici-amici-gato-mix.png"
     ],
     "originUrl": "https://gepsapetfoods.com/cari-amici/",
-    "supplier": "Gepsa"
+    "supplier": "Gepsa",
+    "proteinPct": 28,
+    "fatPct": 10,
+    "fiberPct": 4.5,
+    "moisturePct": 10,
+    "ingredients": "Harina de carne y hueso bovino, harina de subproductos de pollo (fuente natural de glucosamina), maíz, harina de pescado (merluza austral), trigo, gluten de maíz, arroz, soja integral, aceite de pollo, salvado de trigo, aceite de pescado (fuente natural de DHA y EPA), hidrolizado (líquido y/o polvo) a base de subproductos porcinos, pulpa de remolacha (fuente de fibras prebióticas), salvado de maíz, harina de Miscanthus (fuente de celulosa); cloruro de sodio, suplemento de vitaminas (A, D3, E, B3, B5, B1, B2, B6, B9, K3, B7, B12), cloruro de colina; suplemento de minerales (sulfato de zinc, sulfato ferroso, sulfato cúprico, óxido de manganeso, iodato de calcio, sulfato de cobalto, selenito de sodio); carbonato de calcio, acidulante: bisulfato de sodio; taurina, L-lisina, DL-metionina; extracto vegetal de Yucca schidigera; butirato de calcio, butirato de sodio y aceite de palma, colorante natural: caramelo, probiótico: Bacillus subtilis; mineral orgánico: proteinato de zinc; antioxidantes naturales: tocoferoles, extracto de romero."
   },
   {
     "id": "prod-11",
@@ -290,7 +315,12 @@ const fallbackProducts: Product[] = [
     "featured": false,
     "images": [
       "/products/cari-amici-premium-gatos-salmon-y-merluza-austral.png"
-    ]
+    ],
+    "proteinPct": 28,
+    "fatPct": 10,
+    "fiberPct": 4.5,
+    "moisturePct": 10,
+    "ingredients": "Harina de subproductos de pollo (fuente natural de glucosamina), harina de pescado (merluza austral), maíz, harina de carne y hueso bovino, trigo, gluten de maíz, arroz, soja integral, aceite de pollo, salvado de trigo, aceite de pescado (fuente natural de DHA y EPA), hidrolizado (líquido y/o polvo) a base de subproductos porcinos, pulpa de remolacha (fuente de fibras prebióticas), harina de salmón, salvado de maíz, harina de Miscanthus (fuente de celulosa); cloruro de sodio, suplemento de vitaminas (A, D3, E, B3, B5, B1, B2, B6, B9, K3, B7, B12), cloruro de colina; suplemento de minerales (sulfato de zinc, sulfato ferroso, sulfato cúprico, óxido de manganeso, iodato de calcio, sulfato de cobalto, selenito de sodio); carbonato de calcio, acidulante: bisulfato de sodio; taurina, L-lisina, DL-metionina; extracto vegetal de Yucca schidigera; butirato de calcio, butirato de sodio y aceite de palma; colorante natural: caramelo, probiótico: Bacillus subtilis; mineral orgánico: proteinato de zinc; antioxidantes naturales: tocoferoles, extracto de romero."
   },
   {
     "id": "prod-12",
@@ -312,7 +342,12 @@ const fallbackProducts: Product[] = [
       "/products/amici-amici-gato-mix.png"
     ],
     "originUrl": "https://gepsapetfoods.com/cari-amici/",
-    "supplier": "Gepsa"
+    "supplier": "Gepsa",
+    "proteinPct": 28,
+    "fatPct": 10,
+    "fiberPct": 4.5,
+    "moisturePct": 10,
+    "ingredients": "Harina de carne y hueso bovino, harina de subproductos de pollo (fuente natural de glucosamina), maíz, harina de pescado (merluza austral), trigo, gluten de maíz, arroz, soja integral, aceite de pollo, salvado de trigo, aceite de pescado (fuente natural de DHA y EPA), hidrolizado (líquido y/o polvo) a base de subproductos porcinos, pulpa de remolacha (fuente de fibras prebióticas), salvado de maíz, harina de Miscanthus (fuente de celulosa); cloruro de sodio, suplemento de vitaminas (A, D3, E, B3, B5, B1, B2, B6, B9, K3, B7, B12), cloruro de colina; suplemento de minerales (sulfato de zinc, sulfato ferroso, sulfato cúprico, óxido de manganeso, iodato de calcio, sulfato de cobalto, selenito de sodio); carbonato de calcio, acidulante: bisulfato de sodio; taurina, L-lisina, DL-metionina; extracto vegetal de Yucca schidigera; butirato de calcio, butirato de sodio y aceite de palma, colorante natural: caramelo, probiótico: Bacillus subtilis; mineral orgánico: proteinato de zinc; antioxidantes naturales: tocoferoles, extracto de romero."
   },
   {
     "id": "prod-13",
@@ -360,8 +395,8 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/compinche-compinches-gato-adulto.png"
     ],
-    "proteinPct": 18,
-    "fatPct": 6.5,
+    "proteinPct": 25,
+    "fatPct": 8,
     "fiberPct": 4.5,
     "moisturePct": 10,
     "originUrl": "https://gepsapetfoods.com/compinches/",
@@ -416,7 +451,11 @@ const fallbackProducts: Product[] = [
     "ingredients": "como la carne de pollo y huevo que potencian el sabor y la nutrición que entrega el alimento. PROTEÍNA DE ALTA CALIDAD: El huevo de gallina de libre pastoreo es la fuente perfecta para garantizar una digestión adecuada, desarrollo muscular y crecimiento de tu perro. MEJORA LA SALUD DENTAL: Con la incorporación de Hexametafosfato y Vitamina C, que reducen la placa bacteriana, previenen el mal aliento y la acumulación de sarro. FECAS FIRMES Y MENOS OLOR: Con Yucca schidigera y bacterias lácticas que controlan las concentraciones de amoníaco y otros gases, reduciendo el olor y mejorando la consistencia de las fecas. MEJORA LA SALUD INTESTINAL: Prebióticos, extracto de mananos (MOS) que mejora la resistencia de los perros a infecciones y ayuda al buen funcionamiento intestinal y a una buena salud general. PIEL SANA Y PELAJE BRILLANTE: Los",
     "originUrl": "https://www.allendeshnos.cl/producto/can-adulto-razas-pequenas-carne-y-cereales-18kg/",
     "description": "Explora la vanguardia en cuidado canino con nuestra nueva gama de productos, diseñada para fusionar nutrición premium y accesibilidad. DELICIOSOS BOCADOS: El mejor sabor para tu perro, la mejor palatabilidad, con ingredientes como la carne de pollo y huevo que potencian el sabor y la nutrición que entrega el alimento. PROTEÍNA DE ALTA CALIDAD: El huevo de gallina de libre pastoreo es la fuente perfecta para garantizar una digestión adecuada, desarrollo muscular y crecimiento de tu perro. MEJORA LA SALUD DENTAL: Con la incorporación de Hexametafosfato y Vitamina C, que reducen la placa bacteriana, previenen el mal aliento y la acumulación de sarro. FECAS FIRMES Y MENOS OLOR: Con Yucca schidigera y bacterias lácticas que controlan las concentraciones de amoníaco y otros gases, reduciendo el olor y mejorando la consistencia de las fecas. MEJORA LA SALUD INTESTINAL: Prebióticos, extracto de mananos (MOS) que mejora la resistencia de los perros a infecciones y ayuda al buen funcionamiento intestinal y a una buena salud general. PIEL SANA Y PELAJE BRILLANTE: Los beneficios de Omega 3, Omega 6 y el aporte de zinc, se traducen en un pelaje más brillante, sano y sin signos de dermatitis en tu perro. Explora la vanguardia en cuidado canino con nuestra nueva gama de productos, diseñada para fusionar nutrición premium y accesibilidad.",
-    "supplier": "AllendesHnos"
+    "supplier": "AllendesHnos",
+    "proteinPct": 19,
+    "fatPct": 7,
+    "fiberPct": 4.5,
+    "moisturePct": 10
   },
   {
     "id": "prod-17",
@@ -489,9 +528,9 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/ganacat-ganacat-mix.png"
     ],
-    "proteinPct": 19,
-    "fatPct": 7,
-    "fiberPct": 4.5,
+    "proteinPct": 26,
+    "fatPct": 9,
+    "fiberPct": 4,
     "moisturePct": 10,
     "originUrl": "https://gepsapetfoods.com/ganacan-ganacat/",
     "supplier": "Gepsa"
@@ -542,9 +581,9 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/odwalla-odwalla-adulto.png"
     ],
-    "proteinPct": 30,
-    "fatPct": 17,
-    "fiberPct": 3,
+    "proteinPct": 24,
+    "fatPct": 12,
+    "fiberPct": 4.5,
     "moisturePct": 10,
     "originUrl": "https://gepsapetfoods.com/odwalla/",
     "supplier": "Gepsa"
@@ -594,9 +633,9 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/odwalla-odwalla-adulto.png"
     ],
-    "proteinPct": 30,
-    "fatPct": 17,
-    "fiberPct": 3,
+    "proteinPct": 24,
+    "fatPct": 12,
+    "fiberPct": 4.5,
     "moisturePct": 10,
     "originUrl": "https://gepsapetfoods.com/odwalla/",
     "supplier": "Gepsa"
@@ -1448,10 +1487,14 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/champion-champion-adulto.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "Pollo Maíz, harina de subproductos de pollo, harina de soya, harina de carne y hueso bovino, grasa animal (bovino y/o cerdo y/o pollo), hidrolizado líquido de subproductos animales (bovino y/o cerdo y/o pollo), zeolita natural, cloruro de sodio, cloruro de potasio, aceite de pescado, colorantes, antifúngicos, cloruro de colina, levadura hidrolizada (fuente de beta-glucanos y manano-oligosacáridos), antioxidantes, extracto de yucca schidigera y/o quillaja saponaria, antioxidantes biológicos. Vitaminas: A, D3, E, K3, B1, B2, niacina, pantotenato de calcio, piridoxina, ácido fólico, cianocobalamina. Minerales: Óxido de zinc, sulfato ferroso, sulfato de cobre, óxido de manganeso, yodato de potasio, selenito de sodio. Eventuales sustitutos: Trigo y/o triticale y/o sorgo, y/o arroz, gluten de maíz, harina de carne y hueso de cerdo, harina de subproductos de pavo, harina de pescado, harina de salmón, aceite de linaza.",
     "originUrl": "https://cooprinsem.cl/mascotas/1930-concentrado-para-perro-champion-sabrokan-25-kgs.html",
     "description": "Alimento para perros completo y balanceado, que contiene una croqueta especial que da como resultado un exquisito y sabroso alimento que será un deleite para tu perro.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 21,
+    "fatPct": 9,
+    "fiberPct": 3.5,
+    "moisturePct": 12
   },
   {
     "id": "prod-58",
@@ -1474,7 +1517,12 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://www.allendeshnos.cl/producto/champion-dog-adulto-raza-pequena-18-kg/",
     "description": "Champion Dog Adulto Minis y Pequeños Carne, Pollo y Vegetales 18 kg Champion Dog Adulto RP 18 kg",
-    "supplier": "AllendesHnos"
+    "supplier": "AllendesHnos",
+    "proteinPct": 23,
+    "fatPct": 11,
+    "fiberPct": 3.5,
+    "moisturePct": 12,
+    "ingredients": "Pollo Maíz, harina de subproductos de pollo, harina de soya, grasa animal (bovino y/o cerdo y/o pollo), harina de carne y hueso bovino, hidrolizado líquido de subproductos animales (bovino y/o cerdo y/o pollo), zeolita natural, cloruro de sodio, cloruro de potasio, aceite de pescado, colorantes, antifúngicos, cloruro de colina, levadura hidrolizada (fuente de beta-glucanos y manano- oligosacáridos), antioxidantes, extracto de yucca schidigera y/o quillaja saponaria, antioxidantes biológicos. Vitaminas: A, D3, E, K3, B1, B2, niacina, pantotenato de calcio, piridoxina, ácido fólico, cianocobalamina. Minerales: Óxido de zinc, sulfato ferroso, sulfato de cobre, óxido de manganeso, yodato de potasio, selenito de sodio. Eventuales sustitutos: Trigo y/o triticale y/o sorgo, y/o arroz, gluten de maíz, harina de carne y hueso de cerdo, harina de subproductos de pavo, harina de pescado, harina de salmón, aceite de linaza."
   },
   {
     "id": "prod-59",
@@ -1495,10 +1543,14 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/champion-champion-cachorro.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "Pollo Maíz, harina de subproductos de pollo, harina de soya, harina de pescado, grasa animal (bovino y/o cerdo y/o pollo), harina de carne y hueso bovino, hidrolizado líquido de subproductos animales (bovino y/o cerdo y/o pollo), zeolita natural, cloruro de sodio, cloruro de potasio, colorantes, inulina, antifúngicos, cloruro de colina, levadura hidrolizada (fuente de beta-glucanos y manano- oligosacáridos), antioxidantes, extracto de yucca schidigera y/o quillaja saponaria, antioxidantes biológicos. Vitaminas: A, D3, E, K3, B1, B2, niacina, pantotenato de calcio, piridoxina, ácido fólico, cianocobalamina. Minerales: Óxido de zinc, sulfato ferroso, sulfato de cobre, óxido de manganeso, yodato de potasio, selenito de sodio. Eventuales sustitutos: Trigo y/o triticale y/o sorgo, y/o arroz, gluten de maíz, harina de carne y hueso de cerdo, harina de subproductos de pavo, harina de salmón, aceite de linaza.",
     "originUrl": "https://cooprinsem.cl/mascotas/1926-concentrado-para-perro-champion-cachorro-8-kgs.html",
     "description": "Alimento completo y balanceado, especialmente formulado para satisfacer todos sus requerimientos nutricionales.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 26,
+    "fatPct": 10,
+    "fiberPct": 3,
+    "moisturePct": 12
   },
   {
     "id": "prod-60",
@@ -1855,10 +1907,11 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/company-company-adulto.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "{ \"@context\": \"https://schema.org/\", \"@type\": \"Product\", \"name\": \"COMPANY PERROS ADULTOS 20 KG\", \"description\": \"* 23% DE PROTEINAS DE ALTA CALIDAD * PRIMEROS DOS INGREDIENTES DE ORIGEN ANIMAL (CARNE Y POLLO) * PREBIOTICOS, VITAMINAS Y ANTIOXIDANTES * FECAS FIRMES Y CON BAJO OLOR\", \"category\": \"Alimento para Perros\", \"image\" :\"https://www.gorchen.cl/15-home_default/company-perros-adultos-20-kg.jpg\", \"sku\": \"2.24.5\", \"mpn\": \"2.24.5\" , \"brand\": { \"@type\": \"Brand\", \"name\": \"COMPANY\" } , \"weight\": { \"@context\": \"https://schema.org\", \"@type\": \"QuantitativeValue\", \"value\": \"20.000000\", \"unitCode\": \"kg\" } }",
     "originUrl": "https://www.gorchen.cl/alimento-para-perros/8-company-perros-adultos-20-kg.html",
     "description": "* 23% DE PROTEINAS DE ALTA CALIDAD * PRIMEROS DOS INGREDIENTES DE ORIGEN ANIMAL (CARNE Y POLLO) * PREBIOTICOS, VITAMINAS Y ANTIOXIDANTES * FECAS FIRMES Y CON BAJO OLOR",
-    "supplier": "Gorchen"
+    "supplier": "Gorchen",
+    "proteinPct": 23
   },
   {
     "id": "prod-76",
@@ -1879,10 +1932,11 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/company-company-cachorro.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "{ \"@context\": \"https://schema.org/\", \"@type\": \"Product\", \"name\": \"COMPANY PERROS CACHORROS 20 KG\", \"description\": \"* 28% DE PROTEINAS DE ALTA CALIDAD * PRIMEROS DOS INGREDIENTES DE ORIGEN ANIMAL (CARNE Y POLLO) * PREBIOTICOS, VITAMINAS Y ANTIOXIDANTES * HUESOS Y DIENTES SANOS (CALCIO Y FOSFORO)\", \"category\": \"Alimento para Perros\", \"image\" :\"https://www.gorchen.cl/17-home_default/company-perros-cachorros-20-kg.jpg\", \"sku\": \"2.24.6\", \"mpn\": \"2.24.6\" , \"brand\": { \"@type\": \"Brand\", \"name\": \"COMPANY\" } , \"weight\": { \"@context\": \"https://schema.org\", \"@type\": \"QuantitativeValue\", \"value\": \"20.000000\", \"unitCode\": \"kg\" } }",
     "originUrl": "https://www.gorchen.cl/alimento-para-perros/9-company-perros-cachorros-20-kg.html",
     "description": "* 28% DE PROTEINAS DE ALTA CALIDAD * PRIMEROS DOS INGREDIENTES DE ORIGEN ANIMAL (CARNE Y POLLO) * PREBIOTICOS, VITAMINAS Y ANTIOXIDANTES * HUESOS Y DIENTES SANOS (CALCIO Y FOSFORO)",
-    "supplier": "Gorchen"
+    "supplier": "Gorchen",
+    "proteinPct": 28
   },
   {
     "id": "prod-77",
@@ -1903,10 +1957,11 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/kongo-kongo-adulto.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "{ \"@context\": \"https://schema.org/\", \"@type\": \"Product\", \"name\": \"KONGO ADULTOS MEDIANOS Y GRANDES 15 KG\", \"description\": \"* 22% DE PROTEINAS DE ALTA CALIDAD (CARNE Y POLLO PRINCIPALES INGREDIENTES) * MAS VITAMINAS Y MINERALES * ALTA FUENTE DE FIBRAS * REFUERZA EL SISTEMA INMUNOLOGICO Y EL PELAJE * DIGESTION SANA Y SALUDABLE (LIBRE DE COLORANTES Y SABORIZANTES ARTIFICIALES)\", \"category\": \"Alimento para Perros\", \"image\" :\"https://www.gorchen.cl/41-home_default/kongo-adultos-medianos-y-grandes-15-kg.jpg\", \"sku\": \"2.2.20\", \"mpn\": \"2.2.20\" , \"brand\": { \"@type\": \"Brand\", \"name\": \"KONGO\" } , \"weight\": { \"@context\": \"https://schema.org\", \"@type\": \"QuantitativeValue\", \"value\": \"15.000000\", \"unitCode\": \"kg\" } }",
     "originUrl": "https://www.gorchen.cl/alimento-para-perros/19-kongo-adultos-medianos-y-grandes-21-kg.html",
     "description": "* 22% DE PROTEINAS DE ALTA CALIDAD (CARNE Y POLLO PRINCIPALES INGREDIENTES) * MAS VITAMINAS Y MINERALES * ALTA FUENTE DE FIBRAS * REFUERZA EL SISTEMA INMUNOLOGICO Y EL PELAJE * DIGESTION SANA Y SALUDABLE (LIBRE DE COLORANTES Y SABORIZANTES ARTIFICIALES)",
-    "supplier": "Gorchen"
+    "supplier": "Gorchen",
+    "proteinPct": 22
   },
   {
     "id": "prod-78",
@@ -1927,10 +1982,11 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/kongo-kongo-adulto.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "{ \"@context\": \"https://schema.org/\", \"@type\": \"Product\", \"name\": \"KONGO ADULTOS MEDIANOS Y GRANDES 15 KG\", \"description\": \"* 22% DE PROTEINAS DE ALTA CALIDAD (CARNE Y POLLO PRINCIPALES INGREDIENTES) * MAS VITAMINAS Y MINERALES * ALTA FUENTE DE FIBRAS * REFUERZA EL SISTEMA INMUNOLOGICO Y EL PELAJE * DIGESTION SANA Y SALUDABLE (LIBRE DE COLORANTES Y SABORIZANTES ARTIFICIALES)\", \"category\": \"Alimento para Perros\", \"image\" :\"https://www.gorchen.cl/41-home_default/kongo-adultos-medianos-y-grandes-15-kg.jpg\", \"sku\": \"2.2.20\", \"mpn\": \"2.2.20\" , \"brand\": { \"@type\": \"Brand\", \"name\": \"KONGO\" } , \"weight\": { \"@context\": \"https://schema.org\", \"@type\": \"QuantitativeValue\", \"value\": \"15.000000\", \"unitCode\": \"kg\" } }",
     "originUrl": "https://www.gorchen.cl/alimento-para-perros/19-kongo-adultos-medianos-y-grandes-21-kg.html",
     "description": "* 22% DE PROTEINAS DE ALTA CALIDAD (CARNE Y POLLO PRINCIPALES INGREDIENTES) * MAS VITAMINAS Y MINERALES * ALTA FUENTE DE FIBRAS * REFUERZA EL SISTEMA INMUNOLOGICO Y EL PELAJE * DIGESTION SANA Y SALUDABLE (LIBRE DE COLORANTES Y SABORIZANTES ARTIFICIALES)",
-    "supplier": "Gorchen"
+    "supplier": "Gorchen",
+    "proteinPct": 22
   },
   {
     "id": "prod-79",
@@ -1951,10 +2007,11 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/kongo-kongo-adulto.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "{ \"@context\": \"https://schema.org/\", \"@type\": \"Product\", \"name\": \"KONGO ADULTOS MEDIANOS Y GRANDES 15 KG\", \"description\": \"* 22% DE PROTEINAS DE ALTA CALIDAD (CARNE Y POLLO PRINCIPALES INGREDIENTES) * MAS VITAMINAS Y MINERALES * ALTA FUENTE DE FIBRAS * REFUERZA EL SISTEMA INMUNOLOGICO Y EL PELAJE * DIGESTION SANA Y SALUDABLE (LIBRE DE COLORANTES Y SABORIZANTES ARTIFICIALES)\", \"category\": \"Alimento para Perros\", \"image\" :\"https://www.gorchen.cl/41-home_default/kongo-adultos-medianos-y-grandes-15-kg.jpg\", \"sku\": \"2.2.20\", \"mpn\": \"2.2.20\" , \"brand\": { \"@type\": \"Brand\", \"name\": \"KONGO\" } , \"weight\": { \"@context\": \"https://schema.org\", \"@type\": \"QuantitativeValue\", \"value\": \"15.000000\", \"unitCode\": \"kg\" } }",
     "originUrl": "https://www.gorchen.cl/alimento-para-perros/19-kongo-adultos-medianos-y-grandes-21-kg.html",
     "description": "* 22% DE PROTEINAS DE ALTA CALIDAD (CARNE Y POLLO PRINCIPALES INGREDIENTES) * MAS VITAMINAS Y MINERALES * ALTA FUENTE DE FIBRAS * REFUERZA EL SISTEMA INMUNOLOGICO Y EL PELAJE * DIGESTION SANA Y SALUDABLE (LIBRE DE COLORANTES Y SABORIZANTES ARTIFICIALES)",
-    "supplier": "Gorchen"
+    "supplier": "Gorchen",
+    "proteinPct": 22
   },
   {
     "id": "prod-80",
@@ -1975,10 +2032,11 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/kongo-kongo-cachorro.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "{ \"@context\": \"https://schema.org/\", \"@type\": \"Product\", \"name\": \"KONGO CACHORROS 15 Kg\", \"description\": \"* 26% DE PROTEINAS DE ALTA CALIDAD (CARNE Y POLLO PRINCIPALES INGREDIENTES) * REFUERZA EL SISTEMA INMUNOLOGICO, EL PELAJE Y LOS HUESOS * APORTA LS VITAMINAS Y MINERALES PARA EL DESARROLLO * ALTA FUENTE DE FIBRAS * DIGESTION SANA Y SALUDABLE (LIBRE DE COLORANTES Y SABORIZANTES ARTIFICIALES)\", \"category\": \"Alimento para Perros\", \"image\" :\"https://www.gorchen.cl/153-home_default/kongo-cachorros-15-kg.jpg\", \"sku\": \"2.4.22\", \"mpn\": \"2.4.22\" , \"brand\": { \"@type\": \"Brand\", \"name\": \"KONGO\" } , \"weight\": { \"@context\": \"https://schema.org\", \"@type\": \"QuantitativeValue\", \"value\": \"15.000000\", \"unitCode\": \"kg\" } }",
     "originUrl": "https://www.gorchen.cl/alimento-para-perros/33-kongo-gold-cachorros-15-kg.html",
     "description": "* 28% DE PROTEINAS DE ALTA CALIDAD (POLLO ES EL PRIMER INGREDIENTE) * CRECIMIENTO SANO Y NUTRITIVO (SIN COLORANTES NI SABORIZANTES ARTIFICIALES) * DESARROLLA SUS HUESOS Y MUSCULOS * ESTIMULA SU APRENDIZAJE * MEJORA SU SISTEMA INMUNOLOGICO NATURALMENTE",
-    "supplier": "Gorchen"
+    "supplier": "Gorchen",
+    "proteinPct": 26
   },
   {
     "id": "prod-81",
@@ -1999,10 +2057,11 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/kongo-kongo-cachorro.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "{ \"@context\": \"https://schema.org/\", \"@type\": \"Product\", \"name\": \"KONGO CACHORROS 15 Kg\", \"description\": \"* 26% DE PROTEINAS DE ALTA CALIDAD (CARNE Y POLLO PRINCIPALES INGREDIENTES) * REFUERZA EL SISTEMA INMUNOLOGICO, EL PELAJE Y LOS HUESOS * APORTA LS VITAMINAS Y MINERALES PARA EL DESARROLLO * ALTA FUENTE DE FIBRAS * DIGESTION SANA Y SALUDABLE (LIBRE DE COLORANTES Y SABORIZANTES ARTIFICIALES)\", \"category\": \"Alimento para Perros\", \"image\" :\"https://www.gorchen.cl/153-home_default/kongo-cachorros-15-kg.jpg\", \"sku\": \"2.4.22\", \"mpn\": \"2.4.22\" , \"brand\": { \"@type\": \"Brand\", \"name\": \"KONGO\" } , \"weight\": { \"@context\": \"https://schema.org\", \"@type\": \"QuantitativeValue\", \"value\": \"15.000000\", \"unitCode\": \"kg\" } }",
     "originUrl": "https://www.gorchen.cl/alimento-para-perros/33-kongo-gold-cachorros-15-kg.html",
     "description": "* 28% DE PROTEINAS DE ALTA CALIDAD (POLLO ES EL PRIMER INGREDIENTE) * CRECIMIENTO SANO Y NUTRITIVO (SIN COLORANTES NI SABORIZANTES ARTIFICIALES) * DESARROLLA SUS HUESOS Y MUSCULOS * ESTIMULA SU APRENDIZAJE * MEJORA SU SISTEMA INMUNOLOGICO NATURALMENTE",
-    "supplier": "Gorchen"
+    "supplier": "Gorchen",
+    "proteinPct": 26
   },
   {
     "id": "prod-82",
@@ -2023,10 +2082,11 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/kongo-kongo-cachorro.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "{ \"@context\": \"https://schema.org/\", \"@type\": \"Product\", \"name\": \"KONGO CACHORROS 15 Kg\", \"description\": \"* 26% DE PROTEINAS DE ALTA CALIDAD (CARNE Y POLLO PRINCIPALES INGREDIENTES) * REFUERZA EL SISTEMA INMUNOLOGICO, EL PELAJE Y LOS HUESOS * APORTA LS VITAMINAS Y MINERALES PARA EL DESARROLLO * ALTA FUENTE DE FIBRAS * DIGESTION SANA Y SALUDABLE (LIBRE DE COLORANTES Y SABORIZANTES ARTIFICIALES)\", \"category\": \"Alimento para Perros\", \"image\" :\"https://www.gorchen.cl/153-home_default/kongo-cachorros-15-kg.jpg\", \"sku\": \"2.4.22\", \"mpn\": \"2.4.22\" , \"brand\": { \"@type\": \"Brand\", \"name\": \"KONGO\" } , \"weight\": { \"@context\": \"https://schema.org\", \"@type\": \"QuantitativeValue\", \"value\": \"15.000000\", \"unitCode\": \"kg\" } }",
     "originUrl": "https://www.gorchen.cl/alimento-para-perros/33-kongo-gold-cachorros-15-kg.html",
     "description": "* 28% DE PROTEINAS DE ALTA CALIDAD (POLLO ES EL PRIMER INGREDIENTE) * CRECIMIENTO SANO Y NUTRITIVO (SIN COLORANTES NI SABORIZANTES ARTIFICIALES) * DESARROLLA SUS HUESOS Y MUSCULOS * ESTIMULA SU APRENDIZAJE * MEJORA SU SISTEMA INMUNOLOGICO NATURALMENTE",
-    "supplier": "Gorchen"
+    "supplier": "Gorchen",
+    "proteinPct": 26
   },
   {
     "id": "prod-83",
@@ -2047,10 +2107,11 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/kongo-kongo-cachorro.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "{ \"@context\": \"https://schema.org/\", \"@type\": \"Product\", \"name\": \"KONGO CACHORROS 15 Kg\", \"description\": \"* 26% DE PROTEINAS DE ALTA CALIDAD (CARNE Y POLLO PRINCIPALES INGREDIENTES) * REFUERZA EL SISTEMA INMUNOLOGICO, EL PELAJE Y LOS HUESOS * APORTA LS VITAMINAS Y MINERALES PARA EL DESARROLLO * ALTA FUENTE DE FIBRAS * DIGESTION SANA Y SALUDABLE (LIBRE DE COLORANTES Y SABORIZANTES ARTIFICIALES)\", \"category\": \"Alimento para Perros\", \"image\" :\"https://www.gorchen.cl/153-home_default/kongo-cachorros-15-kg.jpg\", \"sku\": \"2.4.22\", \"mpn\": \"2.4.22\" , \"brand\": { \"@type\": \"Brand\", \"name\": \"KONGO\" } , \"weight\": { \"@context\": \"https://schema.org\", \"@type\": \"QuantitativeValue\", \"value\": \"15.000000\", \"unitCode\": \"kg\" } }",
     "originUrl": "https://www.gorchen.cl/alimento-para-perros/33-kongo-gold-cachorros-15-kg.html",
     "description": "* 28% DE PROTEINAS DE ALTA CALIDAD (POLLO ES EL PRIMER INGREDIENTE) * CRECIMIENTO SANO Y NUTRITIVO (SIN COLORANTES NI SABORIZANTES ARTIFICIALES) * DESARROLLA SUS HUESOS Y MUSCULOS * ESTIMULA SU APRENDIZAJE * MEJORA SU SISTEMA INMUNOLOGICO NATURALMENTE",
-    "supplier": "Gorchen"
+    "supplier": "Gorchen",
+    "proteinPct": 26
   },
   {
     "id": "prod-84",
@@ -2071,10 +2132,11 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/kongo-kongo-raza-pequena.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "{ \"@context\": \"https://schema.org/\", \"@type\": \"Product\", \"name\": \"KONGO ADULTOS RAZAS PEQUEÑAS 8 KG\", \"description\": \"* 23% DE PROTEINAS DE ALTA CALIDAD (CARNE Y POLLO PRINCIPALES INGREDIENTES) * MAS VITAMINAS Y MINERALES * REFUERZA EL SISTEMA INMUNOLOGICO * DIGESTION SANA Y SALUDABLE (LIBRE DE COLOROANTES Y SABORIZANTES ARTIFICIALES)\", \"category\": \"Alimento para Perros\", \"image\" :\"https://www.gorchen.cl/353-home_default/kongo-adultos-razas-pequenas-15-kg.jpg\", \"sku\": \"2.3.23\", \"mpn\": \"2.3.23\" , \"brand\": { \"@type\": \"Brand\", \"name\": \"KONGO\" } , \"weight\": { \"@context\": \"https://schema.org\", \"@type\": \"QuantitativeValue\", \"value\": \"8.000000\", \"unitCode\": \"kg\" } }",
     "originUrl": "https://www.gorchen.cl/alimento-para-perros/17-kongo-adultos-razas-pequenas-15-kg-2-gratis.html",
     "description": "* 23% DE PROTEINAS DE ALTA CALIDAD (CARNE Y POLLO PRINCIPALES INGREDIENTES) * MAS VITAMINAS Y MINERALES * REFUERZA EL SISTEMA INMUNOLOGICO * DIGESTION SANA Y SALUDABLE (LIBRE DE COLORANTES Y SABORIZANTES ARTIFICIALES)",
-    "supplier": "Gorchen"
+    "supplier": "Gorchen",
+    "proteinPct": 23
   },
   {
     "id": "prod-85",
@@ -2095,10 +2157,11 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/kongo-kongo-raza-pequena.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "{ \"@context\": \"https://schema.org/\", \"@type\": \"Product\", \"name\": \"KONGO ADULTOS RAZAS PEQUEÑAS 8 KG\", \"description\": \"* 23% DE PROTEINAS DE ALTA CALIDAD (CARNE Y POLLO PRINCIPALES INGREDIENTES) * MAS VITAMINAS Y MINERALES * REFUERZA EL SISTEMA INMUNOLOGICO * DIGESTION SANA Y SALUDABLE (LIBRE DE COLOROANTES Y SABORIZANTES ARTIFICIALES)\", \"category\": \"Alimento para Perros\", \"image\" :\"https://www.gorchen.cl/353-home_default/kongo-adultos-razas-pequenas-15-kg.jpg\", \"sku\": \"2.3.23\", \"mpn\": \"2.3.23\" , \"brand\": { \"@type\": \"Brand\", \"name\": \"KONGO\" } , \"weight\": { \"@context\": \"https://schema.org\", \"@type\": \"QuantitativeValue\", \"value\": \"8.000000\", \"unitCode\": \"kg\" } }",
     "originUrl": "https://www.gorchen.cl/alimento-para-perros/17-kongo-adultos-razas-pequenas-15-kg-2-gratis.html",
     "description": "* 23% DE PROTEINAS DE ALTA CALIDAD (CARNE Y POLLO PRINCIPALES INGREDIENTES) * MAS VITAMINAS Y MINERALES * REFUERZA EL SISTEMA INMUNOLOGICO * DIGESTION SANA Y SALUDABLE (LIBRE DE COLORANTES Y SABORIZANTES ARTIFICIALES)",
-    "supplier": "Gorchen"
+    "supplier": "Gorchen",
+    "proteinPct": 23
   },
   {
     "id": "prod-86",
@@ -2119,10 +2182,11 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/kongo-kongo-raza-pequena.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "{ \"@context\": \"https://schema.org/\", \"@type\": \"Product\", \"name\": \"KONGO ADULTOS RAZAS PEQUEÑAS 8 KG\", \"description\": \"* 23% DE PROTEINAS DE ALTA CALIDAD (CARNE Y POLLO PRINCIPALES INGREDIENTES) * MAS VITAMINAS Y MINERALES * REFUERZA EL SISTEMA INMUNOLOGICO * DIGESTION SANA Y SALUDABLE (LIBRE DE COLOROANTES Y SABORIZANTES ARTIFICIALES)\", \"category\": \"Alimento para Perros\", \"image\" :\"https://www.gorchen.cl/353-home_default/kongo-adultos-razas-pequenas-15-kg.jpg\", \"sku\": \"2.3.23\", \"mpn\": \"2.3.23\" , \"brand\": { \"@type\": \"Brand\", \"name\": \"KONGO\" } , \"weight\": { \"@context\": \"https://schema.org\", \"@type\": \"QuantitativeValue\", \"value\": \"8.000000\", \"unitCode\": \"kg\" } }",
     "originUrl": "https://www.gorchen.cl/alimento-para-perros/17-kongo-adultos-razas-pequenas-15-kg-2-gratis.html",
     "description": "* 23% DE PROTEINAS DE ALTA CALIDAD (CARNE Y POLLO PRINCIPALES INGREDIENTES) * MAS VITAMINAS Y MINERALES * REFUERZA EL SISTEMA INMUNOLOGICO * DIGESTION SANA Y SALUDABLE (LIBRE DE COLORANTES Y SABORIZANTES ARTIFICIALES)",
-    "supplier": "Gorchen"
+    "supplier": "Gorchen",
+    "proteinPct": 23
   },
   {
     "id": "prod-87",
@@ -2139,7 +2203,9 @@ const fallbackProducts: Product[] = [
     "badge": "",
     "color": "lavender",
     "image": "/five-mascotas/alimento-3.svg",
-    "featured": false
+    "featured": false,
+    "proteinPct": 30,
+    "ingredients": "Harina de pescado, harina de pollo, harina de carne vacuna, aceite de pollo, aceite de pescado (fuente de omega 3 y 6), arroz, gluten de maíz, trigo, arveja, harina de soja, levadura de cerveza, hidrolizado proteico de pollo, sal yodada, extracto de yucca schidigera, taurina, metionina, ácido cítrico, tocoferoles, dipropionato de amonio, ácido propiónico; núcleo vitamínico-mineral; vitaminas A, D3, E, K, B1, B2, B6, B12, ácido fólico, ácido nicotínico, ácido pantotenico, biotina, colina, minerales; zinc, hierro, cobre, yodo, manganeso y selenio."
   },
   {
     "id": "prod-88",
@@ -2159,7 +2225,9 @@ const fallbackProducts: Product[] = [
     "featured": false,
     "images": [
       "/products/kongo-kongo-gatos-salmon-atun-8-kg.jpg"
-    ]
+    ],
+    "proteinPct": 30,
+    "ingredients": "Harina de pescado, harina de pollo, harina de carne vacuna, aceite de pollo, aceite de pescado (fuente de omega 3 y 6), arroz, gluten de maíz, trigo, arveja, harina de soja, levadura de cerveza, hidrolizado proteico de pollo, sal yodada, extracto de yucca schidigera, taurina, metionina, ácido cítrico, tocoferoles, dipropionato de amonio, ácido propiónico; núcleo vitamínico-mineral; vitaminas A, D3, E, K, B1, B2, B6, B12, ácido fólico, ácido nicotínico, ácido pantotenico, biotina, colina, minerales; zinc, hierro, cobre, yodo, manganeso y selenio."
   },
   {
     "id": "prod-89",
@@ -2179,7 +2247,9 @@ const fallbackProducts: Product[] = [
     "featured": false,
     "images": [
       "/products/kongo-kongo-gatos-salmon-atun-1-kg.jpg"
-    ]
+    ],
+    "proteinPct": 30,
+    "ingredients": "Harina de pescado, harina de pollo, harina de carne vacuna, aceite de pollo, aceite de pescado (fuente de omega 3 y 6), arroz, gluten de maíz, trigo, arveja, harina de soja, levadura de cerveza, hidrolizado proteico de pollo, sal yodada, extracto de yucca schidigera, taurina, metionina, ácido cítrico, tocoferoles, dipropionato de amonio, ácido propiónico; núcleo vitamínico-mineral; vitaminas A, D3, E, K, B1, B2, B6, B12, ácido fólico, ácido nicotínico, ácido pantotenico, biotina, colina, minerales; zinc, hierro, cobre, yodo, manganeso y selenio."
   },
   {
     "id": "prod-90",
@@ -2200,10 +2270,11 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/kongo-kongo-gato-adulto-pollo.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "{ \"@context\": \"https://schema.org/\", \"@type\": \"Product\", \"name\": \"KONGO GATOS CARNE & POLLO 8 KG\", \"description\": \"* 30% DE PROTEINAS DE ALTA CALIDAD (FUENTE ANIMAL) * TRACTO URINARIO SANO * LIBRE DE COLORANTES Y SABORIZANTES ARTIFICIALES * 100% INGREDIENTES NATURALES\", \"category\": \"Alimento para Gatos\", \"image\" :\"https://www.gorchen.cl/29-home_default/kongo-gatos-carne-pollo-8-kg.jpg\", \"sku\": \"2.5.16\", \"mpn\": \"2.5.16\" , \"brand\": { \"@type\": \"Brand\", \"name\": \"KONGO GATO\" } , \"weight\": { \"@context\": \"https://schema.org\", \"@type\": \"QuantitativeValue\", \"value\": \"8.000000\", \"unitCode\": \"kg\" } }",
     "originUrl": "https://www.gorchen.cl/alimento-para-gatos/15-kongo-gatos-carne-pollo-8-kg.html",
     "description": "* 30% DE PROTEINAS DE ALTA CALIDAD (FUENTE ANIMAL) * TRACTO URINARIO SANO * LIBRE DE COLORANTES Y SABORIZANTES ARTIFICIALES * 100% INGREDIENTES NATURALES",
-    "supplier": "Gorchen"
+    "supplier": "Gorchen",
+    "proteinPct": 30
   },
   {
     "id": "prod-91",
@@ -2224,10 +2295,11 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/kongo-kongo-gato-adulto-pollo.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "{ \"@context\": \"https://schema.org/\", \"@type\": \"Product\", \"name\": \"KONGO GATOS CARNE & POLLO 8 KG\", \"description\": \"* 30% DE PROTEINAS DE ALTA CALIDAD (FUENTE ANIMAL) * TRACTO URINARIO SANO * LIBRE DE COLORANTES Y SABORIZANTES ARTIFICIALES * 100% INGREDIENTES NATURALES\", \"category\": \"Alimento para Gatos\", \"image\" :\"https://www.gorchen.cl/29-home_default/kongo-gatos-carne-pollo-8-kg.jpg\", \"sku\": \"2.5.16\", \"mpn\": \"2.5.16\" , \"brand\": { \"@type\": \"Brand\", \"name\": \"KONGO GATO\" } , \"weight\": { \"@context\": \"https://schema.org\", \"@type\": \"QuantitativeValue\", \"value\": \"8.000000\", \"unitCode\": \"kg\" } }",
     "originUrl": "https://www.gorchen.cl/alimento-para-gatos/15-kongo-gatos-carne-pollo-8-kg.html",
     "description": "* 30% DE PROTEINAS DE ALTA CALIDAD (FUENTE ANIMAL) * TRACTO URINARIO SANO * LIBRE DE COLORANTES Y SABORIZANTES ARTIFICIALES * 100% INGREDIENTES NATURALES",
-    "supplier": "Gorchen"
+    "supplier": "Gorchen",
+    "proteinPct": 30
   },
   {
     "id": "prod-92",
@@ -2248,10 +2320,11 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/kongo-kongo-gatito.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "Harina de carne vacuna, harina de pollo, arroz, gluten de maíz, trigo, harina de germen de maíz, aceite de pollo, aceite de pescado (fuente de omega 3 y 6), leche en polvo, huevo en polvo, plasma bovino en polvo, hidrolizado proteico de pollo, pulpa de remolacha (fuente de fructo-oligosacáridos - FOS), levadura de cerveza, sal, carbonato de calcio, zeolita, fosfato de calcio, dióxido de titanio, dipropionato de amonio, ácido propionico, pirofosfato ácido de sodio, metionina, celulosa en polvo, ácido citrico, tocoferoles, taurina, extracto de yucca schidigera, vitaminas A, D3, E, K, B1, B2, B6, B12, ácido fólico, ácido nicotínico, ácido pantotenico, biotina, colina, minerales: zinc, hierro, cobre, yodo, manganeso y selenio.",
     "originUrl": "https://www.gorchen.cl/alimento-para-gatos/10-kongo-gatitos-8-kg.html",
     "description": "* 34% DE PROTEINAS DE ALTA CALIDAD * ALTA DIGESTIBILIDAD * CRECIMIENTO SANO. LIBRE DE COLORANTES Y SABORIZANTES ARTIFICIALES * DESARROLLO DE LA VISION Y EL SISTEMA INMUNE",
-    "supplier": "Gorchen"
+    "supplier": "Gorchen",
+    "proteinPct": 34
   },
   {
     "id": "prod-93",
@@ -2272,10 +2345,11 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/kongo-kongo-gatito.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "Harina de carne vacuna, harina de pollo, arroz, gluten de maíz, trigo, harina de germen de maíz, aceite de pollo, aceite de pescado (fuente de omega 3 y 6), leche en polvo, huevo en polvo, plasma bovino en polvo, hidrolizado proteico de pollo, pulpa de remolacha (fuente de fructo-oligosacáridos - FOS), levadura de cerveza, sal, carbonato de calcio, zeolita, fosfato de calcio, dióxido de titanio, dipropionato de amonio, ácido propionico, pirofosfato ácido de sodio, metionina, celulosa en polvo, ácido citrico, tocoferoles, taurina, extracto de yucca schidigera, vitaminas A, D3, E, K, B1, B2, B6, B12, ácido fólico, ácido nicotínico, ácido pantotenico, biotina, colina, minerales: zinc, hierro, cobre, yodo, manganeso y selenio.",
     "originUrl": "https://www.gorchen.cl/alimento-para-gatos/10-kongo-gatitos-8-kg.html",
     "description": "* 34% DE PROTEINAS DE ALTA CALIDAD * ALTA DIGESTIBILIDAD * CRECIMIENTO SANO. LIBRE DE COLORANTES Y SABORIZANTES ARTIFICIALES * DESARROLLO DE LA VISION Y EL SISTEMA INMUNE",
-    "supplier": "Gorchen"
+    "supplier": "Gorchen",
+    "proteinPct": 34
   },
   {
     "id": "prod-94",
@@ -2296,10 +2370,11 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/kongo-gold-kongo-gold-kongo-adulto-gold.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "Harina de pollo, arroz, gluten de maíz, germen de maíz desgrasado, grasa animal (pollo-cerdo), aceite de pescado (fuente de omega 3 y 6), hidrolizado proteico bovino, pulpa de remolacha (fuente de fructo-oligosacáridos FOS), levadura de cerveza, zeolita, sal, extracto de yucca schidigera, manano-oligosacáridos MOS, nucleótidos de levadura, carbonato de calcio, dipropionato de amonio, ácido propiónico, acetato de zinc, pirofosfato ácido de sodio, glucosamina, condroitin sulfato, ascorbato de manganeso, metionina, ácido cítrico, tocoferoles, antioxidantes naturales: extracto de romero, vitamina C, betacaroteno, licopeno, luteína, polifenoles, taurina, vitaminas: A, D3, E, K, B1, B2, B6, B12, ácido fólico, ácido nicotínico, pantotenato de calcio, biotina, colina, minerales: zinc, hierro, cobre, yodo, selenio.",
     "originUrl": "https://www.gorchen.cl/alimento-para-perros/19-kongo-adultos-medianos-y-grandes-21-kg.html",
     "description": "* 22% DE PROTEINAS DE ALTA CALIDAD (CARNE Y POLLO PRINCIPALES INGREDIENTES) * MAS VITAMINAS Y MINERALES * ALTA FUENTE DE FIBRAS * REFUERZA EL SISTEMA INMUNOLOGICO Y EL PELAJE * DIGESTION SANA Y SALUDABLE (LIBRE DE COLORANTES Y SABORIZANTES ARTIFICIALES)",
-    "supplier": "Gorchen"
+    "supplier": "Gorchen",
+    "proteinPct": 26
   },
   {
     "id": "prod-95",
@@ -2320,10 +2395,11 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/kongo-gold-kongo-gold-kongo-adulto.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "Harina de pollo, arroz, gluten de maíz, germen de maíz desgrasado, grasa animal (pollo-cerdo), aceite de pescado (fuente de omega 3 y 6), hidrolizado proteico bovino, pulpa de remolacha (fuente de fructo-oligosacáridos FOS), levadura de cerveza, zeolita, sal, extracto de yucca schidigera, manano-oligosacáridos MOS, nucleótidos de levadura, carbonato de calcio, dipropionato de amonio, ácido propiónico, acetato de zinc, pirofosfato ácido de sodio, glucosamina, condroitin sulfato, ascorbato de manganeso, metionina, ácido cítrico, tocoferoles, antioxidantes naturales: extracto de romero, vitamina C, betacaroteno, licopeno, luteína, polifenoles, taurina, vitaminas: A, D3, E, K, B1, B2, B6, B12, ácido fólico, ácido nicotínico, pantotenato de calcio, biotina, colina, minerales: zinc, hierro, cobre, yodo, selenio.",
     "originUrl": "https://www.gorchen.cl/alimento-para-perros/19-kongo-adultos-medianos-y-grandes-21-kg.html",
     "description": "* 22% DE PROTEINAS DE ALTA CALIDAD (CARNE Y POLLO PRINCIPALES INGREDIENTES) * MAS VITAMINAS Y MINERALES * ALTA FUENTE DE FIBRAS * REFUERZA EL SISTEMA INMUNOLOGICO Y EL PELAJE * DIGESTION SANA Y SALUDABLE (LIBRE DE COLORANTES Y SABORIZANTES ARTIFICIALES)",
-    "supplier": "Gorchen"
+    "supplier": "Gorchen",
+    "proteinPct": 26
   },
   {
     "id": "prod-96",
@@ -2344,10 +2420,11 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/kongo-gold-kongo-gold-kongo-cachorro-gold.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "Harina de pollo, arroz, gluten de maíz, germen de maíz desgrasado, grasa animal (pollo-cerdo), aceite de pescado (fuente de omega 3 y 6), hidrolizado proteico bovino, pulpa de remolacha (fuente de fructo-oligosacáridos FOS), leche en polvo, levadura de cerveza, zeolita, sal, extracto de yucca schidigera, manano-oligosacáridos MOS, nucleótidos de levadura, carbonato de calcio, dipropionato de amonio, ácido propiónico, acetato de zinc, pirofosfato ácido de sodio, glucosamina, condroitin sulfato, ascorbato de manganeso, metionina, ácido cítrico, tocoferoles, antioxidantes naturales: extracto de romero, vitamina C, betacaroteno, licopeno, luteína, polifenoles, taurina, vitaminas: A, D3, E, K, B1, B2, B6, B12, ácido fólico, ácido nicotínico, pantotenato de calcio, biotina, colina, minerales: zinc, hierro, cobre, yodo, selenio.",
     "originUrl": "https://www.gorchen.cl/alimento-para-perros/19-kongo-adultos-medianos-y-grandes-21-kg.html",
     "description": "* 22% DE PROTEINAS DE ALTA CALIDAD (CARNE Y POLLO PRINCIPALES INGREDIENTES) * MAS VITAMINAS Y MINERALES * ALTA FUENTE DE FIBRAS * REFUERZA EL SISTEMA INMUNOLOGICO Y EL PELAJE * DIGESTION SANA Y SALUDABLE (LIBRE DE COLORANTES Y SABORIZANTES ARTIFICIALES)",
-    "supplier": "Gorchen"
+    "supplier": "Gorchen",
+    "proteinPct": 28
   },
   {
     "id": "prod-97",
@@ -2368,10 +2445,11 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/kongo-gold-kongo-gold-kongo-cachorro.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "Harina de pollo, arroz, gluten de maíz, germen de maíz desgrasado, grasa animal (pollo-cerdo), aceite de pescado (fuente de omega 3 y 6), hidrolizado proteico bovino, pulpa de remolacha (fuente de fructo-oligosacáridos FOS), leche en polvo, levadura de cerveza, zeolita, sal, extracto de yucca schidigera, manano-oligosacáridos MOS, nucleótidos de levadura, carbonato de calcio, dipropionato de amonio, ácido propiónico, acetato de zinc, pirofosfato ácido de sodio, glucosamina, condroitin sulfato, ascorbato de manganeso, metionina, ácido cítrico, tocoferoles, antioxidantes naturales: extracto de romero, vitamina C, betacaroteno, licopeno, luteína, polifenoles, taurina, vitaminas: A, D3, E, K, B1, B2, B6, B12, ácido fólico, ácido nicotínico, pantotenato de calcio, biotina, colina, minerales: zinc, hierro, cobre, yodo, selenio.",
     "originUrl": "https://www.gorchen.cl/alimento-para-perros/19-kongo-adultos-medianos-y-grandes-21-kg.html",
     "description": "* 22% DE PROTEINAS DE ALTA CALIDAD (CARNE Y POLLO PRINCIPALES INGREDIENTES) * MAS VITAMINAS Y MINERALES * ALTA FUENTE DE FIBRAS * REFUERZA EL SISTEMA INMUNOLOGICO Y EL PELAJE * DIGESTION SANA Y SALUDABLE (LIBRE DE COLORANTES Y SABORIZANTES ARTIFICIALES)",
-    "supplier": "Gorchen"
+    "supplier": "Gorchen",
+    "proteinPct": 28
   },
   {
     "id": "prod-98",
@@ -2392,7 +2470,7 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/natural-meat-natural-meat-perro-adulto.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "{ \"@context\": \"https://schema.org/\", \"@type\": \"Product\", \"name\": \"NATURAL MEAT PERROS ADULTOS 15 KG +2 GRATIS\", \"description\": \"* Formula innovadora con Carne, frutas y verduras * Antioxidantes para mayor longevidad * Probioticos para la salud digestiva * Enzimas proteoliticas para mayor digestibilidad de las proteinas aportadas por la piña y la papaya\", \"category\": \"Alimento para Perros\", \"image\" :\"https://www.gorchen.cl/3-home_default/natural-meat-perros-adultos-15-kg-2-gratis.jpg\", \"sku\": \"2.20.6\", \"mpn\": \"2.20.6\" , \"brand\": { \"@type\": \"Brand\", \"name\": \"NATURAL MEAT\" } , \"weight\": { \"@context\": \"https://schema.org\", \"@type\": \"QuantitativeValue\", \"value\": \"17.000000\", \"unitCode\": \"kg\" } }",
     "originUrl": "https://www.gorchen.cl/alimento-para-perros/3-natural-meat-perros-cachorros-15-kg.html",
     "description": "* Formula innovadora con Carne, frutas y verduras * Antioxidantes para mayor longevidad * Probioticos para la salud digestiva * Enzimas proteoliticas para mayor digestibilidad de las proteinas aportadas por la piña y la papaya",
     "supplier": "Gorchen"
@@ -2416,10 +2494,11 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/voraz-voraz-adulto-voraz.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "{ \"@context\": \"https://schema.org/\", \"@type\": \"Product\", \"name\": \"VORAZ ADULTOS MIX CARNE POLLO VEGETALES 10 KG\", \"description\": \"* 22% DE PROTEINAS DE CALIDAD (PRIMEROS INGREDIENTES CARNE Y POLLO) * LA MEJOR ECUACION PRECIO CALIDAD DE SU SEGMENTO * OPTIMO DESARROLLO * AYUDA A SANO CRECIMIENTO\", \"category\": \"Alimento para Perros\", \"image\" :\"https://www.gorchen.cl/359-home_default/voraz-adultos-mix-carne-pollo-vegetales-20-kg.jpg\", \"sku\": \"2.7.57\", \"mpn\": \"2.7.57\" , \"brand\": { \"@type\": \"Brand\", \"name\": \"VORAZ\" } , \"weight\": { \"@context\": \"https://schema.org\", \"@type\": \"QuantitativeValue\", \"value\": \"10.000000\", \"unitCode\": \"kg\" } }",
     "originUrl": "https://www.gorchen.cl/alimento-para-perros/40-voraz-junior-mix-carne-pollo-vegetales-3-kg.html",
     "description": "* 22% DE PROTEINAS DE CALIDAD (PRIMEROS INGREDIENTES CARNE Y POLLO) * LA MEJOR ECUACION PRECIO CALIDAD DE SU SEGMENTO * OPTIMO DESARROLLO * AYUDA A SANO CRECIMIENTO",
-    "supplier": "Gorchen"
+    "supplier": "Gorchen",
+    "proteinPct": 22
   },
   {
     "id": "prod-100",
@@ -2439,7 +2518,9 @@ const fallbackProducts: Product[] = [
     "featured": false,
     "images": [
       "/products/voraz-voraz-junior-mix-carne-pollo-vegetales-10-kg.jpg"
-    ]
+    ],
+    "proteinPct": 19,
+    "ingredients": "Harina de carne, harina de pollo, trigo, arroz, maíz, gluten de maíz, germen de maíz, germen de maíz desgrasado, germen de trigo, salvado de trigo, centeno, harina de soja, maní, maní desgrasado, sorgo, cebada, avena, salvado de avena, levadura de cerveza, grasa de pollo, grasa vacuna, aceite vegetal, conchilla, gluten feed, fibras de maíz, sal, cloruro de potasio, pulpa de romolacha, pulpa de citrus, zeolita, leche en polvo, huevo en polvo, fructo-oligosacáridos, manano-oligosacáridos, harina de girasol, endospermo de girasol, extracto de yucca schidigera, saborizante: hidrolizado de vísceras de ave, colorantes: amaranto, caramelo, eritrosina, tartrazina, indigotina, amarillo-anaranjado S, antioxidantes: BHT, BHA, TBHQ, ácido cítrico, galato de propilo, etoxiquina; antifúngicos: dipropionato de amonio, ácido propiónico; núcleo vitamínico-mineral: vitaminas: A, D3, E, K, B1, B2, B6, B12, ácido fólico, ácido nicotínico, pantotenato de calcio, biotina, colina; minerales: zinc, hierro, cobre, yodo, manganeso y selenio."
   },
   {
     "id": "prod-101",
@@ -2460,10 +2541,11 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/voraz-voraz-gato.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "{ \"@context\": \"https://schema.org/\", \"@type\": \"Product\", \"name\": \"VORAZ GATOS 10 KG\", \"description\": \"* 26% DE PROTEINAS DE CALIDAD (PRIMEROS INGREDIENTES CARNE Y PESCADO) * LA MEJOR ECUACION PRECIO CALIDAD DE SU SEGMENTO * PELAJE SALUDABLE * OPTIMA DIGESTION\", \"category\": \"Alimento para Gatos\", \"image\" :\"https://www.gorchen.cl/81-home_default/voraz-gatos-10-kg.jpg\", \"sku\": \"2.8.28\", \"mpn\": \"2.8.28\" , \"brand\": { \"@type\": \"Brand\", \"name\": \"VORAZ\" } , \"weight\": { \"@context\": \"https://schema.org\", \"@type\": \"QuantitativeValue\", \"value\": \"10.000000\", \"unitCode\": \"kg\" } }",
     "originUrl": "https://www.gorchen.cl/alimento-para-perros/40-voraz-junior-mix-carne-pollo-vegetales-3-kg.html",
     "description": "* 22% DE PROTEINAS DE CALIDAD (PRIMEROS INGREDIENTES CARNE Y POLLO) * LA MEJOR ECUACION PRECIO CALIDAD DE SU SEGMENTO * OPTIMO DESARROLLO * AYUDA A SANO CRECIMIENTO",
-    "supplier": "Gorchen"
+    "supplier": "Gorchen",
+    "proteinPct": 26
   },
   {
     "id": "prod-102",
@@ -2484,10 +2566,11 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/voraz-voraz-gato.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "{ \"@context\": \"https://schema.org/\", \"@type\": \"Product\", \"name\": \"VORAZ GATOS 10 KG\", \"description\": \"* 26% DE PROTEINAS DE CALIDAD (PRIMEROS INGREDIENTES CARNE Y PESCADO) * LA MEJOR ECUACION PRECIO CALIDAD DE SU SEGMENTO * PELAJE SALUDABLE * OPTIMA DIGESTION\", \"category\": \"Alimento para Gatos\", \"image\" :\"https://www.gorchen.cl/81-home_default/voraz-gatos-10-kg.jpg\", \"sku\": \"2.8.28\", \"mpn\": \"2.8.28\" , \"brand\": { \"@type\": \"Brand\", \"name\": \"VORAZ\" } , \"weight\": { \"@context\": \"https://schema.org\", \"@type\": \"QuantitativeValue\", \"value\": \"10.000000\", \"unitCode\": \"kg\" } }",
     "originUrl": "https://www.gorchen.cl/alimento-para-perros/40-voraz-junior-mix-carne-pollo-vegetales-3-kg.html",
     "description": "* 22% DE PROTEINAS DE CALIDAD (PRIMEROS INGREDIENTES CARNE Y POLLO) * LA MEJOR ECUACION PRECIO CALIDAD DE SU SEGMENTO * OPTIMO DESARROLLO * AYUDA A SANO CRECIMIENTO",
-    "supplier": "Gorchen"
+    "supplier": "Gorchen",
+    "proteinPct": 26
   },
   {
     "id": "prod-103",
@@ -2508,10 +2591,11 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/voraz-voraz-gatito.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
+    "ingredients": "{ \"@context\": \"https://schema.org/\", \"@type\": \"Product\", \"name\": \"VORAZ GATITOS 15 KG\", \"description\": \"* 34% DE PROTEINAS DE CALIDAD (PRIMER INGREDIENTE POLLO) * LA MEJOR ECUACION PRECIO CALIDAD DE SU SEGMENTO * PELAJE SALUDABLE * OPTIMO DESARROLLO\", \"category\": \"Alimento para Gatos\", \"image\" :\"https://www.gorchen.cl/87-home_default/voraz-gatitos-15-kg.jpg\", \"sku\": \"2.8.26\", \"mpn\": \"2.8.26\" , \"brand\": { \"@type\": \"Brand\", \"name\": \"VORAZ\" } , \"weight\": { \"@context\": \"https://schema.org\", \"@type\": \"QuantitativeValue\", \"value\": \"15.000000\", \"unitCode\": \"kg\" } }",
     "originUrl": "https://www.gorchen.cl/alimento-para-gatos/45-voraz-gatitos-500-gr.html",
     "description": "* 34% DE PROTEINAS DE CALIDAD (PRIMER INGREDIENTE POLLO) * LA MEJOR ECUACION PRECIO CALIDAD DE SU SEGMENTO * PELAJE SALUDABLE * OPTIMO DESARROLLO",
-    "supplier": "Gorchen"
+    "supplier": "Gorchen",
+    "proteinPct": 34
   },
   {
     "id": "prod-104",
@@ -2868,7 +2952,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/bavaro-bavaro-force-adulto-cachorro.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/331-bavaro-force-18-kgs-perro-adulto-cachorro-alto-rendimiento.html",
     "description": "Alimento de mantención para perros adultos y cachorros desde los 2 meses de edad. Por su alto contenido energetico Bavaro Force es ideal para perros con alta exigencia de energía. No contiene saborizantes, conservantes ni preservantes artificiales, soya ni ingredientes modificados geneticamente. Calidad Alemana.",
     "supplier": "Cooprinsem"
@@ -2892,7 +2975,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/bavaro-bavaro-task-adulto.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/329-bavaro-task-18-kgs-perro-adulto-actividad-moderada.html",
     "description": "Alimento de mantención para perros adultos. Desarrollado para perros con ligera demanda energética. No contiene saborizantes, conservantes, preservantes artificiales, soya ni ingredientes modificados geneticamente. Calidad Alemana.",
     "supplier": "Cooprinsem"
@@ -2916,7 +2998,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/bavaro-bavaro-work-adulto.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/330-bavaro-work-18-kgs-pero-adulto-actividad-moderada-a-alta.html",
     "description": "Alimento de mantención para perros adultos. Por su alto contenido energetico Bavaro Work es ideal para perros con actividad física normal o con ligera demanda energética . No contiene saborizante, conservantes, preservantes artificiales, sin soya ni ingredientes modificados geneticamente. Calidad Alemana.",
     "supplier": "Cooprinsem"
@@ -2940,7 +3021,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josera-josera-kitten-gatito.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/297-josera-kitten-grain-free-2-kg-gato-cachorro.html",
     "description": "Alimento completo para gatos adultos de interior y de exterior con deliciosa ave y libre de granos. Sus ingredientes garantizan una piel sana y un pelo brillante, además de evitar la formación de bolas de pelo.",
     "supplier": "Cooprinsem"
@@ -3004,7 +3084,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josera-josera-marinesse-adulto.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/289-josera-marinesse-2-kg-gato-adulto-hipoalargenico-salmon.html",
     "description": "Alimento completo para gatos adultos, sus excepcionales ingredientes sólo incluyen proteínas derivadas de sabroso salmón, arroz y patatas, una nutrición perfecta para gatos con aparatos digestivos delicados.",
     "supplier": "Cooprinsem"
@@ -3028,7 +3107,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josera-josera-marinesse-adulto.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/289-josera-marinesse-2-kg-gato-adulto-hipoalargenico-salmon.html",
     "description": "Alimento completo para gatos adultos, sus excepcionales ingredientes sólo incluyen proteínas derivadas de sabroso salmón, arroz y patatas, una nutrición perfecta para gatos con aparatos digestivos delicados.",
     "supplier": "Cooprinsem"
@@ -3052,7 +3130,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josera-josera-naturecat-gatito-adulto.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/295-josera-naturecat-2-kg-gato-cachorro-adulto-alta-actividad.html",
     "description": "Alimento completo para gatos adultos, libre de granos y con una perfecta combinación de aves de corral y salmón. También es ideal para gatitos a partir de los 6 meses que requieren una dieta sin cereales.",
     "supplier": "Cooprinsem"
@@ -3076,7 +3153,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josera-josera-naturecat-gatito-adulto.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/295-josera-naturecat-2-kg-gato-cachorro-adulto-alta-actividad.html",
     "description": "Alimento completo para gatos adultos, libre de granos y con una perfecta combinación de aves de corral y salmón. También es ideal para gatitos a partir de los 6 meses que requieren una dieta sin cereales.",
     "supplier": "Cooprinsem"
@@ -3100,7 +3176,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josera-josera-naturelle-adulto.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/293-josera-naturelle-2-kg-gato-adulto-esterilizado.html",
     "description": "Alimento completo para gatos adultos, libre de granos y con una perfecta combinación de trucha y lentejas. Ideal para gatos de interior y esterilizados por su moderado contenido en grasas.",
     "supplier": "Cooprinsem"
@@ -3124,7 +3199,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josera-josera-naturelle-adulto.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/293-josera-naturelle-2-kg-gato-adulto-esterilizado.html",
     "description": "Alimento completo para gatos adultos, libre de granos y con una perfecta combinación de trucha y lentejas. Ideal para gatos de interior y esterilizados por su moderado contenido en grasas.",
     "supplier": "Cooprinsem"
@@ -3148,7 +3222,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josera-josera-culinesse-adulto.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/menu-de-productos/21001977-josera-culinesse-2-kgs-gato-adulto-piel-y-pelaje.html",
     "description": "Alimento Super Premium completo con deliciosas proteínas de salmón y ave para auténticos gourmets. Gracias a su receta equilibrada, Josera Culinesse es altamente digerible y especialmente sabroso. Con cuidado del pH urinario, anti bolas de pelo, piel brillante y pelaje sano. Libre de gluten y con sabrosos cereales para mayor palatabilidad. No contiene saborizantes, conservantes ni preservantes artificiales, sin trigo, soja, azúcares ni productos lácteos añadidos. Producto libre de BHT/ Etoxiquinas. Fabricado con ingredientes de calidad aptos para consumo humano. Calidad Alemana.",
     "supplier": "Cooprinsem"
@@ -3172,7 +3245,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josera-josera-culinesse-adulto.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/menu-de-productos/21001977-josera-culinesse-2-kgs-gato-adulto-piel-y-pelaje.html",
     "description": "Alimento Super Premium completo con deliciosas proteínas de salmón y ave para auténticos gourmets. Gracias a su receta equilibrada, Josera Culinesse es altamente digerible y especialmente sabroso. Con cuidado del pH urinario, anti bolas de pelo, piel brillante y pelaje sano. Libre de gluten y con sabrosos cereales para mayor palatabilidad. No contiene saborizantes, conservantes ni preservantes artificiales, sin trigo, soja, azúcares ni productos lácteos añadidos. Producto libre de BHT/ Etoxiquinas. Fabricado con ingredientes de calidad aptos para consumo humano. Calidad Alemana.",
     "supplier": "Cooprinsem"
@@ -3196,7 +3268,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josera-josera-kids-cachorro-mediana-grande.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/295-josera-naturecat-2-kg-gato-cachorro-adulto-alta-actividad.html",
     "description": "Alimento completo para gatos adultos, libre de granos y con una perfecta combinación de aves de corral y salmón. También es ideal para gatitos a partir de los 6 meses que requieren una dieta sin cereales.",
     "supplier": "Cooprinsem"
@@ -3220,7 +3291,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josera-josera-festival-adulto-mediana-grande.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/299-josera-kids-125-kg-perro-cachorro-raza-mediana-grande.html",
     "description": "Receta Super Premium especial libre gluten para cachorros de razas medianas y grandes. Con aporte energético reducido y contenido moderado de grasas y proteínas, garantiza un ritmo de crecimiento moderado, huesos fuertes y articulaciones sanas. Con L- carnitina y  taurina que favorecen la función cardíaca. Contiene polvo de achicoria (fuente natural de inulina), que posee propiedades  prebiótica que  refuerza la flora intestinal. Su fórmula incluye carne deshidratada  de Mejillón de labios verdes de Nueva Zelanda (Perna canaliculus), un condroprotector natural que ayuda para un correcto desarrollo  óseo y articular. No contiene saborizantes, conservantes ni preservantes artificiales, sin trigo, soja, azúcares ni productos lácteos añadidos. Producto libre de BHT /Etoxiquinas. Calidad Alemana . Josera Kids es una combinación especial para el crecimiento de razas medianas y grandes. Esta receta con aporte energético reducido y contenido moderado de grasas y proteínas garantiza un ritmo de crecimiento moderado, huesos fuertes y articulaciones sanas. Está indicado para cachorros a partir de 8 semanas de edad y es apto para perros de constitución pesada. Favorece las funciones cardiovasculares y el desarrollo del esqueleto.",
     "supplier": "Cooprinsem"
@@ -3244,7 +3314,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josera-josera-fiesta-plus.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/302-josera-fiesta-plus-125-kg-perro-adulto-raza-mediana-grande.html",
     "description": "Receta Super Premium libre de gluten para perros adultos. Con variedad de colores, las Vital Booster Chips rojas ofrecen un impulso adicional a la vitalidad de las mascotas gracias a las valiosas vitaminas, así como a la taurina y a la L-carnitina.  La vitaminas E y C protegen las células de los radicales libres, la taurina y la L-carnitina apoyan la función cardíaca. Con una sabrosa salsa en polvo para mucho sabor adicional. Valiosos ácidos grasos proporcionan una piel sana y un pelo brillante. Con sabrosas aves de corral y salmón.",
     "supplier": "Cooprinsem"
@@ -3268,7 +3337,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josera-josera-balance-senior-mediana-grande.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/299-josera-kids-125-kg-perro-cachorro-raza-mediana-grande.html",
     "description": "Receta Super Premium especial libre gluten para cachorros de razas medianas y grandes. Con aporte energético reducido y contenido moderado de grasas y proteínas, garantiza un ritmo de crecimiento moderado, huesos fuertes y articulaciones sanas. Con L- carnitina y  taurina que favorecen la función cardíaca. Contiene polvo de achicoria (fuente natural de inulina), que posee propiedades  prebiótica que  refuerza la flora intestinal. Su fórmula incluye carne deshidratada  de Mejillón de labios verdes de Nueva Zelanda (Perna canaliculus), un condroprotector natural que ayuda para un correcto desarrollo  óseo y articular. No contiene saborizantes, conservantes ni preservantes artificiales, sin trigo, soja, azúcares ni productos lácteos añadidos. Producto libre de BHT /Etoxiquinas. Calidad Alemana . Josera Kids es una combinación especial para el crecimiento de razas medianas y grandes. Esta receta con aporte energético reducido y contenido moderado de grasas y proteínas garantiza un ritmo de crecimiento moderado, huesos fuertes y articulaciones sanas. Está indicado para cachorros a partir de 8 semanas de edad y es apto para perros de constitución pesada. Favorece las funciones cardiovasculares y el desarrollo del esqueleto.",
     "supplier": "Cooprinsem"
@@ -3292,7 +3360,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josera-josera-minijunior-5-x-900-g.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/305-josera-minijunior-45-kg-5-x-900-g-perro-cachorro-raza-pequena.html",
     "description": "Para nuestros jóvenes exploradores, que quieren experimentar grandes cosas y tienen grandes planes. Nuestra fórmula de crecimiento Super Premium especial para cachorros de razas pequeñas contiene los mejores nutrientes para apoyar un desarrolloóptimo y saludable. Acompaña a los cachorros hasta la edad adulta sin necesidad de cambiar su alimentación y evita la formación de sarro desde las primeras semanas de vida. Alimento Super Premium libre de gluten,  especial para cachorros de razas pequeñas a partir de las 3 semanas de vida. Pequeñas y deliciosas croquetas a base de  carne deshidratada de Pato y Salmón aportarán valiosos ácidos grasos para una piel sana y un pelaje brillante. Receta altamente digerible para reducir la cantidad de fecas. Contiene Tripolifosfato de sodio que ayuda a reducir  la formación de sarro dental desde las primeras semanas de vida. No contiene saborizantes, conservantes ni preservantes artificiales, sin trigo, soja, azúcares ni productos lácteos añadidos.  Producto libre de BHT/Etoxiquinas. Calidad Alemana.",
     "supplier": "Cooprinsem"
@@ -3316,7 +3383,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josera-josera-miniwell-5-x-900-g.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/305-josera-minijunior-45-kg-5-x-900-g-perro-cachorro-raza-pequena.html",
     "description": "Para nuestros jóvenes exploradores, que quieren experimentar grandes cosas y tienen grandes planes. Nuestra fórmula de crecimiento Super Premium especial para cachorros de razas pequeñas contiene los mejores nutrientes para apoyar un desarrolloóptimo y saludable. Acompaña a los cachorros hasta la edad adulta sin necesidad de cambiar su alimentación y evita la formación de sarro desde las primeras semanas de vida. Alimento Super Premium libre de gluten,  especial para cachorros de razas pequeñas a partir de las 3 semanas de vida. Pequeñas y deliciosas croquetas a base de  carne deshidratada de Pato y Salmón aportarán valiosos ácidos grasos para una piel sana y un pelaje brillante. Receta altamente digerible para reducir la cantidad de fecas. Contiene Tripolifosfato de sodio que ayuda a reducir  la formación de sarro dental desde las primeras semanas de vida. No contiene saborizantes, conservantes ni preservantes artificiales, sin trigo, soja, azúcares ni productos lácteos añadidos.  Producto libre de BHT/Etoxiquinas. Calidad Alemana.",
     "supplier": "Cooprinsem"
@@ -3357,7 +3423,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josera-josera-minisenior-5-x-900-g.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/305-josera-minijunior-45-kg-5-x-900-g-perro-cachorro-raza-pequena.html",
     "description": "Para nuestros jóvenes exploradores, que quieren experimentar grandes cosas y tienen grandes planes. Nuestra fórmula de crecimiento Super Premium especial para cachorros de razas pequeñas contiene los mejores nutrientes para apoyar un desarrolloóptimo y saludable. Acompaña a los cachorros hasta la edad adulta sin necesidad de cambiar su alimentación y evita la formación de sarro desde las primeras semanas de vida. Alimento Super Premium libre de gluten,  especial para cachorros de razas pequeñas a partir de las 3 semanas de vida. Pequeñas y deliciosas croquetas a base de  carne deshidratada de Pato y Salmón aportarán valiosos ácidos grasos para una piel sana y un pelaje brillante. Receta altamente digerible para reducir la cantidad de fecas. Contiene Tripolifosfato de sodio que ayuda a reducir  la formación de sarro dental desde las primeras semanas de vida. No contiene saborizantes, conservantes ni preservantes artificiales, sin trigo, soja, azúcares ni productos lácteos añadidos.  Producto libre de BHT/Etoxiquinas. Calidad Alemana.",
     "supplier": "Cooprinsem"
@@ -3381,7 +3446,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josera-josera-young-star-cachorro-s-cereales.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/295-josera-naturecat-2-kg-gato-cachorro-adulto-alta-actividad.html",
     "description": "Alimento completo para gatos adultos, libre de granos y con una perfecta combinación de aves de corral y salmón. También es ideal para gatitos a partir de los 6 meses que requieren una dieta sin cereales.",
     "supplier": "Cooprinsem"
@@ -3405,7 +3469,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josera-josera-ente-kartoffel-monoproteico-s-cereales-pato.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/313-josera-ente-kartoffel-125-kg-perro-adulto-monoproteico-pato.html",
     "description": "Receta Hipoalérgenica Super Premium Grain Free especial para perros adultos de todas las razas. Desarrollado con deliciosa carne de pato (como única fuente de proteína animal). Contiene valiosos ácidos grasos y biotina para mantener una piel sana y un pelaje brillante. Contenido energético moderado para perros adultos saludables y sensibles con nivel de actividad normal.Contiene patata deshidratada como única fuente de carbohidratos. No contiene saborizantes, conservantes ni preservantes artificiales, sin trigo, soja, azúcares o productos lácteos añadidos. Producto libre de  BHT/Etoxiquinas. Calidad Alemana.",
     "supplier": "Cooprinsem"
@@ -3429,7 +3492,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josera-josera-lachs-kartoffel-monoproteico-s-cereal-salmon.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/289-josera-marinesse-2-kg-gato-adulto-hipoalargenico-salmon.html",
     "description": "Alimento completo para gatos adultos, sus excepcionales ingredientes sólo incluyen proteínas derivadas de sabroso salmón, arroz y patatas, una nutrición perfecta para gatos con aparatos digestivos delicados.",
     "supplier": "Cooprinsem"
@@ -3453,7 +3515,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josera-josera-chicken-sweet-potato.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/308-josera-miniwell-45-kg-5x900-gr-perro-adulto-raza-pequena.html",
     "description": "Alimento Super Premium libre de gluten, especial para perros adultos de razas pequeñas. Pequeñas y deliciosas croquetas a base de carne deshidratada  de aves de corral  combinado con los mejores ingredientes, ofrece el máximo disfrute y otorga una nutrición óptima y saludable. Con valiosos acidos grasos y biotina para una piel sana y pelaje brillante. Contiene Tripolifosfato de sodio que ayuda a reducir la  formacion de sarro dental. No contiene saborizante, conservantes ni preservantes artificiales, sin trigo, soja, azúcares o productos lácteos añadidos. Producto libre de BHT/Etoxiquinas. Calidad Alemana.",
     "supplier": "Cooprinsem"
@@ -3477,7 +3538,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josera-josera-light-vital.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/320-josera-light-vital-125-kg-perro-adulto-reduccion-de-peso.html",
     "description": "Alimento Super Premium dietético  para perros adultos con sobrepeso o tendencia a la obesidad. Un alto contenido proteico que estimula el metabolismo  de su perro, reducido porcentaje de grasa y mayor aporte de fibra aumenta la sensacion de saciedad. La  L –Carnitina fomenta el metabolismo de las grasas y la Taurina estimulan la buena función cardíaca y aumentan la vitalidad. Ayuda al cuidado oseo y articular gracias al contenido de carne de mejillón de labios verdes de Nueva Zelanda (Condroprotector natural). No contiene saborizantes, conservantes ni preservantes artificiales, sin trigo, soja, azúcares ni productos lácteos añadidos. Producto libre de BHT/Etoxiquinas.  Calidad Alemana.",
     "supplier": "Cooprinsem"
@@ -3501,7 +3561,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josera-josera-sensiplus.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/322-josera-sensiplus-125-kg-perro-sensibilidad-digestiva.html",
     "description": "Receta Super Premium libre de gluten para perros sensibles de todas las razas. Formulado para nuestros fieles compañeros con exigencias especiales: un alimento completo liviano, sumamente tolerable con ingredientes seleccionados hace esta fórmula altamente digerible, reduciendo la tensión de un sistema digestivo sensible. Un placer saludable con sabrosa carne de aves y arroz. Contiene vitaminas y ácidos grasos para una piel sana y un pelaje brillante. No contiene saborizantes, conservantes ni preservantes artificiales, sin trigo, soja, azúcares o productos lácteos añadidos. Producto libre de BHT/Etoxiquinas.  Calidad  Alemana.",
     "supplier": "Cooprinsem"
@@ -3525,7 +3584,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josera-josera-high-energy.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/menu-de-productos/21002563-josera-high-protein-chicken-125-kg-perro-alto-rendimiento-.html",
     "description": "Alimento Super Premium  para perros adultos activos de todas las razas. Alto en proteínas (30% de proteínas totales). Una delicia libre de gluten para nuestros perros más activos. Alimentación de alto rendimiento para perros en crecimiento, deportistas, hembras gestantes y en lactancia.  Con proteína de aves de corral de alta calidad. Ayuda al cuidado de las articulaciones gracias al contenido de carne de mejillón de labios verdes de Nueva Zelanda (Perna canaliculus). No contiene saborizantes, conservantes ni preservantes artificiales, sin trigo, soja, azúcares o productos lácteos añadidos. Producto libre de BHT/Etoxiquinas. Calidad Alemana.",
     "supplier": "Cooprinsem"
@@ -3549,7 +3607,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josi-josicat-crunchy-adulto.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/323-josicat-poultry-chicken-10-kg-gato-adulto-aves.html",
     "description": "JosiCat es un alimento completo para gatos adultos, en base a deliciosa carne de aves de corral. Gracias al contenido equilibrado de proteína y grasa es adecuado tanto para gatos con vida indoor como outodoor. Natural, delicioso y saludable. No contiene saborizantes, conservantes ni preservantes artificiales, sin soya, azúcares o productos lácteos añadidos. Producto libre de BHT/ Etoxiquinas. Calidad Alemana",
     "supplier": "Cooprinsem"
@@ -3573,7 +3630,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josi-josicat-kitten.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/323-josicat-poultry-chicken-10-kg-gato-adulto-aves.html",
     "description": "JosiCat es un alimento completo para gatos adultos, en base a deliciosa carne de aves de corral. Gracias al contenido equilibrado de proteína y grasa es adecuado tanto para gatos con vida indoor como outodoor. Natural, delicioso y saludable. No contiene saborizantes, conservantes ni preservantes artificiales, sin soya, azúcares o productos lácteos añadidos. Producto libre de BHT/ Etoxiquinas. Calidad Alemana",
     "supplier": "Cooprinsem"
@@ -3597,7 +3653,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josi-josicat-crispy-duck.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/323-josicat-poultry-chicken-10-kg-gato-adulto-aves.html",
     "description": "JosiCat es un alimento completo para gatos adultos, en base a deliciosa carne de aves de corral. Gracias al contenido equilibrado de proteína y grasa es adecuado tanto para gatos con vida indoor como outodoor. Natural, delicioso y saludable. No contiene saborizantes, conservantes ni preservantes artificiales, sin soya, azúcares o productos lácteos añadidos. Producto libre de BHT/ Etoxiquinas. Calidad Alemana",
     "supplier": "Cooprinsem"
@@ -3621,7 +3676,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josi-josicat-crispy-duck.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/323-josicat-poultry-chicken-10-kg-gato-adulto-aves.html",
     "description": "JosiCat es un alimento completo para gatos adultos, en base a deliciosa carne de aves de corral. Gracias al contenido equilibrado de proteína y grasa es adecuado tanto para gatos con vida indoor como outodoor. Natural, delicioso y saludable. No contiene saborizantes, conservantes ni preservantes artificiales, sin soya, azúcares o productos lácteos añadidos. Producto libre de BHT/ Etoxiquinas. Calidad Alemana",
     "supplier": "Cooprinsem"
@@ -3645,7 +3699,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josi-josicat-esterilizado-classic.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/323-josicat-poultry-chicken-10-kg-gato-adulto-aves.html",
     "description": "JosiCat es un alimento completo para gatos adultos, en base a deliciosa carne de aves de corral. Gracias al contenido equilibrado de proteína y grasa es adecuado tanto para gatos con vida indoor como outodoor. Natural, delicioso y saludable. No contiene saborizantes, conservantes ni preservantes artificiales, sin soya, azúcares o productos lácteos añadidos. Producto libre de BHT/ Etoxiquinas. Calidad Alemana",
     "supplier": "Cooprinsem"
@@ -3669,7 +3722,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josi-josicat-esterilizado-classic.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/323-josicat-poultry-chicken-10-kg-gato-adulto-aves.html",
     "description": "JosiCat es un alimento completo para gatos adultos, en base a deliciosa carne de aves de corral. Gracias al contenido equilibrado de proteína y grasa es adecuado tanto para gatos con vida indoor como outodoor. Natural, delicioso y saludable. No contiene saborizantes, conservantes ni preservantes artificiales, sin soya, azúcares o productos lácteos añadidos. Producto libre de BHT/ Etoxiquinas. Calidad Alemana",
     "supplier": "Cooprinsem"
@@ -3693,7 +3745,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josi-josidog-junior-cachorro.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/324-josidog-regular-18-kgs-perro-adulto.html",
     "description": "Es un alimento versátil adecuado para perros adultos de todas las razas con actividad normal. Formulado para mantener al perro en forma y saludable. REGULAR tiene la mejor relación Calidad-Precio de los alimentos de su categoría.",
     "supplier": "Cooprinsem"
@@ -3717,7 +3768,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josi-josidog-regular-adulto.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/324-josidog-regular-18-kgs-perro-adulto.html",
     "description": "Es un alimento versátil adecuado para perros adultos de todas las razas con actividad normal. Formulado para mantener al perro en forma y saludable. REGULAR tiene la mejor relación Calidad-Precio de los alimentos de su categoría.",
     "supplier": "Cooprinsem"
@@ -3741,7 +3791,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josi-josidog-family-adulto-cachorro.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/324-josidog-regular-18-kgs-perro-adulto.html",
     "description": "Es un alimento versátil adecuado para perros adultos de todas las razas con actividad normal. Formulado para mantener al perro en forma y saludable. REGULAR tiene la mejor relación Calidad-Precio de los alimentos de su categoría.",
     "supplier": "Cooprinsem"
@@ -3765,7 +3814,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josi-josidog-active-adulto.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/324-josidog-regular-18-kgs-perro-adulto.html",
     "description": "Es un alimento versátil adecuado para perros adultos de todas las razas con actividad normal. Formulado para mantener al perro en forma y saludable. REGULAR tiene la mejor relación Calidad-Precio de los alimentos de su categoría.",
     "supplier": "Cooprinsem"
@@ -3789,7 +3837,6 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/josi-josidog-solido-senior.jpg"
     ],
-    "ingredients": "Consulte el empaque o especificación técnica del fabricante.",
     "originUrl": "https://cooprinsem.cl/mascotas/324-josidog-regular-18-kgs-perro-adulto.html",
     "description": "Es un alimento versátil adecuado para perros adultos de todas las razas con actividad normal. Formulado para mantener al perro en forma y saludable. REGULAR tiene la mejor relación Calidad-Precio de los alimentos de su categoría.",
     "supplier": "Cooprinsem"
@@ -4033,10 +4080,14 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/purina-purina-cat-chow-gatito.png"
     ],
-    "ingredients": "Agua suficiente para proceso, carne de pollo, hígado de cerdo, gluten de trigo, carne de atún, vísceras de cerdo, almidón de maíz modificado, harina de soya, concentrado de proteína de soya, fosfato de calcio, colorantes (rojo 3, dióxido de titanio), cloruro de potasio, taurina, sal, cloruro de colina, mononitrato de tiamina, sulfato de zinc, suplemento de vitamina E, sulfato ferroso, niacina, sulfato de cobre, pantotenato de calcio, sulfato de manganeso, suplemento de vitamina A, complejo sódico de bisulfito de menadiona (fuente de actividad de vitamina K), hidrocloruro de piridoxina, suplemento de riboflavina, suplemento de vitamina B-12, biotina, acido fólico, suplemento de vitamina D-3, yoduro de potasio.",
+    "ingredients": "Maíz, harina de soya, harina de carne y hueso de cerdo, harina de subproductos de pollo, gluten de maíz, aceite de pollo, harina de plumas de pollo, hidrolizado de hígado de pollo y/o cerdo con TSPP en polvo, corro de sodio, harina de pescado, acido fosíórico, colorante natural caramelo, inulina, suplementos vitamínicos antioxidantes, cloruro de colina, metionina, premezcla mineral quelada, taurina, vitamina E, trigo, harina de algas (Schizochy trium sp), vitamina C, colorante natural rojo carmín, leche en polvo bovina, espinaca deshidratadas, levadura de cerveza (Saccharomyces cerevisiae), cloruro de potasio, L-lisina, carbonato de calcio. Eventuales sustitutos: Sorgo, arroz, fibra de soya, harina de carne y hueso animal (bovino y cerdo), harina de carne y hueso bovina, harina de subproductos de pavo, grasa animal (bovino y cerdo), sebo bovino, bisulfato de sodio, fosfato de calcio, tomate deshidratado, arveja deshidratada, zanahoria deshidratada, celulosa, harina de salmón",
     "originUrl": "https://purina.cl/felix/filetes-y-trocitos/gatitos-sensaciones-de-pollo",
     "description": "Felix Pollo es un alimento húmedo completo y balanceado para tos en desarrollo, con trocitos de pollo que deleitan a tu gato. Conócelo",
-    "supplier": "Purina"
+    "supplier": "Purina",
+    "proteinPct": 36,
+    "fatPct": 12,
+    "fiberPct": 3,
+    "moisturePct": 12
   },
   {
     "id": "prod-165",
@@ -4057,10 +4108,14 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/purina-purina-cat-chow-gatito.png"
     ],
-    "ingredients": "Agua suficiente para proceso, carne de pollo, hígado de cerdo, gluten de trigo, carne de atún, vísceras de cerdo, almidón de maíz modificado, harina de soya, concentrado de proteína de soya, fosfato de calcio, colorantes (rojo 3, dióxido de titanio), cloruro de potasio, taurina, sal, cloruro de colina, mononitrato de tiamina, sulfato de zinc, suplemento de vitamina E, sulfato ferroso, niacina, sulfato de cobre, pantotenato de calcio, sulfato de manganeso, suplemento de vitamina A, complejo sódico de bisulfito de menadiona (fuente de actividad de vitamina K), hidrocloruro de piridoxina, suplemento de riboflavina, suplemento de vitamina B-12, biotina, acido fólico, suplemento de vitamina D-3, yoduro de potasio.",
+    "ingredients": "Maíz, harina de soya, harina de carne y hueso de cerdo, harina de subproductos de pollo, gluten de maíz, aceite de pollo, harina de plumas de pollo, hidrolizado de hígado de pollo y/o cerdo con TSPP en polvo, corro de sodio, harina de pescado, acido fosíórico, colorante natural caramelo, inulina, suplementos vitamínicos antioxidantes, cloruro de colina, metionina, premezcla mineral quelada, taurina, vitamina E, trigo, harina de algas (Schizochy trium sp), vitamina C, colorante natural rojo carmín, leche en polvo bovina, espinaca deshidratadas, levadura de cerveza (Saccharomyces cerevisiae), cloruro de potasio, L-lisina, carbonato de calcio. Eventuales sustitutos: Sorgo, arroz, fibra de soya, harina de carne y hueso animal (bovino y cerdo), harina de carne y hueso bovina, harina de subproductos de pavo, grasa animal (bovino y cerdo), sebo bovino, bisulfato de sodio, fosfato de calcio, tomate deshidratado, arveja deshidratada, zanahoria deshidratada, celulosa, harina de salmón",
     "originUrl": "https://purina.cl/felix/filetes-y-trocitos/gatitos-sensaciones-de-pollo",
     "description": "Felix Pollo es un alimento húmedo completo y balanceado para tos en desarrollo, con trocitos de pollo que deleitan a tu gato. Conócelo",
-    "supplier": "Purina"
+    "supplier": "Purina",
+    "proteinPct": 36,
+    "fatPct": 12,
+    "fiberPct": 3,
+    "moisturePct": 12
   },
   {
     "id": "prod-166",
@@ -4081,10 +4136,14 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/purina-purina-cat-chow-gatito.png"
     ],
-    "ingredients": "Agua suficiente para proceso, carne de pollo, hígado de cerdo, gluten de trigo, carne de atún, vísceras de cerdo, almidón de maíz modificado, harina de soya, concentrado de proteína de soya, fosfato de calcio, colorantes (rojo 3, dióxido de titanio), cloruro de potasio, taurina, sal, cloruro de colina, mononitrato de tiamina, sulfato de zinc, suplemento de vitamina E, sulfato ferroso, niacina, sulfato de cobre, pantotenato de calcio, sulfato de manganeso, suplemento de vitamina A, complejo sódico de bisulfito de menadiona (fuente de actividad de vitamina K), hidrocloruro de piridoxina, suplemento de riboflavina, suplemento de vitamina B-12, biotina, acido fólico, suplemento de vitamina D-3, yoduro de potasio.",
+    "ingredients": "Maíz, harina de soya, harina de carne y hueso de cerdo, harina de subproductos de pollo, gluten de maíz, aceite de pollo, harina de plumas de pollo, hidrolizado de hígado de pollo y/o cerdo con TSPP en polvo, corro de sodio, harina de pescado, acido fosíórico, colorante natural caramelo, inulina, suplementos vitamínicos antioxidantes, cloruro de colina, metionina, premezcla mineral quelada, taurina, vitamina E, trigo, harina de algas (Schizochy trium sp), vitamina C, colorante natural rojo carmín, leche en polvo bovina, espinaca deshidratadas, levadura de cerveza (Saccharomyces cerevisiae), cloruro de potasio, L-lisina, carbonato de calcio. Eventuales sustitutos: Sorgo, arroz, fibra de soya, harina de carne y hueso animal (bovino y cerdo), harina de carne y hueso bovina, harina de subproductos de pavo, grasa animal (bovino y cerdo), sebo bovino, bisulfato de sodio, fosfato de calcio, tomate deshidratado, arveja deshidratada, zanahoria deshidratada, celulosa, harina de salmón",
     "originUrl": "https://purina.cl/felix/filetes-y-trocitos/gatitos-sensaciones-de-pollo",
     "description": "Felix Pollo es un alimento húmedo completo y balanceado para tos en desarrollo, con trocitos de pollo que deleitan a tu gato. Conócelo",
-    "supplier": "Purina"
+    "supplier": "Purina",
+    "proteinPct": 36,
+    "fatPct": 12,
+    "fiberPct": 3,
+    "moisturePct": 12
   },
   {
     "id": "prod-167",
@@ -4105,10 +4164,14 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/purina-purina-cat-chow-gatito.png"
     ],
-    "ingredients": "Agua suficiente para proceso, carne de pollo, hígado de cerdo, gluten de trigo, carne de atún, vísceras de cerdo, almidón de maíz modificado, harina de soya, concentrado de proteína de soya, fosfato de calcio, colorantes (rojo 3, dióxido de titanio), cloruro de potasio, taurina, sal, cloruro de colina, mononitrato de tiamina, sulfato de zinc, suplemento de vitamina E, sulfato ferroso, niacina, sulfato de cobre, pantotenato de calcio, sulfato de manganeso, suplemento de vitamina A, complejo sódico de bisulfito de menadiona (fuente de actividad de vitamina K), hidrocloruro de piridoxina, suplemento de riboflavina, suplemento de vitamina B-12, biotina, acido fólico, suplemento de vitamina D-3, yoduro de potasio.",
+    "ingredients": "Maíz, harina de soya, harina de carne y hueso de cerdo, harina de subproductos de pollo, gluten de maíz, aceite de pollo, harina de plumas de pollo, hidrolizado de hígado de pollo y/o cerdo con TSPP en polvo, corro de sodio, harina de pescado, acido fosíórico, colorante natural caramelo, inulina, suplementos vitamínicos antioxidantes, cloruro de colina, metionina, premezcla mineral quelada, taurina, vitamina E, trigo, harina de algas (Schizochy trium sp), vitamina C, colorante natural rojo carmín, leche en polvo bovina, espinaca deshidratadas, levadura de cerveza (Saccharomyces cerevisiae), cloruro de potasio, L-lisina, carbonato de calcio. Eventuales sustitutos: Sorgo, arroz, fibra de soya, harina de carne y hueso animal (bovino y cerdo), harina de carne y hueso bovina, harina de subproductos de pavo, grasa animal (bovino y cerdo), sebo bovino, bisulfato de sodio, fosfato de calcio, tomate deshidratado, arveja deshidratada, zanahoria deshidratada, celulosa, harina de salmón",
     "originUrl": "https://purina.cl/felix/filetes-y-trocitos/gatitos-sensaciones-de-pollo",
     "description": "Felix Pollo es un alimento húmedo completo y balanceado para tos en desarrollo, con trocitos de pollo que deleitan a tu gato. Conócelo",
-    "supplier": "Purina"
+    "supplier": "Purina",
+    "proteinPct": 36,
+    "fatPct": 12,
+    "fiberPct": 3,
+    "moisturePct": 12
   },
   {
     "id": "prod-168",
@@ -4465,10 +4528,14 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/purina-purina-gati-pescado.png"
     ],
-    "ingredients": "Agua suficiente para proceso, carne de pollo, hígado de cerdo, gluten de trigo, carne de atún, vísceras de cerdo, almidón de maíz modificado, harina de soya, concentrado de proteína de soya, fosfato de calcio, colorantes (rojo 3, dióxido de titanio), cloruro de potasio, taurina, sal, cloruro de colina, mononitrato de tiamina, sulfato de zinc, suplemento de vitamina E, sulfato ferroso, niacina, sulfato de cobre, pantotenato de calcio, sulfato de manganeso, suplemento de vitamina A, complejo sódico de bisulfito de menadiona (fuente de actividad de vitamina K), hidrocloruro de piridoxina, suplemento de riboflavina, suplemento de vitamina B-12, biotina, acido fólico, suplemento de vitamina D-3, yoduro de potasio.",
+    "ingredients": "Maíz, harina de soya, afrechillo de trigo, harina de subproductos de pollo, harina de carne y hueso bovino, sebo vacuno, gluten de maíz, cloruro de sodio, bisulfato de sodio, harina de pescado, harina de salmón, harina de plumas de pollo, carbonato de calcio, hidrolizado de vísceras de pollo y/o cerdo en polvo, cloruro de colina, suplemento vitamínico antioxidante, suplementos minerales quelados, taurina, zanahoria deshidratada, espinaca deshidratada, DL-metionina. SMAV1F3230 Eventuales sustitutos: Trigo, sorgo, arroz, fibra de soya, pulpa de remolacha, celulosa, pared celular de levadura (Saccharomyces cerevisiae), harina de subproductos de pavo, harina de carne y hueso de cerdo, harina de carne y hueso animal (cerdo y bovino), aceite de pollo, grasa animal (cerdo y bovino), ácido fosfórico, fosfato de calcio, L-lisina, L-treonina, L-triptófano, vitamina C, vitamina E, inulina, cloruro de potasio, tomate deshidratado, arveja deshidratada, levadura de cerveza (Saccharomyces cerevisiae), harina de alga (Schizochytrium sp), leche en polvo bovina, zeolita, harina de cordero, huevo en polvo, colorantes naturales.",
     "originUrl": "https://purina.cl/felix/filetes-y-trocitos/gatitos-sensaciones-de-pollo",
     "description": "Felix Pollo es un alimento húmedo completo y balanceado para tos en desarrollo, con trocitos de pollo que deleitan a tu gato. Conócelo",
-    "supplier": "Purina"
+    "supplier": "Purina",
+    "proteinPct": 26,
+    "fatPct": 9,
+    "fiberPct": 5.5,
+    "moisturePct": 12
   },
   {
     "id": "prod-181",
@@ -4489,10 +4556,14 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/purina-purina-gati-pescado-arroz.png"
     ],
-    "ingredients": "Agua suficiente para proceso, carne de pollo, hígado de cerdo, gluten de trigo, carne de atún, vísceras de cerdo, almidón de maíz modificado, harina de soya, concentrado de proteína de soya, fosfato de calcio, colorantes (rojo 3, dióxido de titanio), cloruro de potasio, taurina, sal, cloruro de colina, mononitrato de tiamina, sulfato de zinc, suplemento de vitamina E, sulfato ferroso, niacina, sulfato de cobre, pantotenato de calcio, sulfato de manganeso, suplemento de vitamina A, complejo sódico de bisulfito de menadiona (fuente de actividad de vitamina K), hidrocloruro de piridoxina, suplemento de riboflavina, suplemento de vitamina B-12, biotina, acido fólico, suplemento de vitamina D-3, yoduro de potasio.",
+    "ingredients": "Maíz, harina de soya, afrechillo de trigo, harina de subproductos de pollo, harina de carne y hueso bovino, sebo vacuno, gluten de maíz, cloruro de sodio, bisulfato de sodio, harina de pescado, harina de salmón, harina de plumas de pollo, carbonato de calcio, hidrolizado de vísceras de pollo y/o cerdo en polvo, cloruro de colina, suplemento vitamínico antioxidante, suplementos minerales quelados, taurina, zanahoria deshidratada, espinaca deshidratada, DL-metionina. SMAV1F3230 Eventuales sustitutos: Trigo, sorgo, arroz, fibra de soya, pulpa de remolacha, celulosa, pared celular de levadura (Saccharomyces cerevisiae), harina de subproductos de pavo, harina de carne y hueso de cerdo, harina de carne y hueso animal (cerdo y bovino), aceite de pollo, grasa animal (cerdo y bovino), ácido fosfórico, fosfato de calcio, L-lisina, L-treonina, L-triptófano, vitamina C, vitamina E, inulina, cloruro de potasio, tomate deshidratado, arveja deshidratada, levadura de cerveza (Saccharomyces cerevisiae), harina de alga (Schizochytrium sp), leche en polvo bovina, zeolita, harina de cordero, huevo en polvo, colorantes naturales.",
     "originUrl": "https://purina.cl/felix/filetes-y-trocitos/gatitos-sensaciones-de-pollo",
     "description": "Felix Pollo es un alimento húmedo completo y balanceado para tos en desarrollo, con trocitos de pollo que deleitan a tu gato. Conócelo",
-    "supplier": "Purina"
+    "supplier": "Purina",
+    "proteinPct": 26,
+    "fatPct": 9,
+    "fiberPct": 5.5,
+    "moisturePct": 12
   },
   {
     "id": "prod-182",
@@ -4513,13 +4584,14 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/purina-purina-gati-carne.png"
     ],
-    "proteinPct": 21,
-    "fatPct": 10,
-    "fiberPct": 3.5,
+    "proteinPct": 26,
+    "fatPct": 9,
+    "fiberPct": 5.5,
     "moisturePct": 12,
     "originUrl": "https://purina.cl/bonelo/productos/carne-adulto-todos-los-tamanos",
     "description": "Bonelo para perros adultos en mantenimiento, nutrición completa y balanceada, sin colorantes, para mantener a tu perro saludable y en condición ideal.",
-    "supplier": "Purina"
+    "supplier": "Purina",
+    "ingredients": "Maíz, harina de soya, afrechillo de trigo, harina de subproductos de pollo, harina de carne y hueso bovino, sebo vacuno, gluten de maíz, cloruro de sodio, bisulfato de sodio, carbonato de calcio, hidrolizado de vísceras de pollo y/o cerdo en polvo, cloruro de colina, suplemento vitamínico antioxidante, suplementos minerales quelados, taurina, arveja deshidratada, zanahoria deshidratada, espinaca deshidratada, DL-metionina. SMAV1F2229 Eventuales sustitutos: Trigo, sorgo, arroz, fibra de soya, pulpa de remolacha, celulosa, pared celular de levadura (Saccharomyces cerevisiae), harina de subproductos de pavo, harina de carne y hueso de cerdo, harina de pescado, harina de salmón, harina de carne y hueso animal (cerdo y bovino), harina de plumas de pollo, aceite de pollo, grasa animal (cerdo y bovino), ácido fosfórico, fosfato de calcio, L-lisina, L-treonina, L-triptófano, vitamina C, vitamina E, inulina, cloruro de potasio, tomate deshidratado, levadura de cerveza (Saccharomyces cerevisiae), harina de alga (Schizochytrium sp), leche en polvo bovina, zeolita, harina de cordero, huevo en polvo, colorantes naturales"
   },
   {
     "id": "prod-183",
@@ -4540,10 +4612,14 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/purina-purina-felix-megamix-gatito.png"
     ],
-    "ingredients": "Agua suficiente para proceso, carne de pollo, hígado de cerdo, gluten de trigo, carne de atún, vísceras de cerdo, almidón de maíz modificado, harina de soya, concentrado de proteína de soya, fosfato de calcio, colorantes (rojo 3, dióxido de titanio), cloruro de potasio, taurina, sal, cloruro de colina, mononitrato de tiamina, sulfato de zinc, suplemento de vitamina E, sulfato ferroso, niacina, sulfato de cobre, pantotenato de calcio, sulfato de manganeso, suplemento de vitamina A, complejo sódico de bisulfito de menadiona (fuente de actividad de vitamina K), hidrocloruro de piridoxina, suplemento de riboflavina, suplemento de vitamina B-12, biotina, acido fólico, suplemento de vitamina D-3, yoduro de potasio.",
+    "ingredients": "Maíz y/o arroz y/o sorgo y/o trigo, harinas proteicas de origen animal (pollo, pavo, res y/o cerdo), concentrado proteico (de soya y/o de maíz), grasa (vacuna y/o porcina y/o avícola y/o vegetal y /o pescado), sal, hidrolizado a base de hígados de pollo y/o cerdo, ácido fosfórico y/o bisulfato de sodio, cloruro de colina, vitaminas (A, B1, B2, B3, B5, B6, B7, B9, B12, D3, E, K3), minerales [sulfatos: (manganeso, hierro, cobre, zinc), proteinatos y/o glicinatos: (manganeso, hierro, cobre, zinc, selenio), yodato de calcio o potasio, selenito de sodio], harina de alga (Schizochytrium ssp.), leche en polvo, harinas proteicas de origen piscícola (atún, salmón, pescados), harina de mariscos (camarón y/o langostino), colorantes naturales, aminoácidos (metionina, lisina, taurina), cloruro de potasio, carbonato de calcio y/o fosfato de calcio.",
     "originUrl": "https://purina.cl/felix/filetes-y-trocitos/gatitos-sensaciones-de-pollo",
     "description": "Felix Pollo es un alimento húmedo completo y balanceado para tos en desarrollo, con trocitos de pollo que deleitan a tu gato. Conócelo",
-    "supplier": "Purina"
+    "supplier": "Purina",
+    "proteinPct": 34,
+    "fatPct": 12,
+    "fiberPct": 3,
+    "moisturePct": 12
   },
   {
     "id": "prod-184",
@@ -4564,10 +4640,14 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/purina-purina-felix-megamix-gato-adulto.png"
     ],
-    "ingredients": "Agua suficiente para proceso, carne de pollo, hígado de cerdo, gluten de trigo, carne de atún, vísceras de cerdo, almidón de maíz modificado, harina de soya, concentrado de proteína de soya, fosfato de calcio, colorantes (rojo 3, dióxido de titanio), cloruro de potasio, taurina, sal, cloruro de colina, mononitrato de tiamina, sulfato de zinc, suplemento de vitamina E, sulfato ferroso, niacina, sulfato de cobre, pantotenato de calcio, sulfato de manganeso, suplemento de vitamina A, complejo sódico de bisulfito de menadiona (fuente de actividad de vitamina K), hidrocloruro de piridoxina, suplemento de riboflavina, suplemento de vitamina B-12, biotina, acido fólico, suplemento de vitamina D-3, yoduro de potasio.",
+    "ingredients": "Maíz y/o sorgo y/o arroz y/o trigo, concentrado proteico (de soya y/o de maíz), harinas proteicas de origen animal (pollo, pavo, res y/o cerdo), grasa (vacuna y/o porcina y/o avícola y/o vegetal y/o pescado), hidrolizado a base de hígados de pollo y/o cerdo, sal, ácido fosfórico y/o bisulfato de sodio, aminoácidos (metionina, lisina, taurina), cloruro de colina, vitaminas (A, B1, B2, B3, B5, B6, B7, B9, B12, D3, E, K3), minerales [sulfatos: (manganeso, hierro, cobre, zinc), proteinatos y/o glicinatos: (manganeso, hierro, cobre, zinc, selenio), yodato de calcio o potasio, selenito de sodio], harina de atún, harina de salmón, harina de mariscos (camarón y/o langostino), colorantes naturales, carbonato de calcio y/o fosfato de calcio, cloruro de potasio",
     "originUrl": "https://purina.cl/felix/filetes-y-trocitos/gatitos-sensaciones-de-pollo",
     "description": "Felix Pollo es un alimento húmedo completo y balanceado para tos en desarrollo, con trocitos de pollo que deleitan a tu gato. Conócelo",
-    "supplier": "Purina"
+    "supplier": "Purina",
+    "proteinPct": 30,
+    "fatPct": 10,
+    "fiberPct": 4,
+    "moisturePct": 12
   },
   {
     "id": "prod-185",
@@ -4616,9 +4696,9 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/purina-purina-pro-plan-adult-cat-3kg-ar.png"
     ],
-    "proteinPct": 21,
-    "fatPct": 10,
-    "fiberPct": 3.5,
+    "proteinPct": 36,
+    "fatPct": 16,
+    "fiberPct": 2.5,
     "moisturePct": 12,
     "originUrl": "https://purina.cl/bonelo/productos/carne-adulto-todos-los-tamanos",
     "description": "Bonelo para perros adultos en mantenimiento, nutrición completa y balanceada, sin colorantes, para mantener a tu perro saludable y en condición ideal.",
@@ -4643,9 +4723,9 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/purina-purina-pro-plan-adult-cat-7-3kg-ar.png"
     ],
-    "proteinPct": 21,
-    "fatPct": 10,
-    "fiberPct": 3.5,
+    "proteinPct": 37,
+    "fatPct": 15,
+    "fiberPct": 3,
     "moisturePct": 12,
     "originUrl": "https://purina.cl/bonelo/productos/carne-adulto-todos-los-tamanos",
     "description": "Bonelo para perros adultos en mantenimiento, nutrición completa y balanceada, sin colorantes, para mantener a tu perro saludable y en condición ideal.",
@@ -4726,13 +4806,14 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/purina-purina-pro-plan-adult-cat-live-clear-3kg-ar.png"
     ],
-    "proteinPct": 21,
-    "fatPct": 10,
-    "fiberPct": 3.5,
+    "proteinPct": 36,
+    "fatPct": 14,
+    "fiberPct": 3,
     "moisturePct": 12,
     "originUrl": "https://purina.cl/bonelo/productos/carne-adulto-todos-los-tamanos",
     "description": "Bonelo para perros adultos en mantenimiento, nutrición completa y balanceada, sin colorantes, para mantener a tu perro saludable y en condición ideal.",
-    "supplier": "Purina"
+    "supplier": "Purina",
+    "ingredients": "Gluten de maíz, arroz, harina de subproductos de pollo, carne de pollo congelada, maíz, trigo, aceite de pollo y/o grasa vacuna preservados con tocoferoles (fuente de vitamina E), ácido fosfórico y/o bisulfato de sodio, fibra de soja, sal, carbonato y/o fosfato cálcico, hidrolizado (polvo y/o líquido) a base de subproductos de pollo y/o cerdo, cloruro de potasio, suplemento proteico de huevo en polvo, pirofosfato tetrasódico, cloruro de colina, aceite de pescado y/o harina de alga (Schizochytrium sp.), suplemento vitamínico antioxidante (A, D3, E, K3, B1, B2, B3, B5, B6, B7, B9, B12, BHT), suplementos minerales [(sulfatos: zinc, hierro, manganeso, cobre), (proteinatos: zinc, hierro, manganeso, cobre, selenio), yodato de calcio, selenito de sodio], taurina, levadura seca (Saccharomyces cerevisiae ssp.), L-lisina, DL-metionina, ácido ascórbico (fuente de vitamina C)."
   },
   {
     "id": "prod-191",
@@ -5173,13 +5254,14 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/purina-purina-excellent-adulto-carne.png"
     ],
-    "proteinPct": 21,
+    "proteinPct": 23,
     "fatPct": 10,
-    "fiberPct": 3.5,
+    "fiberPct": 4,
     "moisturePct": 12,
     "originUrl": "https://purina.cl/bonelo/productos/carne-adulto-todos-los-tamanos",
     "description": "Bonelo para perros adultos en mantenimiento, nutrición completa y balanceada, sin colorantes, para mantener a tu perro saludable y en condición ideal.",
-    "supplier": "Purina"
+    "supplier": "Purina",
+    "ingredients": "Maíz, harina de soya, arroz, harina de carne y hueso bovino, aceite de pollo, harina de subproductos de pollo, hidrolizado de hígado de pollo líquido, sebo bovino, gluten de maíz, cloruro de sodio, suplemento vitamínico antioxidante, premezcla de minerales quelados, cloruro de colina, carbonato de calcio, cloruro de potasio, L-lisina. JENV1F2109. Eventuales sustitutos: Sorgo, trigo, salvado de trigo, celulosa, pulpa de remolacha, harina de carne y hueso de cerdo, harina de salmón, harina de pescado, harina de subproductos de pavo, harina de carne y hueso de cordero, huevo en polvo, grasa de cerdo, harina de pluma de pollo, harina de alga (Schizochytrium sp), leche bovina en polvo, vitamina C, vitamina E, hidrolizado de hígado de cerdo líquido, pared celular de levadura (Saccharomyces cerevisiae), DL-metionina, taurina, arveja deshidratada, zanahoria deshidratada, fosfato de calcio."
   },
   {
     "id": "prod-207",
@@ -5256,9 +5338,9 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/purina-purina-pro-plan-adult-small-breed-3kg-ar.png"
     ],
-    "proteinPct": 21,
-    "fatPct": 10,
-    "fiberPct": 3.5,
+    "proteinPct": 29,
+    "fatPct": 17,
+    "fiberPct": 3,
     "moisturePct": 12,
     "originUrl": "https://purina.cl/bonelo/productos/carne-adulto-todos-los-tamanos",
     "description": "Bonelo para perros adultos en mantenimiento, nutrición completa y balanceada, sin colorantes, para mantener a tu perro saludable y en condición ideal.",
@@ -5526,7 +5608,12 @@ const fallbackProducts: Product[] = [
     "featured": false,
     "images": [
       "/products/pro-plan-cn-perros-convalescence-veterinary-diets.png"
-    ]
+    ],
+    "proteinPct": 9.5,
+    "fatPct": 7.5,
+    "fiberPct": 1.5,
+    "moisturePct": 75,
+    "ingredients": "Agua suficiente para el proceso, subproductos de carne, subproductos de aves, carne, hígado, aceite de maíz, harina de arroz, salmón, saborizantes naturales y artificiales, fosfato tricalcico, cloruro de potasio, goma guar, fibra de avena, sulfato de calcio, sulfato de magnesio, cloruro de colina, dl-metionina, taurina, suplemento de Vit. E, sulfato de zinc, mononitrato de tiamina: (Vit. B1), sulfato ferroso, niacina (Vit. B3), sulfato de cobre, pantotenato de calcio (Vit. B5), suplemento de Vit. A, sulfato de manganeso, complejo bisulfito de menadiona sódica (Vit. K9, hidrocloruro de piridoxina (Vit. B6), suplemento de riboflavina (Vit. B2), suplemento de Vit. B12, biotina (Vit. B7), ioduro de potasio, ácido fólico (Vit. B9), suplemento de Vit. D3, selenito-de sodio."
   },
   {
     "id": "prod-220",
@@ -5934,12 +6021,11 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "peach",
-    "image": "/products/superpet-superpet-adulto.png",
+    "image": "/five-mascotas/alimento-0.svg",
     "featured": false,
     "images": [
-      "/products/superpet-superpet-adulto.png"
+      "/five-mascotas/alimento-0.svg"
     ],
-    "ingredients": "Aceite de salmón salvaje, Aceite de borraja (Borago officinalis), Aceite de maravilla, Vitamina E acetato, Saborizante natural de carne.",
     "originUrl": "https://dragpharma.cl/descargas/superpet-puppy-ficha-tecnica.pdf",
     "description": "Suplemento alimenticio líquido formulado con ácidos grasos esenciales Omega 3 y Omega 6 de origen marino y vegetal, con alto contenido de DHA y EPA para potenciar el desarrollo neurológico, cognitivo y la salud dérmica del cachorro.",
     "supplier": "DragPharma"
@@ -5958,10 +6044,10 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "lavender",
-    "image": "/products/superpet-omega-puppy.png",
+    "image": "/five-mascotas/alimento-0.svg",
     "featured": false,
     "images": [
-      "/products/superpet-omega-puppy.png"
+      "/five-mascotas/alimento-0.svg"
     ]
   },
   {
@@ -5978,12 +6064,11 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "violet",
-    "image": "/products/superpet-superpet-gato.png",
+    "image": "/five-mascotas/alimento-0.svg",
     "featured": false,
     "images": [
-      "/products/superpet-superpet-gato.png"
+      "/five-mascotas/alimento-0.svg"
     ],
-    "ingredients": "Aceite de salmón salvaje, Aceite de borraja (Borago officinalis), Aceite de maravilla, Vitamina E acetato, Saborizante natural de carne.",
     "originUrl": "https://dragpharma.cl/descargas/superpet-puppy-ficha-tecnica.pdf",
     "description": "Suplemento alimenticio líquido formulado con ácidos grasos esenciales Omega 3 y Omega 6 de origen marino y vegetal, con alto contenido de DHA y EPA para potenciar el desarrollo neurológico, cognitivo y la salud dérmica del cachorro.",
     "supplier": "DragPharma"
@@ -6006,7 +6091,12 @@ const fallbackProducts: Product[] = [
     "featured": false,
     "images": [
       "/products/appetit-adulto.webp"
-    ]
+    ],
+    "proteinPct": 27,
+    "fatPct": 12,
+    "fiberPct": 3,
+    "moisturePct": 12,
+    "ingredients": "HARINA CARNE HUESO CERDO/VACUNO; AVENA GRANO; Subproductos molineria trigo; Leguminosas; Maiz grano; Grasa de pollo/cerdo estabilizada; Gluten de maiz; Salvado de arroz; Hidrolizado de hígado (saborizante natural); Vitaminas (A, D, E, B1 tiamina, B2 riboflavina, B3 niacina, B5 ácido pantoténico, B6 piridoxina, ácido fólico, B12 cianocobolamina, biotina, colina); Minerales (calcio, fósforo, potasio, sodio, cloruro, magnesio, cobre, yodo, hierro, manganeso, selenio, zinc); Harina linaza; Levadura de cerveza; Deodorizante natural; Fibra dietetica; Antifungico; Antioxidante autorizado (Butilhidroxitolueno); Saponina de quillay; Taurina; Preservante autorizado; Glucosamina; Condroitina; L-carnitina."
   },
   {
     "id": "prod-238",
@@ -6481,7 +6571,10 @@ const fallbackProducts: Product[] = [
     "featured": false,
     "images": [
       "/products/bokato-tradicion.webp"
-    ]
+    ],
+    "proteinPct": 24,
+    "fatPct": 10,
+    "ingredients": "Carne de ave y cerdo, maíz de grano molido, arroz de grano, aceite de pavo, blend de aceite marino de omega 3, 6 y 9, hidrolizado de hígado, L-Carnitina, diatomita, betaglucanos, levadura de cerveza, fibra dietética, Yucca Schidigera, vitaminas y minerales de acuerdo con las tablas de requerimientos NRC y AAFCO."
   },
   {
     "id": "prod-256",
@@ -6553,7 +6646,12 @@ const fallbackProducts: Product[] = [
     "featured": false,
     "images": [
       "/products/bokato-petit.webp"
-    ]
+    ],
+    "proteinPct": 27,
+    "fatPct": 13,
+    "fiberPct": 2.5,
+    "moisturePct": 10,
+    "ingredients": "Carne ave y cerdo, maíz de grano molido, arroz de grano, aceite de pavo, grasa de cerdo, salvado de trigo, harina de pescado, linaza molida, hidrolizado de hígado de ave, levadura de cerveza, extracto de yucca schidigera, quillay, vitaminas y minerales."
   },
   {
     "id": "prod-259",
@@ -8854,8 +8952,12 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "violet",
-    "image": "/five-mascotas/botiquin.svg",
-    "featured": false
+    "image": "/products/superpet-omega-adulto.png",
+    "featured": false,
+    "images": [
+      "/products/superpet-omega-adulto.png"
+    ],
+    "ingredients": "Aceite de salmón del pacífico, Aceite de semillas de borraja prensado en frío, Aceite de girasol purificado, Alfa-tocoferol acetato (Vitamina E)."
   },
   {
     "id": "prod-381",
@@ -8871,8 +8973,12 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "green",
-    "image": "/five-mascotas/botiquin.svg",
-    "featured": false
+    "image": "/products/superpet-omega-gato.png",
+    "featured": false,
+    "images": [
+      "/products/superpet-omega-gato.png"
+    ],
+    "ingredients": "Aceite de salmón noruego, Aceite de borraja, Aceite de maravilla refinado, Vitamina E acetato, Esencia natural de atún."
   },
   {
     "id": "prod-382",
@@ -8888,8 +8994,12 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "peach",
-    "image": "/five-mascotas/botiquin.svg",
-    "featured": false
+    "image": "/products/superpet-omega-puppy.png",
+    "featured": false,
+    "images": [
+      "/products/superpet-omega-puppy.png"
+    ],
+    "ingredients": "Aceite de salmón salvaje, Aceite de borraja (Borago officinalis), Aceite de maravilla, Vitamina E acetato, Saborizante natural de carne."
   },
   {
     "id": "prod-383",
@@ -8905,8 +9015,12 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "lavender",
-    "image": "/five-mascotas/botiquin.svg",
-    "featured": false
+    "image": "/products/superpet-omega-senior.png",
+    "featured": false,
+    "images": [
+      "/products/superpet-omega-senior.png"
+    ],
+    "ingredients": "Aceite de salmón, Aceite de linaza virgen, Aceite de borraja, Vitamina E acetato, Extracto de romero como antioxidante natural."
   },
   {
     "id": "prod-384",
