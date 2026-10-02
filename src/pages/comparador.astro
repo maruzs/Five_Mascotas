@@ -395,6 +395,17 @@ const getBreedType = (p: any) => {
                   </svg>
                   <span>Agregar al Carro</span>
                 </button>
+                ${item.prod.originUrl ? `
+                  <a 
+                    href="${item.prod.originUrl}" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    class="comp-origin-link" 
+                    style="display:block; text-align:center; font-size:11.5px; color:#7025a8; text-decoration:none; margin-top:8px; font-weight:700;"
+                  >
+                    🌐 Ficha Oficial del Fabricante ↗
+                  </a>
+                ` : ''}
               </div>
             `).join('')}
           </div>

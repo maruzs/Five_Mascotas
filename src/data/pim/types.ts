@@ -37,6 +37,9 @@ export interface Product {
   ingredients?: string; // Comma-separated list of ingredients
   grainFree?: boolean;
   breedSize?: string; // Pequeña, Mediana, Grande, Todas las Razas
+  originUrl?: string;
+  description?: string;
+  supplier?: string;
 }
 
 export interface MegaMenuItem {
