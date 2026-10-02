@@ -1,0 +1,244 @@
+[
+  {
+    "id": "acomer-naturals-acomer-naturals-alimento-para-perro-adulto",
+    "marca_madre": "Tresko",
+    "submarca": "Acomer Naturals",
+    "categoria_calidad": "Super Premium",
+    "especie": "perro",
+    "etapa_vida": "adulto",
+    "nombre": "Acomer Naturals Alimento para Perro Adulto",
+    "formatos": [
+      "9 kg",
+      "22 kg"
+    ],
+    "descripcion": "Alimento SUPER PREMIUM para perro adulto Acomer Naturals. Formulado bajo el concepto de alimentos biológicamente adecuados, sin colorantes artificiales, con 26% de proteínas, ácidos grasos Omega 3 y 6, y envase aluminizado con cierre de velcro re-sellable (Zipper block) y válvula de frescura.",
+    "ingredientes": "Harina de carne - hueso/ave, maíz, trigo, harina de soya, harinilla de trigo, harinilla de arroz, aceite de ave-cerdo, cloruro de sodio, hidrolizado de hígado y vacuno, bentonita/zeolita, vitaminas, cloruro de colina, minerales, glutamato monosódico, sorbato de potasio, antifúngicos y antioxidantes autorizados, Omega 3 y Omega 6.",
+    "analisis_garantizado": {
+      "Proteínas (Mínimo)": "26%",
+      "Lípidos / Materia grasa (Mínimo)": "10%",
+      "Fibra (Máximo)": "4%",
+      "Humedad (Máximo)": "10%"
+    },
+    "imagen_local": "Imagenes_Alimentos/Tresko/perros/acomer-naturals/acomer-naturals-alimento-para-perro-adulto.png",
+    "url_imagen_original": "https://tresko.cl/wp-content/uploads/2024/09/Acomer-Naturals-22kg.png",
+    "url_origen": "https://tresko.cl/producto/alimento-acomer-naturals-super-premium-perro-adulto-22-kg/"
+  },
+  {
+    "id": "acomer-acomer-perro-adulto-sabor-carne-y-cereales",
+    "marca_madre": "Tresko",
+    "submarca": "Acomer",
+    "categoria_calidad": "Premium",
+    "especie": "perro",
+    "etapa_vida": "adulto",
+    "nombre": "Acomer Perro Adulto Sabor Carne y Cereales",
+    "formatos": [
+      "10 kg",
+      "18 kg",
+      "25 kg"
+    ],
+    "descripcion": "Alimento PREMIUM para perro adulto formulado bajo el concepto de alimentos biológicamente adecuados, diseñados en función de su adaptación evolutiva a la carne fresca y rica en proteínas. Aporta Omega 3 y 6 para piel sana y pelaje brillante.",
+    "ingredientes": "Harinas de carne y ave, trigo, maíz, arroz y soya, aceite de aves y/o grasa estabilizada de cerdo - vacuno, premix vitamínico y premix mineral, antioxidantes, ácidos grasos Omega 3 y Omega 6.",
+    "analisis_garantizado": {
+      "Proteínas (Mínimo)": "22%",
+      "Lípidos (Mínimo)": "12%",
+      "Fibra (Máximo)": "5%",
+      "Humedad (Máximo)": "10%"
+    },
+    "imagen_local": "Imagenes_Alimentos/Tresko/perros/acomer/acomer-perro-adulto-sabor-carne-y-cereales.jpg",
+    "url_imagen_original": "https://tresko.cl/wp-content/uploads/2025/06/Acomer-Adulto-2025-25kg.jpg",
+    "url_origen": "https://tresko.cl/producto/acomer-adulto-25kg/"
+  },
+  {
+    "id": "acomer-acomer-perro-cachorro-sabor-carne-y-cereales",
+    "marca_madre": "Tresko",
+    "submarca": "Acomer",
+    "categoria_calidad": "Premium",
+    "especie": "perro",
+    "etapa_vida": "cachorro",
+    "nombre": "Acomer Perro Cachorro Sabor Carne y Cereales",
+    "formatos": [
+      "10 kg"
+    ],
+    "descripcion": "Alimento PREMIUM para cachorros que proporciona un óptimo desarrollo musculoesquelético con alta concentración proteica, calcio, fósforo y ácidos grasos esenciales para el crecimiento saludable.",
+    "ingredientes": "Harinas de carne y ave, trigo, maíz, arroz y soya, aceite de aves y/o grasa estabilizada de cerdo - vacuno, premix vitamínico y mineral, antioxidantes, ácidos grasos Omega 3.",
+    "analisis_garantizado": {
+      "Proteínas (Mínimo)": "24%",
+      "Lípidos (Mínimo)": "8%",
+      "Fibra (Máximo)": "4,5%",
+      "Humedad (Máximo)": "10%",
+      "Calcio (Mínimo)": "2,5%",
+      "Fósforo (Mínimo)": "1%"
+    },
+    "imagen_local": "Imagenes_Alimentos/Tresko/perros/acomer/acomer-perro-cachorro-sabor-carne-y-cereales.png",
+    "url_imagen_original": "https://tresko.cl/wp-content/uploads/2024/09/Acomer-Cachorros-10kg.png",
+    "url_origen": "https://tresko.cl/producto/acomer-cachorro-10kg/"
+  },
+  {
+    "id": "acomer-acomer-razas-pequenas-sabor-carne",
+    "marca_madre": "Tresko",
+    "submarca": "Acomer",
+    "categoria_calidad": "Premium",
+    "especie": "perro",
+    "etapa_vida": "adulto",
+    "nombre": "Acomer Razas Pequeñas Sabor Carne",
+    "formatos": [
+      "10 kg"
+    ],
+    "descripcion": "Alimento PREMIUM especialmente formulado con croqueta de tamaño adaptado a mandíbulas pequeñas, alta palatabilidad, zeolita para heces firmes y aceite de origen marino desodorizado (Omega 3).",
+    "ingredientes": "Maíz, harinilla de cereales (trigo, arroz), trigo, harina de carne y hueso (bovino, porcino) y/o ave, subproductos de leguminosas, aceite de aves y/o grasa estabilizada cerdo - vacuno, hidrolizado de hígados de aves y/o cerdo y/o vacuno, cloruro de sodio, zeolita, cloruro de colina, sorbato de potasio, antifúngicos y colorantes autorizados, antioxidantes (BHA/BHT), realzante del sabor autorizado, aceite de origen marino estabilizado y desodorizado (Omega 3).",
+    "analisis_garantizado": {
+      "Proteínas (Mínimo)": "21%",
+      "Lípidos (Mínimo)": "8%",
+      "Fibra (Máximo)": "4%",
+      "Humedad (Máximo)": "10%"
+    },
+    "imagen_local": "Imagenes_Alimentos/Tresko/perros/acomer/acomer-razas-pequenas-sabor-carne.png",
+    "url_imagen_original": "https://tresko.cl/wp-content/uploads/2024/09/Acomer-Razas-Pequenas-10kg.png",
+    "url_origen": "https://tresko.cl/producto/acomer-razas-pequenas-10kg/"
+  },
+  {
+    "id": "acomer-acomer-gatos-alimento-premium",
+    "marca_madre": "Tresko",
+    "submarca": "Acomer",
+    "categoria_calidad": "Premium",
+    "especie": "gato",
+    "etapa_vida": "adulto",
+    "nombre": "Acomer Gatos Alimento Premium",
+    "formatos": [
+      "10 kg"
+    ],
+    "descripcion": "Alimento PREMIUM para gatos adultos con 30% de proteína de alto valor biológico, taurina para salud cardíaca y visual, desodorizante natural y enriquecido con vitaminas y minerales esenciales.",
+    "ingredientes": "Harinas de carne - ave y/o pescado, trigo, maíz, arroz y soya, aceite de aves y/o grasa estabilizada de cerdo - vacuno, desodorizante natural, hidrolizados de hígado vacuno y/o pollo, cloruro de sodio, premix vitamínico y mineral, colorantes autorizados, antifúngico, antioxidantes y ácidos grasos Omega 3 y 6. Minerales: Calcio, Zinc, Cobre, Yodo, Cobalto, Selenio, Potasio. Vitaminas: Colina, Taurina, Vitamina C, Niacina, Biotina, B2, B6, K3, E, D3, A.",
+    "analisis_garantizado": {
+      "Proteínas (Mínimo)": "30%",
+      "Lípidos (Mínimo)": "8%",
+      "Fibra (Máximo)": "2%",
+      "Humedad (Máximo)": "10%"
+    },
+    "imagen_local": "Imagenes_Alimentos/Tresko/gatos/acomer/acomer-gatos-alimento-premium.png",
+    "url_imagen_original": "https://tresko.cl/wp-content/uploads/2024/09/Acomer-Gatos-10kg.png",
+    "url_origen": "https://tresko.cl/producto/acomer-gatos/"
+  },
+  {
+    "id": "guardian-guardian-perro-adulto-sabor-carne",
+    "marca_madre": "Tresko",
+    "submarca": "Guardián",
+    "categoria_calidad": "Premium",
+    "especie": "perro",
+    "etapa_vida": "adulto",
+    "nombre": "Guardián Perro Adulto Sabor Carne",
+    "formatos": [
+      "9 kg",
+      "16 kg",
+      "22 kg"
+    ],
+    "descripcion": "Alimento PREMIUM para perro adulto Guardián. Formulado bajo el concepto de alimentos biológicamente adecuados, multipartículas para todo tamaño de perro, salud bucal, piel sana, pelaje brillante, heces más firmes y aporte de Omega 3 y 6.",
+    "ingredientes": "Maíz, trigo, harina de carne-hueso vacuno/ave, harinilla de trigo, harinilla de arroz, aceite de cerdo-ave, harina de soya, hidrolizado de hígado y vacuno, cloruro de sodio, bentonita/zeolita, vitaminas, cloruro de colina, minerales, sorbato de potasio, antifúngicos y antioxidantes autorizados, Omega 3 y 6.",
+    "analisis_garantizado": {
+      "Proteínas (Mínimo)": "20%",
+      "Lípidos (Mínimo)": "14%",
+      "Fibra (Máximo)": "4,5%",
+      "Humedad (Máximo)": "10%"
+    },
+    "imagen_local": "Imagenes_Alimentos/Tresko/perros/guardian/guardian-perro-adulto-sabor-carne.png",
+    "url_imagen_original": "https://tresko.cl/wp-content/uploads/2024/09/Guardian-Adulto-22kg.png",
+    "url_origen": "https://tresko.cl/producto/alimento-guardian-adulto-22kg/"
+  },
+  {
+    "id": "guardian-guardian-perro-cachorro-sabor-carne",
+    "marca_madre": "Tresko",
+    "submarca": "Guardián",
+    "categoria_calidad": "Premium",
+    "especie": "perro",
+    "etapa_vida": "cachorro",
+    "nombre": "Guardián Perro Cachorro Sabor Carne",
+    "formatos": [
+      "9 kg",
+      "16 kg"
+    ],
+    "descripcion": "Alimento PREMIUM para cachorros Guardián con 24% de proteínas, fórmula completa y balanceada para el crecimiento óseo y muscular, defensas activas y digestión saludable.",
+    "ingredientes": "Maíz, trigo, harina de carne-hueso vacuno/ave, trigo, harinilla de arroz, harinilla de trigo, harina de soya, aceite de cerdo-ave, hidrolizado de hígado y vacuno, cloruro de sodio, bentonita/zeolita, vitaminas, cloruro de colina, minerales, sorbato de potasio, antifúngicos y antioxidantes autorizados, Omega 3 y 6.",
+    "analisis_garantizado": {
+      "Proteínas (Mínimo)": "24%",
+      "Lípidos (Mínimo)": "8%",
+      "Fibra (Máximo)": "3,5%",
+      "Humedad (Máximo)": "10%"
+    },
+    "imagen_local": "Imagenes_Alimentos/Tresko/perros/guardian/guardian-perro-cachorro-sabor-carne.png",
+    "url_imagen_original": "https://tresko.cl/wp-content/uploads/2024/09/Guardian-Cachorro-16kg.png",
+    "url_origen": "https://tresko.cl/producto/alimento-guardian-cachorro-16kg/"
+  },
+  {
+    "id": "ekos-ekos-cat-alimento-para-gato-adulto-sabor-carne",
+    "marca_madre": "Tresko",
+    "submarca": "Ekos",
+    "categoria_calidad": "Standard / Premium",
+    "especie": "gato",
+    "etapa_vida": "adulto",
+    "nombre": "Ekos Cat Alimento para Gato Adulto Sabor Carne",
+    "formatos": [
+      "9 kg",
+      "10 kg",
+      "16 kg"
+    ],
+    "descripcion": "Alimento para gato formulado especialmente para fortalecer la piel y el pelaje desde el interior, con proteínas de alto valor biológico (26%), ácidos grasos Omega 3 y 6, y probióticos para una buena función intestinal.",
+    "ingredientes": "Harina de carne, maíz, trigo, harinilla de arroz, harina de soya, harinilla de trigo, aceite de cerdo-ave, hidrolizado de hígado y vacuno, cloruro de sodio, bentonita/zeolita, vitaminas, cloruro de colina, minerales, taurina, sorbato de potasio, antifúngicos, antioxidantes y colorantes autorizados, Omega 3 y 6.",
+    "analisis_garantizado": {
+      "Proteínas (Mínimo)": "26%",
+      "Lípidos (Mínimo)": "12%",
+      "Fibra (Máximo)": "4,5%",
+      "Humedad (Máximo)": "10%"
+    },
+    "imagen_local": "Imagenes_Alimentos/Tresko/gatos/ekos/ekos-cat-alimento-para-gato-adulto-sabor-carne.png",
+    "url_imagen_original": "https://tresko.cl/wp-content/uploads/2026/06/1.png",
+    "url_origen": "https://tresko.cl/producto/alimento-ekos-cat-10kg/"
+  },
+  {
+    "id": "trigono-trigono-gatos-alimento-sabor-carne",
+    "marca_madre": "Tresko",
+    "submarca": "Trígono",
+    "categoria_calidad": "Standard",
+    "especie": "gato",
+    "etapa_vida": "adulto",
+    "nombre": "Trígono Gatos Alimento Sabor Carne",
+    "formatos": [
+      "10 kg"
+    ],
+    "descripcion": "Alimento completo y balanceado para gatos adultos, sabor carne, con 24% de proteína bruta, taurina, ácidos grasos Omega 3 y premix vitamínico-mineral completo.",
+    "ingredientes": "Harinas de carne y ave, trigo, maíz, arroz y soya, aceite de ave y/o grasa estabilizada de cerdo - vacuno, premix vitamínico y premix mineral, desodorizante natural, antioxidantes, colorantes autorizados, ácido graso Omega 3.",
+    "analisis_garantizado": {
+      "Proteínas (Mínimo)": "24%",
+      "Lípidos (Mínimo)": "8%",
+      "Fibra (Máximo)": "4,5%",
+      "Humedad (Máximo)": "10%"
+    },
+    "imagen_local": "Imagenes_Alimentos/Tresko/gatos/trigono/trigono-gatos-alimento-sabor-carne.png",
+    "url_imagen_original": "https://tresko.cl/wp-content/uploads/2024/09/Trigono-Gatos-10kg.png",
+    "url_origen": "https://tresko.cl/producto/trigono-gatos-10kg/"
+  },
+  {
+    "id": "trigono-trigono-cachorros-alimento-sabor-carne",
+    "marca_madre": "Tresko",
+    "submarca": "Trígono",
+    "categoria_calidad": "Standard",
+    "especie": "perro",
+    "etapa_vida": "cachorro",
+    "nombre": "Trígono Cachorros Alimento Sabor Carne",
+    "formatos": [
+      "10 kg"
+    ],
+    "descripcion": "Alimento completo para cachorros diseñado para satisfacer las demandas nutricionales y energéticas de la etapa temprana de crecimiento con 22% de proteínas y calcio/fósforo balanceado.",
+    "ingredientes": "Maíz, trigo, harinas de carne y ave, arroz y soya, aceites de ave y/o grasa estabilizada de cerdo-vacuno, premix vitamínico y mineral, antioxidante, ácido Omega 3.",
+    "analisis_garantizado": {
+      "Proteínas (Mínimo)": "22%",
+      "Lípidos (Mínimo)": "8%",
+      "Fibra (Máximo)": "4,5%",
+      "Humedad (Máximo)": "10%",
+      "Calcio (Mínimo)": "2,5%",
+      "Fósforo (Mínimo)": "1%"
+    },
+    "imagen_local": "Imagenes_Alimentos/Tresko/perros/trigono/trigono-cachorros-alimento-sabor-carne.png",
+    "url_imagen_original": "https://tresko.cl/wp-content/uploads/2024/09/Trigono-Cachorro-10kg.png",
+    "url_origen": "https://tresko.cl/producto/trigono-cachorro-10kg/"
+  }
+]

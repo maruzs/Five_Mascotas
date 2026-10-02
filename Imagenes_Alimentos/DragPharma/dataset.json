@@ -1,0 +1,234 @@
+[
+  {
+    "id": "dragpharma-mamistop-perro",
+    "marca_madre": "Drag Pharma",
+    "submarca": "Mamistop",
+    "especie": "perro",
+    "etapa_vida": "cachorro",
+    "nombre": "Mamistop Sustituto Lácteo para Cachorros",
+    "formatos": [
+      "Pote 250 g",
+      "Pote 500 g"
+    ],
+    "descripcion": "Sustituto lácteo en polvo para perros cachorros huérfanos, camadas numerosas, destete precoz o como suplemento alimenticio para hembras preñadas, lactantes o perros desnutridos y convalecientes.",
+    "ingredientes": "Leche entera en polvo, Concentrado de proteína de suero, Aceites vegetales (maravilla, coco), Caseína de leche, Maltodextrina, Lecitina de soya, Fosfato dicálcico, Carbonato de calcio, Cloruro de colina, Taurina, L-Arginina, Vitaminas (A, D3, E, C, B1, B2, B6, B12, K3, Niacina, Ácido fólico, Biotina) y Minerales traza (Hierro, Cobre, Manganeso, Zinc, Selenio).",
+    "analisis_garantizado": {
+      "Proteína Cruda (mín.)": "27.0%",
+      "Grasa Cruda (mín.)": "28.0%",
+      "Fibra Cruda (máx.)": "0.2%",
+      "Humedad (máx.)": "5.0%",
+      "Cenizas (máx.)": "6.0%",
+      "Energía Metabolizable": "4.600 Kcal/kg"
+    },
+    "url_imagen_original": "https://distribuidoramdr.cl/wp-content/uploads/2021/04/Mamistop-250g.png",
+    "url_origen": "https://dragpharma.cl/descargas/mamistop-perros-ficha-tecnica.pdf",
+    "imagen_local": "Imagenes_Alimentos/DragPharma/perros/Mamistop/mamistop-perro.png"
+  },
+  {
+    "id": "dragpharma-mamistop-gato",
+    "marca_madre": "Drag Pharma",
+    "submarca": "Mamistop",
+    "especie": "gato",
+    "etapa_vida": "cachorro",
+    "nombre": "Mamistop Sustituto Lácteo para Gatitos",
+    "formatos": [
+      "Pote 200 g",
+      "Pote 400 g"
+    ],
+    "descripcion": "Sustituto lácteo completo especialmente formulado para gatitos huérfanos o con incapacidad de amamantar. Formulado con niveles enriquecidos de Taurina y Arginina esenciales para el desarrollo cardiaco y visual del felino.",
+    "ingredientes": "Concentrado de proteínas lácteas, Grasa vegetal emulsificada, Suero de leche deslactosado, Caseinato de calcio, Aceite de pescado desodorizado, Taurina, L-Carnitina, L-Arginina, Minerales quelados y complejo vitamínico hidrosoluble y liposoluble.",
+    "analisis_garantizado": {
+      "Proteína Cruda (mín.)": "33.0%",
+      "Grasa Cruda (mín.)": "26.0%",
+      "Fibra Cruda (máx.)": "0.15%",
+      "Humedad (máx.)": "4.5%",
+      "Taurina (mín.)": "0.2%",
+      "Energía Metabolizable": "4.450 Kcal/kg"
+    },
+    "url_imagen_original": "https://superzoo.cl/on/demandware.static/-/Sites-Superzoo-master-catalog/default/dw6bf9a764/images/7800000000000_1.png",
+    "url_origen": "https://dragpharma.cl/descargas/mamistop-felino-ficha-tecnica.pdf",
+    "imagen_local": "Imagenes_Alimentos/DragPharma/gatos/Mamistop/mamistop-gato.png"
+  },
+  {
+    "id": "dragpharma-apetipet-jarabe",
+    "marca_madre": "Drag Pharma",
+    "submarca": "Apetipet",
+    "especie": "perro",
+    "etapa_vida": "adulto",
+    "nombre": "Apetipet Suplemento Estimulante del Apetito y Vitamínico Perros",
+    "formatos": [
+      "Frasco 100 mL"
+    ],
+    "descripcion": "Suplemento alimenticio en jarabe altamente palatable a base de L-Carnitina, Metionina y Complejo B, formulado para estimular el apetito y mejorar la asimilación nutricional en caninos convalecientes o inapetentes.",
+    "ingredientes": "DL-Carnitina Clorhidrato, Sorbitol, DL-Metionina, Cloruro de Colina, Vitamina B1 (Tiamina), Vitamina B2 (Riboflavina), Vitamina B6 (Piridoxina), Vitamina B12 (Cianocobalamina), Ácido Nicotínico, Pantotenato de Calcio, excipientes c.s.p.",
+    "analisis_garantizado": {
+      "DL-Carnitina Clorhidrato": "5.0 g / 100 mL",
+      "Sorbitol": "25.0 g / 100 mL",
+      "DL-Metionina": "1.0 g / 100 mL",
+      "Colina Cloruro": "1.0 g / 100 mL",
+      "Vitamina B1": "15 mg / 100 mL",
+      "Vitamina B6": "15 mg / 100 mL"
+    },
+    "url_imagen_original": "https://distribuidoramdr.cl/wp-content/uploads/2021/04/Apetipet-100ml.png",
+    "url_origen": "https://dragpharma.cl/descargas/apetipet-ficha-tecnica.pdf",
+    "imagen_local": "Imagenes_Alimentos/DragPharma/perros/Apetipet/apetipet-jarabe.png"
+  },
+  {
+    "id": "dragpharma-apeticat-jarabe",
+    "marca_madre": "Drag Pharma",
+    "submarca": "Apeticat",
+    "especie": "gato",
+    "etapa_vida": "adulto",
+    "nombre": "Apeticat Suplemento Nutricional y Estimulante del Apetito Gatos",
+    "formatos": [
+      "Frasco 100 mL"
+    ],
+    "descripcion": "Suplemento nutricional con Taurina, Carnitina y Complejo B diseñado especialmente para la fisiología felina. Combate cuadros de inapetencia, estrés nutricional y apoya la recuperación de peso corporal.",
+    "ingredientes": "DL-Carnitina Clorhidrato, Sorbitol, Taurina, Colina Cloruro, Vitamina B1, Vitamina B2, Vitamina B6, Vitamina B12, Nicotinamida, Pantotenato de Calcio, vehículo palatable felino c.s.p.",
+    "analisis_garantizado": {
+      "DL-Carnitina Clorhidrato": "1.6 g / 100 mL",
+      "Taurina": "1.0 g / 100 mL",
+      "Sorbitol": "25.0 g / 100 mL",
+      "Colina Cloruro": "9.0 mg / 100 mL",
+      "Vitamina B12": "20 mcg / 100 mL",
+      "Humedad (máx.)": "70.0%"
+    },
+    "url_imagen_original": "https://distribuidoramdr.cl/wp-content/uploads/2021/04/Apeticat-100ml.png",
+    "url_origen": "https://dragpharma.cl/descargas/apeticat-ficha-tecnica.pdf",
+    "imagen_local": "Imagenes_Alimentos/DragPharma/gatos/Apeticat/apeticat-jarabe.png"
+  },
+  {
+    "id": "dragpharma-superpet-omega-puppy",
+    "marca_madre": "Drag Pharma",
+    "submarca": "Superpet",
+    "especie": "perro",
+    "etapa_vida": "cachorro",
+    "nombre": "Superpet Omega Puppy Suplemento Ácidos Grasos Esenciales",
+    "formatos": [
+      "Frasco 125 mL"
+    ],
+    "descripcion": "Suplemento alimenticio líquido formulado con ácidos grasos esenciales Omega 3 y Omega 6 de origen marino y vegetal, con alto contenido de DHA y EPA para potenciar el desarrollo neurológico, cognitivo y la salud dérmica del cachorro.",
+    "ingredientes": "Aceite de salmón salvaje, Aceite de borraja (Borago officinalis), Aceite de maravilla, Vitamina E acetato, Saborizante natural de carne.",
+    "analisis_garantizado": {
+      "Ácido Linoleico (Omega 6)": "450 mg / mL",
+      "Ácido Docosahexaenoico (DHA)": "38 mg / mL",
+      "Ácido Eicosapentaenoico (EPA)": "26 mg / mL",
+      "Vitamina E": "45 UI / mL"
+    },
+    "url_imagen_original": "https://distribuidoramdr.cl/wp-content/uploads/2021/04/Superpet-Puppy-125ml.png",
+    "url_origen": "https://dragpharma.cl/descargas/superpet-puppy-ficha-tecnica.pdf",
+    "imagen_local": "Imagenes_Alimentos/DragPharma/perros/Superpet/superpet-omega-puppy.png"
+  },
+  {
+    "id": "dragpharma-superpet-omega-adulto",
+    "marca_madre": "Drag Pharma",
+    "submarca": "Superpet",
+    "especie": "perro",
+    "etapa_vida": "adulto",
+    "nombre": "Superpet Omega Adulto Suplemento Piel y Pelaje Perros",
+    "formatos": [
+      "Frasco 125 mL",
+      "Frasco 250 mL"
+    ],
+    "descripcion": "Fórmula nutricional balanceada de ácidos grasos esenciales Omega 3 y 6 para perros adultos. Favorece un pelaje brillante, disminuye la caída excesiva de pelo y reduce procesos inflamatorios dérmicos.",
+    "ingredientes": "Aceite de salmón del pacífico, Aceite de semillas de borraja prensado en frío, Aceite de girasol purificado, Alfa-tocoferol acetato (Vitamina E).",
+    "analisis_garantizado": {
+      "Ácido Linoleico": "420 mg / mL",
+      "Ácido Gama-Linolénico (GLA)": "12 mg / mL",
+      "EPA + DHA": "45 mg / mL",
+      "Vitamina E (mín.)": "40 UI / mL"
+    },
+    "url_imagen_original": "https://distribuidoramdr.cl/wp-content/uploads/2021/04/Superpet-Adulto-125ml.png",
+    "url_origen": "https://dragpharma.cl/descargas/superpet-adulto-ficha-tecnica.pdf",
+    "imagen_local": "Imagenes_Alimentos/DragPharma/perros/Superpet/superpet-omega-adulto.png"
+  },
+  {
+    "id": "dragpharma-superpet-omega-senior",
+    "marca_madre": "Drag Pharma",
+    "submarca": "Superpet",
+    "especie": "perro",
+    "etapa_vida": "senior",
+    "nombre": "Superpet Omega Senior Coadyuvante Nutricional Articular y Cognitivo",
+    "formatos": [
+      "Frasco 125 mL"
+    ],
+    "descripcion": "Suplemento alimenticio especializado para perros de edad avanzada. Combina Omega 3 de alta pureza con antioxidantes naturales para retrasar el deterioro cognitivo senil y mantener la movilidad articular.",
+    "ingredientes": "Aceite de salmón, Aceite de linaza virgen, Aceite de borraja, Vitamina E acetato, Extracto de romero como antioxidante natural.",
+    "analisis_garantizado": {
+      "Omega 3 Totales": "110 mg / mL",
+      "EPA": "35 mg / mL",
+      "DHA": "42 mg / mL",
+      "Vitamina E": "50 UI / mL"
+    },
+    "url_imagen_original": "https://distribuidoramdr.cl/wp-content/uploads/2021/04/Superpet-Senior-125ml.png",
+    "url_origen": "https://dragpharma.cl/descargas/superpet-senior-ficha-tecnica.pdf",
+    "imagen_local": "Imagenes_Alimentos/DragPharma/perros/Superpet/superpet-omega-senior.png"
+  },
+  {
+    "id": "dragpharma-superpet-omega-gato",
+    "marca_madre": "Drag Pharma",
+    "submarca": "Superpet",
+    "especie": "gato",
+    "etapa_vida": "adulto",
+    "nombre": "Superpet Omega Felino Ácidos Grasos Esenciales Gatos",
+    "formatos": [
+      "Frasco 125 mL"
+    ],
+    "descripcion": "Solución oral de alta palatabilidad para gatos con proporción óptima de ácidos grasos Omega 6 y Omega 3. Reduce la formación de bolas de pelo al mejorar la textura cutánea y disminuir el acicalado por prurito.",
+    "ingredientes": "Aceite de salmón noruego, Aceite de borraja, Aceite de maravilla refinado, Vitamina E acetato, Esencia natural de atún.",
+    "analisis_garantizado": {
+      "Ácido Linoleico": "439.8 mg / mL",
+      "Ácido Gama-Linolénico": "9.96 mg / mL",
+      "EPA": "21.06 mg / mL",
+      "DHA": "28.91 mg / mL",
+      "Vitamina E": "46 UI / mL"
+    },
+    "url_imagen_original": "https://distribuidoramdr.cl/wp-content/uploads/2021/04/Superpet-Gato-125ml.png",
+    "url_origen": "https://dragpharma.cl/descargas/superpet-gato-ficha-tecnica.pdf",
+    "imagen_local": "Imagenes_Alimentos/DragPharma/gatos/Superpet/superpet-omega-gato.png"
+  },
+  {
+    "id": "dragpharma-biopower-perros-gatos",
+    "marca_madre": "Drag Pharma",
+    "submarca": "Bio-Power",
+    "especie": "perro",
+    "etapa_vida": "adulto",
+    "nombre": "Bio-Power Suplemento Probiótico y Prebiótico Perros y Gatos",
+    "formatos": [
+      "Caja 30 sachet 1 g"
+    ],
+    "descripcion": "Suplemento alimenticio simbiótico que combina microorganismos benéficos probióticos vivos y fructooligosacáridos (FOS) prebióticos para restaurar y proteger la microbiota intestinal de perros y gatos.",
+    "ingredientes": "Lactobacillus acidophilus, Enterococcus faecium, Bifidobacterium bifidum, Fructooligosacáridos (FOS), Maltodextrina, Almidón de maíz pregelatinizado, Dióxido de silicio.",
+    "analisis_garantizado": {
+      "Probióticos viables": "1 x 10^9 UFC / g",
+      "FOS (Prebiótico) (mín.)": "100 mg / g",
+      "Proteína Cruda (mín.)": "1.0%",
+      "Humedad (máx.)": "6.0%"
+    },
+    "url_imagen_original": "https://distribuidoramdr.cl/wp-content/uploads/2021/04/Biopower-30-sobres.png",
+    "url_origen": "https://dragpharma.cl/descargas/biopower-ficha-tecnica.pdf",
+    "imagen_local": "Imagenes_Alimentos/DragPharma/perros/Bio-Power/biopower-perros-gatos.png"
+  },
+  {
+    "id": "dragpharma-herplex-gato",
+    "marca_madre": "Drag Pharma",
+    "submarca": "Herplex",
+    "especie": "gato",
+    "etapa_vida": "adulto",
+    "nombre": "Herplex L-Lisina Suplemento Nutricional Inmune Gatos",
+    "formatos": [
+      "Pote 100 g polvo"
+    ],
+    "descripcion": "Suplemento nutricional a base de L-Lisina pura en polvo altamente palatable para gatos. La L-lisina compite con la arginina reduciendo la replicación del herpesvirus felino (FHV-1) y fortaleciendo las defensas respiratorias y oculares.",
+    "ingredientes": "Monoclorhidrato de L-Lisina grado alimenticio, Hidrolizado de hígado de ave, Dióxido de silicio amorfo.",
+    "analisis_garantizado": {
+      "L-Lisina (mínimo)": "500 mg / g",
+      "Proteína Cruda (mín.)": "45.0%",
+      "Grasa Cruda (mín.)": "1.5%",
+      "Humedad (máx.)": "8.0%"
+    },
+    "url_imagen_original": "https://distribuidoramdr.cl/wp-content/uploads/2021/04/Herplex-polvo.png",
+    "url_origen": "https://dragpharma.cl/descargas/herplex-ficha-tecnica.pdf",
+    "imagen_local": "Imagenes_Alimentos/DragPharma/gatos/Herplex/herplex-gato.png"
+  }
+]

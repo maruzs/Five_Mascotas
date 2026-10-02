@@ -1,0 +1,90 @@
+[
+  {
+    "id": "voller-perros-adultos-razas-medianas-y-grandes",
+    "marca_madre": "Voller",
+    "submarca": "Voller",
+    "especie": "perro",
+    "etapa_vida": "adulto",
+    "nombre": "Voller Perros Adultos Razas Medianas y Grandes 20kg",
+    "formatos": [
+      "20 kg"
+    ],
+    "descripcion": "Alimento completo y balanceado para perros adultos de razas medianas y grandes. Formulado con carne fresca de pollo de consumo humano y harina de carne/ave. Contiene semillas de linaza ricas en Omega 3 y 6, MOS, taurina y extracto de quillay para heces más firmes y menor olor.",
+    "ingredientes": "Harina de Carne/Ave y Carne fresca de pollo, Maíz, Sub productos de trigo, Arroz, Aceite de vacuno y/o cerdo y/o aceite de pollo, Hidrolizado de hígado de ave/vacuno, Sal, Semillas de Linaza, Levadura. Vitaminas: A, C, D, E, K, B2 Riboflavina, B5 Ácido Pantoténico, B9 Ácido Fólico, B7 Biotina, B12 Cianocobalamina, Colina. Taurina. Minerales: Zinc, Selenio, Cobre, Hierro, Cobalto, Yodo, Zeolita, Extracto de Quillay, Colorante natural, Antioxidantes y Preservantes autorizados, Manano-oligosacáridos (MOS).",
+    "analisis_garantizado": {
+      "Proteína Total": "26% mínimo",
+      "Grasa Cruda": "12% mínimo",
+      "Fibra Cruda": "3,5% máximo",
+      "Humedad": "12% máxima"
+    },
+    "imagen_local": "Imagenes_Alimentos/Voller/perros/voller/voller-perros-adultos-razas-medianas-y-grandes.png",
+    "url_imagen_original": "https://voller.cl/wp-content/uploads/2025/07/Razas-Mediana-y-Grandes-2-1.png",
+    "url_origen": "https://voller.cl/productos/"
+  },
+  {
+    "id": "voller-perros-adultos-razas-pequenas",
+    "marca_madre": "Voller",
+    "submarca": "Voller",
+    "especie": "perro",
+    "etapa_vida": "adulto",
+    "nombre": "Voller Perros Adultos Razas Pequeñas 10kg",
+    "formatos": [
+      "10 kg"
+    ],
+    "descripcion": "Fórmula especialmente adaptada en tamaño de croqueta y densidad energética para perros adultos de razas pequeñas. Elaborado con carne fresca de pollo, DHA (omega 3), linaza (omega 6), L-Metionina, levadura y MOS para protección digestiva e inmunológica.",
+    "ingredientes": "Harina de Carne y/o pollo, Carne fresca de pollo, Maíz, Sub productos de trigo, Arroz, Aceite de pollo, Hidrolizado de hígado de pollo y/o vacuno, Premix vitamínico y mineral. Vitaminas: A, D3, E, C, B5 Ácido Pantoténico, B6 Piridoxina, B2 Riboflavina, B3 Niacina, B1 Tiamina, B7 Biotina, B12 Cobalamina, B9 Ácido Fólico. Minerales: Zinc, Hierro, Cobre, Yodo, Selenio. Aminoácidos: L-Metionina. Zeolita, Cloruro de colina, Extracto de quillay, sal, semillas de linaza (fuente de Omega 6), Levadura de cerveza, DHA (fuente de omega 3), Manano Oligosacáridos (MOS).",
+    "analisis_garantizado": {
+      "Proteína Total": "27% mínimo",
+      "Grasa Cruda": "8% mínimo",
+      "Fibra Cruda": "3% máximo",
+      "Humedad": "11% máxima"
+    },
+    "imagen_local": "Imagenes_Alimentos/Voller/perros/voller/voller-perros-adultos-razas-pequenas.png",
+    "url_imagen_original": "https://voller.cl/wp-content/uploads/2025/07/Razas-Pequenas-1.png",
+    "url_origen": "https://voller.cl/productos/"
+  },
+  {
+    "id": "voller-cachorros-todas-las-razas",
+    "marca_madre": "Voller",
+    "submarca": "Voller",
+    "especie": "perro",
+    "etapa_vida": "cachorro",
+    "nombre": "Voller Cachorros Todas las Razas 10kg",
+    "formatos": [
+      "10 kg"
+    ],
+    "descripcion": "Nutrición de alta calidad para cachorros de todas las razas en fase de crecimiento. Aporte proteico del 28% con carne fresca de pollo, enriquecido con DHA para el desarrollo cognitivo y visual, prebióticos MOS y balance óptimo de minerales.",
+    "ingredientes": "Harina de Carne y/o pollo, Carne fresca de pollo, Maíz, Sub productos de trigo, Arroz, Aceite de pollo, Hidrolizado de hígado de pollo y/o vacuno, Premix vitamínico y mineral. Vitaminas: A, D3, E, C, Ácido Pantoténico B5, Piridoxina B6, Riboflavina B2, Niacina B3, Tiamina B1, Biotina B7, Cobalamina B12, Ácido Fólico B9. Minerales: Zinc, Hierro, Cobre, Yodo, Selenio. Aminoácidos: L-Metionina. Zeolita, Cloruro de colina, Extracto de quillay, sal, semillas de linaza (fuente de Omega 6), Levadura de cerveza, DHA (fuente de omega 3), Manano Oligosacáridos (MOS).",
+    "analisis_garantizado": {
+      "Proteína Total": "28% mínimo",
+      "Grasa Cruda": "10% mínimo",
+      "Fibra Cruda": "3% máximo",
+      "Humedad": "11% máxima"
+    },
+    "imagen_local": "Imagenes_Alimentos/Voller/perros/voller/voller-cachorros-todas-las-razas.png",
+    "url_imagen_original": "https://voller.cl/wp-content/uploads/2025/07/Cachorros_Todas-Las-razas.png",
+    "url_origen": "https://voller.cl/productos/"
+  },
+  {
+    "id": "voller-gatos-adultos",
+    "marca_madre": "Voller",
+    "submarca": "Voller",
+    "especie": "gato",
+    "etapa_vida": "adulto",
+    "nombre": "Voller Gatos Adultos 10kg",
+    "formatos": [
+      "10 kg"
+    ],
+    "descripcion": "Alimento completo para gatos adultos con 30% de proteína de alta digestibilidad. Formulado con carne fresca de pollo, DHA (omega 3), linaza, L-Metionina para el control de pH urinario y prevención de cálculos, taurina y prebióticos MOS.",
+    "ingredientes": "Harina de Carne y/o pollo, Carne fresca de pollo, Maíz, Sub productos de trigo, Arroz, Aceite de pollo, Hidrolizado de hígado de pollo y/o vacuno, Premix vitamínico y mineral. Vitaminas: A, D3, E, C, Ácido Pantoténico B5, Piridoxina B6, Riboflavina B2, Niacina B3, Tiamina B1, Biotina B7, Cobalamina B12, Ácido Fólico B9. Minerales: Zinc, Hierro, Cobre, Yodo, Selenio. Aminoácidos: L-Metionina. Zeolita, Cloruro de colina, Extracto de quillay, sal, semillas de linaza (fuente de Omega 6), Levadura de cerveza, DHA (fuente de omega 3), Manano Oligosacáridos (MOS).",
+    "analisis_garantizado": {
+      "Proteína Total": "30% mínimo",
+      "Grasa Cruda": "12% mínimo",
+      "Fibra Cruda": "2,5% máximo",
+      "Humedad": "8% máxima"
+    },
+    "imagen_local": "Imagenes_Alimentos/Voller/gatos/voller/voller-gatos-adultos.png",
+    "url_imagen_original": "https://voller.cl/wp-content/uploads/2025/07/Gatos-Adtultos.png",
+    "url_origen": "https://voller.cl/productos/"
+  }
+]

@@ -1,0 +1,156 @@
+[
+  {
+    "id": "mastin-adulto",
+    "marca_madre": "Nutritec",
+    "submarca": "Mastin",
+    "especie": "perro",
+    "etapa_vida": "adulto",
+    "nombre": "Mastin Adulto",
+    "formatos": [
+      "22 kg"
+    ],
+    "descripcion": "MASTIN Adulto es un Alimento Premium completo y balanceado, específicamente formulado para constituir el único alimento de tu mascota durante toda su vida adulta. Elaborado con ingredientes naturales de primera calidad sometidos a cocción a alta temperatura por corto tiempo. Rico en proteínas de origen animal, con ácidos grasos omega 3 y 6, fibra dietaria, prebióticos y zeolitas para heces firmes y con menos olor.",
+    "ingredientes": "Proteínas de origen animal (ave y vacuno), cereales seleccionados, grasa animal estabilizada, ácidos grasos esenciales omega 3 y 6, fibra dietaria, prebióticos, suplemento polivitamínico y polimineral, agentes desodorizantes, zeolitas.",
+    "analisis_garantizado": {
+      "Proteína Cruda": "Mínimo 23%",
+      "Materia Grasa": "Mínimo 8%",
+      "Fibra Cruda": "Máximo 3%",
+      "Energía Metabolizable": "3400 Kcal/Kg aprox."
+    },
+    "imagen_local": "Imagenes_Alimentos/Nutritec/perros/mastin/mastin-adulto.jpg",
+    "url_imagen_original": "http://nutritec.cl/images/mastinadulto.jpg",
+    "url_origen": "http://nutritec.cl/mastinadulto.html"
+  },
+  {
+    "id": "mastin-madre-cachorro",
+    "marca_madre": "Nutritec",
+    "submarca": "Mastin",
+    "especie": "perro",
+    "etapa_vida": "cachorro",
+    "nombre": "Mastin Madre / Cachorro",
+    "formatos": [
+      "15 kg"
+    ],
+    "descripcion": "MASTIN Madre y Cachorro es un Alimento Premium completo y balanceado, específicamente formulado para constituir el primer y único alimento sólido de tu cachorro durante toda su etapa de crecimiento, así como para madres en gestación y lactancia. Rico en proteínas animales de alto valor biológico (26%), fortificado con calcio y fósforo para huesos fuertes.",
+    "ingredientes": "Proteínas de origen animal (alta digestibilidad), cereales seleccionados, grasa animal estabilizada, ácidos grasos esenciales omega 3 y 6, fibra dietaria, prebióticos, suplemento vitamínico y mineral rico en Calcio y Fósforo, agentes desodorizantes, zeolitas.",
+    "analisis_garantizado": {
+      "Proteína Cruda": "Mínimo 26%",
+      "Materia Grasa": "Mínimo 10%",
+      "Fibra Cruda": "Máximo 3%",
+      "Energía Metabolizable": "3500 Kcal/Kg aprox."
+    },
+    "imagen_local": "Imagenes_Alimentos/Nutritec/perros/mastin/mastin-madre-cachorro.jpg",
+    "url_imagen_original": "http://nutritec.cl/images/mastinmadrecachorro.jpg",
+    "url_origen": "http://nutritec.cl/madrecachorro.html"
+  },
+  {
+    "id": "regal-pet-adulto-carne",
+    "marca_madre": "Nutritec",
+    "submarca": "Regal Pet",
+    "especie": "perro",
+    "etapa_vida": "adulto",
+    "nombre": "Regal Pet Adulto con Carne",
+    "formatos": [
+      "18 kg"
+    ],
+    "descripcion": "Regal Pet es una dieta completa y balanceada con categoría estándar que contiene todos los nutrientes esenciales para el perro adulto, con óptima relación de proteínas y energía. Contiene mayoritariamente proteínas de vacuno de alta calidad y palatabilidad, ácidos grasos omega 3 y 6, prebióticos y zeolitas para heces firmes y reducidas.",
+    "ingredientes": "Proteínas animales de vacuno, cereales y subproductos, grasa animal, ácidos grasos esenciales omega 3 y 6, prebióticos, fibra dietaria, vitaminas, minerales, antioxidantes, zeolitas.",
+    "analisis_garantizado": {
+      "Proteína Cruda": "Mínimo 20%",
+      "Materia Grasa": "Mínimo 8%",
+      "Fibra Cruda": "Máximo 5%",
+      "Energía Metabolizable": "3300 Kcal/Kg aprox."
+    },
+    "imagen_local": "Imagenes_Alimentos/Nutritec/perros/regal-pet/regal-pet-adulto-carne.jpg",
+    "url_imagen_original": "http://nutritec.cl/images/regalpet.jpg",
+    "url_origen": "http://nutritec.cl/regalpet.html"
+  },
+  {
+    "id": "as-k-nino-adulto",
+    "marca_madre": "Nutritec",
+    "submarca": "As K Nino",
+    "especie": "perro",
+    "etapa_vida": "adulto",
+    "nombre": "As K Nino Dieta Perro Adulto",
+    "formatos": [
+      "20 kg"
+    ],
+    "descripcion": "As K Nino es un alimento completo y balanceado de categoría económica para perros adultos que brinda una excelente relación precio-calidad. Formulado con ingredientes naturales, proteínas animales de buena aceptación, cereales y grasas equilibradas para mantener energía y condición física saludable sin sobrepeso.",
+    "ingredientes": "Proteínas animales, cereales seleccionados, grasas animales estabilizadas, vitaminas, minerales, fibra dietaria, antioxidantes.",
+    "analisis_garantizado": {
+      "Proteína Cruda": "Mínimo 18%",
+      "Materia Grasa": "Mínimo 7%",
+      "Fibra Cruda": "Máximo 5.5%",
+      "Energía Metabolizable": "3000 Kcal/Kg aprox."
+    },
+    "imagen_local": "Imagenes_Alimentos/Nutritec/perros/as-k-nino/as-k-nino-adulto.jpg",
+    "url_imagen_original": "http://nutritec.cl/images/portfo/port14.png",
+    "url_origen": "http://nutritec.cl/asknino.html"
+  },
+  {
+    "id": "cool-dog-adulto",
+    "marca_madre": "Nutritec",
+    "submarca": "Cool Dog",
+    "especie": "perro",
+    "etapa_vida": "adulto",
+    "nombre": "Cool Dog Perro Adulto",
+    "formatos": [
+      "30 kg"
+    ],
+    "descripcion": "Cool Dog es un alimento 100% natural, completo y balanceado para perros adultos de categoría súper económica. Formulado con granos, subproductos de cereales, proteínas animales y vegetales, y fibra dietaria para una digestión adecuada a precio accesible.",
+    "ingredientes": "Proteínas animales y vegetales, granos y subproductos de cereales, grasas animales, fibra dietaria, vitaminas, minerales.",
+    "analisis_garantizado": {
+      "Proteína Cruda": "Mínimo 18%",
+      "Materia Grasa": "Mínimo 5%",
+      "Fibra Cruda": "Máximo 6%",
+      "Energía Metabolizable": "2850 Kcal/Kg aprox."
+    },
+    "imagen_local": "Imagenes_Alimentos/Nutritec/perros/cool-dog/cool-dog-adulto.jpg",
+    "url_imagen_original": "http://nutritec.cl/images/portfo/port1.png",
+    "url_origen": "http://nutritec.cl/cooldog.html"
+  },
+  {
+    "id": "bio-cat-adulto-pollo-carne-leche",
+    "marca_madre": "Nutritec",
+    "submarca": "Bio Cat",
+    "especie": "gato",
+    "etapa_vida": "adulto",
+    "nombre": "Bio Cat Gato Adulto Pollo Carne Leche",
+    "formatos": [
+      "10 kg"
+    ],
+    "descripcion": "Bio-Cat es un alimento Premium completo y balanceado con ingredientes sanos y naturales para gatos adultos. Aporta altos niveles de proteína, suplementado con taurina para la salud cardíaca y visual, harina de salmón rica en omega 3 y 6, y fórmula de control de bolas de pelo con zeolitas.",
+    "ingredientes": "Proteínas animales de alta calidad (pollo, carne y harina de salmón), cereales, leche en polvo, taurina, ácidos grasos esenciales omega 3 y 6, vitaminas, minerales, antioxidantes, zeolitas.",
+    "analisis_garantizado": {
+      "Proteína Cruda": "Mínimo 30%",
+      "Materia Grasa": "Mínimo 12%",
+      "Fibra Cruda": "Máximo 3%",
+      "Energía Metabolizable": "3650 Kcal/Kg aprox."
+    },
+    "imagen_local": "Imagenes_Alimentos/Nutritec/gatos/bio-cat/bio-cat-adulto-pollo-carne-leche.jpg",
+    "url_imagen_original": "http://nutritec.cl/images/biocat.jpg",
+    "url_origen": "http://nutritec.cl/biocat.html"
+  },
+  {
+    "id": "as-kat-adulto",
+    "marca_madre": "Nutritec",
+    "submarca": "As Kat",
+    "especie": "gato",
+    "etapa_vida": "adulto",
+    "nombre": "As Kat Alimento Completo Gato Adulto",
+    "formatos": [
+      "20 kg"
+    ],
+    "descripcion": "As-Kat es un alimento completo y balanceado para gatos adultos con óptima relación precio-calidad. Formulado con balance vitamínico-mineral específico para evitar la formación de cálculos renales y componentes para el control y prevención de bolas de pelo en el estómago.",
+    "ingredientes": "Proteínas de origen animal y vegetal, subproductos de cereales, grasas estabilizadas, taurina, balance de sales y minerales de control de pH urinario, vitaminas, fibra digestiva.",
+    "analisis_garantizado": {
+      "Proteína Cruda": "Mínimo 26%",
+      "Materia Grasa": "Mínimo 10%",
+      "Fibra Cruda": "Máximo 3%",
+      "Energía Metabolizable": "3500 Kcal/Kg aprox."
+    },
+    "imagen_local": "Imagenes_Alimentos/Nutritec/gatos/as-kat/as-kat-adulto.jpg",
+    "url_imagen_original": "http://nutritec.cl/images/portfo/askat.png",
+    "url_origen": "http://nutritec.cl/askat.html"
+  }
+]

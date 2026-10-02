@@ -1,0 +1,71 @@
+[
+  {
+    "id": "stayhappy-creamy-cat-snack-gatos",
+    "marca_madre": "Stay Happy",
+    "submarca": "Stay Happy",
+    "especie": "gato",
+    "etapa_vida": "adulto",
+    "nombre": "Stay Happy Creamy Cat Snack Natural para Gatos",
+    "formatos": [
+      "4 tubos x 15 g (60 g)"
+    ],
+    "descripcion": "Snack natural cremoso e irresistible para gatos de todas las razas y etapas de vida, ideal para lamer. Formulado con alta palatabilidad, fuente de proteína animal (variedades pollo, salmón y camarón), libre de granos (Grain Free sin trigo ni maíz) y enriquecido con extracto de Yucca Schidigera para reducir notablemente el olor de las heces.",
+    "ingredientes": "Proteína animal (pollo / salmón / camarón según variedad), almidón de tapioca, taurina, extracto de Yucca Schidigera, agua, espesantes naturales, vitaminas y minerales esenciales.",
+    "analisis_garantizado": {
+      "Proteína Cruda (mín.)": "6.5%",
+      "Grasa Cruda (mín.)": "0.1%",
+      "Fibra Cruda (máx.)": "1.0%",
+      "Humedad (máx.)": "90.0%",
+      "Cenizas (máx.)": "2.0%"
+    },
+    "imagen_local": "Imagenes_Alimentos/StayHappy/gatos/stay-happy/stayhappy-creamy-cat-snack-gatos.png",
+    "url_imagen_original": "https://happylovers.cl/stayhappy/wp-content/uploads/2022/08/Creamy-cat-1.png",
+    "url_origen": "https://happylovers.cl/stayhappy/creamy-cat/"
+  },
+  {
+    "id": "stayhappy-jerky-proteico-snack-perros",
+    "marca_madre": "Stay Happy",
+    "submarca": "Stay Happy",
+    "especie": "perro",
+    "etapa_vida": "adulto",
+    "nombre": "Stay Happy Jerky Proteico Snack Natural para Perros",
+    "formatos": [
+      "100 g"
+    ],
+    "descripcion": "Snack proteico natural tipo jerky en tiras para perros de todas las razas y edades. Formulado con doble proteína animal (variedades vacuno, salmón y cordero), sin preservantes ni colorantes artificiales, 100% Grain Free y con saponinas triterpénicas naturales que auxilian activamente en neutralizar los malos olores fecales.",
+    "ingredientes": "Carne fresca y subproductos cárnicos seleccionados (vacuno, salmón, cordero), glicerina vegetal grado alimenticio, sal, saponinas triterpénicas (extracto de Yucca Schidigera y Quillay), tocoferoles mixtos como antioxidante natural.",
+    "analisis_garantizado": {
+      "Proteína Cruda (mín.)": "35.0%",
+      "Grasa Cruda (mín.)": "5.0%",
+      "Fibra Cruda (máx.)": "3.0%",
+      "Humedad (máx.)": "22.0%",
+      "Cenizas (máx.)": "6.0%"
+    },
+    "imagen_local": "Imagenes_Alimentos/StayHappy/perros/stay-happy/stayhappy-jerky-proteico-snack-perros.png",
+    "url_imagen_original": "https://happylovers.cl/stayhappy/wp-content/uploads/2025/07/jerkys.png",
+    "url_origen": "https://happylovers.cl/stayhappy/snack-proteico-para-perros/"
+  },
+  {
+    "id": "stayhappy-galletas-proteicas-grain-free-perros",
+    "marca_madre": "Stay Happy",
+    "submarca": "Stay Happy",
+    "especie": "perro",
+    "etapa_vida": "adulto",
+    "nombre": "Stay Happy Galletas Proteicas Grain Free Snack Premium",
+    "formatos": [
+      "120 g"
+    ],
+    "descripcion": "Snack premium horneado y crocante, elaborado con ingredientes naturales de calidad humana aptos para mascotas. Fórmula 100% libre de granos (Grain Free) que favorece la digestión estomacal, aporta energía limpia y fortalece el vínculo mediante un premio altamente nutritivo y apetitoso.",
+    "ingredientes": "Harina de legumbres (arvejas/garbanzos), proteína animal seleccionada, aceite vegetal prensado, fécula de papa, fibra dietaria insoluble, extractos botánicos naturales, tocoferoles naturales (conservante de frescura).",
+    "analisis_garantizado": {
+      "Proteína Cruda (mín.)": "18.0%",
+      "Grasa Cruda (mín.)": "6.0%",
+      "Fibra Cruda (máx.)": "4.5%",
+      "Humedad (máx.)": "10.0%",
+      "Cenizas (máx.)": "5.0%"
+    },
+    "imagen_local": "Imagenes_Alimentos/StayHappy/perros/stay-happy/stayhappy-galletas-proteicas-grain-free-perros.png",
+    "url_imagen_original": "https://happylovers.cl/stayhappy/wp-content/uploads/2025/07/galletas.png",
+    "url_origen": "https://happylovers.cl/stayhappy/galletas-proteicas-grain-free/"
+  }
+]
