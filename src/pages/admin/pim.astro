@@ -632,9 +632,16 @@ const officialPhotos = [
       } catch {}
 
       const primaryImg = imagesList[0] || (formData.get('image') as string) || '/five-mascotas/products/fit-formula-perro-adulto.png';
+      const id = formData.get('id') as string;
+
+      // Merge with the existing product so fields not present in this form
+      // (fiberPct, moisturePct, originUrl, supplier, featured, images, etc.)
+      // are preserved instead of being wiped on save.
+      const existing = AdminStoreService.getProducts().find((p) => p.id === id);
 
       const updated: Product = {
-        id: formData.get('id') as string,
+        ...(existing || ({} as Product)),
+        id,
         name: formData.get('name') as string,
         pet: formData.get('pet') as any,
         brand: formData.get('brand') as string,
@@ -646,7 +653,7 @@ const officialPhotos = [
         price: Number(formData.get('price')),
         oldPrice: Number(formData.get('oldPrice')),
         badge: formData.get('badge') as string,
-        color: 'violet',
+        color: existing?.color || 'violet',
         image: primaryImg,
         images: imagesList.slice(0, 5),
         // New nutritional attributes saved to PIM
