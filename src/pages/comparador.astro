@@ -19,12 +19,6 @@ const getStageType = (p: any) => {
   if (n.includes('senior') || n.includes('mature') || n.includes('edad avanzada')) return 'senior';
   return 'adulto';
 };
-const getBreedType = (p: any) => {
-  const n = (p.name || '').toLowerCase();
-  if (n.includes('pequeñ') || n.includes('small') || n.includes('mini') || n.includes('toy')) return 'pequena';
-  if (n.includes('grande') || n.includes('maxi') || n.includes('large')) return 'grande';
-  return 'todas';
-};
 ---
 
 <BaseLayout
@@ -73,15 +67,6 @@ const getBreedType = (p: any) => {
           </div>
         </div>
 
-        <!-- Tamaño de Raza (Solo para perros) -->
-        <div class="comp-filter-group" id="breed-group">
-          <span class="comp-filter-group-label">Raza:</span>
-          <div class="comp-filter-pills" id="breed-filters">
-            <button type="button" class="comp-pill-btn active" data-breed="all">Todas las razas</button>
-            <button type="button" class="comp-pill-btn" data-breed="pequena">Raza Pequeña (Mini)</button>
-            <button type="button" class="comp-pill-btn" data-breed="grande">Raza Grande / Maxi</button>
-          </div>
-        </div>
       </div>
     </header>
 
@@ -102,7 +87,6 @@ const getBreedType = (p: any) => {
                 selected={p.id === initialLeft.id}
                 data-pet={getPetType(p)}
                 data-stage={getStageType(p)}
-                data-breed={getBreedType(p)}
               >
                 {p.brand} — {p.name} ({p.format})
               </option>
@@ -131,7 +115,6 @@ const getBreedType = (p: any) => {
                 selected={p.id === initialRight.id}
                 data-pet={getPetType(p)}
                 data-stage={getStageType(p)}
-                data-breed={getBreedType(p)}
               >
                 {p.brand} — {p.name} ({p.format})
               </option>
@@ -155,7 +138,6 @@ const getBreedType = (p: any) => {
                 value={p.id}
                 data-pet={getPetType(p)}
                 data-stage={getStageType(p)}
-                data-breed={getBreedType(p)}
               >
                 {p.brand} — {p.name} ({p.format})
               </option>
@@ -220,7 +202,6 @@ const getBreedType = (p: any) => {
     const container = document.querySelector<HTMLElement>('#comparison-table-container')!;
     const brandBadge1 = document.querySelector<HTMLElement>('#slot-1-brand-badge');
     const brandBadge2 = document.querySelector<HTMLElement>('#slot-2-brand-badge');
-    const breedGroup = document.querySelector<HTMLElement>('#breed-group');
 
     // Get live products list from PIM or fallback
     const getLiveProducts = (): Product[] => {
@@ -236,13 +217,8 @@ const getBreedType = (p: any) => {
     // Filter state
     let activePet = 'perro';
     let activeStage = 'adulto';
-    let activeBreed = 'all';
 
     const filterOptions = () => {
-      if (breedGroup) {
-        breedGroup.style.display = activePet === 'gato' ? 'none' : 'flex';
-      }
-
       [slot1, slot2, slot3].forEach((select) => {
         const validOptions = Array.from(select.options).filter((opt) => opt.value);
         let firstMatch: HTMLOptionElement | undefined = undefined;
@@ -251,13 +227,11 @@ const getBreedType = (p: any) => {
         for (const opt of validOptions) {
           const pet = opt.dataset.pet;
           const stage = opt.dataset.stage;
-          const breed = opt.dataset.breed;
 
           const matchPet = pet === activePet;
           const matchStage = activeStage === 'all' || stage === activeStage;
-          const matchBreed = activeBreed === 'all' || breed === activeBreed || breed === 'todas';
 
-          if (matchPet && matchStage && matchBreed) {
+          if (matchPet && matchStage) {
             opt.hidden = false;
             if (!firstMatch) firstMatch = opt;
             if (opt.selected) currentSelectedStillValid = true;
@@ -290,15 +264,6 @@ const getBreedType = (p: any) => {
         document.querySelectorAll('#stage-filters .comp-pill-btn').forEach((b) => b.classList.remove('active'));
         btn.classList.add('active');
         activeStage = (btn as HTMLElement).dataset.stage || 'all';
-        filterOptions();
-      });
-    });
-
-    document.querySelectorAll('#breed-filters .comp-pill-btn').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('#breed-filters .comp-pill-btn').forEach((b) => b.classList.remove('active'));
-        btn.classList.add('active');
-        activeBreed = (btn as HTMLElement).dataset.breed || 'all';
         filterOptions();
       });
     });
@@ -477,35 +442,6 @@ const getBreedType = (p: any) => {
             `).join('')}
           </div>
 
-          <!-- 5. GRAIN-FREE ROW -->
-          <div class="comp-row">
-            <div class="comp-col-label">
-              <span class="comp-label-title">Libre de Granos</span>
-              <span class="comp-label-desc">Sin trigo, soya ni maíz común</span>
-            </div>
-            ${items.map((item) => `
-              <div class="comp-col-data">
-                ${item.nut.grainFree ? `
-                  <div class="comp-grain-badge grain-free">
-                    <span class="comp-icon-check">✓</span>
-                    <div>
-                      <strong>100% Grain-Free</strong>
-                      <small>Cero granos • Fácil digestión</small>
-                    </div>
-                  </div>
-                ` : `
-                  <div class="comp-grain-badge with-grains">
-                    <span class="comp-icon-neutral">🌾</span>
-                    <div>
-                      <strong>Cereales Nobles</strong>
-                      <small>Contiene arroz / maíz seleccionado</small>
-                    </div>
-                  </div>
-                `}
-              </div>
-            `).join('')}
-          </div>
-
           <!-- 6. PRIMARY PROTEIN SOURCE ROW -->
           <div class="comp-row">
             <div class="comp-col-label">
@@ -538,28 +474,6 @@ const getBreedType = (p: any) => {
                     </li>
                   `).join('')}
                 </ol>
-              </div>
-            `).join('')}
-          </div>
-
-          <!-- 8. KEY ADDITIVES ROW -->
-          <div class="comp-row">
-            <div class="comp-col-label">
-              <span class="comp-label-title">Aditivos Funcionales</span>
-              <span class="comp-label-desc">Soporte intestinal y dérmico</span>
-            </div>
-            ${items.map((item) => `
-              <div class="comp-col-data">
-                <div class="comp-additives-grid">
-                  <div class="comp-additive-chip ${item.nut.hasProbiotics ? 'active' : 'inactive'}">
-                    <span>${item.nut.hasProbiotics ? '✓' : '—'}</span>
-                    <span>${item.nut.hasProbiotics ? 'Probióticos / MOS activos' : 'Sin probióticos declarados'}</span>
-                  </div>
-                  <div class="comp-additive-chip ${item.nut.omega3_6 ? 'active' : 'inactive'}">
-                    <span>${item.nut.omega3_6 ? '✓' : '—'}</span>
-                    <span>${item.nut.omega3_6 ? 'Omega 3 y 6 garantizados' : 'Nivel lipídico base'}</span>
-                  </div>
-                </div>
               </div>
             `).join('')}
           </div>
@@ -620,6 +534,11 @@ const getBreedType = (p: any) => {
 
     // Filter and run
     filterOptions();
+
+    // Refresh from the server catalog so admin image/price edits are reflected
+    AdminStoreService.fetchPimFromServer()
+      .then(() => renderComparison())
+      .catch(() => {});
   </script>
 </BaseLayout>
 

@@ -1539,10 +1539,10 @@
       "oldPrice": 0,
       "badge": "",
       "color": "green",
-      "image": "/products/champion-champion-adulto.jpg",
+      "image": "/products/champion-champion-adulto.png",
       "featured": false,
       "images": [
-        "/products/champion-champion-adulto.jpg"
+        "/products/champion-champion-adulto.png"
       ],
       "ingredients": "Pollo Maíz, harina de subproductos de pollo, harina de soya, harina de carne y hueso bovino, grasa animal (bovino y/o cerdo y/o pollo), hidrolizado líquido de subproductos animales (bovino y/o cerdo y/o pollo), zeolita natural, cloruro de sodio, cloruro de potasio, aceite de pescado, colorantes, antifúngicos, cloruro de colina, levadura hidrolizada (fuente de beta-glucanos y manano-oligosacáridos), antioxidantes, extracto de yucca schidigera y/o quillaja saponaria, antioxidantes biológicos. Vitaminas: A, D3, E, K3, B1, B2, niacina, pantotenato de calcio, piridoxina, ácido fólico, cianocobalamina. Minerales: Óxido de zinc, sulfato ferroso, sulfato de cobre, óxido de manganeso, yodato de potasio, selenito de sodio. Eventuales sustitutos: Trigo y/o triticale y/o sorgo, y/o arroz, gluten de maíz, harina de carne y hueso de cerdo, harina de subproductos de pavo, harina de pescado, harina de salmón, aceite de linaza.",
       "originUrl": "https://cooprinsem.cl/mascotas/1930-concentrado-para-perro-champion-sabrokan-25-kgs.html",
@@ -1595,10 +1595,10 @@
       "oldPrice": 0,
       "badge": "",
       "color": "lavender",
-      "image": "/products/champion-champion-cachorro.jpg",
+      "image": "/products/champion-champion-cachorro.png",
       "featured": false,
       "images": [
-        "/products/champion-champion-cachorro.jpg"
+        "/products/champion-champion-cachorro.png"
       ],
       "ingredients": "Pollo Maíz, harina de subproductos de pollo, harina de soya, harina de pescado, grasa animal (bovino y/o cerdo y/o pollo), harina de carne y hueso bovino, hidrolizado líquido de subproductos animales (bovino y/o cerdo y/o pollo), zeolita natural, cloruro de sodio, cloruro de potasio, colorantes, inulina, antifúngicos, cloruro de colina, levadura hidrolizada (fuente de beta-glucanos y manano- oligosacáridos), antioxidantes, extracto de yucca schidigera y/o quillaja saponaria, antioxidantes biológicos. Vitaminas: A, D3, E, K3, B1, B2, niacina, pantotenato de calcio, piridoxina, ácido fólico, cianocobalamina. Minerales: Óxido de zinc, sulfato ferroso, sulfato de cobre, óxido de manganeso, yodato de potasio, selenito de sodio. Eventuales sustitutos: Trigo y/o triticale y/o sorgo, y/o arroz, gluten de maíz, harina de carne y hueso de cerdo, harina de subproductos de pavo, harina de salmón, aceite de linaza.",
       "originUrl": "https://cooprinsem.cl/mascotas/1926-concentrado-para-perro-champion-cachorro-8-kgs.html",
@@ -11122,5 +11122,5 @@
       "featured": true
     }
   ],
-  "updatedAt": "2026-10-02T19:08:48.297Z"
+  "updatedAt": "2026-10-02T19:21:54.252Z"
 }
