@@ -244,8 +244,11 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "green",
-    "image": "/five-mascotas/alimento-1.svg",
-    "featured": false
+    "image": "/products/cari-amici-premium-gatos-salmon-y-merluza-austral.png",
+    "featured": false,
+    "images": [
+      "/products/cari-amici-premium-gatos-salmon-y-merluza-austral.png"
+    ]
   },
   {
     "id": "prod-10",
@@ -283,8 +286,11 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "lavender",
-    "image": "/five-mascotas/alimento-3.svg",
-    "featured": false
+    "image": "/products/cari-amici-premium-gatos-salmon-y-merluza-austral.png",
+    "featured": false,
+    "images": [
+      "/products/cari-amici-premium-gatos-salmon-y-merluza-austral.png"
+    ]
   },
   {
     "id": "prod-12",
@@ -2149,8 +2155,11 @@ const fallbackProducts: Product[] = [
     "oldPrice": 23000,
     "badge": "Promoción",
     "color": "violet",
-    "image": "/five-mascotas/alimento-0.svg",
-    "featured": false
+    "image": "/products/kongo-kongo-gatos-salmon-atun-8-kg.jpg",
+    "featured": false,
+    "images": [
+      "/products/kongo-kongo-gatos-salmon-atun-8-kg.jpg"
+    ]
   },
   {
     "id": "prod-89",
@@ -2166,8 +2175,11 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "green",
-    "image": "/five-mascotas/alimento-1.svg",
-    "featured": false
+    "image": "/products/kongo-kongo-gatos-salmon-atun-1-kg.jpg",
+    "featured": false,
+    "images": [
+      "/products/kongo-kongo-gatos-salmon-atun-1-kg.jpg"
+    ]
   },
   {
     "id": "prod-90",
@@ -2423,8 +2435,11 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "violet",
-    "image": "/five-mascotas/alimento-0.svg",
-    "featured": false
+    "image": "/products/voraz-voraz-junior-mix-carne-pollo-vegetales-10-kg.jpg",
+    "featured": false,
+    "images": [
+      "/products/voraz-voraz-junior-mix-carne-pollo-vegetales-10-kg.jpg"
+    ]
   },
   {
     "id": "prod-101",
@@ -2944,8 +2959,11 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "violet",
-    "image": "/five-mascotas/alimento-0.svg",
-    "featured": false
+    "image": "/products/josera-josera-daily-cat-2-kgs-gato-adulto-sensibilidad-digestiva.jpg",
+    "featured": false,
+    "images": [
+      "/products/josera-josera-daily-cat-2-kgs-gato-adulto-sensibilidad-digestiva.jpg"
+    ]
   },
   {
     "id": "prod-121",
@@ -2961,8 +2979,11 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "green",
-    "image": "/five-mascotas/alimento-1.svg",
-    "featured": false
+    "image": "/products/josera-josera-daily-cat-10-kgs-gato-adulto-sensibilidad-digestiva.jpg",
+    "featured": false,
+    "images": [
+      "/products/josera-josera-daily-cat-10-kgs-gato-adulto-sensibilidad-digestiva.jpg"
+    ]
   },
   {
     "id": "prod-122",
@@ -5481,8 +5502,11 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "peach",
-    "image": "/five-mascotas/alimento-2.svg",
-    "featured": false
+    "image": "/products/alimento-humedo-pro-plan-gastroenteric.jpg",
+    "featured": false,
+    "images": [
+      "/products/alimento-humedo-pro-plan-gastroenteric.jpg"
+    ]
   },
   {
     "id": "prod-219",
@@ -5498,8 +5522,11 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "lavender",
-    "image": "/five-mascotas/alimento-3.svg",
-    "featured": false
+    "image": "/products/pro-plan-cn-perros-convalescence-veterinary-diets.png",
+    "featured": false,
+    "images": [
+      "/products/pro-plan-cn-perros-convalescence-veterinary-diets.png"
+    ]
   },
   {
     "id": "prod-220",
@@ -5931,8 +5958,11 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "lavender",
-    "image": "/five-mascotas/alimento-3.svg",
-    "featured": false
+    "image": "/products/superpet-omega-puppy.png",
+    "featured": false,
+    "images": [
+      "/products/superpet-omega-puppy.png"
+    ]
   },
   {
     "id": "prod-236",
@@ -5972,8 +6002,11 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "green",
-    "image": "/five-mascotas/alimento-1.svg",
-    "featured": false
+    "image": "/products/appetit-adulto.webp",
+    "featured": false,
+    "images": [
+      "/products/appetit-adulto.webp"
+    ]
   },
   {
     "id": "prod-238",
@@ -6213,7 +6246,10 @@ const fallbackProducts: Product[] = [
     "ingredients": "Naturales como proteínas animales y vegetales Ayuda al sistema inmune, gracias a la vitamina E que fortalecen la salud de tu perro Sin sabores, colorantes, ni conservadores artificiales Fuente de proteína y Balance ideal de fibras Con Omega 6 y Zinc para un pelo saludable. Combínalo con sus croquetas Pedigree todos los dias Los alimentos PEDIGREE, fomentan, apoyan, fortalecen y alimentan el poder de un perro para ser más saludable y feliz en cada etapa de la vida. Deliciosos y nutritivos trocitos de pollo que no alteran la calidad de las heces. Para perros adultos. Proporcionan una alimentación tan completa y balanceada como nuestro alimento seco que ya conoces Fibras altamente digestibles y sin conservantes",
     "originUrl": "https://www.allendeshnos.cl/producto/pedigree-pouch-cachorro-pollo-100gr-18-und/",
     "description": "Los alimentos PEDIGREE, fomentan, apoyan, fortalecen y alimentan el poder de un perro para ser más saludable y feliz en cada etapa de la vida. Deliciosos y nutritivos trocitos de pollo que no alteran la calidad de las heces. Para perros adultos. Proporcionan una alimentación tan completa y balanceada como nuestro alimento seco que ya conoces Fibras altamente digestibles y sin conservantes Alimento 100% Completo y Balanceado. Elaborado con Ingredientes Naturales como proteínas animales y vegetales Ayuda al sistema inmune, gracias a la vitamina E que fortalecen la salud de tu perro Sin sabores, colorantes, ni conservadores artificiales Fuente de proteína y Balance ideal de fibras Con Omega 6 y Zinc para un pelo saludable. Combínalo con sus croquetas Pedigree todos los dias Los alimentos PEDIGREE, fomentan, apoyan, fortalecen y alimentan el poder de un perro para ser más saludable y feliz en cada etapa de la vida. Deliciosos y nutritivos trocitos de pollo que no alteran la calidad de las heces. Para perros adultos. Proporcionan una alimentación tan completa y balanceada como nuestro alimento seco que ya conoces Fibras altamente digestibles y sin conservantes",
-    "supplier": "AllendesHnos"
+    "supplier": "AllendesHnos",
+    "proteinPct": 21,
+    "fiberPct": 4,
+    "moisturePct": 12
   },
   {
     "id": "prod-247",
@@ -6237,7 +6273,10 @@ const fallbackProducts: Product[] = [
     "ingredients": "Naturales como proteínas animales y vegetales Proporciona heces firmes y fáciles de limpiar Con vitaminas y minerales Pedigree Sobrecitos es un alimento balanceado completo destinado a Perros Adultos Senior +7 años que brinda todos los nutrientes que tu perro necesita para ayudarlo a mantenerse saludable",
     "originUrl": "https://www.allendeshnos.cl/producto/pedigree-sobres-senior-en-salsa-sabor-carne/",
     "description": "Alimento 100% completo y balanceado Contiene vitamina E que ayuda al sistema inmunológico Con Ingredientes Naturales como proteínas animales y vegetales Proporciona heces firmes y fáciles de limpiar Con vitaminas y minerales Pedigree Sobrecitos es un alimento balanceado completo destinado a Perros Adultos Senior +7 años que brinda todos los nutrientes que tu perro necesita para ayudarlo a mantenerse saludable",
-    "supplier": "AllendesHnos"
+    "supplier": "AllendesHnos",
+    "proteinPct": 21,
+    "fiberPct": 4,
+    "moisturePct": 12
   },
   {
     "id": "prod-248",
@@ -6261,7 +6300,10 @@ const fallbackProducts: Product[] = [
     "ingredients": "Naturales como proteínas animales y vegetales Proporciona heces firmes y fáciles de limpiar Con vitaminas y minerales Pedigree Sobrecitos es un alimento balanceado completo destinado a Perros Adultos que brinda todos los nutrientes que tu perro necesita para ayudarlo a mantenerse saludable",
     "originUrl": "https://www.allendeshnos.cl/producto/pedigree-pouch-adulto-razas-pequenas-pollo/",
     "description": "Alimento 100% completo y balanceado Contiene vitamina E que ayuda al sistema inmunológico Con Ingredientes Naturales como proteínas animales y vegetales Proporciona heces firmes y fáciles de limpiar Con vitaminas y minerales Pedigree Sobrecitos es un alimento balanceado completo destinado a Perros Adultos que brinda todos los nutrientes que tu perro necesita para ayudarlo a mantenerse saludable",
-    "supplier": "AllendesHnos"
+    "supplier": "AllendesHnos",
+    "proteinPct": 21,
+    "fiberPct": 4,
+    "moisturePct": 12
   },
   {
     "id": "prod-249",
@@ -6285,7 +6327,10 @@ const fallbackProducts: Product[] = [
     "ingredients": "Naturales como proteínas animales y vegetales Ayuda al sistema inmune, gracias a la vitamina E que fortalecen la salud de tu perro Sin sabores, colorantes, ni conservadores artificiales Fuente de proteína y Balance ideal de fibras Con Omega 6 y Zinc para un pelo saludable. Combínalo con sus croquetas Pedigree todos los dias Los alimentos PEDIGREE, fomentan, apoyan, fortalecen y alimentan el poder de un perro para ser más saludable y feliz en cada etapa de la vida. Deliciosos y nutritivos trocitos de pollo que no alteran la calidad de las heces. Para perros adultos. Proporcionan una alimentación tan completa y balanceada como nuestro alimento seco que ya conoces Fibras altamente digestibles y sin conservantes",
     "originUrl": "https://www.allendeshnos.cl/producto/pedigree-pouch-cachorro-pollo-100gr-18-und/",
     "description": "Los alimentos PEDIGREE, fomentan, apoyan, fortalecen y alimentan el poder de un perro para ser más saludable y feliz en cada etapa de la vida. Deliciosos y nutritivos trocitos de pollo que no alteran la calidad de las heces. Para perros adultos. Proporcionan una alimentación tan completa y balanceada como nuestro alimento seco que ya conoces Fibras altamente digestibles y sin conservantes Alimento 100% Completo y Balanceado. Elaborado con Ingredientes Naturales como proteínas animales y vegetales Ayuda al sistema inmune, gracias a la vitamina E que fortalecen la salud de tu perro Sin sabores, colorantes, ni conservadores artificiales Fuente de proteína y Balance ideal de fibras Con Omega 6 y Zinc para un pelo saludable. Combínalo con sus croquetas Pedigree todos los dias Los alimentos PEDIGREE, fomentan, apoyan, fortalecen y alimentan el poder de un perro para ser más saludable y feliz en cada etapa de la vida. Deliciosos y nutritivos trocitos de pollo que no alteran la calidad de las heces. Para perros adultos. Proporcionan una alimentación tan completa y balanceada como nuestro alimento seco que ya conoces Fibras altamente digestibles y sin conservantes",
-    "supplier": "AllendesHnos"
+    "supplier": "AllendesHnos",
+    "proteinPct": 25,
+    "fiberPct": 4,
+    "moisturePct": 12
   },
   {
     "id": "prod-250",
@@ -6306,10 +6351,13 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/whiskas-whiskas-adulto-pescado.png"
     ],
-    "ingredients": "de alta calidad. Cocidos al vapor Whiskas® sabor pescado soufflé – alimento balanceado completo para gatos adultos (húmedo)",
+    "ingredients": "Maíz y/o trigo y/o arroz, harina de subproductos de pollo, gluten de maíz y/o harina de soja y/o salvado de maíz y/o salvado de trigo, grasa de pollo y/o sebo bovino, harina de carne y hueso bovino, hidrolizado de menudencias (pollo y/o cerdo y/o bovino), cloruro de sodio, harina de trigo, aminoácidos (taurina, arginina), vitaminas (E, niacina, ácido pantoténico, B1, A, B2, B6, ácido fólico, B12, D3), cloruro de potasio, harina de pescado, cloruro de colina, minerales (sulfato ferroso, óxido de zinc, sulfato de cobre, iodato de calcio, selenito de sodio), zanahoria deshidratada, espinaca deshidratada, prebióticos (mananooligosacáridos), antioxidante (BHT, BHA).",
     "originUrl": "https://www.allendeshnos.cl/producto/whiskas-pouch-souffle-sabor-pescado-85gr-12-und/",
     "description": "Whiskas® sabor pescado soufflé – alimento balanceado completo para gatos adultos (húmedo) 100% Completo y Balanceado. Sin conservantes. Sin sabores artificiales. Ayuda nutricionalment ea mantener la salud del tracto urinario. Hecho con ingredientes de alta calidad. Cocidos al vapor Whiskas® sabor pescado soufflé – alimento balanceado completo para gatos adultos (húmedo)",
-    "supplier": "AllendesHnos"
+    "supplier": "AllendesHnos",
+    "proteinPct": 28,
+    "fiberPct": 4,
+    "moisturePct": 12
   },
   {
     "id": "prod-251",
@@ -6330,10 +6378,13 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/whiskas-whiskas-adulto-carne.png"
     ],
-    "ingredients": "de alta calidad. Cocidos al vapor Whiskas® sabor carne soufflé – alimento balanceado completo para gatos adultos (húmedo)",
+    "ingredients": "Maíz y/o trigo y/o arroz, harina de subproductos de pollo, gluten de maíz y/o harina de soja y/o salvado de maíz y/o salvado de trigo, grasa de pollo y/o sebo bovino, harina de carne y hueso bovino, hidrolizado de menudencias (pollo y/o cerdo y/o bovino), cloruro de sodio, harina de trigo, colorantes (caramelo, rojo ponceau, amarillo ocaso, tartrazina, índigo carmín), aminoácidos (taurina, arginina), vitaminas (E, niacina, ácido pantoténico, B1, A, B2, B6, ácido fólico, B12, D3), cloruro de potasio, cloruro de colina, minerales (sulfato ferroso, óxido de zinc, sulfato de cobre, iodato de calcio, selenito de sodio), zanahoria deshidratada, espinaca deshidratada, prebióticos (mananooligosacáridos), antioxidante (BHT/BHA).",
     "originUrl": "https://www.allendeshnos.cl/producto/whiskas-pouch-souffle-sabor-carne-85gr-12-und/",
     "description": "Whiskas® sabor carne soufflé – alimento balanceado completo para gatos adultos (húmedo) 100% Completo y Balanceado. Sin conservantes. Sin sabores artificiales. Ayuda nutricionalmente a mantener la salud del tracto urinario. Hecho con ingredientes de alta calidad. Cocidos al vapor Whiskas® sabor carne soufflé – alimento balanceado completo para gatos adultos (húmedo)",
-    "supplier": "AllendesHnos"
+    "supplier": "AllendesHnos",
+    "proteinPct": 28,
+    "fiberPct": 4,
+    "moisturePct": 12
   },
   {
     "id": "prod-252",
@@ -6354,10 +6405,13 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/whiskas-whiskas-gatito.png"
     ],
-    "ingredients": "naturales Whiskas® gatitos sabor carne soufflé – alimento balanceado completo para gatos en crecimiento (húmedo)",
+    "ingredients": "Maíz y/o trigo y/o arroz, harina de subproductos de pollo, gluten de maíz y/o harina de soja y/o salvado de maíz y/o salvado de trigo, grasa de pollo y/o sebo bovino, harina de carne y hueso bovino, hidrolizado de menudencias (pollo y/o cerdo y/o bovino), cloruro de sodio, aminoácidos (metionina, taurina, arginina), vitaminas (E, niacina, ácido pantoténico, B1, A, B2, B6, ácido fólico, B12, D3), cloruro de colina, cloruro de potasio, minerales (sulfato ferroso, óxido de zinc, sulfato de cobre, iodato de calcio, selenito de sodio), zanahoria deshidratada, espinaca deshidratada, aceite de pescado y/o harina de pescado (fuente de DHA), prebióticos (mananooligosacáridos), leche en polvo, antioxidante (BHT/BHA).",
     "originUrl": "https://www.allendeshnos.cl/producto/whiskas-pouch-souffle-sabor-gatito-carne-85gr-12-und/",
     "description": "Whiskas® gatitos sabor carne soufflé – alimento balanceado completo para gatos en crecimiento (húmedo) Sin conservantes Sin sabores artificiales Sin colorantes artificiales. Con ingredientes naturales Whiskas® gatitos sabor carne soufflé – alimento balanceado completo para gatos en crecimiento (húmedo)",
-    "supplier": "AllendesHnos"
+    "supplier": "AllendesHnos",
+    "proteinPct": 30,
+    "fiberPct": 4,
+    "moisturePct": 12
   },
   {
     "id": "prod-253",
@@ -6423,8 +6477,11 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "lavender",
-    "image": "/five-mascotas/alimento-3.svg",
-    "featured": false
+    "image": "/products/bokato-tradicion.webp",
+    "featured": false,
+    "images": [
+      "/products/bokato-tradicion.webp"
+    ]
   },
   {
     "id": "prod-256",
@@ -6492,8 +6549,11 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "peach",
-    "image": "/five-mascotas/alimento-2.svg",
-    "featured": false
+    "image": "/products/bokato-petit.webp",
+    "featured": false,
+    "images": [
+      "/products/bokato-petit.webp"
+    ]
   },
   {
     "id": "prod-259",
