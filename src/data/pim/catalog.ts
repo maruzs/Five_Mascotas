@@ -637,10 +637,10 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "lavender",
-    "image": "/products/odwalla-odwalla-adulto.png",
+    "image": "/products/odwalla-odwalla-adulto-15kg.png",
     "featured": false,
     "images": [
-      "/products/odwalla-odwalla-adulto.png"
+      "/products/odwalla-odwalla-adulto-15kg.png"
     ],
     "proteinPct": 24,
     "fatPct": 12,
@@ -664,10 +664,10 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "violet",
-    "image": "/products/odwalla-odwalla-cachorro.png",
+    "image": "/products/odwalla-odwalla-cachorro-15kg.png",
     "featured": false,
     "images": [
-      "/products/odwalla-odwalla-cachorro.png"
+      "/products/odwalla-odwalla-cachorro-15kg.png"
     ],
     "proteinPct": 30,
     "fatPct": 17,
@@ -802,10 +802,10 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "green",
-    "image": "/products/acomer-acomer-adulto.png",
+    "image": "/products/acomer-acomer-adulto-18kg.png",
     "featured": false,
     "images": [
-      "/products/acomer-acomer-adulto.png"
+      "/products/acomer-acomer-adulto-18kg.png"
     ],
     "proteinPct": 26,
     "fatPct": 10,
@@ -830,10 +830,10 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "peach",
-    "image": "/products/acomer-acomer-adulto.png",
+    "image": "/products/acomer-acomer-adulto-25kg.png",
     "featured": false,
     "images": [
-      "/products/acomer-acomer-adulto.png"
+      "/products/acomer-acomer-adulto-25kg.png"
     ],
     "proteinPct": 26,
     "fatPct": 10,
@@ -886,10 +886,10 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "violet",
-    "image": "/products/acomer-acomer-natural.png",
+    "image": "/products/acomer-acomer-natural-22kg.png",
     "featured": false,
     "images": [
-      "/products/acomer-acomer-natural.png"
+      "/products/acomer-acomer-natural-22kg.png"
     ],
     "proteinPct": 26,
     "fatPct": 10,
@@ -1019,10 +1019,10 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "green",
-    "image": "/products/master-dog-master-dog-cachorro.jpg",
+    "image": "/products/master-dog-master-dog-cachorro.png",
     "featured": false,
     "images": [
-      "/products/master-dog-master-dog-cachorro.jpg"
+      "/products/master-dog-master-dog-cachorro.png"
     ],
     "proteinPct": 8,
     "fatPct": 3,
@@ -1046,10 +1046,10 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "peach",
-    "image": "/products/master-dog-master-dog-adulto.jpg",
+    "image": "/products/master-dog-master-dog-adulto.png",
     "featured": false,
     "images": [
-      "/products/master-dog-master-dog-adulto.jpg"
+      "/products/master-dog-master-dog-adulto.png"
     ],
     "proteinPct": 8,
     "fatPct": 3,
@@ -1073,10 +1073,10 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "lavender",
-    "image": "/products/master-dog-master-dog-adulto-razas-pequenas.jpg",
+    "image": "/products/master-dog-master-dog-adulto-razas-pequenas.png",
     "featured": false,
     "images": [
-      "/products/master-dog-master-dog-adulto-razas-pequenas.jpg"
+      "/products/master-dog-master-dog-adulto-razas-pequenas.png"
     ],
     "proteinPct": 8,
     "fatPct": 3,
@@ -1100,10 +1100,10 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "violet",
-    "image": "/products/master-dog-master-dog-senior.jpg",
+    "image": "/products/master-dog-master-dog-senior.png",
     "featured": false,
     "images": [
-      "/products/master-dog-master-dog-senior.jpg"
+      "/products/master-dog-master-dog-senior.png"
     ],
     "proteinPct": 8,
     "fatPct": 3,
@@ -1127,10 +1127,10 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "green",
-    "image": "/products/master-dog-master-dog-senior.jpg",
+    "image": "/products/master-dog-master-dog-senior-21kg.png",
     "featured": false,
     "images": [
-      "/products/master-dog-master-dog-senior.jpg"
+      "/products/master-dog-master-dog-senior-21kg.png"
     ],
     "proteinPct": 8,
     "fatPct": 3,
@@ -1313,10 +1313,10 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "violet",
-    "image": "/products/mastin-mastin-mastin-cachorro.jpg",
+    "image": "/products/mastin-mastin-mastin-cachorro.png",
     "featured": false,
     "images": [
-      "/products/mastin-mastin-mastin-cachorro.jpg"
+      "/products/mastin-mastin-mastin-cachorro.png"
     ],
     "proteinPct": 26,
     "fatPct": 10,
@@ -1340,10 +1340,10 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "green",
-    "image": "/products/mastin-mastin-mastin-adulto.jpg",
+    "image": "/products/mastin-mastin-mastin-adulto.png",
     "featured": false,
     "images": [
-      "/products/mastin-mastin-mastin-adulto.jpg"
+      "/products/mastin-mastin-mastin-adulto.png"
     ],
     "proteinPct": 23,
     "fatPct": 8,
@@ -1367,10 +1367,10 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "peach",
-    "image": "/products/mastin-mastin-mastin-adulto.jpg",
+    "image": "/products/mastin-mastin-mastin-adulto-8kg.png",
     "featured": false,
     "images": [
-      "/products/mastin-mastin-mastin-adulto.jpg"
+      "/products/mastin-mastin-mastin-adulto-8kg.png"
     ],
     "proteinPct": 23,
     "fatPct": 8,
