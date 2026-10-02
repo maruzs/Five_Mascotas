@@ -244,3 +244,49 @@ En `data/pim.json` los campos `ingredients` de los 3 Whiskas secos contienen tex
 ## 7.5 Imágenes pendientes (8)
 
 Cachupín Cachorro, Mastín Senior/Signature/Raza Pequeña, Kongo Gato Pescado 15 kg, N&D Espirulina Tilapia (1,5/7 kg), N&D Jabalí lata, Askat, Pionero y Gallina x4.
+
+---
+
+# 📋 8. Faltantes al cierre de la fase 4 (2026-10)
+
+> Quedan **11 productos** con datos incompletos de 285 alimentos (**96,1% completos**).
+
+| ID | Marca | Producto | Formato | Falta | Foto |
+| :--- | :--- | :--- | :---: | :--- | :---: |
+| prod-35 | Cachupín | Cachupín Cachorro | 25 kg | Proteína | ✅ |
+| prod-52 | Mastín | Mastín Mastin Signature 15 Kg | 15 kg | Ingredientes, Proteína | ❌ |
+| prod-71 | Gallina | Gallina Ponedora Inicial | 25 kg | Ingredientes, Proteína | ❌ |
+| prod-72 | Gallina | Gallina Ponedora Final | 25 kg | Ingredientes, Proteína | ❌ |
+| prod-73 | Gallina | Gallina Broiler Inicial | 25 kg | Ingredientes, Proteína | ❌ |
+| prod-74 | Gallina | Gallina Broiler Final | 25 kg | Ingredientes, Proteína | ❌ |
+| prod-98 | Natural Meat | Natural Meat Perro Adulto | 15+2 kg | Proteína | ✅ |
+| prod-218 | Purina | Purina Ppvd Canine En Cnne 380G N8 Us | 0,38 kg | Ingredientes, Proteína | ✅ |
+| prod-234 | Superpet | Superpet Adulto | 18 kg | Ingredientes, Proteína | ❌ |
+| prod-235 | Superpet | Superpet Cachorro | 18 kg | Ingredientes, Proteína | ❌ |
+| prod-236 | Superpet | Superpet Gato | 10 kg | Ingredientes, Proteína | ❌ |
+
+## Sin foto real (11)
+
+| ID | Marca | Producto | Formato | Estado de datos |
+| :--- | :--- | :--- | :---: | :--- |
+| prod-44 | Askat | Askat Adulto | 20 kg | ✅ Datos completos |
+| prod-52 | Mastín | Mastín Mastin Signature 15 Kg | 15 kg | Datos incompletos |
+| prod-71 | Gallina | Gallina Ponedora Inicial | 25 kg | Datos incompletos |
+| prod-72 | Gallina | Gallina Ponedora Final | 25 kg | Datos incompletos |
+| prod-73 | Gallina | Gallina Broiler Inicial | 25 kg | Datos incompletos |
+| prod-74 | Gallina | Gallina Broiler Final | 25 kg | Datos incompletos |
+| prod-87 | Kongo | Kongo Gato Adulto Pescado | 15 kg | ✅ Datos completos |
+| prod-136 | Josera | Josera Miniwell | 10 kg | ✅ Datos completos |
+| prod-234 | Superpet | Superpet Adulto | 18 kg | Datos incompletos |
+| prod-235 | Superpet | Superpet Cachorro | 18 kg | Datos incompletos |
+| prod-236 | Superpet | Superpet Gato | 10 kg | Datos incompletos |
+
+## Notas de la fase 4
+
+- **Integrados 46 productos** usando `FaltantesEnlaces.md`: Purina (Cat Chow, Pro Plan), Top One (4), Gepsa (Compinches, Ganacan, Ganacat, Zimpi), Nutritec (Mastín Senior y Raza Pequeña), Cachupín, N&D (Spirulina Adult Tilapia código 1058 y Prime Jabalí lata), Odwalla, Sabrocat, Felinnes, Magnífico, Guau Forte, Askat, Pionero, Canito, Sabrokan, Natural Meat, Josera Chicken & Sweet Potato y Bokato Lady.
+- **Imágenes integradas (14):** Top One (4), Mastín Senior y Raza Pequeña, Pionero, Canito, Sabrokan, Cachupín Cachorro, N&D Spirulina Tilapia Adult y N&D Prime Jabalí.
+- **Bavaro:** datos obtenidos por OCR (tesseract) de los PDFs: Force 28/16/2, Task 23/9/2.7, Work 26/12/2 + composición genérica europea.
+- **Descartado por el proveedor:** Superpet alimentos (sin información pública).
+- **Bloqueado:** PPVD Canine EN 380 g (proplanvetdirect.com responde 403).
+- **Sin fuente:** Gallina (4, alimento de granja), Mastín Signature (Nutritec no tiene esa línea), proteína de Natural Meat y macros de Cachupín Cachorro.
+- Los ingredientes de N&D Tilapia Adult provienen de la ficha oficial brasileña (farmina.com/br, código 1058) traducidos al español.

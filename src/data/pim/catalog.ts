@@ -374,7 +374,8 @@ const fallbackProducts: Product[] = [
     "moisturePct": 10,
     "originUrl": "https://gepsapetfoods.com/compinches/",
     "description": "Nutrición completa y balanceada para tu mascota con proteínas de origen animal.",
-    "supplier": "Gepsa"
+    "supplier": "Gepsa",
+    "ingredients": "Proteínas de origen animal : harina de carne y hueso vacuno; proteínas de origen vegetal : harina de soja, gluten de maíz; cereales : harina de maíz, harina de trigo, salvado de trigo, salvado de maíz; saborizantes naturales : aceite de pollo, hidrolizado de subproductos vacunos; vitaminas : A, D3, E, K, B1, B2, B3, B5, B6, B9, B12, biotina, colina; minerales : sal, (óxido de zinc, sulfato de cobre, óxido de manganeso, sulfato ferroso, selenito de sodio, iodato de calcio, carbonato de cobalto); carbonato de calcio, fosfato de calcio; aminoácidos esenciales : L-lisina, DL-metionina; antioxidantes: tocoferoles naturales, lecitina, extracto de romero."
   },
   {
     "id": "prod-14",
@@ -401,7 +402,8 @@ const fallbackProducts: Product[] = [
     "moisturePct": 10,
     "originUrl": "https://gepsapetfoods.com/compinches/",
     "description": "Nutrición completa y balanceada para tu mascota con proteínas de origen animal.",
-    "supplier": "Gepsa"
+    "supplier": "Gepsa",
+    "ingredients": "Proteínas de origen animal: harina de pescado, harina de subproductos de pollo, harina de carne y hueso vacuno; proteínas de origen vegetal: harina de soja, gluten de maíz; cereales: harina de maíz, harina de trigo, salvado de trigo, salvado de maíz; saborizantes naturales: aceite de pollo, hidrolizado de subproductos porcinos; fuente natural de omega 3: aceite de pescado; acidulante: ácido fosfórico; vitaminas: A, D3, E, K, B1, B2, B3, B5, B6, B9, B12, biotina. Sal. Colina; minerales: carbonato de calcio, fosfato de calcio, óxido de zinc, sulfato de cobre, óxido de manganeso, sulfato ferroso, selenito de sodio, iodato de calcio, carbonato de cobalto; aminoácidos esenciales: DL-metionina, L-lisina, taurina; antioxidantes: tocoferoles naturales, lecitina, extracto de romero."
   },
   {
     "id": "prod-15",
@@ -427,7 +429,8 @@ const fallbackProducts: Product[] = [
     "fiberPct": 4.5,
     "moisturePct": 10,
     "originUrl": "https://gepsapetfoods.com/ganacan-ganacat/",
-    "supplier": "Gepsa"
+    "supplier": "Gepsa",
+    "ingredients": "Proteínas de origen animal : harina de subproductos de pollo, harina de carne y hueso vacuno, leche en polvo, harina de pescado; p roteínas de origen vegetal : gluten de maíz, soja integral; cereales: arroz, trigo, maíz; s aborizantes naturales : aceite de pollo, hidrolizado de subproductos vacunos, levadura de cerveza; fuente natural de DHA : aceite de pescado; fuente natural de fibras prebióticas : achicoria; vitaminas: A, D3, E, K, B1, B2, B3, B5, B6, B9, B12, biotina. Sal; colina; minerales: óxido de zinc, sulfato de cobre, óxido de manganeso, sulfato ferroso, selenito de sodio, iodato de calcio, carbonato de cobalto; antioxidantes : BHA, BHT."
   },
   {
     "id": "prod-16",
@@ -481,7 +484,8 @@ const fallbackProducts: Product[] = [
     "fiberPct": 4.5,
     "moisturePct": 10,
     "originUrl": "https://gepsapetfoods.com/ganacan-ganacat/",
-    "supplier": "Gepsa"
+    "supplier": "Gepsa",
+    "ingredients": "Proteínas de origen animal : harina de carne y hueso vacuno, harina de subproductos de pollo, harina de pescado; p roteínas de origen vegetal: soja integral, gluten de maíz; cereales: arroz, trigo, maíz, salvado de trigo; s aborizantes naturales: aceite de pollo, hidrolizado de subproductos vacunos; fuente natural de DHA: aceite de pescado; vitaminas: A, D3, E, K, B1, B2, B3, B5, B6, B9, B12, biotina. Sal; colina; minerales: carbonato de calcio, óxido de zinc, sulfato de cobre, óxido de manganeso, sulfato ferroso, selenito de sodio, iodato de calcio, carbonato de cobalto; colorante : marrón; antioxidantes : BHT, BHA."
   },
   {
     "id": "prod-18",
@@ -507,7 +511,8 @@ const fallbackProducts: Product[] = [
     "fiberPct": 4,
     "moisturePct": 10,
     "originUrl": "https://gepsapetfoods.com/ganacan-ganacat/",
-    "supplier": "Gepsa"
+    "supplier": "Gepsa",
+    "ingredients": "Proteínas de origen animal : harina de pescado, harina de subproductos de pollo, harina de carne y hueso vacuno; proteínas de origen vegetal : soja integral, gluten de maíz; cereales: arroz, trigo, maíz, salvado de trigo; saborizantes naturales: aceite de pollo, hidrolizado de subproductos porcinos; fuente natural de DHA : aceite de pescado; v itaminas: A, D3, E, K, B1, B2, B3, B5, B6, B9, B12, biotina. Sal; acidulante: ácido fosfórico. Colina; minerales: carbonato de calcio, óxido de zinc, sulfato de cobre, óxido de manganeso, sulfato ferroso, selenito de sodio, iodato de calcio, carbonato de cobalto; a minoácidos esenciales: DL-metionina, taurina; antioxidantes : BHA, BHT."
   },
   {
     "id": "prod-19",
@@ -533,7 +538,8 @@ const fallbackProducts: Product[] = [
     "fiberPct": 4,
     "moisturePct": 10,
     "originUrl": "https://gepsapetfoods.com/ganacan-ganacat/",
-    "supplier": "Gepsa"
+    "supplier": "Gepsa",
+    "ingredients": "Proteínas de origen animal : harina de pescado, harina de carne y hueso vacuno, harina de subproductos de pollo; proteínas de origen vegetal : soja integral, gluten de maíz; cereales : arroz, trigo, maíz, salvado de trigo; saborizantes naturales: aceite de pollo, hidrolizado de subproductos porcinos; fuente natural de DHA: aceite de pescado; v itaminas: A, D3, E, K, B1, B2, B3, B5, B6, B9, B12, biotina; acidulante: ácido fosfórico; minerales: sal, carbonato de calcio, óxido de zinc, sulfato de cobre, óxido de manganeso, sulfato ferroso, selenito de sodio, iodato de calcio, carbonato de cobalto. Colina; a minoácidos esenciales: DL-metionina, taurina; colorante : marrón; antioxidantes : BHA, BHT."
   },
   {
     "id": "prod-20",
@@ -560,7 +566,8 @@ const fallbackProducts: Product[] = [
     "moisturePct": 10,
     "originUrl": "https://gepsapetfoods.com/magnificos/",
     "description": "Alimento balanceado completo para perros adultos con ingredientes nobles.",
-    "supplier": "Gepsa"
+    "supplier": "Gepsa",
+    "ingredients": "Proteínas de origen animal: harina de carne y hueso vacuno; proteínas de origen vegetal: soja integral, gluten de maíz; cereales: maíz, trigo, salvado de trigo, salvado de maíz; saborizantes naturales: aceite de pollo, hidrolizado de subproductos vacunos; sal; vitaminas: A, D3, E, K, B1, B2, B3, B5, B6, B9, B12, biotina; minerales: carbonato de calcio, óxido de zinc, sulfato de cobre, óxido manganeso, sulfato ferroso, selenito de sodio, iodato de calcio, carbonato de cobalto; colina; aminoácidos esenciales: L-lisina, DL-metionina; antioxidantes: tocoferoles naturales, lecitina, extracto de romero."
   },
   {
     "id": "prod-21",
@@ -586,7 +593,8 @@ const fallbackProducts: Product[] = [
     "fiberPct": 4.5,
     "moisturePct": 10,
     "originUrl": "https://gepsapetfoods.com/odwalla/",
-    "supplier": "Gepsa"
+    "supplier": "Gepsa",
+    "ingredients": "Harina de carne, harina de pollo, maíz, arroz, gluten de maíz, salvado de trigo, expeller de chía (fuente de omega 3 y 6), soja integral, pulpa de remolacha, aceite de pollo, aceite de pescado (fuente de omega 3 y 6), arveja, saborizante de carne, aceite de canola (fuente natural de DHA y omega 9), achicoria (fuente de inulina), microalgas marinas –Schizochytrium powder– (fuente natural de DHA), cloruro de sodio, zanahoria deshidratada, espinaca deshidratada, manzana deshidratada, suplemento de vitaminas (A, D3, E, K, tiamina, riboflavina, piridoxina, B12, ácido fólico, ácido pantoténico, niacina, biotina), cloruro de colina, suplemento de sales minerales (sulfato de zinc, óxido cúprico, óxido manganoso, sulfato ferroso, selenito de sodio, carbonato de cobalto, iodato de calcio), colorantes: dióxido de titanio, tartrazina, antioxidantes: BHT, BHA."
   },
   {
     "id": "prod-22",
@@ -612,7 +620,8 @@ const fallbackProducts: Product[] = [
     "fiberPct": 3,
     "moisturePct": 10,
     "originUrl": "https://gepsapetfoods.com/odwalla/",
-    "supplier": "Gepsa"
+    "supplier": "Gepsa",
+    "ingredients": "Harina de carne, harina de pollo, maíz, arroz, gluten de maíz, salvado de trigo, soja integral, pulpa de remolacha, aceite de pollo, leche en polvo, aceite de pescado (fuente de omega 3 y 6), arveja, saborizante de carne, aceite de canola (fuente natural de DHA y omega 9), microalgas marinas –Schizochytrium powder– (fuente natural de DHA), manzana deshidratada, achicoria (fuente de inulina), cloruro de sodio, zanahoria deshidratada, espinaca deshidratada, suplemento de vitaminas (A, D3, E, K, tiamina, riboflavina, piridoxina, B12, ácido fólico, ácido pantoténico, niacina, biotina), cloruro de colina, suplemento de sales minerales (sulfato de zinc, óxido cúprico, óxido manganoso, sulfato ferroso, selenito de sodio, carbonato de cobalto, iodato de calcio), colorantes: marrón, dióxido de titanio, antioxidantes: BHT, BHA."
   },
   {
     "id": "prod-23",
@@ -638,7 +647,8 @@ const fallbackProducts: Product[] = [
     "fiberPct": 4.5,
     "moisturePct": 10,
     "originUrl": "https://gepsapetfoods.com/odwalla/",
-    "supplier": "Gepsa"
+    "supplier": "Gepsa",
+    "ingredients": "Harina de carne, harina de pollo, maíz, arroz, gluten de maíz, salvado de trigo, expeller de chía (fuente de omega 3 y 6), soja integral, pulpa de remolacha, aceite de pollo, aceite de pescado (fuente de omega 3 y 6), arveja, saborizante de carne, aceite de canola (fuente natural de DHA y omega 9), achicoria (fuente de inulina), microalgas marinas –Schizochytrium powder– (fuente natural de DHA), cloruro de sodio, zanahoria deshidratada, espinaca deshidratada, manzana deshidratada, suplemento de vitaminas (A, D3, E, K, tiamina, riboflavina, piridoxina, B12, ácido fólico, ácido pantoténico, niacina, biotina), cloruro de colina, suplemento de sales minerales (sulfato de zinc, óxido cúprico, óxido manganoso, sulfato ferroso, selenito de sodio, carbonato de cobalto, iodato de calcio), colorantes: dióxido de titanio, tartrazina, antioxidantes: BHT, BHA."
   },
   {
     "id": "prod-24",
@@ -664,7 +674,8 @@ const fallbackProducts: Product[] = [
     "fiberPct": 3,
     "moisturePct": 10,
     "originUrl": "https://gepsapetfoods.com/odwalla/",
-    "supplier": "Gepsa"
+    "supplier": "Gepsa",
+    "ingredients": "Harina de carne, harina de pollo, maíz, arroz, gluten de maíz, salvado de trigo, soja integral, pulpa de remolacha, aceite de pollo, leche en polvo, aceite de pescado (fuente de omega 3 y 6), arveja, saborizante de carne, aceite de canola (fuente natural de DHA y omega 9), microalgas marinas –Schizochytrium powder– (fuente natural de DHA), manzana deshidratada, achicoria (fuente de inulina), cloruro de sodio, zanahoria deshidratada, espinaca deshidratada, suplemento de vitaminas (A, D3, E, K, tiamina, riboflavina, piridoxina, B12, ácido fólico, ácido pantoténico, niacina, biotina), cloruro de colina, suplemento de sales minerales (sulfato de zinc, óxido cúprico, óxido manganoso, sulfato ferroso, selenito de sodio, carbonato de cobalto, iodato de calcio), colorantes: marrón, dióxido de titanio, antioxidantes: BHT, BHA."
   },
   {
     "id": "prod-25",
@@ -691,7 +702,8 @@ const fallbackProducts: Product[] = [
     "moisturePct": 10,
     "originUrl": "https://gepsapetfoods.com/zimpi/",
     "description": "Alimento balanceado completo para perros.",
-    "supplier": "Gepsa"
+    "supplier": "Gepsa",
+    "ingredients": "Proteínas de origen animal : harina de carne y hueso vacuno; proteínas de origen vegetal : soja integral; cereales : arroz, maíz, trigo; saborizantes naturales : hidrolizado de subproductos vacunos, aceite de pollo; vitaminas : A, D3, E, K, B1, B2, B3, B5, B6, B9, B12, biotina. Sal; colina; minerales : óxido de zinc, sulfato de cobre, óxido de manganeso, sulfato ferroso, selenito de sodio, iodato de calcio, carbonato de cobalto; antioxidantes : tocoferoles naturales, lecitina, extracto de romero."
   },
   {
     "id": "prod-26",
@@ -937,7 +949,12 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://www.allendeshnos.cl/producto/cachupin-adulto-pollo-y-arroz-9-kg/",
     "description": "El Alimento para perro adulto sabor pollo y arroz Cachupín es lo que tu perro necesita para mantenerse fuerte, sano y repleto de energía para disfrutar de los días de juegos en el jardín o los paseos al aire libre. Ofrece una nutrición completa y balanceada manteniendo su condición física, sin sentirse limitado por la edad, ya que es ideal para perros adultos. El Alimento para perro adulto sabor pollo y arroz Cachupín es lo que tu perro necesita para mantenerse fuerte, sano y repleto de energía para disfrutar de los días de juegos en el jardín o los paseos al aire libre. Ofrece una nutrición completa y balanceada manteniendo su condición física, sin sentirse limitado por la edad, ya que es ideal para perros adultos.",
-    "supplier": "AllendesHnos"
+    "supplier": "AllendesHnos",
+    "proteinPct": 20,
+    "fatPct": 8,
+    "fiberPct": 4.5,
+    "moisturePct": 10,
+    "ingredients": "Maíz, subproducto de cereal, harina de subproducto animal, trigo, harina de soya, grasa de bovino (estabilizada con BHA/BHT), hidrolizado de hígado, carbonato de calcio, cloruro de colina, propionato de calcio y sodio, colorantes autorizados, DL-alfa tocoferol acetato (fuente de vitamina E), cloruro de potasio, sulfato de zinc, sulfato ferroso, cloruro de sodio, niacina, sulfato de manganeso, pantotenato de calcio, suplemento de riboflavina (vitamina B2), suplemento de vitamina A, sulfato de cobre, mononitrato de tiamina, suplemento de hidrocloruro de piridoxina (vitamina B6), suplemento de vitamina D3, bisulfito de menadiona, ácido fólico, yodato de calcio, D-biotina, suplemento de vitamina B12, selenito de sodio."
   },
   {
     "id": "prod-35",
@@ -953,8 +970,12 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "lavender",
-    "image": "/five-mascotas/alimento-3.svg",
-    "featured": false
+    "image": "/products/cachupin-cachorro.png",
+    "featured": false,
+    "ingredients": "Maíz, harina de carne y hueso (vacuno, cerdo), harinilla de cereal (trigo, arroz), harina de subproductos de ave, harina de soya, aceite de ave (estabilizado con antioxidantes BHT/BHA), gluten de maíz, hidrolizado de hígado (ave, bovino), premix vitamínico mineral (potasio, magnesio, vitamina A, colina, vitamina D3, zinc, vitamina E, hierro, niacina, vitamina B5, cobre, vitamina B2, manganeso, vitamina B1, vitamina B6, vitamina K3, ácido fólico, yodo, vitamina H, selenio, vitamina B12), cloruro de sodio, zeolita, antifúngico autorizado, colorante autorizado, antioxidantes (BHT/BHA).",
+    "images": [
+      "/products/cachupin-cachorro.png"
+    ]
   },
   {
     "id": "prod-36",
@@ -977,7 +998,12 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://www.allendeshnos.cl/producto/guau-forte-x-25-kgs/",
     "description": "GUAU FORTE, ALIMENTO PARA PERROS EN FORMATO DE  25 KILOS GUAU FORTE, ALIMENTO PARA PERROS EN FORMATO DE  25 KILOS",
-    "supplier": "AllendesHnos"
+    "supplier": "AllendesHnos",
+    "proteinPct": 18,
+    "fatPct": 7,
+    "fiberPct": 7,
+    "moisturePct": 10,
+    "ingredients": "Harina de trigo, maíz grano molido, harina de carne, harinilla de arroz, subproductos del maíz, aceite de ave, hidrolizado de hígado, sal, zeolitas, premix de vitaminas y minerales (vitaminas A, D3, E, B1, B6, B12, pantotenato de calcio, niacina, ácido fólico, cloruro de colina vegetal, sulfato de cobre, óxido de zinc, zinc orgánico, selenio de sodio, selenio orgánico, yodato de potasio), antioxidantes."
   },
   {
     "id": "prod-37",
@@ -1185,7 +1211,12 @@ const fallbackProducts: Product[] = [
     "badge": "",
     "color": "violet",
     "image": "/five-mascotas/alimento-0.svg",
-    "featured": false
+    "featured": false,
+    "proteinPct": 21,
+    "fatPct": 8,
+    "fiberPct": 5,
+    "moisturePct": 12,
+    "ingredients": "Harina de carne, harina de pollo, cereales (maíz, trigo), grasa animal estabilizada, pulpa de remolacha, minerales (zinc, hierro, calcio, fósforo), vitaminas (A, D3, E, complejo B) y antioxidantes naturales."
   },
   {
     "id": "prod-45",
@@ -1363,8 +1394,16 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "lavender",
-    "image": "/five-mascotas/alimento-3.svg",
-    "featured": false
+    "image": "/products/mastin-senior.png",
+    "featured": false,
+    "proteinPct": 25,
+    "fatPct": 6,
+    "fiberPct": 5,
+    "moisturePct": 12,
+    "ingredients": "Maíz grano, harinas de carne de ave, vacuno y porcino, almidón gelificado de maíz, afrecho de maíz, tercerías de trigo, aceite de ave y cerdo, aceite de salmón, harina de salmón, levadura de cerveza, saborizantes naturales, antioxidantes, colorantes autorizados, zeolitas, suplementos vitamínicos y minerales completos, fortificado con vitamina E y C, condroitin sulfato, glucosaminas, hexametafosfatos, coceta, probioticos ​",
+    "images": [
+      "/products/mastin-senior.png"
+    ]
   },
   {
     "id": "prod-52",
@@ -1397,8 +1436,16 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "green",
-    "image": "/five-mascotas/alimento-1.svg",
-    "featured": false
+    "image": "/products/mastin-raza-pequena.png",
+    "featured": false,
+    "proteinPct": 23,
+    "fatPct": 12,
+    "fiberPct": 4,
+    "moisturePct": 12,
+    "ingredients": "Harina de maíz, harina de carne y hueso de vacuno, Harina de subproductos de pollo y/o cerdo salvado de trigo, harina de tercera de trigo, harinas gelificadas de cereales, gluten de maíz, aceite de pollo, aceite de salmón, harina de salmón, levadura de cerveza, saborizantes naturales, antioxidantes, colorantes autorizados, zeolitas, suplementos vitamínicos y minerales completos. ​",
+    "images": [
+      "/products/mastin-raza-pequena.png"
+    ]
   },
   {
     "id": "prod-54",
@@ -1414,8 +1461,16 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "peach",
-    "image": "/five-mascotas/alimento-2.svg",
-    "featured": false
+    "image": "/products/pionero-perro-adulto.png",
+    "featured": false,
+    "proteinPct": 26,
+    "fatPct": 14,
+    "fiberPct": 3,
+    "moisturePct": 10,
+    "ingredients": "Harina de Carne de Ave y/o Cerdo, Maíz, Arroz y/o Salvado de Arroz, Harina de Maíz, Harina de Cordero, Aceite de Ave y Cerdo, Hidrolizado de Ave y Cerdo, Levadura de Cerveza, Zeolitas, Harina de Salmón, Pomasa de Tomate, Aceite de Salmón, Sal, Premix Vitamínico (A, D3, E, K3, B1, B6, B12, Ácido Fólico, Niacina, Pantotenato de Calcio), Cloruro de Colina, Premix Mineral (Mn, Cu, I, Zn, Se, Fe, Ca, Na, S), Propionato de Calcio, Extracto de Romero y Tocoferoles, Vitamina C, Vitamina E, Extracto de Yuca y Quillay.",
+    "images": [
+      "/products/pionero-perro-adulto.png"
+    ]
   },
   {
     "id": "prod-55",
@@ -1463,10 +1518,14 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/canito-canito-perro-adulto.png"
     ],
-    "ingredients": "como la carne de pollo y huevo que potencian el sabor y la nutrición que entrega el alimento. PROTEÍNA DE ALTA CALIDAD: El huevo de gallina de libre pastoreo es la fuente perfecta para garantizar una digestión adecuada, desarrollo muscular y crecimiento de tu perro. MEJORA LA SALUD DENTAL: Con la incorporación de Hexametafosfato y Vitamina C, que reducen la placa bacteriana, previenen el mal aliento y la acumulación de sarro. FECAS FIRMES Y MENOS OLOR: Con Yucca schidigera y bacterias lácticas que controlan las concentraciones de amoníaco y otros gases, reduciendo el olor y mejorando la consistencia de las fecas. MEJORA LA SALUD INTESTINAL: Prebióticos, extracto de mananos (MOS) que mejora la resistencia de los perros a infecciones y ayuda al buen funcionamiento intestinal y a una buena salud general. PIEL SANA Y PELAJE BRILLANTE: Los",
+    "ingredients": "Cereales (arroz, maíz y/o trigo), afrechillo de trigo, harina de carne y hueso, poroto soya tostado, afrecho de soya, aceite de pollo, conchuela molida, hidrolizado de pollo, sal, huevo líquido, linaza, colorantes autorizados. Minerales: calcio, fósforo, magnesio, potasio, sodio, zinc, cobre, manganeso, hierro, yodo, selenio. Vitaminas: A, D3, E, B1, B6, B2, K, B12, cloruro de colina, niacina, pantotenato de calcio, ácido fólico, biotina.",
     "originUrl": "https://www.allendeshnos.cl/producto/can-adulto-razas-pequenas-carne-y-cereales-18kg/",
     "description": "Explora la vanguardia en cuidado canino con nuestra nueva gama de productos, diseñada para fusionar nutrición premium y accesibilidad. DELICIOSOS BOCADOS: El mejor sabor para tu perro, la mejor palatabilidad, con ingredientes como la carne de pollo y huevo que potencian el sabor y la nutrición que entrega el alimento. PROTEÍNA DE ALTA CALIDAD: El huevo de gallina de libre pastoreo es la fuente perfecta para garantizar una digestión adecuada, desarrollo muscular y crecimiento de tu perro. MEJORA LA SALUD DENTAL: Con la incorporación de Hexametafosfato y Vitamina C, que reducen la placa bacteriana, previenen el mal aliento y la acumulación de sarro. FECAS FIRMES Y MENOS OLOR: Con Yucca schidigera y bacterias lácticas que controlan las concentraciones de amoníaco y otros gases, reduciendo el olor y mejorando la consistencia de las fecas. MEJORA LA SALUD INTESTINAL: Prebióticos, extracto de mananos (MOS) que mejora la resistencia de los perros a infecciones y ayuda al buen funcionamiento intestinal y a una buena salud general. PIEL SANA Y PELAJE BRILLANTE: Los beneficios de Omega 3, Omega 6 y el aporte de zinc, se traducen en un pelaje más brillante, sano y sin signos de dermatitis en tu perro. Explora la vanguardia en cuidado canino con nuestra nueva gama de productos, diseñada para fusionar nutrición premium y accesibilidad.",
-    "supplier": "AllendesHnos"
+    "supplier": "AllendesHnos",
+    "proteinPct": 20,
+    "fatPct": 7,
+    "fiberPct": 4.5,
+    "moisturePct": 12
   },
   {
     "id": "prod-57",
@@ -1657,7 +1716,12 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://www.allendeshnos.cl/producto/sabrocat-8kg/",
     "description": "Sabrocat es un alimento balanceado que satisface los requerimientos nutricionales de su gato.  Su fórmula contiene todos los nutrientes: proteínas, grasa, carbohidratos, vitaminas y minerales necesarios para que su mascota se mantenga saludable.",
-    "supplier": "AllendesHnos"
+    "supplier": "AllendesHnos",
+    "proteinPct": 26,
+    "fatPct": 9,
+    "fiberPct": 4,
+    "moisturePct": 12,
+    "ingredients": "Grano de Maíz, harina de carne y hueso, trigo, harina de subproducto de pollo, afrecho de trigo, conchilla molida, hidrolizado de hígado y sal. Vitaminas: A, D3, E, B1, B6, B2, K, B12, cloruro de colina, Niacina, Pantotenato de Calcio, Ácido Fólico y Biotina. Minerales: Calcio, fósforo, magnesio, potasio, sodio, zinc, cobre, manganeso, hierro, yodo, selenio y cobalto."
   },
   {
     "id": "prod-64",
@@ -1680,7 +1744,12 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://www.allendeshnos.cl/producto/sabrocat-8kg/",
     "description": "Sabrocat es un alimento balanceado que satisface los requerimientos nutricionales de su gato.  Su fórmula contiene todos los nutrientes: proteínas, grasa, carbohidratos, vitaminas y minerales necesarios para que su mascota se mantenga saludable.",
-    "supplier": "AllendesHnos"
+    "supplier": "AllendesHnos",
+    "proteinPct": 26,
+    "fatPct": 9,
+    "fiberPct": 4,
+    "moisturePct": 12,
+    "ingredients": "Grano de Maíz, harina de carne y hueso, trigo, harina de subproducto de pollo, afrecho de trigo, conchilla molida, hidrolizado de hígado y sal. Vitaminas: A, D3, E, B1, B6, B2, K, B12, cloruro de colina, Niacina, Pantotenato de Calcio, Ácido Fólico y Biotina. Minerales: Calcio, fósforo, magnesio, potasio, sodio, zinc, cobre, manganeso, hierro, yodo, selenio y cobalto."
   },
   {
     "id": "prod-65",
@@ -1703,7 +1772,12 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://www.allendeshnos.cl/producto/sabrokan-cachorro-8kg/",
     "description": "Sabrokan Cachorro es un alimento completo para perros hasta 1 año de edad, que contiene todos los nutrientes que tu perro necesita para mantenerse en buena forma. Sabrokan Cachorro es un alimento completo para perros hasta 1 año de edad, que contiene todos los nutrientes que tu perro necesita para mantenerse en buena forma.",
-    "supplier": "AllendesHnos"
+    "supplier": "AllendesHnos",
+    "proteinPct": 20,
+    "fatPct": 7,
+    "fiberPct": 4.5,
+    "moisturePct": 12,
+    "ingredients": "Cereales (arroz, maíz y/o trigo), afrechillo de trigo, harina de carne y hueso, poroto soya tostado, afrecho de soya, aceite de pollo, conchuela molida, hidrolizado de pollo, sal, huevo líquido, linaza, colorantes autorizados. Minerales: calcio, fósforo, magnesio, potasio, sodio, zinc, cobre, manganeso, hierro, yodo, selenio. Vitaminas: A, D3, E, B1, B6, B2, K, B12, cloruro de colina, niacina, pantotenato de calcio, ácido fólico, biotina."
   },
   {
     "id": "prod-66",
@@ -1719,14 +1793,19 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "peach",
-    "image": "/products/top-one-top-one-adulto.png",
+    "image": "/products/top-one-top-one-adulto.webp",
     "featured": false,
     "images": [
-      "/products/top-one-top-one-adulto.png"
+      "/products/top-one-top-one-adulto.webp"
     ],
     "originUrl": "https://www.allendeshnos.cl/producto/top-one-perro-adulto-raza-pequena-9kg/",
     "description": "De proteína para mantener tejidos óseos y musculares sanos Con Pollo Favorece el sistema inmune Sistema digestivo saludable Piel sana y pelaje brillante Con omega 3 y 6, ácidos grasos esenciales, que benefician un pelaje sano, entregando elasticidad a la piel de tu perro. Gracias a la adición de extracto de yucca y un adecuado balance de zeolita, se generan heces más firmes y con menos olor.",
-    "supplier": "AllendesHnos"
+    "supplier": "AllendesHnos",
+    "ingredients": "Harina de subproductos de pollo, trigo, maiz, arroz, harina de soya, harina de carne y hueso bovino, grasa animal (bovino y/o cerdo y/o pollo), harina de pescado, hidrolizado liquido de subproductos animales (bovino y/o cerdo y/o pollo), zeolita natural, colorante caramelo natural, aceite de linaza, propionato de calcio, inulina (fuente de fructo-oligosacáridos), cloruro de colina, cloruro de potasio, levadura hidrolizada (fuente de beta-glucanos y manano-oligosacáridos), antioxidantes, glucosamina, yucca schidigera y/o quillaja saponaria, antioxidantes biológicos. Vitaminas: A, D3. E, C, B1, B2, niacina, pantotenato de calcio, piridoxina, ácido fólico, cianocobalamina. Minerales: Oxido de zinc, sulfato de cobre, óxido de manganeso, yoduro de potasio, selenito de sodio.Eventuales sustitutos: Triticale y/o sorgo, gluten de maiz, harina de carne y hueso de cerdo, harina de subproductos de pavo, harina de salmón.",
+    "proteinPct": 26,
+    "fatPct": 8,
+    "fiberPct": 3,
+    "moisturePct": 12
   },
   {
     "id": "prod-67",
@@ -1742,14 +1821,19 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "lavender",
-    "image": "/products/top-one-top-one-adulto.png",
+    "image": "/products/top-one-top-one-adulto.webp",
     "featured": false,
     "images": [
-      "/products/top-one-top-one-adulto.png"
+      "/products/top-one-top-one-adulto.webp"
     ],
     "originUrl": "https://www.allendeshnos.cl/producto/top-one-perro-adulto-raza-pequena-9kg/",
     "description": "De proteína para mantener tejidos óseos y musculares sanos Con Pollo Favorece el sistema inmune Sistema digestivo saludable Piel sana y pelaje brillante Con omega 3 y 6, ácidos grasos esenciales, que benefician un pelaje sano, entregando elasticidad a la piel de tu perro. Gracias a la adición de extracto de yucca y un adecuado balance de zeolita, se generan heces más firmes y con menos olor.",
-    "supplier": "AllendesHnos"
+    "supplier": "AllendesHnos",
+    "ingredients": "Harina de subproductos de pollo, trigo, maiz, arroz, harina de soya, harina de carne y hueso bovino, grasa animal (bovino y/o cerdo y/o pollo), harina de pescado, hidrolizado liquido de subproductos animales (bovino y/o cerdo y/o pollo), zeolita natural, colorante caramelo natural, aceite de linaza, propionato de calcio, inulina (fuente de fructo-oligosacáridos), cloruro de colina, cloruro de potasio, levadura hidrolizada (fuente de beta-glucanos y manano-oligosacáridos), antioxidantes, glucosamina, yucca schidigera y/o quillaja saponaria, antioxidantes biológicos. Vitaminas: A, D3. E, C, B1, B2, niacina, pantotenato de calcio, piridoxina, ácido fólico, cianocobalamina. Minerales: Oxido de zinc, sulfato de cobre, óxido de manganeso, yoduro de potasio, selenito de sodio.Eventuales sustitutos: Triticale y/o sorgo, gluten de maiz, harina de carne y hueso de cerdo, harina de subproductos de pavo, harina de salmón.",
+    "proteinPct": 26,
+    "fatPct": 8,
+    "fiberPct": 3,
+    "moisturePct": 12
   },
   {
     "id": "prod-68",
@@ -1765,14 +1849,19 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "violet",
-    "image": "/products/top-one-top-one-raza-pequena.png",
+    "image": "/products/top-one-top-one-raza-pequena.webp",
     "featured": false,
     "images": [
-      "/products/top-one-top-one-raza-pequena.png"
+      "/products/top-one-top-one-raza-pequena.webp"
     ],
     "originUrl": "https://www.allendeshnos.cl/producto/top-one-perro-adulto-raza-pequena-9kg/",
     "description": "De proteína para mantener tejidos óseos y musculares sanos Con Pollo Favorece el sistema inmune Sistema digestivo saludable Piel sana y pelaje brillante Con omega 3 y 6, ácidos grasos esenciales, que benefician un pelaje sano, entregando elasticidad a la piel de tu perro. Gracias a la adición de extracto de yucca y un adecuado balance de zeolita, se generan heces más firmes y con menos olor.",
-    "supplier": "AllendesHnos"
+    "supplier": "AllendesHnos",
+    "ingredients": "Harina de subproductos de pollo, trigo, maiz, arroz, harina de soya, harina de carne y hueso bovino, grasa animal (bovino y/o cerdo y/o pollo), harina de pescado, hidrolizado liquido de subproductos animales (bovino y/o cerdo y/o pollo), zeolita natural, colorante caramelo natural, aceite de linaza, propionato de calcio, inulina (fuente de fructo-oligosacáridos), cloruro de colina, cloruro de potasio, levadura hidrolizada (fuente de beta-glucanos y manano-oligosacáridos), antioxidantes, glucosamina, yucca schidigera y/o quillaja saponaria, antioxidantes biológicos. Vitaminas: A, D3. E, C, B1, B2, niacina, pantotenato de calcio, piridoxina, ácido fólico, cianocobalamina. Minerales: Oxido de zinc, sulfato de cobre, óxido de manganeso, yoduro de potasio, selenito de sodio.Eventuales sustitutos: Triticale y/o sorgo, gluten de maiz, harina de carne y hueso de cerdo, harina de subproductos de pavo, harina de salmón.",
+    "proteinPct": 26,
+    "fatPct": 8,
+    "fiberPct": 3,
+    "moisturePct": 12
   },
   {
     "id": "prod-69",
@@ -1788,14 +1877,19 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "green",
-    "image": "/products/top-one-top-one-cachorro.png",
+    "image": "/products/top-one-top-one-cachorro.webp",
     "featured": false,
     "images": [
-      "/products/top-one-top-one-cachorro.png"
+      "/products/top-one-top-one-cachorro.webp"
     ],
     "originUrl": "https://www.allendeshnos.cl/producto/top-one-perro-adulto-raza-pequena-9kg/",
     "description": "De proteína para mantener tejidos óseos y musculares sanos Con Pollo Favorece el sistema inmune Sistema digestivo saludable Piel sana y pelaje brillante Con omega 3 y 6, ácidos grasos esenciales, que benefician un pelaje sano, entregando elasticidad a la piel de tu perro. Gracias a la adición de extracto de yucca y un adecuado balance de zeolita, se generan heces más firmes y con menos olor.",
-    "supplier": "AllendesHnos"
+    "supplier": "AllendesHnos",
+    "ingredients": "Harina de subproductos de pollo, trigo, maíz, harina de soya, arroz, harina de pescado, grasa animal (bovino y/o cerdo y/o pollo), hidrolizado líquido de subproductos animales (bovino y/o cerdo y/o pollo), zeolita natural, aceite de pescado, colorante caramelo natural, cloruro de sodio, propionato de calcio, inulina (fuente de fructo-oligosacáridos), cloruro de colina, cloruro de potasio, levadura hidrolizada (fuente de beta-glucanos y manano-oligosacáridos), antioxidantes, glucosamina, yucca schidigera y/o quillaja saponaria, antioxidantes biológicos. Vitaminas: A, D3, E, C, B1, B2, niacina, pantotenato de calcio, piridoxina, ácido fólico, cianocobalamina. Minerales: Oxido de zinc, sulfato de cobre, óxido de manganeso, yoduro de potasio, selenito de sodio. Eventuales sustitutos: Triticale y/o sorgo, gluten de maíz, harina de carne y hueso de cerdo, harina de subproductos de pavo, harina de salmón.",
+    "proteinPct": 29,
+    "fatPct": 10,
+    "fiberPct": 3,
+    "moisturePct": 12
   },
   {
     "id": "prod-70",
@@ -1811,14 +1905,19 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "peach",
-    "image": "/products/top-one-top-one-gato.png",
+    "image": "/products/top-one-top-one-gato.webp",
     "featured": false,
     "images": [
-      "/products/top-one-top-one-gato.png"
+      "/products/top-one-top-one-gato.webp"
     ],
     "originUrl": "https://www.allendeshnos.cl/producto/top-one-perro-adulto-raza-pequena-9kg/",
     "description": "De proteína para mantener tejidos óseos y musculares sanos Con Pollo Favorece el sistema inmune Sistema digestivo saludable Piel sana y pelaje brillante Con omega 3 y 6, ácidos grasos esenciales, que benefician un pelaje sano, entregando elasticidad a la piel de tu perro. Gracias a la adición de extracto de yucca y un adecuado balance de zeolita, se generan heces más firmes y con menos olor.",
-    "supplier": "AllendesHnos"
+    "supplier": "AllendesHnos",
+    "ingredients": "Harina de subproductos de pollo, maiz, trigo, gluten de maiz, grasa animal (bovino y/o cerdo y/o pollo), harina de salmón, hidrolizado liquido de subproductos animales (bovino y/o cerdo y/o pollo), cloruro de potasio, inulina (fuente de fructo-oligosacáridos), zeolita natural, cloruro de colina, colorante caramelo natural, cloruro de sodio, aceite de linaza, ácido fosfórico, taurina, metionina, lisina, levadura hidrolizada (fuente de beta-glucanos y manano-oligosacáridos), antioxidantes, extracto de yucca schidigera y/o quillaja saponaria, antioxidantes biológicos. Vitaminas: A, D3, E, K3. C, B1, B2, niacina, pantotenato de calcio, piridoxina, ácido fólico, cianocobalamina, biotina. Minerales: Sulfato de zinc, sulfato de cobre, sulfato de manganeso, yodato de calcio, selenito de sodio. Eventuales sustitutos: Triticale y/o sorgo, y/o arroz, harina de soya, harina de subproductos de pavo, harina de pescado.",
+    "proteinPct": 31,
+    "fatPct": 12,
+    "fiberPct": 2.5,
+    "moisturePct": 12
   },
   {
     "id": "prod-71",
@@ -2470,7 +2569,7 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/natural-meat-natural-meat-perro-adulto.jpg"
     ],
-    "ingredients": "{ \"@context\": \"https://schema.org/\", \"@type\": \"Product\", \"name\": \"NATURAL MEAT PERROS ADULTOS 15 KG +2 GRATIS\", \"description\": \"* Formula innovadora con Carne, frutas y verduras * Antioxidantes para mayor longevidad * Probioticos para la salud digestiva * Enzimas proteoliticas para mayor digestibilidad de las proteinas aportadas por la piña y la papaya\", \"category\": \"Alimento para Perros\", \"image\" :\"https://www.gorchen.cl/3-home_default/natural-meat-perros-adultos-15-kg-2-gratis.jpg\", \"sku\": \"2.20.6\", \"mpn\": \"2.20.6\" , \"brand\": { \"@type\": \"Brand\", \"name\": \"NATURAL MEAT\" } , \"weight\": { \"@context\": \"https://schema.org\", \"@type\": \"QuantitativeValue\", \"value\": \"17.000000\", \"unitCode\": \"kg\" } }",
+    "ingredients": "Trigo, harina de pollo, gluten de maíz, germen de maíz, arveja, arroz, harina de carne, aceite de pollo, pulpa de remolacha, levadura de cerveza, suero de queso en polvo, hidrolizado proteico de pollo, aceite de pescado, zeolita, huevo en polvo, plasma bovino en polvo, sal, arándano deshidratado, ananá deshidratada, papaya deshidratada, zanahoria deshidratada, pulpa de tomate desecada, yogurt entero en polvo, extracto de yucca schidígera, propionato de calcio, ácido propiónico, BHT, BHA. Vitaminas: A, B1, B2, B6, B12, ácido pantoténico, ácido fólico, biotina, metionina, cloruro de colina. Minerales: hierro, manganeso, cobre, zinc, yodo y selenio.",
     "originUrl": "https://www.gorchen.cl/alimento-para-perros/3-natural-meat-perros-cachorros-15-kg.html",
     "description": "* Formula innovadora con Carne, frutas y verduras * Antioxidantes para mayor longevidad * Probioticos para la salud digestiva * Enzimas proteoliticas para mayor digestibilidad de las proteinas aportadas por la piña y la papaya",
     "supplier": "Gorchen"
@@ -2954,7 +3053,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/331-bavaro-force-18-kgs-perro-adulto-cachorro-alto-rendimiento.html",
     "description": "Alimento de mantención para perros adultos y cachorros desde los 2 meses de edad. Por su alto contenido energetico Bavaro Force es ideal para perros con alta exigencia de energía. No contiene saborizantes, conservantes ni preservantes artificiales, soya ni ingredientes modificados geneticamente. Calidad Alemana.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 28,
+    "fatPct": 16,
+    "fiberPct": 2,
+    "ingredients": "Alimento completo para perros en crecimiento y adultos. Composición: cereales; carne y subproductos animales; aceites y grasas; subproductos vegetales; minerales."
   },
   {
     "id": "prod-117",
@@ -2977,7 +3080,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/329-bavaro-task-18-kgs-perro-adulto-actividad-moderada.html",
     "description": "Alimento de mantención para perros adultos. Desarrollado para perros con ligera demanda energética. No contiene saborizantes, conservantes, preservantes artificiales, soya ni ingredientes modificados geneticamente. Calidad Alemana.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 23,
+    "fatPct": 9,
+    "fiberPct": 2.7,
+    "ingredients": "Alimento completo para perros adultos. Composición: cereales; carne y subproductos animales; aceites y grasas; subproductos vegetales; minerales."
   },
   {
     "id": "prod-118",
@@ -3000,7 +3107,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/330-bavaro-work-18-kgs-pero-adulto-actividad-moderada-a-alta.html",
     "description": "Alimento de mantención para perros adultos. Por su alto contenido energetico Bavaro Work es ideal para perros con actividad física normal o con ligera demanda energética . No contiene saborizante, conservantes, preservantes artificiales, sin soya ni ingredientes modificados geneticamente. Calidad Alemana.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 26,
+    "fatPct": 12,
+    "fiberPct": 2,
+    "ingredients": "Alimento completo para perros adultos. Composición: cereales; carne y subproductos animales; aceites y grasas; subproductos vegetales; minerales."
   },
   {
     "id": "prod-119",
@@ -3605,7 +3716,11 @@ const fallbackProducts: Product[] = [
     ],
     "originUrl": "https://cooprinsem.cl/mascotas/308-josera-miniwell-45-kg-5x900-gr-perro-adulto-raza-pequena.html",
     "description": "Alimento Super Premium libre de gluten, especial para perros adultos de razas pequeñas. Pequeñas y deliciosas croquetas a base de carne deshidratada  de aves de corral  combinado con los mejores ingredientes, ofrece el máximo disfrute y otorga una nutrición óptima y saludable. Con valiosos acidos grasos y biotina para una piel sana y pelaje brillante. Contiene Tripolifosfato de sodio que ayuda a reducir la  formacion de sarro dental. No contiene saborizante, conservantes ni preservantes artificiales, sin trigo, soja, azúcares o productos lácteos añadidos. Producto libre de BHT/Etoxiquinas. Calidad Alemana.",
-    "supplier": "Cooprinsem"
+    "supplier": "Cooprinsem",
+    "proteinPct": 25,
+    "fatPct": 17,
+    "fiberPct": 3,
+    "ingredients": "proteína de ave de corral deshidratada 26,5 % (de la cual pollo 40,0 %), harina de guisante, batata deshidratada 20%, grasas de aves, pulpa de remolacha, harina de algarroba, proteína de ave de corral hidrolizada, levaduras, sustancias minerales, fibra de manzana, polvo de achicoria, carne deshidratada de mejillón verde de Nueva Zelanda (Perna canaliculus)."
   },
   {
     "id": "prod-142",
@@ -4116,13 +4231,14 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/purina-purina-cat-chow-adulto-carne.png"
     ],
-    "proteinPct": 21,
-    "fatPct": 10,
+    "proteinPct": 31,
+    "fatPct": 11,
     "fiberPct": 3.5,
     "moisturePct": 12,
     "originUrl": "https://purina.cl/bonelo/productos/carne-adulto-todos-los-tamanos",
     "description": "Bonelo para perros adultos en mantenimiento, nutrición completa y balanceada, sin colorantes, para mantener a tu perro saludable y en condición ideal.",
-    "supplier": "Purina"
+    "supplier": "Purina",
+    "ingredients": "Maíz, harina de soya, harina de subproductos de pollo, harina de carne y hueso de cerdo, aceite de pollo, harina de plumas de pollo, harina de carne y hueso bovino ,hidrolizado de hígado de pollo y/o cerdo con TSPP en polvo, gluten de maíz, cloruro de sodio, ácido fosfórico, trigo, colorante natural caramelo, inulina, cloruro de colina, metionina, premezcla minerales quelados, cloruro de potasio,suplementos vitamínicos antioxidantes, vitamina E, taurina, arroz, levadura de cerveza (Saccharomyces cerevisiae), arvejas deshidratadas, vitamina C, colorante natural rojo carmín,carbonato de calcio, tomate en polvo, harina de alga (Schizochytrium sp), L-lisina. Eventuales sustitutos: Sorgo, salvado de trigo, harina de carne y hueso animal (bovino y cerdo), harina de subproductos de pavo, harina de pescado, grasa animal (bovino y cerdo), sebo bovino, bisulfato de sodio, fibra de soya, celulosa, pulpa de remolacha, fosfato de calcio, espinaca deshidratada, zanahorias deshidratadas, harina de salmón, leche bovina en polvo."
   },
   {
     "id": "prod-161",
@@ -4143,13 +4259,14 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/purina-purina-cat-chow-adulto-carne.png"
     ],
-    "proteinPct": 21,
-    "fatPct": 10,
+    "proteinPct": 31,
+    "fatPct": 11,
     "fiberPct": 3.5,
     "moisturePct": 12,
     "originUrl": "https://purina.cl/bonelo/productos/carne-adulto-todos-los-tamanos",
     "description": "Bonelo para perros adultos en mantenimiento, nutrición completa y balanceada, sin colorantes, para mantener a tu perro saludable y en condición ideal.",
-    "supplier": "Purina"
+    "supplier": "Purina",
+    "ingredients": "Maíz, harina de soya, harina de subproductos de pollo, harina de carne y hueso de cerdo, aceite de pollo, harina de plumas de pollo, harina de carne y hueso bovino ,hidrolizado de hígado de pollo y/o cerdo con TSPP en polvo, gluten de maíz, cloruro de sodio, ácido fosfórico, trigo, colorante natural caramelo, inulina, cloruro de colina, metionina, premezcla minerales quelados, cloruro de potasio,suplementos vitamínicos antioxidantes, vitamina E, taurina, arroz, levadura de cerveza (Saccharomyces cerevisiae), arvejas deshidratadas, vitamina C, colorante natural rojo carmín,carbonato de calcio, tomate en polvo, harina de alga (Schizochytrium sp), L-lisina. Eventuales sustitutos: Sorgo, salvado de trigo, harina de carne y hueso animal (bovino y cerdo), harina de subproductos de pavo, harina de pescado, grasa animal (bovino y cerdo), sebo bovino, bisulfato de sodio, fibra de soya, celulosa, pulpa de remolacha, fosfato de calcio, espinaca deshidratada, zanahorias deshidratadas, harina de salmón, leche bovina en polvo."
   },
   {
     "id": "prod-162",
@@ -4170,13 +4287,14 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/purina-purina-cat-chow-adulto-carne.png"
     ],
-    "proteinPct": 21,
-    "fatPct": 10,
+    "proteinPct": 31,
+    "fatPct": 11,
     "fiberPct": 3.5,
     "moisturePct": 12,
     "originUrl": "https://purina.cl/bonelo/productos/carne-adulto-todos-los-tamanos",
     "description": "Bonelo para perros adultos en mantenimiento, nutrición completa y balanceada, sin colorantes, para mantener a tu perro saludable y en condición ideal.",
-    "supplier": "Purina"
+    "supplier": "Purina",
+    "ingredients": "Maíz, harina de soya, harina de subproductos de pollo, harina de carne y hueso de cerdo, aceite de pollo, harina de plumas de pollo, harina de carne y hueso bovino ,hidrolizado de hígado de pollo y/o cerdo con TSPP en polvo, gluten de maíz, cloruro de sodio, ácido fosfórico, trigo, colorante natural caramelo, inulina, cloruro de colina, metionina, premezcla minerales quelados, cloruro de potasio,suplementos vitamínicos antioxidantes, vitamina E, taurina, arroz, levadura de cerveza (Saccharomyces cerevisiae), arvejas deshidratadas, vitamina C, colorante natural rojo carmín,carbonato de calcio, tomate en polvo, harina de alga (Schizochytrium sp), L-lisina. Eventuales sustitutos: Sorgo, salvado de trigo, harina de carne y hueso animal (bovino y cerdo), harina de subproductos de pavo, harina de pescado, grasa animal (bovino y cerdo), sebo bovino, bisulfato de sodio, fibra de soya, celulosa, pulpa de remolacha, fosfato de calcio, espinaca deshidratada, zanahorias deshidratadas, harina de salmón, leche bovina en polvo."
   },
   {
     "id": "prod-163",
@@ -4197,13 +4315,14 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/purina-purina-cat-chow-adulto-carne.png"
     ],
-    "proteinPct": 21,
-    "fatPct": 10,
+    "proteinPct": 31,
+    "fatPct": 11,
     "fiberPct": 3.5,
     "moisturePct": 12,
     "originUrl": "https://purina.cl/bonelo/productos/carne-adulto-todos-los-tamanos",
     "description": "Bonelo para perros adultos en mantenimiento, nutrición completa y balanceada, sin colorantes, para mantener a tu perro saludable y en condición ideal.",
-    "supplier": "Purina"
+    "supplier": "Purina",
+    "ingredients": "Maíz, harina de soya, harina de subproductos de pollo, harina de carne y hueso de cerdo, aceite de pollo, harina de plumas de pollo, harina de carne y hueso bovino ,hidrolizado de hígado de pollo y/o cerdo con TSPP en polvo, gluten de maíz, cloruro de sodio, ácido fosfórico, trigo, colorante natural caramelo, inulina, cloruro de colina, metionina, premezcla minerales quelados, cloruro de potasio,suplementos vitamínicos antioxidantes, vitamina E, taurina, arroz, levadura de cerveza (Saccharomyces cerevisiae), arvejas deshidratadas, vitamina C, colorante natural rojo carmín,carbonato de calcio, tomate en polvo, harina de alga (Schizochytrium sp), L-lisina. Eventuales sustitutos: Sorgo, salvado de trigo, harina de carne y hueso animal (bovino y cerdo), harina de subproductos de pavo, harina de pescado, grasa animal (bovino y cerdo), sebo bovino, bisulfato de sodio, fibra de soya, celulosa, pulpa de remolacha, fosfato de calcio, espinaca deshidratada, zanahorias deshidratadas, harina de salmón, leche bovina en polvo."
   },
   {
     "id": "prod-164",
@@ -4846,7 +4965,8 @@ const fallbackProducts: Product[] = [
     "moisturePct": 12,
     "originUrl": "https://purina.cl/bonelo/productos/carne-adulto-todos-los-tamanos",
     "description": "Bonelo para perros adultos en mantenimiento, nutrición completa y balanceada, sin colorantes, para mantener a tu perro saludable y en condición ideal.",
-    "supplier": "Purina"
+    "supplier": "Purina",
+    "ingredients": "Carne de pollo congelada, maíz, harina de subproductos de pollo, gluten de maíz, trigo, aceite de pollo y/o grasa vacuna preservados con tocoferoles (fuente de vitamina E), hidrolizado (polvo y/o líquido) a base de subproductos de pollo y/o cerdo, inulina, sal, harina de pescado y/o harina de alga (Schizochytrium sp.), cloruro de potasio, arroz, gluten de trigo, ácido fosfórico y/o bisulfato de sodio, aceite de pescado, pirofosfato tetrasódico, suplemento vitamínico antioxidante (A, D3, E, K3, B1, B2, B3, B5, B6, B7, B9, B12, BHT), cloruro de colina, suplementos minerales [(sulfatos: zinc, hierro, manganeso, cobre), (proteinatos: zinc, hierro, manganeso, cobre, selenio), yodato de calcio, selenito de sodio], levadura seca (Saccharomyces cerevisiae ssp.), taurina, DL-metionina, ácido ascórbico (fuente de vitamina C), carbonato y/o fosfato cálcico, L-lisina."
   },
   {
     "id": "prod-187",
@@ -4873,7 +4993,8 @@ const fallbackProducts: Product[] = [
     "moisturePct": 12,
     "originUrl": "https://purina.cl/bonelo/productos/carne-adulto-todos-los-tamanos",
     "description": "Bonelo para perros adultos en mantenimiento, nutrición completa y balanceada, sin colorantes, para mantener a tu perro saludable y en condición ideal.",
-    "supplier": "Purina"
+    "supplier": "Purina",
+    "ingredients": "Carne de pollo congelada, gluten de maíz, harina de subproductos de pollo, maíz, trigo, aceite de pollo y/o grasa vacuna preservados con tocoferoles (fuente de vitamina E), aceite de pescado y/o harina de alga (Schizochytrium sp.), hidrolizado (polvo y/o líquido) a base de subproductos de pollo y/o cerdo, inulina, ácido fosfórico y/o bisulfato de sodio, cloruro de potasio, arroz, gluten de trigo, pulpa de remolacha, carbonato y/o fosfato cálcico, L-arginina, suplemento vitamínico antioxidante (A, D3, E, K3, B1, B2, B3, B5, B6, B7, B9, B12, BHT), sal, L-lisina, cloruro de colina, suplementos minerales [(sulfatos: zinc, hierro, manganeso, cobre), (proteinatos: zinc, hierro, manganeso, cobre, selenio), yodato de calcio, selenito de sodio], beta-caroteno, taurina, DLmetionina, levadura seca (Saccharomyces cerevisiae ssp.), ácido ascórbico (fuente de vitamina C)."
   },
   {
     "id": "prod-188",
@@ -5488,7 +5609,8 @@ const fallbackProducts: Product[] = [
     "moisturePct": 12,
     "originUrl": "https://purina.cl/bonelo/productos/carne-adulto-todos-los-tamanos",
     "description": "Bonelo para perros adultos en mantenimiento, nutrición completa y balanceada, sin colorantes, para mantener a tu perro saludable y en condición ideal.",
-    "supplier": "Purina"
+    "supplier": "Purina",
+    "ingredients": "Carne de pollo congelada, maíz, harina de subproductos de pollo, trigo, gluten de maíz, aceite de pollo y/o grasa vacuna preservados con tocoferoles (fuente de vitamina E), hidrolizado a base de subproductos de pollo y/o cerdo, arroz, pulpa de remolacha, cloruro de potasio, zeolita, sal, aceite de pescado y/o harina de alga (Schizochytrium sp.), carbonato y/o fosfato cálcico, suplemento vitamínico antioxidante (A, D3, E, K3, B1, B2, B3, B5, B6, B7, B9, B12, BHT), pirofosfato tetrasódico, sorbato de potasio, cloruro de colina, spirulina (Arthrospira latensis), suplementos minerales [(sulfatos: zinc, hierro, manganeso, cobre, magnesio), (proteinatos: zinc, hierro, manganeso, cobre, selenio), yodato de calcio, selenito de sodio], levadura seca (Saccharomyces cerevisiae ssp.), L-lisina, DL-metionina, taurina, ácido ascórbico (fuente de vitamina C)."
   },
   {
     "id": "prod-210",
@@ -6429,10 +6551,14 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/felinnes-felinnes-adulto.png"
     ],
-    "ingredients": "para entregar a tu gato una experiencia única en sabor y textura. Felinnes Pouch, Trocitos en salsa para gato adulto sabor salmón",
+    "ingredients": "Proteínas de origen animal y vegetal: harina de ave, salmón, carne y hueso. Granos seleccionados: trigo, arroz, gluten meal. Suplementos funcionales: probióticos (Lactobacillus spp.), taurina, yucca schidigera. Ácidos grasos marinos (EPA y DHA) para sistema nervioso y pelaje. Vitaminas: A, D3, E, K3, C, complejo B, biotina, niacina. Minerales: zinc, cobre, manganeso, yodo, selenio.",
     "originUrl": "https://www.allendeshnos.cl/producto/felinnes-pouch-sabor-salmon-24-x85gr/",
     "description": "Jugosos trocitos en salsa es una mezcla de seleccionados ingredientes para entregar a tu gato una experiencia única en sabor y textura. Felinnes Pouch, Trocitos en salsa para gato adulto sabor salmón",
-    "supplier": "AllendesHnos"
+    "supplier": "AllendesHnos",
+    "proteinPct": 30,
+    "fatPct": 10,
+    "fiberPct": 3,
+    "moisturePct": 12
   },
   {
     "id": "prod-245",
@@ -6453,10 +6579,14 @@ const fallbackProducts: Product[] = [
     "images": [
       "/products/felinnes-felinnes-gatito.png"
     ],
-    "ingredients": "para entregar a tu gato una experiencia única en sabor y textura. Felinnes Pouch, Trocitos en salsa para gatitos",
+    "ingredients": "Proteínas de origen animal y vegetal: harina de ave, salmón, carne y hueso. Granos seleccionados: trigo, arroz, gluten meal. Suplementos funcionales: probióticos (Lactobacillus spp.), taurina, yucca schidigera. Ácidos grasos marinos (EPA y DHA) para sistema nervioso y pelaje. Vitaminas: A, D3, E, K3, C, complejo B, biotina, niacina. Minerales: zinc, cobre, manganeso, yodo, selenio.",
     "originUrl": "https://www.allendeshnos.cl/producto/felinnes-pouch-gatito-carne-leche-24x85-gr/",
     "description": "Jugosos trocitos en salsa es una mezcla de seleccionados ingredientes para entregar a tu gato una experiencia única en sabor y textura. Felinnes Pouch, Trocitos en salsa para gatitos",
-    "supplier": "AllendesHnos"
+    "supplier": "AllendesHnos",
+    "proteinPct": 34,
+    "fatPct": 10,
+    "fiberPct": 3,
+    "moisturePct": 12
   },
   {
     "id": "prod-246",
@@ -6819,7 +6949,9 @@ const fallbackProducts: Product[] = [
     "proteinPct": 28,
     "originUrl": "https://www.bokato.cl/bokato-lady-premium-alimento-mascota-naturales",
     "description": "28% de proteínas premium (90% animal) L-carnitina contra sobrepeso Previene cáncer mamario, infecciones ¡Salud hormonal, vitalidad y pelaje radiante garantizados!",
-    "supplier": "Bokato"
+    "supplier": "Bokato",
+    "fatPct": 14,
+    "ingredients": "Proteína de ave, maíz de grano molido, arroz de grano molido, aceite de ave, salvado de arroz, plasma sanguíneo deshidratado en spray, hidrolizado de salmón, hidrolizado en base a hígado, blend marino de Omega 3, 6 y 9 con EPA y DHA, L-carnitina, diatomita o kieselguhr earth, maqui deshidratado (Aristotelia chilensis) como antioxidante natural, betaglucanos, MOS, FOS, fibra natural, semilla de lino, Yucca schidigera, Quillaja saponina, glucosamina y condroitina, Cúrcuma longa, piperina, vitaminas A, D3, E, K3, B1, B2, B6, B12, ácido fólico, biotina y niacina (B3), colina, minerales orgánicos, ácidos orgánicos, Se++ como bioselenio."
   },
   {
     "id": "prod-260",
@@ -6996,8 +7128,16 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "peach",
-    "image": "/five-mascotas/alimento-2.svg",
-    "featured": false
+    "image": "/products/n-d-espirulina-gato-adulto.png",
+    "featured": false,
+    "proteinPct": 40,
+    "fatPct": 18,
+    "fiberPct": 2.9,
+    "moisturePct": 9,
+    "ingredients": "Carne separada mecánicamente de tilapia (mín. 5%), harina de pescado, harina de vísceras de aves, harina de torresmo, huevo en polvo, almidón de patata, almidón de mandioca, aceite de pescado, aceite de pollo, pulpa de remolacha, celulosa en polvo, semilla de lino, cáscara de guisante, alfalfa deshidratada, semilla de psyllium, levadura seca de cervecería, biomasa de microalgas deshidratada (Spirulina spp.) (mín. 0,5%), goji berry (mín. 0,075%), zanahoria deshidratada, espinaca deshidratada, extracto de aloe vera, cúrcuma en polvo, betacaroteno, aditivos prebióticos (FOS y MOS), DL-metionina, taurina, L-carnitina, sulfato de condroitina, sulfato de glucosamina, aditivos adsorbentes (extracto de yucca y zeolita), hidrolizado de hígado de aves y porcinos, vitaminas (A, D3, E, B1, B2, B5, B6, B12, C, biotina, niacina, ácido fólico, cloruro de colina), cloruro de amonio, cloruro de sodio, cloruro de potasio, hierro aminoácido quelado, cobre aminoácido quelado, zinc aminoácido quelado, manganeso aminoácido quelado, proteinato de selenio, iodato de calcio, propionato de calcio, concentrado de tocoferoles. Sustitutivos eventuales: proteína hidrolizada de pescado, proteína hidrolizada de pollo.",
+    "images": [
+      "/products/n-d-espirulina-gato-adulto.png"
+    ]
   },
   {
     "id": "prod-267",
@@ -7013,8 +7153,16 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "lavender",
-    "image": "/five-mascotas/alimento-3.svg",
-    "featured": false
+    "image": "/products/n-d-espirulina-gato-adulto.png",
+    "featured": false,
+    "proteinPct": 40,
+    "fatPct": 18,
+    "fiberPct": 2.9,
+    "moisturePct": 9,
+    "ingredients": "Carne separada mecánicamente de tilapia (mín. 5%), harina de pescado, harina de vísceras de aves, harina de torresmo, huevo en polvo, almidón de patata, almidón de mandioca, aceite de pescado, aceite de pollo, pulpa de remolacha, celulosa en polvo, semilla de lino, cáscara de guisante, alfalfa deshidratada, semilla de psyllium, levadura seca de cervecería, biomasa de microalgas deshidratada (Spirulina spp.) (mín. 0,5%), goji berry (mín. 0,075%), zanahoria deshidratada, espinaca deshidratada, extracto de aloe vera, cúrcuma en polvo, betacaroteno, aditivos prebióticos (FOS y MOS), DL-metionina, taurina, L-carnitina, sulfato de condroitina, sulfato de glucosamina, aditivos adsorbentes (extracto de yucca y zeolita), hidrolizado de hígado de aves y porcinos, vitaminas (A, D3, E, B1, B2, B5, B6, B12, C, biotina, niacina, ácido fólico, cloruro de colina), cloruro de amonio, cloruro de sodio, cloruro de potasio, hierro aminoácido quelado, cobre aminoácido quelado, zinc aminoácido quelado, manganeso aminoácido quelado, proteinato de selenio, iodato de calcio, propionato de calcio, concentrado de tocoferoles. Sustitutivos eventuales: proteína hidrolizada de pescado, proteína hidrolizada de pollo.",
+    "images": [
+      "/products/n-d-espirulina-gato-adulto.png"
+    ]
   },
   {
     "id": "prod-268",
@@ -7301,8 +7449,15 @@ const fallbackProducts: Product[] = [
     "oldPrice": 0,
     "badge": "",
     "color": "peach",
-    "image": "/five-mascotas/alimento-2.svg",
-    "featured": false
+    "image": "/products/n-d-gato-jabali-y-manzana.png",
+    "featured": false,
+    "proteinPct": 13,
+    "fatPct": 5.2,
+    "fiberPct": 0.7,
+    "ingredients": "Jabalí (50%), arenques, huevos de gallina cocidos, batata, aceite de pescado, manzana (2%), fructooligosacáridos, cloruro de colina, sulfato de condroitina, glucosamina, vitaminas, minerales.",
+    "images": [
+      "/products/n-d-gato-jabali-y-manzana.png"
+    ]
   },
   {
     "id": "prod-279",
