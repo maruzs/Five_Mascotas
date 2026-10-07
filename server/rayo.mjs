@@ -478,88 +478,70 @@ ${petProfile ? `Perfil Mascota: Especie=${petProfile.species || 'N/A'}, Peso=${p
 Responde como Rayo, analizando objetivamente los datos anteriores. Sé claro, profesional y estructurado.
 `.trim();
 
-  // 6. Invocar Gemini 2.0 Flash REST API
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 12000); // 12s timeout
+  // 6. Invocar Gemini REST API con failover automático entre modelos
+  const candidateModels = ['gemini-flash-latest', 'gemini-3.8-flash', 'gemini-3.1-flash-lite'];
 
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`;
-    const payload = {
-      systemInstruction: {
-        parts: [{ text: systemInstruction }],
-      },
-      contents: [
-        {
-          role: 'user',
-          parts: [{ text: userPrompt }],
+  for (const model of candidateModels) {
+    try {
+      const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+      const payload = {
+        systemInstruction: {
+          parts: [{ text: systemInstruction }],
         },
-      ],
-      generationConfig: {
-        temperature: 0.3,
-        maxOutputTokens: 900,
-      },
-    };
-
-    const res = await fetch(geminiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-      signal: controller.signal,
-    });
-
-    clearTimeout(timeoutId);
-
-    if (!res.ok) {
-      const errText = await res.text();
-      console.warn(`[Rayo] Gemini API error (${res.status}):`, errText);
-      // Fallback
-      const fallbackAnswer = buildDeterministicResponse({
-        query,
-        mode,
-        productsToCompare,
-        portionData,
-        antiparasitics,
-        petProfile,
-      });
-      return {
-        ok: true,
-        provider: 'rayo-deterministic-engine-fallback',
-        answer: fallbackAnswer,
-        portionData,
-        antiparasitics,
+        contents: [
+          {
+            role: 'user',
+            parts: [{ text: userPrompt }],
+          },
+        ],
+        generationConfig: {
+          temperature: 0.3,
+          maxOutputTokens: 900,
+        },
       };
+
+      const res = await fetch(geminiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        const json = await res.json();
+        const candidateText = json.candidates?.[0]?.content?.parts?.[0]?.text;
+
+        if (candidateText) {
+          return {
+            ok: true,
+            provider: model,
+            answer: candidateText,
+            portionData,
+            antiparasitics,
+          };
+        }
+      } else {
+        const errText = await res.text();
+        console.warn(`[Rayo] Modelo ${model} error (${res.status}), intentando siguiente:`, errText.slice(0, 150));
+      }
+    } catch (err) {
+      console.warn(`[Rayo] Error de conexión con ${model}:`, err.message);
     }
-
-    const json = await res.json();
-    const candidateText = json.candidates?.[0]?.content?.parts?.[0]?.text;
-
-    if (!candidateText) {
-      throw new Error('Respuesta vacía de Gemini');
-    }
-
-    return {
-      ok: true,
-      provider: 'gemini-flash-latest',
-      answer: candidateText,
-      portionData,
-      antiparasitics,
-    };
-  } catch (err) {
-    console.warn('[Rayo] Error conectando con Gemini API:', err.message);
-    const fallbackAnswer = buildDeterministicResponse({
-      query,
-      mode,
-      productsToCompare,
-      portionData,
-      antiparasitics,
-      petProfile,
-    });
-    return {
-      ok: true,
-      provider: 'rayo-deterministic-engine-fallback',
-      answer: fallbackAnswer,
-      portionData,
-      antiparasitics,
-    };
   }
+
+  // Fallback final determinista si todos los modelos de Gemini están saturados
+  const fallbackAnswer = buildDeterministicResponse({
+    query,
+    mode,
+    productsToCompare,
+    portionData,
+    antiparasitics,
+    petProfile,
+  });
+  return {
+    ok: true,
+    provider: 'rayo-deterministic-engine-fallback',
+    answer: fallbackAnswer,
+    portionData,
+    antiparasitics,
+  };
 }
