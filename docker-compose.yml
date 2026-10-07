@@ -12,6 +12,7 @@ services:
     env_file:
       - .env
     environment:
+      PORT: 80
       TZ: America/Santiago
     security_opt:
       - no-new-privileges:true
