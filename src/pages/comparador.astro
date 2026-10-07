@@ -147,6 +147,48 @@ const getStageType = (p: any) => {
       </div>
     </section>
 
+    <!-- Rayo AI Nutritional Verdict Bento Box -->
+    <section class="comp-rayo-banner" aria-label="Veredicto Nutricional de Rayo">
+      <div class="comp-rayo-card">
+        <div class="comp-rayo-avatar-side">
+          <div class="comp-rayo-avatar-ring">
+            <img
+              src="/images/Rayo-Bot.png"
+              alt="Rayo · Asistente Nutricional"
+              class="comp-rayo-img"
+              width="68"
+              height="68"
+              loading="eager"
+            />
+          </div>
+          <span class="comp-rayo-role-badge">Asesor Nutricional IA</span>
+        </div>
+        <div class="comp-rayo-content">
+          <div class="comp-rayo-header-row">
+            <div class="comp-rayo-text-wrap">
+              <div class="comp-rayo-pill">
+                <span class="comp-rayo-dot"></span>
+                <span>Análisis con Google Gemini 2.0 & PIM Oficial</span>
+              </div>
+              <h2 class="comp-rayo-title">⚡ Veredicto de Rayo · Experto Nutricional</h2>
+              <p class="comp-rayo-desc">
+                ¿Indeciso entre las opciones? Rayo analiza la proteína real, los primeros ingredientes, alérgenos y la relación precio/calidad de los alimentos seleccionados para <strong>perros y gatos</strong>.
+              </p>
+            </div>
+            <button type="button" id="btn-ask-rayo-verdict" class="comp-rayo-cta-btn">
+              <span class="rayo-spark-icon">✨</span>
+              <span>Pedir veredicto a Rayo</span>
+            </button>
+          </div>
+
+          <!-- Container for Rayo's Live Verdict Result -->
+          <div id="rayo-verdict-result" class="comp-rayo-verdict-panel" hidden>
+            <!-- Injected by script -->
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Comparison Matrix Dynamic Container -->
     <main class="comp-matrix-container" id="comparison-table-container">
       <!-- Injected reactively by client script with complete styling -->
@@ -539,6 +581,103 @@ const getStageType = (p: any) => {
     AdminStoreService.fetchPimFromServer()
       .then(() => renderComparison())
       .catch(() => {});
+
+    // Rayo AI Verdict Integration
+    const rayoBtn = document.querySelector<HTMLButtonElement>('#btn-ask-rayo-verdict');
+    const rayoResultPanel = document.querySelector<HTMLElement>('#rayo-verdict-result');
+
+    const formatMarkdownSimple = (text: string): string => {
+      let escaped = text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+      escaped = escaped.replace(/^### (.*$)/gim, '<h3 class="rayo-verdict-h3">$1</h3>');
+      escaped = escaped.replace(/^#### (.*$)/gim, '<h4 class="rayo-verdict-h4">$1</h4>');
+      escaped = escaped.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      escaped = escaped.replace(/\*(.*?)\*/g, '<em>$1</em>');
+      escaped = escaped.replace(/^> (.*$)/gim, '<blockquote class="rayo-verdict-quote">$1</blockquote>');
+      escaped = escaped.replace(/^\s*-\s+(.*$)/gim, '<li class="rayo-verdict-li">$1</li>');
+      escaped = escaped.replace(/(<li.*<\/li>)/s, '<ul class="rayo-verdict-ul">$1</ul>');
+      escaped = escaped.replace(/\n\n+/g, '<p class="rayo-verdict-p"></p>');
+      escaped = escaped.replace(/\n/g, '<br/>');
+      return escaped;
+    };
+
+    rayoBtn?.addEventListener('click', async () => {
+      const selectedIds = [slot1.value, slot2.value, slot3.value].filter(Boolean);
+      if (selectedIds.length < 2) {
+        alert('Selecciona al menos dos alimentos para pedir el veredicto a Rayo.');
+        return;
+      }
+
+      if (!rayoResultPanel) return;
+      rayoResultPanel.hidden = false;
+      rayoResultPanel.innerHTML = `
+        <div class="rayo-verdict-loading">
+          <div class="rayo-verdict-spinner"></div>
+          <div>
+            <strong>Rayo está analizando las etiquetas nutricionales...</strong>
+            <p>Comparando proteína bruta, primeros ingredientes, fuentes de carbohidratos y rendimiento por kilo.</p>
+          </div>
+        </div>
+      `;
+
+      try {
+        const resp = await fetch('/api/chat-nutricional', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            mode: 'comparison',
+            productIds: selectedIds,
+          }),
+        });
+
+        const data = await resp.json();
+        if (data.ok && data.answer) {
+          rayoResultPanel.innerHTML = `
+            <div class="rayo-verdict-output">
+              <div class="rayo-verdict-badge-row">
+                <span class="rayo-badge-checked">✓ Veredicto Oficial Generado</span>
+                <span class="rayo-badge-meta">Basado en datos técnicos del PIM</span>
+              </div>
+              <div class="rayo-verdict-text">
+                ${formatMarkdownSimple(data.answer)}
+              </div>
+              <div class="rayo-verdict-actions">
+                <button type="button" class="rayo-action-chip" id="rayo-open-portion-calc">
+                  ⚖️ Calcular porción recomendada para mi mascota
+                </button>
+                <button type="button" class="rayo-action-chip" id="rayo-open-chat-duda">
+                  💬 Preguntarle más a Rayo sobre estos alimentos
+                </button>
+              </div>
+            </div>
+          `;
+
+          // Quick actions
+          rayoResultPanel.querySelector('#rayo-open-portion-calc')?.addEventListener('click', () => {
+            window.dispatchEvent(new CustomEvent('five:open-rayo', { detail: { mode: 'portion' } }));
+          });
+          rayoResultPanel.querySelector('#rayo-open-chat-duda')?.addEventListener('click', () => {
+            window.dispatchEvent(new CustomEvent('five:open-rayo', {
+              detail: { mode: 'chat', query: '¿Cuál de los alimentos analizados es más adecuado según la edad de mi mascota?' },
+            }));
+          });
+        } else {
+          rayoResultPanel.innerHTML = `
+            <div class="rayo-verdict-error">
+              <p>⚠️ ${data.error || 'No se pudo generar el veredicto en este momento.'}</p>
+            </div>
+          `;
+        }
+      } catch (err) {
+        rayoResultPanel.innerHTML = `
+          <div class="rayo-verdict-error">
+            <p>⚠️ Ocurrió un error al contactar al asistente. Por favor intenta nuevamente.</p>
+          </div>
+        `;
+      }
+    });
   </script>
 </BaseLayout>
 
@@ -1282,5 +1421,278 @@ const getStageType = (p: any) => {
     color: #4b5563;
     line-height: 1.6;
     margin: 0;
+  }
+
+  /* ==========================================================
+     RAYO VERDICT BENTO BOX IN COMPARADOR
+     ========================================================== */
+
+  .comp-rayo-banner {
+    margin: 24px 0 28px;
+  }
+
+  .comp-rayo-card {
+    background: linear-gradient(135deg, #ffffff 0%, #fdfafe 60%, #f7efff 100%);
+    border: 2px solid #e9d5ff;
+    border-radius: 20px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 0 4px 20px rgba(112, 37, 168, 0.08);
+    position: relative;
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .comp-rayo-card {
+      flex-direction: row;
+      align-items: flex-start;
+      padding: 26px;
+      gap: 24px;
+    }
+  }
+
+  .comp-rayo-avatar-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .comp-rayo-avatar-ring {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7025a8, #276717);
+    padding: 3px;
+    box-shadow: 0 6px 16px rgba(112, 37, 168, 0.25);
+  }
+
+  .comp-rayo-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #ffffff;
+    display: block;
+  }
+
+  .comp-rayo-role-badge {
+    background: #7025a8;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  .comp-rayo-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .comp-rayo-header-row {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  @media (min-width: 900px) {
+    .comp-rayo-header-row {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .comp-rayo-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #f3e8ff;
+    color: #7025a8;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-size: 11.5px;
+    font-weight: 750;
+    margin-bottom: 6px;
+  }
+
+  .comp-rayo-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #9333ea;
+  }
+
+  .comp-rayo-title {
+    font-size: clamp(19px, 2.6vw, 24px);
+    font-weight: 850;
+    color: #111827;
+    margin: 0 0 6px;
+    letter-spacing: -0.4px;
+  }
+
+  .comp-rayo-desc {
+    font-size: 13.5px;
+    color: #4b5563;
+    line-height: 1.5;
+    margin: 0;
+    max-width: 650px;
+  }
+
+  .comp-rayo-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #7025a8 0%, #276717 100%);
+    color: #ffffff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 9999px;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(112, 37, 168, 0.3);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+  }
+
+  .comp-rayo-cta-btn:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 20px rgba(112, 37, 168, 0.4);
+  }
+
+  .rayo-spark-icon {
+    font-size: 16px;
+  }
+
+  /* Panel del Veredicto en Vivo */
+  .comp-rayo-verdict-panel {
+    background: #ffffff;
+    border: 1px solid #e5d7f2;
+    border-radius: 14px;
+    padding: 18px 22px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    animation: rayoFadeIn 0.3s ease-out;
+  }
+
+  .comp-rayo-verdict-panel[hidden] {
+    display: none;
+  }
+
+  .rayo-verdict-loading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: #4b5563;
+  }
+
+  .rayo-verdict-spinner {
+    width: 28px;
+    height: 28px;
+    border: 3px solid #f3e8ff;
+    border-top-color: #7025a8;
+    border-radius: 50%;
+    animation: rayoSpin 0.8s linear infinite;
+    flex-shrink: 0;
+  }
+
+  .rayo-verdict-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  .rayo-badge-checked {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+
+  .rayo-badge-meta {
+    font-size: 11.5px;
+    color: #6b7280;
+    font-weight: 600;
+  }
+
+  .rayo-verdict-text {
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: #1f2937;
+  }
+
+  .rayo-verdict-h3 {
+    font-size: 16px;
+    font-weight: 850;
+    color: #7025a8;
+    margin: 12px 0 8px;
+  }
+
+  .rayo-verdict-h4 {
+    font-size: 14.5px;
+    font-weight: 800;
+    color: #111827;
+    margin: 10px 0 4px;
+  }
+
+  .rayo-verdict-quote {
+    background: #faf5ff;
+    border-left: 3px solid #7025a8;
+    margin: 10px 0;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    color: #581c87;
+  }
+
+  .rayo-verdict-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px dashed #e5e7eb;
+  }
+
+  .rayo-action-chip {
+    background: #f9fafb;
+    border: 1px solid #d1d5db;
+    color: #374151;
+    padding: 7px 12px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 750;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .rayo-action-chip:hover {
+    background: #f3e8ff;
+    border-color: #7025a8;
+    color: #7025a8;
+  }
+
+  .rayo-verdict-error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 13px;
   }
 </style>

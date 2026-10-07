@@ -9,6 +9,8 @@ services:
       - "3004:80"
     volumes:
       - ./data:/app/data
+    env_file:
+      - .env
     environment:
       TZ: America/Santiago
     security_opt:

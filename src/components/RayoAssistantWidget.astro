@@ -1,0 +1,1225 @@
+---
+// src/components/RayoAssistantWidget.astro
+// Asistente Nutricional Flotante "Rayo · Experto Nutricional" para FIVE Mascotas
+---
+
+<div id="rayo-widget-root" class="rayo-widget-container" data-astro-rerun>
+  <!-- Botón Lanzador Flotante Circular -->
+  <button
+    id="rayo-launcher-btn"
+    type="button"
+    class="rayo-launcher"
+    aria-label="Abrir Asistente Nutricional Rayo"
+    aria-haspopup="dialog"
+    aria-expanded="false"
+  >
+    <div class="rayo-launcher-avatar-wrap">
+      <img
+        src="/images/Rayo-Bot.png"
+        alt="Rayo · Asistente Nutricional"
+        class="rayo-launcher-avatar"
+        width="58"
+        height="58"
+        loading="eager"
+      />
+      <span class="rayo-status-dot" aria-hidden="true"></span>
+    </div>
+    <span class="rayo-launcher-pill-badge">Rayo · IA</span>
+  </button>
+
+  <!-- Ventana / Modal del Asistente -->
+  <div
+    id="rayo-modal"
+    class="rayo-modal"
+    role="dialog"
+    aria-labelledby="rayo-modal-title"
+    aria-modal="true"
+    hidden
+  >
+    <!-- Header -->
+    <header class="rayo-header">
+      <div class="rayo-header-info">
+        <div class="rayo-header-avatar-wrap">
+          <img
+            src="/images/Rayo-Bot.png"
+            alt="Rayo"
+            class="rayo-header-avatar"
+            width="44"
+            height="44"
+          />
+          <span class="rayo-header-badge">Tuxedo Pro</span>
+        </div>
+        <div>
+          <h2 id="rayo-modal-title" class="rayo-header-title">Rayo · Experto Nutricional</h2>
+          <p class="rayo-header-subtitle">
+            Asesor veterinario de FIVE para <strong>Perros</strong> y <strong>Gatos</strong> 🐶🐱
+          </p>
+        </div>
+      </div>
+      <button
+        id="rayo-close-btn"
+        type="button"
+        class="rayo-close-btn"
+        aria-label="Cerrar asistente nutricional"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Pestañas de Modo -->
+    <nav class="rayo-tabs" aria-label="Modos de Rayo">
+      <button type="button" class="rayo-tab-btn active" data-tab="chat">
+        💬 Chat & Dudas
+      </button>
+      <button type="button" class="rayo-tab-btn" data-tab="portion">
+        ⚖️ Calcular Porción
+      </button>
+      <button type="button" class="rayo-tab-btn" data-tab="farma">
+        💊 Antiparasitarios
+      </button>
+    </nav>
+
+    <!-- Contenido de Pestaña: CHAT -->
+    <div id="rayo-tab-chat" class="rayo-tab-panel active">
+      <!-- Feed de Conversación -->
+      <div id="rayo-messages-feed" class="rayo-feed">
+        <!-- Mensaje de Bienvenida de Rayo -->
+        <div class="rayo-msg rayo-msg-bot">
+          <img src="/images/Rayo-Bot.png" alt="Rayo" class="rayo-msg-avatar" width="28" height="28" />
+          <div class="rayo-msg-bubble">
+            <p>
+              ¡Hola! Soy <strong>Rayo</strong>, el gato tuxedo y asesor nutricional de <strong>FIVE Mascotas</strong>. 🐾
+            </p>
+            <p>
+              Puedo ayudarte a evaluar ingredientes, calidad de proteína, calcular porciones exactas o encontrar la pastilla antiparasitaria para el peso de tu perro o gato.
+            </p>
+          </div>
+        </div>
+
+        <!-- Sugerencias Rápidas -->
+        <div class="rayo-quick-suggestions" id="rayo-suggestions">
+          <span class="rayo-suggestions-title">Consultas habituales:</span>
+          <div class="rayo-chips-wrap">
+            <button type="button" class="rayo-chip" data-query="¿Qué diferencia hay entre un alimento con grano y uno Grain Free?">
+              🌾 ¿Cereales o Grain Free?
+            </button>
+            <button type="button" class="rayo-chip" data-query="¿Cómo saber si el primer ingrediente de un alimento es de buena calidad?">
+              🥩 Evaluar primer ingrediente
+            </button>
+            <button type="button" class="rayo-chip" data-query="¿Por qué los gatos necesitan mayor porcentaje de proteína que los perros?">
+              🐱 Proteína en gatos vs perros
+            </button>
+            <button type="button" class="rayo-chip" data-query="¿Cómo hacer la transición gradual de un alimento a otro sin malestar estomacal?">
+              🔄 Transición gradual segura
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Bar -->
+      <form id="rayo-chat-form" class="rayo-input-form">
+        <input
+          type="text"
+          id="rayo-chat-input"
+          class="rayo-input"
+          placeholder="Escribe tu consulta sobre alimentos, ingredientes o cuidados..."
+          maxlength="300"
+          autocomplete="off"
+          required
+        />
+        <button type="submit" id="rayo-send-btn" class="rayo-send-btn" aria-label="Enviar pregunta">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </form>
+    </div>
+
+    <!-- Contenido de Pestaña: CALCULADORA DE PORCIÓN -->
+    <div id="rayo-tab-portion" class="rayo-tab-panel" hidden>
+      <form id="rayo-portion-form" class="rayo-calc-form">
+        <div class="rayo-form-group">
+          <label class="rayo-label" for="portion-species">Especie:</label>
+          <div class="rayo-radio-pills">
+            <label class="rayo-pill-label">
+              <input type="radio" name="portion-species" value="perro" checked />
+              <span>🐶 Perro</span>
+            </label>
+            <label class="rayo-pill-label">
+              <input type="radio" name="portion-species" value="gato" />
+              <span>🐱 Gato</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="rayo-form-row">
+          <div class="rayo-form-group">
+            <label class="rayo-label" for="portion-weight">Peso actual (kg):</label>
+            <input
+              type="number"
+              id="portion-weight"
+              class="rayo-input-number"
+              min="0.5"
+              max="90"
+              step="0.5"
+              value="12"
+              required
+            />
+          </div>
+
+          <div class="rayo-form-group">
+            <label class="rayo-label" for="portion-stage">Etapa de vida:</label>
+            <select id="portion-stage" class="rayo-select">
+              <option value="adulto">Adulto</option>
+              <option value="cachorro">Cachorro / Gatito</option>
+              <option value="senior">Senior (+7 años)</option>
+              <option value="esterilizado">Esterilizado / Castrado</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="rayo-form-group">
+          <label class="rayo-label" for="portion-activity">Nivel de actividad:</label>
+          <select id="portion-activity" class="rayo-select">
+            <option value="normal">Normal (1-2 paseos / juego moderado)</option>
+            <option value="baja">Baja / Sedentario / Tendencia a sobrepeso</option>
+            <option value="alta">Alta / Activo / Deportivo</option>
+          </select>
+        </div>
+
+        <button type="submit" class="rayo-action-btn">
+          ⚡ Calcular Ración con Rayo
+        </button>
+      </form>
+
+      <div id="rayo-portion-result" class="rayo-result-card" hidden></div>
+    </div>
+
+    <!-- Contenido de Pestaña: ANTIPARASITARIOS -->
+    <div id="rayo-tab-farma" class="rayo-tab-panel" hidden>
+      <form id="rayo-farma-form" class="rayo-calc-form">
+        <p class="rayo-tab-desc">
+          Encuentra la pastilla o pipeta oficial de FIVE (Nexgard, Simparica, Bravecto, Credelio, etc.) exacta para el peso de tu mascota.
+        </p>
+
+        <div class="rayo-form-group">
+          <label class="rayo-label">Especie:</label>
+          <div class="rayo-radio-pills">
+            <label class="rayo-pill-label">
+              <input type="radio" name="farma-species" value="perro" checked />
+              <span>🐶 Perro</span>
+            </label>
+            <label class="rayo-pill-label">
+              <input type="radio" name="farma-species" value="gato" />
+              <span>🐱 Gato</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="rayo-form-group">
+          <label class="rayo-label" for="farma-weight">Peso exacto de la mascota (kg):</label>
+          <div class="rayo-input-with-addon">
+            <input
+              type="number"
+              id="farma-weight"
+              class="rayo-input-number"
+              min="0.5"
+              max="90"
+              step="0.5"
+              value="8"
+              required
+            />
+            <span class="rayo-addon">kg</span>
+          </div>
+        </div>
+
+        <button type="submit" class="rayo-action-btn">
+          🔍 Buscar Pastilla Indicada
+        </button>
+      </form>
+
+      <div id="rayo-farma-result" class="rayo-result-card" hidden></div>
+    </div>
+
+    <!-- Disclaimer Footer -->
+    <footer class="rayo-footer">
+      <span>🛡️ Orientación nutricional basada en fichas PIM. En patologías, consulta a tu veterinario.</span>
+    </footer>
+  </div>
+</div>
+
+<script>
+  // Script del Asistente Rayo
+  const root = document.querySelector<HTMLElement>('#rayo-widget-root');
+  if (root) {
+    const launcherBtn = root.querySelector<HTMLButtonElement>('#rayo-launcher-btn');
+    const modal = root.querySelector<HTMLElement>('#rayo-modal');
+    const closeBtn = root.querySelector<HTMLButtonElement>('#rayo-close-btn');
+
+    const tabs = root.querySelectorAll<HTMLButtonElement>('.rayo-tab-btn');
+    const panels: Record<string, HTMLElement | null> = {
+      chat: root.querySelector<HTMLElement>('#rayo-tab-chat'),
+      portion: root.querySelector<HTMLElement>('#rayo-tab-portion'),
+      farma: root.querySelector<HTMLElement>('#rayo-tab-farma'),
+    };
+
+    // Chat elements
+    const chatForm = root.querySelector<HTMLFormElement>('#rayo-chat-form');
+    const chatInput = root.querySelector<HTMLInputElement>('#rayo-chat-input');
+    const messagesFeed = root.querySelector<HTMLElement>('#rayo-messages-feed');
+    const suggestionsWrap = root.querySelector<HTMLElement>('#rayo-suggestions');
+
+    // Portion elements
+    const portionForm = root.querySelector<HTMLFormElement>('#rayo-portion-form');
+    const portionResult = root.querySelector<HTMLElement>('#rayo-portion-result');
+
+    // Farma elements
+    const farmaForm = root.querySelector<HTMLFormElement>('#rayo-farma-form');
+    const farmaResult = root.querySelector<HTMLElement>('#rayo-farma-result');
+
+    // Toggle Modal
+    const openModal = (defaultTab?: string) => {
+      if (!modal) return;
+      modal.hidden = false;
+      modal.classList.add('is-open');
+      launcherBtn?.setAttribute('aria-expanded', 'true');
+      if (defaultTab) switchTab(defaultTab);
+      if (defaultTab === 'chat' || !defaultTab) {
+        setTimeout(() => chatInput?.focus(), 150);
+      }
+    };
+
+    const closeModal = () => {
+      if (!modal) return;
+      modal.classList.remove('is-open');
+      modal.hidden = true;
+      launcherBtn?.setAttribute('aria-expanded', 'false');
+    };
+
+    launcherBtn?.addEventListener('click', () => {
+      if (modal?.hidden) openModal();
+      else closeModal();
+    });
+
+    closeBtn?.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal?.hidden) closeModal();
+    });
+
+    // Escuchar evento global para abrir Rayo desde cualquier parte de la tienda (ej: comparador)
+    window.addEventListener('five:open-rayo', ((e: CustomEvent) => {
+      const mode = e.detail?.mode || 'chat';
+      openModal(mode);
+      if (mode === 'chat' && e.detail?.query) {
+        if (chatInput) chatInput.value = e.detail.query;
+        chatForm?.dispatchEvent(new Event('submit'));
+      }
+    }) as EventListener);
+
+    // Switch Tabs
+    const switchTab = (targetKey: string) => {
+      tabs.forEach((tab) => {
+        const isMatch = tab.dataset.tab === targetKey;
+        tab.classList.toggle('active', isMatch);
+        tab.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+      });
+
+      Object.entries(panels).forEach(([key, panel]) => {
+        if (!panel) return;
+        if (key === targetKey) {
+          panel.hidden = false;
+          panel.classList.add('active');
+        } else {
+          panel.hidden = true;
+          panel.classList.remove('active');
+        }
+      });
+    };
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.tab;
+        if (target) switchTab(target);
+      });
+    });
+
+    // Helper para formatear Markdown simple a HTML seguro
+    const formatMarkdown = (text: string): string => {
+      let escaped = text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+
+      // Headers
+      escaped = escaped.replace(/^### (.*$)/gim, '<h4 class="rayo-md-h4">$1</h4>');
+      escaped = escaped.replace(/^#### (.*$)/gim, '<h5 class="rayo-md-h5">$1</h5>');
+
+      // Bold & Italic
+      escaped = escaped.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      escaped = escaped.replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+      // Blockquotes
+      escaped = escaped.replace(/^> (.*$)/gim, '<blockquote class="rayo-md-quote">$1</blockquote>');
+
+      // Lists
+      escaped = escaped.replace(/^\s*-\s+(.*$)/gim, '<li class="rayo-md-li">$1</li>');
+      escaped = escaped.replace(/(<li.*<\/li>)/s, '<ul class="rayo-md-ul">$1</ul>');
+
+      // Line breaks
+      escaped = escaped.replace(/\n\n+/g, '<p class="rayo-md-p"></p>');
+      escaped = escaped.replace(/\n/g, '<br/>');
+
+      return escaped;
+    };
+
+    // Agregar mensaje al feed de chat
+    const appendMessage = (sender: 'bot' | 'user', text: string) => {
+      if (!messagesFeed) return;
+      const isBot = sender === 'bot';
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `rayo-msg rayo-msg-${sender}`;
+
+      const avatarHtml = isBot
+        ? `<img src="/images/Rayo-Bot.png" alt="Rayo" class="rayo-msg-avatar" width="28" height="28" />`
+        : `<div class="rayo-user-avatar">Tú</div>`;
+
+      const bodyHtml = isBot ? formatMarkdown(text) : `<p>${text.replace(/</g, '&lt;')}</p>`;
+
+      msgDiv.innerHTML = `
+        ${avatarHtml}
+        <div class="rayo-msg-bubble">
+          ${bodyHtml}
+        </div>
+      `;
+
+      messagesFeed.appendChild(msgDiv);
+      messagesFeed.scrollTop = messagesFeed.scrollHeight;
+    };
+
+    // Indicador de "Escribiendo..."
+    const appendTyping = (): HTMLElement => {
+      const typingDiv = document.createElement('div');
+      typingDiv.className = 'rayo-msg rayo-msg-bot rayo-typing-msg';
+      typingDiv.id = 'rayo-typing-indicator';
+      typingDiv.innerHTML = `
+        <img src="/images/Rayo-Bot.png" alt="Rayo" class="rayo-msg-avatar" width="28" height="28" />
+        <div class="rayo-msg-bubble rayo-typing-bubble">
+          <span></span><span></span><span></span>
+        </div>
+      `;
+      messagesFeed?.appendChild(typingDiv);
+      if (messagesFeed) messagesFeed.scrollTop = messagesFeed.scrollHeight;
+      return typingDiv;
+    };
+
+    const removeTyping = () => {
+      const ind = root.querySelector('#rayo-typing-indicator');
+      ind?.remove();
+    };
+
+    // Chat submit handler
+    chatForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const val = (chatInput?.value || '').trim();
+      if (!val) return;
+
+      appendMessage('user', val);
+      if (chatInput) chatInput.value = '';
+      if (suggestionsWrap) suggestionsWrap.style.display = 'none';
+
+      appendTyping();
+
+      try {
+        const resp = await fetch('/api/chat-nutricional', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            query: val,
+            mode: 'chat',
+          }),
+        });
+
+        const data = await resp.json();
+        removeTyping();
+
+        if (data.ok && data.answer) {
+          appendMessage('bot', data.answer);
+        } else {
+          appendMessage('bot', data.error || 'Lo siento, tuve un percance técnico temporal. Por favor intenta nuevamente.');
+        }
+      } catch (err) {
+        removeTyping();
+        appendMessage('bot', 'No pude conectar con el servidor en este momento. Revisa tu conexión a internet.');
+      }
+    });
+
+    // Manejar clics en sugerencias rápidas
+    root.querySelectorAll<HTMLButtonElement>('.rayo-chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const q = chip.dataset.query;
+        if (q && chatInput) {
+          chatInput.value = q;
+          chatForm?.dispatchEvent(new Event('submit'));
+        }
+      });
+    });
+
+    // Manejar submit de Calculadora de Porción
+    portionForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const species = (portionForm.querySelector<HTMLInputElement>('input[name="portion-species"]:checked')?.value || 'perro') as string;
+      const weight = parseFloat((portionForm.querySelector<HTMLInputElement>('#portion-weight')?.value || '10'));
+      const stage = (portionForm.querySelector<HTMLSelectElement>('#portion-stage')?.value || 'adulto') as string;
+      const activity = (portionForm.querySelector<HTMLSelectElement>('#portion-activity')?.value || 'normal') as string;
+
+      if (!portionResult) return;
+      portionResult.hidden = false;
+      portionResult.innerHTML = `
+        <div class="rayo-loading-box">
+          <div class="rayo-spinner"></div>
+          <span>Rayo está calculando la energía metabólica...</span>
+        </div>
+      `;
+
+      try {
+        const resp = await fetch('/api/chat-nutricional', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            mode: 'portion',
+            petProfile: {
+              species,
+              weightKg: weight,
+              lifeStage: stage,
+              activityLevel: activity,
+            },
+          }),
+        });
+
+        const data = await resp.json();
+        if (data.ok && data.answer) {
+          portionResult.innerHTML = `
+            <div class="rayo-result-body">
+              ${formatMarkdown(data.answer)}
+            </div>
+          `;
+        } else {
+          portionResult.innerHTML = `<div class="rayo-error-msg">${data.error || 'No se pudo calcular la porción.'}</div>`;
+        }
+      } catch {
+        portionResult.innerHTML = `<div class="rayo-error-msg">Error de conexión al calcular la porción.</div>`;
+      }
+    });
+
+    // Manejar submit de Antiparasitarios
+    farmaForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const species = (farmaForm.querySelector<HTMLInputElement>('input[name="farma-species"]:checked')?.value || 'perro') as string;
+      const weight = parseFloat((farmaForm.querySelector<HTMLInputElement>('#farma-weight')?.value || '8'));
+
+      if (!farmaResult) return;
+      farmaResult.hidden = false;
+      farmaResult.innerHTML = `
+        <div class="rayo-loading-box">
+          <div class="rayo-spinner"></div>
+          <span>Buscando en catálogo oficial de farmacia de FIVE...</span>
+        </div>
+      `;
+
+      try {
+        const resp = await fetch('/api/chat-nutricional', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            mode: 'antiparasitic',
+            petProfile: {
+              species,
+              weightKg: weight,
+            },
+          }),
+        });
+
+        const data = await resp.json();
+        if (data.ok && data.answer) {
+          farmaResult.innerHTML = `
+            <div class="rayo-result-body">
+              ${formatMarkdown(data.answer)}
+            </div>
+          `;
+        } else {
+          farmaResult.innerHTML = `<div class="rayo-error-msg">${data.error || 'No se encontraron antiparasitarios.'}</div>`;
+        }
+      } catch {
+        farmaResult.innerHTML = `<div class="rayo-error-msg">Error de conexión al consultar antiparasitarios.</div>`;
+      }
+    });
+  }
+</script>
+
+<style is:global>
+  /* =========================================================
+     RAYO · EXPERTO NUTRICIONAL WIDGET (FIVE MASCOTAS)
+     ========================================================= */
+
+  .rayo-widget-container {
+    position: fixed;
+    bottom: 84px; /* Flota sobre el MobileBottomNav (60px) en mobile */
+    right: 18px;
+    z-index: 1100; /* Superior al MobileBottomNav (1000) */
+    font-family: inherit;
+    pointer-events: none; /* Allows clicks around it */
+  }
+
+  @media (min-width: 768px) {
+    .rayo-widget-container {
+      bottom: 26px;
+      right: 26px;
+    }
+  }
+
+  /* Botón Lanzador Circular Flotante */
+  .rayo-launcher {
+    pointer-events: auto;
+    position: relative;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 3px solid #7025a8;
+    padding: 0;
+    box-shadow: 0 10px 28px rgba(112, 37, 168, 0.35), 0 3px 10px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+  }
+
+  .rayo-launcher:hover {
+    transform: scale(1.1) translateY(-3px);
+    box-shadow: 0 14px 34px rgba(112, 37, 168, 0.45), 0 5px 14px rgba(0, 0, 0, 0.16);
+    border-color: #9333ea;
+  }
+
+  .rayo-launcher-avatar-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fdfafe;
+  }
+
+  .rayo-launcher-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .rayo-status-dot {
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+    width: 13px;
+    height: 13px;
+    background: #10b981;
+    border: 2.5px solid #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.9);
+    animation: rayoPulse 2.5s infinite;
+  }
+
+  @keyframes rayoPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+  }
+
+  .rayo-launcher-pill-badge {
+    position: absolute;
+    bottom: -8px;
+    background: linear-gradient(135deg, #7025a8, #276717);
+    color: #ffffff;
+    font-size: 9.5px;
+    font-weight: 850;
+    padding: 2px 7px;
+    border-radius: 9999px;
+    letter-spacing: 0.3px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    border: 1.5px solid #ffffff;
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+
+  /* Modal / Ventana */
+  .rayo-modal {
+    pointer-events: auto;
+    position: fixed;
+    bottom: 84px;
+    right: 18px;
+    width: calc(100vw - 36px);
+    max-width: 430px;
+    height: 600px;
+    max-height: calc(100vh - 110px);
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid rgba(112, 37, 168, 0.15);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18), 0 6px 16px rgba(112, 37, 168, 0.12);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 1200;
+    animation: rayoFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @media (min-width: 768px) {
+    .rayo-modal {
+      bottom: 26px;
+      right: 26px;
+      height: 620px;
+      max-height: calc(100vh - 50px);
+    }
+  }
+
+  @keyframes rayoFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(16px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* Header */
+  .rayo-header {
+    background: linear-gradient(135deg, #7025a8 0%, #4a1570 100%);
+    color: #ffffff;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .rayo-header-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .rayo-header-avatar-wrap {
+    position: relative;
+  }
+
+  .rayo-header-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #ffffff;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .rayo-header-badge {
+    position: absolute;
+    bottom: -4px;
+    right: -4px;
+    background: #276717;
+    color: #ffffff;
+    font-size: 8.5px;
+    font-weight: 800;
+    padding: 2px 5px;
+    border-radius: 6px;
+    letter-spacing: 0.2px;
+  }
+
+  .rayo-header-title {
+    font-size: 15px;
+    font-weight: 800;
+    margin: 0;
+    line-height: 1.2;
+    color: #ffffff;
+  }
+
+  .rayo-header-subtitle {
+    font-size: 11.5px;
+    margin: 2px 0 0;
+    opacity: 0.9;
+    color: #e9d5ff;
+  }
+
+  .rayo-header-subtitle strong {
+    color: #ffffff;
+  }
+
+  .rayo-close-btn {
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    color: #ffffff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+
+  .rayo-close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  /* Pestañas */
+  .rayo-tabs {
+    display: flex;
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 4px;
+    gap: 4px;
+  }
+
+  .rayo-tab-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 8px 6px;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #6b7280;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .rayo-tab-btn.active {
+    background: #ffffff;
+    color: #7025a8;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Paneles */
+  .rayo-tab-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .rayo-tab-panel[hidden] {
+    display: none;
+  }
+
+  /* Feed de Conversación */
+  .rayo-feed {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: #fdfcff;
+  }
+
+  .rayo-msg {
+    display: flex;
+    gap: 8px;
+    max-width: 90%;
+  }
+
+  .rayo-msg-bot {
+    align-self: flex-start;
+  }
+
+  .rayo-msg-user {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+  }
+
+  .rayo-msg-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: #f3e8ff;
+    border: 1px solid #d8b4fe;
+  }
+
+  .rayo-user-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #7025a8;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .rayo-msg-bubble {
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .rayo-msg-bot .rayo-msg-bubble {
+    background: #ffffff;
+    border: 1px solid #e9d5ff;
+    color: #1f2937;
+    border-top-left-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  }
+
+  .rayo-msg-user .rayo-msg-bubble {
+    background: #7025a8;
+    color: #ffffff;
+    border-top-right-radius: 4px;
+  }
+
+  .rayo-msg-bubble p {
+    margin: 0 0 6px;
+  }
+  .rayo-msg-bubble p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Sugerencias Rápidas */
+  .rayo-quick-suggestions {
+    background: #f8f6fc;
+    border: 1px dashed #d8b4fe;
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin-top: 4px;
+  }
+
+  .rayo-suggestions-title {
+    display: block;
+    font-size: 11px;
+    font-weight: 750;
+    color: #7025a8;
+    margin-bottom: 6px;
+  }
+
+  .rayo-chips-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .rayo-chip {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    padding: 5px 10px;
+    border-radius: 9999px;
+    font-size: 11.5px;
+    color: #374151;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s;
+    font-weight: 600;
+  }
+
+  .rayo-chip:hover {
+    background: #f3e8ff;
+    border-color: #7025a8;
+    color: #7025a8;
+  }
+
+  /* Formulario de Input en Chat */
+  .rayo-input-form {
+    display: flex;
+    gap: 8px;
+    padding: 10px 14px;
+    background: #ffffff;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .rayo-input {
+    flex: 1;
+    border: 1px solid #d1d5db;
+    border-radius: 9999px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .rayo-input:focus {
+    border-color: #7025a8;
+    box-shadow: 0 0 0 2px rgba(112, 37, 168, 0.15);
+  }
+
+  .rayo-send-btn {
+    background: #7025a8;
+    border: none;
+    color: #ffffff;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, transform 0.1s;
+    flex-shrink: 0;
+  }
+
+  .rayo-send-btn:hover {
+    background: #5b1a8c;
+    transform: scale(1.05);
+  }
+
+  /* Formularios de Calculadora y Farma */
+  .rayo-calc-form {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+  }
+
+  .rayo-tab-desc {
+    font-size: 12px;
+    color: #4b5563;
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  .rayo-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .rayo-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .rayo-label {
+    font-size: 12px;
+    font-weight: 750;
+    color: #374151;
+  }
+
+  .rayo-radio-pills {
+    display: flex;
+    gap: 8px;
+  }
+
+  .rayo-pill-label {
+    flex: 1;
+    cursor: pointer;
+  }
+
+  .rayo-pill-label input {
+    display: none;
+  }
+
+  .rayo-pill-label span {
+    display: block;
+    text-align: center;
+    padding: 7px;
+    font-size: 12px;
+    font-weight: 700;
+    background: #f3f4f6;
+    border-radius: 8px;
+    border: 1.5px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .rayo-pill-label input:checked + span {
+    background: #f3e8ff;
+    border-color: #7025a8;
+    color: #7025a8;
+  }
+
+  .rayo-input-number,
+  .rayo-select {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+    box-sizing: border-box;
+  }
+
+  .rayo-input-number:focus,
+  .rayo-select:focus {
+    border-color: #7025a8;
+  }
+
+  .rayo-input-with-addon {
+    display: flex;
+    align-items: center;
+  }
+
+  .rayo-input-with-addon input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .rayo-addon {
+    background: #f3f4f6;
+    border: 1px solid #d1d5db;
+    border-left: none;
+    padding: 8px 12px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #6b7280;
+  }
+
+  .rayo-action-btn {
+    background: linear-gradient(135deg, #7025a8 0%, #276717 100%);
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    margin-top: 4px;
+  }
+
+  .rayo-action-btn:hover {
+    opacity: 0.95;
+    transform: translateY(-1px);
+  }
+
+  /* Resultados de Calculadora */
+  .rayo-result-card {
+    margin: 0 14px 14px;
+    padding: 12px;
+    background: #fdfcff;
+    border: 1px solid #e9d5ff;
+    border-radius: 12px;
+    overflow-y: auto;
+    max-height: 260px;
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+
+  .rayo-loading-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #7025a8;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .rayo-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #e9d5ff;
+    border-top-color: #7025a8;
+    border-radius: 50%;
+    animation: rayoSpin 0.7s linear infinite;
+  }
+
+  @keyframes rayoSpin {
+    to { transform: rotate(360deg); }
+  }
+
+  .rayo-error-msg {
+    color: #dc2626;
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+  /* Markdown en respuestas */
+  .rayo-md-h4 {
+    font-size: 13.5px;
+    font-weight: 800;
+    color: #7025a8;
+    margin: 8px 0 4px;
+  }
+
+  .rayo-md-h5 {
+    font-size: 12.5px;
+    font-weight: 800;
+    color: #1f2937;
+    margin: 6px 0 3px;
+  }
+
+  .rayo-md-quote {
+    margin: 6px 0;
+    padding: 6px 10px;
+    background: #f3e8ff;
+    border-left: 3px solid #7025a8;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #4a1570;
+  }
+
+  .rayo-md-ul {
+    margin: 4px 0 6px;
+    padding-left: 18px;
+  }
+
+  .rayo-md-li {
+    margin-bottom: 3px;
+  }
+
+  .rayo-md-p {
+    margin: 6px 0;
+  }
+
+  /* Typing Dots */
+  .rayo-typing-bubble {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 14px;
+  }
+
+  .rayo-typing-bubble span {
+    width: 6px;
+    height: 6px;
+    background: #9333ea;
+    border-radius: 50%;
+    animation: rayoBlink 1.4s infinite both;
+  }
+  .rayo-typing-bubble span:nth-child(2) { animation-delay: 0.2s; }
+  .rayo-typing-bubble span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes rayoBlink {
+    0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
+    40% { opacity: 1; transform: scale(1.1); }
+  }
+
+  /* Footer */
+  .rayo-footer {
+    background: #f9fafb;
+    border-top: 1px solid #f3f4f6;
+    padding: 8px 12px;
+    font-size: 10.5px;
+    color: #6b7280;
+    text-align: center;
+    line-height: 1.35;
+  }
+</style>

@@ -6,6 +6,7 @@ import zlib from 'node:zlib';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { nexoEnabled, nexoConfigured, nexoCatalogData, nexoCheckout, nexoRequest } from './nexo.mjs';
+import { checkRateLimit, handleRayoNutritionalChat } from './rayo.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -287,6 +288,50 @@ const server = http.createServer(async (req, res) => {
       }
       return;
     }
+    res.statusCode = 405;
+    res.end(JSON.stringify({ ok: false, error: 'Method Not Allowed' }));
+    return;
+  }
+
+  // API ROUTE: /api/chat-nutricional (Rayo · Experto Nutricional de FIVE Mascotas)
+  if (pathname === '/api/chat-nutricional') {
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+
+    if (req.method === 'POST') {
+      const clientIp = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket?.remoteAddress || '127.0.0.1';
+      const rateStatus = checkRateLimit(clientIp);
+      if (!rateStatus.allowed) {
+        res.statusCode = 429;
+        res.setHeader('Retry-After', String(rateStatus.retryAfterSeconds));
+        res.end(JSON.stringify({
+          ok: false,
+          error: `Rayo está descansando sus patitas. Has alcanzado el límite momentáneo de consultas. Vuelve a intentar en ${rateStatus.retryAfterSeconds} segundos.`,
+          retryAfter: rateStatus.retryAfterSeconds,
+        }));
+        return;
+      }
+
+      try {
+        const body = await parseBody(req);
+        const { query, mode, productIds, petProfile } = body;
+        const result = await handleRayoNutritionalChat({
+          query: typeof query === 'string' ? query.slice(0, 1000) : '',
+          mode: mode || 'chat',
+          productIds: Array.isArray(productIds) ? productIds.slice(0, 5) : [],
+          petProfile: typeof petProfile === 'object' && petProfile !== null ? petProfile : null,
+          dataDir,
+        });
+
+        res.statusCode = 200;
+        res.end(JSON.stringify(result));
+      } catch (err) {
+        res.statusCode = 500;
+        res.end(JSON.stringify({ ok: false, error: err.message || 'Error interno en asistente Rayo' }));
+      }
+      return;
+    }
+
     res.statusCode = 405;
     res.end(JSON.stringify({ ok: false, error: 'Method Not Allowed' }));
     return;
