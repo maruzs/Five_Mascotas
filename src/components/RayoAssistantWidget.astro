@@ -1,10 +1,11 @@
 ---
 // src/components/RayoAssistantWidget.astro
-// Asistente Nutricional Flotante "Rayo · Experto Nutricional" para FIVE Mascotas
+// Asistente Nutricional "Rayo · Experto Nutricional" para FIVE Mascotas
+// Diseño profesional Anti-Vibecoding: Cero degradados en imagen, cero emojis, iconografía SVG corporativa.
 ---
 
 <div id="rayo-widget-root" class="rayo-widget-container" data-astro-rerun>
-  <!-- Botón Lanzador Flotante Circular -->
+  <!-- Botón Lanzador Flotante Circular (Sin degradados, avatar limpio) -->
   <button
     id="rayo-launcher-btn"
     type="button"
@@ -18,13 +19,13 @@
         src="/images/Rayo-Bot.png"
         alt="Rayo · Asistente Nutricional"
         class="rayo-launcher-avatar"
-        width="58"
-        height="58"
+        width="56"
+        height="56"
         loading="eager"
       />
       <span class="rayo-status-dot" aria-hidden="true"></span>
     </div>
-    <span class="rayo-launcher-pill-badge">Rayo · IA</span>
+    <span class="rayo-launcher-pill-badge">Rayo IA</span>
   </button>
 
   <!-- Ventana / Modal del Asistente -->
@@ -36,7 +37,7 @@
     aria-modal="true"
     hidden
   >
-    <!-- Header -->
+    <!-- Header Profesional (Limpio, sobrio, tipografía editorial) -->
     <header class="rayo-header">
       <div class="rayo-header-info">
         <div class="rayo-header-avatar-wrap">
@@ -44,15 +45,20 @@
             src="/images/Rayo-Bot.png"
             alt="Rayo"
             class="rayo-header-avatar"
-            width="44"
-            height="44"
+            width="42"
+            height="42"
           />
-          <span class="rayo-header-badge">Tuxedo Pro</span>
         </div>
-        <div>
-          <h2 id="rayo-modal-title" class="rayo-header-title">Rayo · Experto Nutricional</h2>
+        <div class="rayo-header-text">
+          <div class="rayo-header-status-row">
+            <h2 id="rayo-modal-title" class="rayo-header-title">Rayo</h2>
+            <span class="rayo-online-tag">
+              <span class="rayo-online-dot"></span>
+              En línea
+            </span>
+          </div>
           <p class="rayo-header-subtitle">
-            Asesor veterinario de FIVE para <strong>Perros</strong> y <strong>Gatos</strong> 🐶🐱
+            Experto nutricional para <strong>perros y gatos</strong>
           </p>
         </div>
       </div>
@@ -62,76 +68,90 @@
         class="rayo-close-btn"
         aria-label="Cerrar asistente nutricional"
       >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
       </button>
     </header>
 
-    <!-- Pestañas de Modo -->
-    <nav class="rayo-tabs" aria-label="Modos de Rayo">
+    <!-- Pestañas de Modo con Icon Pack SVG Oficial -->
+    <nav class="rayo-tabs" aria-label="Secciones del Asistente">
       <button type="button" class="rayo-tab-btn active" data-tab="chat">
-        💬 Chat & Dudas
+        <svg class="rayo-tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <span>Consultas</span>
       </button>
       <button type="button" class="rayo-tab-btn" data-tab="portion">
-        ⚖️ Calcular Porción
+        <svg class="rayo-tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"></path>
+          <path d="M2 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"></path>
+          <path d="M7 21h10"></path>
+          <path d="M12 3v18"></path>
+          <path d="M3 7h18"></path>
+        </svg>
+        <span>Porción Diaria</span>
       </button>
       <button type="button" class="rayo-tab-btn" data-tab="farma">
-        💊 Antiparasitarios
+        <svg class="rayo-tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"></path>
+          <path d="m8.5 8.5 7 7"></path>
+        </svg>
+        <span>Antiparasitarios</span>
       </button>
     </nav>
 
-    <!-- Contenido de Pestaña: CHAT -->
+    <!-- Contenido de Pestaña: CONSULTAS / CHAT -->
     <div id="rayo-tab-chat" class="rayo-tab-panel active">
       <!-- Feed de Conversación -->
       <div id="rayo-messages-feed" class="rayo-feed">
-        <!-- Mensaje de Bienvenida de Rayo -->
+        <!-- Mensaje Inicial de Rayo -->
         <div class="rayo-msg rayo-msg-bot">
           <img src="/images/Rayo-Bot.png" alt="Rayo" class="rayo-msg-avatar" width="28" height="28" />
           <div class="rayo-msg-bubble">
             <p>
-              ¡Hola! Soy <strong>Rayo</strong>, el gato tuxedo y asesor nutricional de <strong>FIVE Mascotas</strong>. 🐾
+              Hola, soy <strong>Rayo</strong>, asesor nutricional de FIVE Mascotas.
             </p>
             <p>
-              Puedo ayudarte a evaluar ingredientes, calidad de proteína, calcular porciones exactas o encontrar la pastilla antiparasitaria para el peso de tu perro o gato.
+              Puedo orientarte sobre calidad de ingredientes, requerimientos proteicos, porciones según peso y antiparasitarios oficiales para perros y gatos.
             </p>
           </div>
         </div>
 
-        <!-- Sugerencias Rápidas -->
+        <!-- Sugerencias Rápidas con SVG Icons -->
         <div class="rayo-quick-suggestions" id="rayo-suggestions">
-          <span class="rayo-suggestions-title">Consultas habituales:</span>
+          <span class="rayo-suggestions-title">Temas frecuentes:</span>
           <div class="rayo-chips-wrap">
             <button type="button" class="rayo-chip" data-query="¿Qué diferencia hay entre un alimento con grano y uno Grain Free?">
-              🌾 ¿Cereales o Grain Free?
+              Cereales vs Grain Free
             </button>
-            <button type="button" class="rayo-chip" data-query="¿Cómo saber si el primer ingrediente de un alimento es de buena calidad?">
-              🥩 Evaluar primer ingrediente
+            <button type="button" class="rayo-chip" data-query="¿Cómo evaluar la calidad del primer ingrediente en la etiqueta?">
+              Calidad del primer ingrediente
             </button>
-            <button type="button" class="rayo-chip" data-query="¿Por qué los gatos necesitan mayor porcentaje de proteína que los perros?">
-              🐱 Proteína en gatos vs perros
+            <button type="button" class="rayo-chip" data-query="¿Por qué los gatos requieren mayor proteína animal que los perros?">
+              Proteína en felinos vs caninos
             </button>
-            <button type="button" class="rayo-chip" data-query="¿Cómo hacer la transición gradual de un alimento a otro sin malestar estomacal?">
-              🔄 Transición gradual segura
+            <button type="button" class="rayo-chip" data-query="¿Cómo hacer una transición gradual de alimento sin malestar estomacal?">
+              Transición gradual de alimento
             </button>
           </div>
         </div>
       </div>
 
-      <!-- Input Bar -->
+      <!-- Barra de Entrada -->
       <form id="rayo-chat-form" class="rayo-input-form">
         <input
           type="text"
           id="rayo-chat-input"
           class="rayo-input"
-          placeholder="Escribe tu consulta sobre alimentos, ingredientes o cuidados..."
+          placeholder="Escribe tu consulta sobre alimentos, ingredientes o dosis..."
           maxlength="300"
           autocomplete="off"
           required
         />
-        <button type="submit" id="rayo-send-btn" class="rayo-send-btn" aria-label="Enviar pregunta">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <button type="submit" id="rayo-send-btn" class="rayo-send-btn" aria-label="Enviar consulta">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="22" y1="2" x2="11" y2="13"></line>
             <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
           </svg>
@@ -143,15 +163,34 @@
     <div id="rayo-tab-portion" class="rayo-tab-panel" hidden>
       <form id="rayo-portion-form" class="rayo-calc-form">
         <div class="rayo-form-group">
-          <label class="rayo-label" for="portion-species">Especie:</label>
+          <label class="rayo-label">Especie:</label>
           <div class="rayo-radio-pills">
             <label class="rayo-pill-label">
               <input type="radio" name="portion-species" value="perro" checked />
-              <span>🐶 Perro</span>
+              <span class="rayo-pill-content">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10 5.172a2 2 0 0 0-3.414-1.414l-3.172 3.172a2 2 0 0 0 0 2.828l1.414 1.414"></path>
+                  <path d="M14 5.172a2 2 0 0 1 3.414-1.414l3.172 3.172a2 2 0 0 1 0 2.828l-1.414 1.414"></path>
+                  <path d="M6 12a6 6 0 1 0 12 0 6 6 0 0 0-12 0Z"></path>
+                  <circle cx="9" cy="11" r="1" fill="currentColor"></circle>
+                  <circle cx="15" cy="11" r="1" fill="currentColor"></circle>
+                  <path d="M11 15h2"></path>
+                </svg>
+                Canino (Perro)
+              </span>
             </label>
             <label class="rayo-pill-label">
               <input type="radio" name="portion-species" value="gato" />
-              <span>🐱 Gato</span>
+              <span class="rayo-pill-content">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 5c-3.87 0-7 3.13-7 7 0 2.87 1.74 5.34 4.24 6.42L12 21l2.76-2.58C17.26 17.34 19 14.87 19 12c0-3.87-3.13-7-7-7Z"></path>
+                  <path d="M5 8 3 3l5 2"></path>
+                  <path d="M19 8l2-5-5 2"></path>
+                  <circle cx="9" cy="12" r="1" fill="currentColor"></circle>
+                  <circle cx="15" cy="12" r="1" fill="currentColor"></circle>
+                </svg>
+                Felino (Gato)
+              </span>
             </label>
           </div>
         </div>
@@ -185,14 +224,19 @@
         <div class="rayo-form-group">
           <label class="rayo-label" for="portion-activity">Nivel de actividad:</label>
           <select id="portion-activity" class="rayo-select">
-            <option value="normal">Normal (1-2 paseos / juego moderado)</option>
-            <option value="baja">Baja / Sedentario / Tendencia a sobrepeso</option>
-            <option value="alta">Alta / Activo / Deportivo</option>
+            <option value="normal">Normal (actividad moderada)</option>
+            <option value="baja">Baja (sedentario / sobrepeso)</option>
+            <option value="alta">Alta (muy activo / trabajo)</option>
           </select>
         </div>
 
         <button type="submit" class="rayo-action-btn">
-          ⚡ Calcular Ración con Rayo
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          Calcular Ración Diaria
         </button>
       </form>
 
@@ -203,7 +247,7 @@
     <div id="rayo-tab-farma" class="rayo-tab-panel" hidden>
       <form id="rayo-farma-form" class="rayo-calc-form">
         <p class="rayo-tab-desc">
-          Encuentra la pastilla o pipeta oficial de FIVE (Nexgard, Simparica, Bravecto, Credelio, etc.) exacta para el peso de tu mascota.
+          Opciones oficiales homologadas en el catálogo de FIVE según rango de peso corporal.
         </p>
 
         <div class="rayo-form-group">
@@ -211,11 +255,30 @@
           <div class="rayo-radio-pills">
             <label class="rayo-pill-label">
               <input type="radio" name="farma-species" value="perro" checked />
-              <span>🐶 Perro</span>
+              <span class="rayo-pill-content">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10 5.172a2 2 0 0 0-3.414-1.414l-3.172 3.172a2 2 0 0 0 0 2.828l1.414 1.414"></path>
+                  <path d="M14 5.172a2 2 0 0 1 3.414-1.414l3.172 3.172a2 2 0 0 1 0 2.828l-1.414 1.414"></path>
+                  <path d="M6 12a6 6 0 1 0 12 0 6 6 0 0 0-12 0Z"></path>
+                  <circle cx="9" cy="11" r="1" fill="currentColor"></circle>
+                  <circle cx="15" cy="11" r="1" fill="currentColor"></circle>
+                  <path d="M11 15h2"></path>
+                </svg>
+                Perro
+              </span>
             </label>
             <label class="rayo-pill-label">
               <input type="radio" name="farma-species" value="gato" />
-              <span>🐱 Gato</span>
+              <span class="rayo-pill-content">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 5c-3.87 0-7 3.13-7 7 0 2.87 1.74 5.34 4.24 6.42L12 21l2.76-2.58C17.26 17.34 19 14.87 19 12c0-3.87-3.13-7-7-7Z"></path>
+                  <path d="M5 8 3 3l5 2"></path>
+                  <path d="M19 8l2-5-5 2"></path>
+                  <circle cx="9" cy="12" r="1" fill="currentColor"></circle>
+                  <circle cx="15" cy="12" r="1" fill="currentColor"></circle>
+                </svg>
+                Gato
+              </span>
             </label>
           </div>
         </div>
@@ -238,16 +301,23 @@
         </div>
 
         <button type="submit" class="rayo-action-btn">
-          🔍 Buscar Pastilla Indicada
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          Buscar Presentación Indicada
         </button>
       </form>
 
       <div id="rayo-farma-result" class="rayo-result-card" hidden></div>
     </div>
 
-    <!-- Disclaimer Footer -->
+    <!-- Footer con Icono SVG Institucional (Cero Emojis) -->
     <footer class="rayo-footer">
-      <span>🛡️ Orientación nutricional basada en fichas PIM. En patologías, consulta a tu veterinario.</span>
+      <svg class="rayo-footer-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+      </svg>
+      <span>Información técnica basada en fichas PIM. En condiciones clínicas, consulta a tu médico veterinario.</span>
     </footer>
   </div>
 </div>
@@ -311,7 +381,7 @@
       if (e.key === 'Escape' && !modal?.hidden) closeModal();
     });
 
-    // Escuchar evento global para abrir Rayo desde cualquier parte de la tienda (ej: comparador)
+    // Escuchar evento global para abrir Rayo desde cualquier parte de la tienda
     window.addEventListener('five:open-rayo', ((e: CustomEvent) => {
       const mode = e.detail?.mode || 'chat';
       openModal(mode);
@@ -348,12 +418,15 @@
       });
     });
 
-    // Helper para formatear Markdown simple a HTML seguro
+    // Helper para formatear Markdown simple a HTML seguro sin emojis
     const formatMarkdown = (text: string): string => {
       let escaped = text
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;');
+
+      // Limpieza de cualquier emoji residual en la respuesta
+      escaped = escaped.replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '');
 
       // Headers
       escaped = escaped.replace(/^### (.*$)/gim, '<h4 class="rayo-md-h4">$1</h4>');
@@ -401,7 +474,7 @@
       messagesFeed.scrollTop = messagesFeed.scrollHeight;
     };
 
-    // Indicador de "Escribiendo..."
+    // Indicador de escritura
     const appendTyping = (): HTMLElement => {
       const typingDiv = document.createElement('div');
       typingDiv.className = 'rayo-msg rayo-msg-bot rayo-typing-msg';
@@ -450,15 +523,15 @@
         if (data.ok && data.answer) {
           appendMessage('bot', data.answer);
         } else {
-          appendMessage('bot', data.error || 'Lo siento, tuve un percance técnico temporal. Por favor intenta nuevamente.');
+          appendMessage('bot', data.error || 'No fue posible procesar la consulta en este momento.');
         }
       } catch (err) {
         removeTyping();
-        appendMessage('bot', 'No pude conectar con el servidor en este momento. Revisa tu conexión a internet.');
+        appendMessage('bot', 'Error de conexión con el servidor.');
       }
     });
 
-    // Manejar clics en sugerencias rápidas
+    // Manejar clics en sugerencias
     root.querySelectorAll<HTMLButtonElement>('.rayo-chip').forEach((chip) => {
       chip.addEventListener('click', () => {
         const q = chip.dataset.query;
@@ -482,7 +555,7 @@
       portionResult.innerHTML = `
         <div class="rayo-loading-box">
           <div class="rayo-spinner"></div>
-          <span>Rayo está calculando la energía metabólica...</span>
+          <span>Calculando requerimiento calórico...</span>
         </div>
       `;
 
@@ -527,7 +600,7 @@
       farmaResult.innerHTML = `
         <div class="rayo-loading-box">
           <div class="rayo-spinner"></div>
-          <span>Buscando en catálogo oficial de farmacia de FIVE...</span>
+          <span>Buscando en catálogo oficial de farmacia...</span>
         </div>
       `;
 
@@ -552,7 +625,7 @@
             </div>
           `;
         } else {
-          farmaResult.innerHTML = `<div class="rayo-error-msg">${data.error || 'No se encontraron antiparasitarios.'}</div>`;
+          farmaResult.innerHTML = `<div class="rayo-error-msg">${data.error || 'No se encontraron registros de antiparasitarios.'}</div>`;
         }
       } catch {
         farmaResult.innerHTML = `<div class="rayo-error-msg">Error de conexión al consultar antiparasitarios.</div>`;
@@ -564,37 +637,38 @@
 <style is:global>
   /* =========================================================
      RAYO · EXPERTO NUTRICIONAL WIDGET (FIVE MASCOTAS)
+     Directivas Anti-Vibecoding: Cero degradados en imagen, cero emojis.
      ========================================================= */
 
   .rayo-widget-container {
     position: fixed;
-    bottom: 84px; /* Flota sobre el MobileBottomNav (60px) en mobile */
-    right: 18px;
-    z-index: 1100; /* Superior al MobileBottomNav (1000) */
+    bottom: 84px;
+    right: 20px;
+    z-index: 1100;
     font-family: inherit;
-    pointer-events: none; /* Allows clicks around it */
+    pointer-events: none;
   }
 
   @media (min-width: 768px) {
     .rayo-widget-container {
-      bottom: 26px;
-      right: 26px;
+      bottom: 28px;
+      right: 28px;
     }
   }
 
-  /* Botón Lanzador Circular Flotante */
+  /* Botón Lanzador Circular Flotante (Sólido, limpio, sin degradados) */
   .rayo-launcher {
     pointer-events: auto;
     position: relative;
-    width: 62px;
-    height: 62px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     background: #ffffff;
-    border: 3px solid #7025a8;
+    border: 2px solid #7025a8;
     padding: 0;
-    box-shadow: 0 10px 28px rgba(112, 37, 168, 0.35), 0 3px 10px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08);
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -602,9 +676,9 @@
   }
 
   .rayo-launcher:hover {
-    transform: scale(1.1) translateY(-3px);
-    box-shadow: 0 14px 34px rgba(112, 37, 168, 0.45), 0 5px 14px rgba(0, 0, 0, 0.16);
-    border-color: #9333ea;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(112, 37, 168, 0.25);
+    border-color: #5b1a8c;
   }
 
   .rayo-launcher-avatar-wrap {
@@ -613,10 +687,10 @@
     height: 100%;
     border-radius: 50%;
     overflow: hidden;
+    background: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #fdfafe;
   }
 
   .rayo-launcher-avatar {
@@ -631,31 +705,24 @@
     position: absolute;
     bottom: 3px;
     right: 3px;
-    width: 13px;
-    height: 13px;
+    width: 12px;
+    height: 12px;
     background: #10b981;
-    border: 2.5px solid #ffffff;
+    border: 2px solid #ffffff;
     border-radius: 50%;
-    box-shadow: 0 0 10px rgba(16, 185, 129, 0.9);
-    animation: rayoPulse 2.5s infinite;
-  }
-
-  @keyframes rayoPulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.2); opacity: 0.8; }
+    box-shadow: 0 0 4px rgba(16, 185, 129, 0.6);
   }
 
   .rayo-launcher-pill-badge {
     position: absolute;
-    bottom: -8px;
-    background: linear-gradient(135deg, #7025a8, #276717);
+    bottom: -7px;
+    background: #7025a8;
     color: #ffffff;
     font-size: 9.5px;
-    font-weight: 850;
-    padding: 2px 7px;
+    font-weight: 800;
+    padding: 2px 8px;
     border-radius: 9999px;
     letter-spacing: 0.3px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     border: 1.5px solid #ffffff;
     white-space: nowrap;
     text-transform: uppercase;
@@ -666,27 +733,27 @@
     pointer-events: auto;
     position: fixed;
     bottom: 84px;
-    right: 18px;
-    width: calc(100vw - 36px);
-    max-width: 430px;
-    height: 600px;
+    right: 20px;
+    width: calc(100vw - 40px);
+    max-width: 420px;
+    height: 580px;
     max-height: calc(100vh - 110px);
     background: #ffffff;
-    border-radius: 20px;
-    border: 1px solid rgba(112, 37, 168, 0.15);
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18), 0 6px 16px rgba(112, 37, 168, 0.12);
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
     display: flex;
     flex-direction: column;
     overflow: hidden;
     z-index: 1200;
-    animation: rayoFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: rayoFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   @media (min-width: 768px) {
     .rayo-modal {
-      bottom: 26px;
-      right: 26px;
-      height: 620px;
+      bottom: 28px;
+      right: 28px;
+      height: 600px;
       max-height: calc(100vh - 50px);
     }
   }
@@ -694,19 +761,19 @@
   @keyframes rayoFadeIn {
     from {
       opacity: 0;
-      transform: translateY(16px) scale(0.96);
+      transform: translateY(10px);
     }
     to {
       opacity: 1;
-      transform: translateY(0) scale(1);
+      transform: translateY(0);
     }
   }
 
-  /* Header */
+  /* Header (Sólido, limpio, fondo blanco con borde sutil) */
   .rayo-header {
-    background: linear-gradient(135deg, #7025a8 0%, #4a1570 100%);
-    color: #ffffff;
-    padding: 14px 16px;
+    background: #ffffff;
+    border-bottom: 1px solid #f3f4f6;
+    padding: 14px 18px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -719,70 +786,92 @@
   }
 
   .rayo-header-avatar-wrap {
-    position: relative;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1.5px solid #e5e7eb;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: #f9fafb;
   }
 
   .rayo-header-avatar {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    background: #ffffff;
-    border: 2px solid #ffffff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    display: block;
   }
 
-  .rayo-header-badge {
-    position: absolute;
-    bottom: -4px;
-    right: -4px;
-    background: #276717;
-    color: #ffffff;
-    font-size: 8.5px;
-    font-weight: 800;
-    padding: 2px 5px;
-    border-radius: 6px;
-    letter-spacing: 0.2px;
+  .rayo-header-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .rayo-header-status-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
   .rayo-header-title {
     font-size: 15px;
     font-weight: 800;
+    color: #111827;
     margin: 0;
     line-height: 1.2;
-    color: #ffffff;
+    letter-spacing: -0.2px;
+  }
+
+  .rayo-online-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #065f46;
+    background: #ecfdf5;
+    padding: 1px 6px;
+    border-radius: 9999px;
+  }
+
+  .rayo-online-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #10b981;
   }
 
   .rayo-header-subtitle {
-    font-size: 11.5px;
+    font-size: 12px;
+    color: #6b7280;
     margin: 2px 0 0;
-    opacity: 0.9;
-    color: #e9d5ff;
+    line-height: 1.3;
   }
 
   .rayo-header-subtitle strong {
-    color: #ffffff;
+    color: #374151;
   }
 
   .rayo-close-btn {
-    background: rgba(255, 255, 255, 0.15);
+    background: #f3f4f6;
     border: none;
-    color: #ffffff;
-    width: 32px;
-    height: 32px;
+    color: #6b7280;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s;
+    transition: background 0.15s, color 0.15s;
   }
 
   .rayo-close-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: #e5e7eb;
+    color: #111827;
   }
 
-  /* Pestañas */
+  /* Pestañas de Navegación */
   .rayo-tabs {
     display: flex;
     background: #f9fafb;
@@ -793,21 +882,30 @@
 
   .rayo-tab-btn {
     flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
     background: transparent;
     border: none;
     padding: 8px 6px;
-    font-size: 11.5px;
+    font-size: 12px;
     font-weight: 700;
     color: #6b7280;
     border-radius: 8px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.15s ease;
+  }
+
+  .rayo-tab-icon {
+    flex-shrink: 0;
+    color: currentColor;
   }
 
   .rayo-tab-btn.active {
     background: #ffffff;
     color: #7025a8;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   }
 
   /* Paneles */
@@ -822,7 +920,7 @@
     display: none;
   }
 
-  /* Feed de Conversación */
+  /* Feed de Mensajes */
   .rayo-feed {
     flex: 1;
     overflow-y: auto;
@@ -830,7 +928,7 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
-    background: #fdfcff;
+    background: #ffffff;
   }
 
   .rayo-msg {
@@ -854,8 +952,8 @@
     border-radius: 50%;
     object-fit: cover;
     flex-shrink: 0;
-    background: #f3e8ff;
-    border: 1px solid #d8b4fe;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
   }
 
   .rayo-user-avatar {
@@ -874,23 +972,22 @@
 
   .rayo-msg-bubble {
     padding: 10px 14px;
-    border-radius: 14px;
+    border-radius: 12px;
     font-size: 13px;
     line-height: 1.5;
   }
 
   .rayo-msg-bot .rayo-msg-bubble {
-    background: #ffffff;
-    border: 1px solid #e9d5ff;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
     color: #1f2937;
-    border-top-left-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    border-top-left-radius: 3px;
   }
 
   .rayo-msg-user .rayo-msg-bubble {
     background: #7025a8;
     color: #ffffff;
-    border-top-right-radius: 4px;
+    border-top-right-radius: 3px;
   }
 
   .rayo-msg-bubble p {
@@ -902,9 +999,9 @@
 
   /* Sugerencias Rápidas */
   .rayo-quick-suggestions {
-    background: #f8f6fc;
-    border: 1px dashed #d8b4fe;
-    border-radius: 12px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
     padding: 10px 12px;
     margin-top: 4px;
   }
@@ -913,7 +1010,9 @@
     display: block;
     font-size: 11px;
     font-weight: 750;
-    color: #7025a8;
+    color: #4b5563;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
     margin-bottom: 6px;
   }
 
@@ -925,19 +1024,18 @@
 
   .rayo-chip {
     background: #ffffff;
-    border: 1px solid #e5e7eb;
+    border: 1px solid #d1d5db;
     padding: 5px 10px;
-    border-radius: 9999px;
+    border-radius: 6px;
     font-size: 11.5px;
     color: #374151;
     cursor: pointer;
     text-align: left;
-    transition: all 0.15s;
+    transition: border-color 0.15s, color 0.15s;
     font-weight: 600;
   }
 
   .rayo-chip:hover {
-    background: #f3e8ff;
     border-color: #7025a8;
     color: #7025a8;
   }
@@ -948,23 +1046,23 @@
     gap: 8px;
     padding: 10px 14px;
     background: #ffffff;
-    border-top: 1px solid #e5e7eb;
+    border-top: 1px solid #f3f4f6;
   }
 
   .rayo-input {
     flex: 1;
     border: 1px solid #d1d5db;
-    border-radius: 9999px;
-    padding: 8px 14px;
+    border-radius: 8px;
+    padding: 8px 12px;
     font-size: 13px;
     font-family: inherit;
     outline: none;
-    transition: border-color 0.2s;
+    transition: border-color 0.15s, box-shadow 0.15s;
   }
 
   .rayo-input:focus {
     border-color: #7025a8;
-    box-shadow: 0 0 0 2px rgba(112, 37, 168, 0.15);
+    box-shadow: 0 0 0 2px rgba(112, 37, 168, 0.12);
   }
 
   .rayo-send-btn {
@@ -973,23 +1071,22 @@
     color: #ffffff;
     width: 36px;
     height: 36px;
-    border-radius: 50%;
+    border-radius: 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s, transform 0.1s;
+    transition: background 0.15s;
     flex-shrink: 0;
   }
 
   .rayo-send-btn:hover {
     background: #5b1a8c;
-    transform: scale(1.05);
   }
 
   /* Formularios de Calculadora y Farma */
   .rayo-calc-form {
-    padding: 14px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -998,7 +1095,7 @@
 
   .rayo-tab-desc {
     font-size: 12px;
-    color: #4b5563;
+    color: #6b7280;
     line-height: 1.45;
     margin: 0;
   }
@@ -1035,19 +1132,23 @@
     display: none;
   }
 
-  .rayo-pill-label span {
-    display: block;
+  .rayo-pill-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
     text-align: center;
-    padding: 7px;
-    font-size: 12px;
+    padding: 9px;
+    font-size: 12.5px;
     font-weight: 700;
-    background: #f3f4f6;
+    background: #f9fafb;
     border-radius: 8px;
-    border: 1.5px solid transparent;
-    transition: all 0.2s;
+    border: 1.5px solid #e5e7eb;
+    color: #4b5563;
+    transition: all 0.15s;
   }
 
-  .rayo-pill-label input:checked + span {
+  .rayo-pill-label input:checked + .rayo-pill-content {
     background: #f3e8ff;
     border-color: #7025a8;
     color: #7025a8;
@@ -1063,11 +1164,13 @@
     font-family: inherit;
     outline: none;
     box-sizing: border-box;
+    background: #ffffff;
   }
 
   .rayo-input-number:focus,
   .rayo-select:focus {
     border-color: #7025a8;
+    box-shadow: 0 0 0 2px rgba(112, 37, 168, 0.12);
   }
 
   .rayo-input-with-addon {
@@ -1081,7 +1184,7 @@
   }
 
   .rayo-addon {
-    background: #f3f4f6;
+    background: #f9fafb;
     border: 1px solid #d1d5db;
     border-left: none;
     padding: 8px 12px;
@@ -1092,33 +1195,38 @@
     color: #6b7280;
   }
 
+  /* Botón de Acción Sólido (Cero degradados) */
   .rayo-action-btn {
-    background: linear-gradient(135deg, #7025a8 0%, #276717 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #7025a8;
     color: #ffffff;
     border: none;
-    padding: 10px;
-    border-radius: 10px;
+    padding: 11px;
+    border-radius: 8px;
     font-size: 13px;
     font-weight: 800;
     cursor: pointer;
-    transition: opacity 0.2s, transform 0.1s;
+    transition: background 0.15s, transform 0.1s;
     margin-top: 4px;
   }
 
   .rayo-action-btn:hover {
-    opacity: 0.95;
+    background: #5b1a8c;
     transform: translateY(-1px);
   }
 
-  /* Resultados de Calculadora */
+  /* Resultados */
   .rayo-result-card {
-    margin: 0 14px 14px;
-    padding: 12px;
-    background: #fdfcff;
-    border: 1px solid #e9d5ff;
-    border-radius: 12px;
+    margin: 0 16px 16px;
+    padding: 12px 14px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
     overflow-y: auto;
-    max-height: 260px;
+    max-height: 240px;
     font-size: 12.5px;
     line-height: 1.5;
   }
@@ -1135,7 +1243,7 @@
   .rayo-spinner {
     width: 16px;
     height: 16px;
-    border: 2px solid #e9d5ff;
+    border: 2px solid #e5e7eb;
     border-top-color: #7025a8;
     border-radius: 50%;
     animation: rayoSpin 0.7s linear infinite;
@@ -1162,7 +1270,7 @@
   .rayo-md-h5 {
     font-size: 12.5px;
     font-weight: 800;
-    color: #1f2937;
+    color: #111827;
     margin: 6px 0 3px;
   }
 
@@ -1200,7 +1308,7 @@
   .rayo-typing-bubble span {
     width: 6px;
     height: 6px;
-    background: #9333ea;
+    background: #7025a8;
     border-radius: 50%;
     animation: rayoBlink 1.4s infinite both;
   }
@@ -1216,10 +1324,17 @@
   .rayo-footer {
     background: #f9fafb;
     border-top: 1px solid #f3f4f6;
-    padding: 8px 12px;
-    font-size: 10.5px;
+    padding: 8px 14px;
+    font-size: 11px;
     color: #6b7280;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 6px;
     line-height: 1.35;
+  }
+
+  .rayo-footer-icon {
+    flex-shrink: 0;
+    color: #9ca3af;
   }
 </style>

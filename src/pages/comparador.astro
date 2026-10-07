@@ -51,8 +51,27 @@ const getStageType = (p: any) => {
         <div class="comp-filter-group">
           <span class="comp-filter-group-label">Especie:</span>
           <div class="comp-filter-pills" id="pet-filters">
-            <button type="button" class="comp-pill-btn active" data-pet="perro">🐶 Perros</button>
-            <button type="button" class="comp-pill-btn" data-pet="gato">🐱 Gatos</button>
+            <button type="button" class="comp-pill-btn active" data-pet="perro">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;">
+                <path d="M10 5.172a2 2 0 0 0-3.414-1.414l-3.172 3.172a2 2 0 0 0 0 2.828l1.414 1.414"></path>
+                <path d="M14 5.172a2 2 0 0 1 3.414-1.414l3.172 3.172a2 2 0 0 1 0 2.828l-1.414 1.414"></path>
+                <path d="M6 12a6 6 0 1 0 12 0 6 6 0 0 0-12 0Z"></path>
+                <circle cx="9" cy="11" r="1" fill="currentColor"></circle>
+                <circle cx="15" cy="11" r="1" fill="currentColor"></circle>
+                <path d="M11 15h2"></path>
+              </svg>
+              Perros
+            </button>
+            <button type="button" class="comp-pill-btn" data-pet="gato">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;">
+                <path d="M12 5c-3.87 0-7 3.13-7 7 0 2.87 1.74 5.34 4.24 6.42L12 21l2.76-2.58C17.26 17.34 19 14.87 19 12c0-3.87-3.13-7-7-7Z"></path>
+                <path d="M5 8 3 3l5 2"></path>
+                <path d="M19 8l2-5-5 2"></path>
+                <circle cx="9" cy="12" r="1" fill="currentColor"></circle>
+                <circle cx="15" cy="12" r="1" fill="currentColor"></circle>
+              </svg>
+              Gatos
+            </button>
           </div>
         </div>
 
@@ -170,13 +189,15 @@ const getStageType = (p: any) => {
                 <span class="comp-rayo-dot"></span>
                 <span>Análisis con Google Gemini 2.0 & PIM Oficial</span>
               </div>
-              <h2 class="comp-rayo-title">⚡ Veredicto de Rayo · Experto Nutricional</h2>
+              <h2 class="comp-rayo-title">Veredicto de Rayo · Experto Nutricional</h2>
               <p class="comp-rayo-desc">
                 ¿Indeciso entre las opciones? Rayo analiza la proteína real, los primeros ingredientes, alérgenos y la relación precio/calidad de los alimentos seleccionados para <strong>perros y gatos</strong>.
               </p>
             </div>
             <button type="button" id="btn-ask-rayo-verdict" class="comp-rayo-cta-btn">
-              <span class="rayo-spark-icon">✨</span>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
               <span>Pedir veredicto a Rayo</span>
             </button>
           </div>
@@ -645,10 +666,20 @@ const getStageType = (p: any) => {
               </div>
               <div class="rayo-verdict-actions">
                 <button type="button" class="rayo-action-chip" id="rayo-open-portion-calc">
-                  ⚖️ Calcular porción recomendada para mi mascota
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;">
+                    <path d="M16 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"></path>
+                    <path d="M2 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"></path>
+                    <path d="M7 21h10"></path>
+                    <path d="M12 3v18"></path>
+                    <path d="M3 7h18"></path>
+                  </svg>
+                  Calcular ración recomendada para mi mascota
                 </button>
                 <button type="button" class="rayo-action-chip" id="rayo-open-chat-duda">
-                  💬 Preguntarle más a Rayo sobre estos alimentos
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                  </svg>
+                  Consultar más detalles con Rayo
                 </button>
               </div>
             </div>
@@ -666,14 +697,14 @@ const getStageType = (p: any) => {
         } else {
           rayoResultPanel.innerHTML = `
             <div class="rayo-verdict-error">
-              <p>⚠️ ${data.error || 'No se pudo generar el veredicto en este momento.'}</p>
+              <p>${data.error || 'No se pudo generar el veredicto en este momento.'}</p>
             </div>
           `;
         }
       } catch (err) {
         rayoResultPanel.innerHTML = `
           <div class="rayo-verdict-error">
-            <p>⚠️ Ocurrió un error al contactar al asistente. Por favor intenta nuevamente.</p>
+            <p>Ocurrió un error al contactar al asistente. Por favor intenta nuevamente.</p>
           </div>
         `;
       }
@@ -1432,14 +1463,14 @@ const getStageType = (p: any) => {
   }
 
   .comp-rayo-card {
-    background: linear-gradient(135deg, #ffffff 0%, #fdfafe 60%, #f7efff 100%);
-    border: 2px solid #e9d5ff;
+    background: #ffffff;
+    border: 1.5px solid #e5dde9;
     border-radius: 20px;
     padding: 22px;
     display: flex;
     flex-direction: column;
     gap: 20px;
-    box-shadow: 0 4px 20px rgba(112, 37, 168, 0.08);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
     position: relative;
     overflow: hidden;
   }
@@ -1465,9 +1496,10 @@ const getStageType = (p: any) => {
     width: 76px;
     height: 76px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #7025a8, #276717);
+    background: #ffffff;
+    border: 2px solid #7025a8;
     padding: 3px;
-    box-shadow: 0 6px 16px rgba(112, 37, 168, 0.25);
+    box-shadow: 0 4px 12px rgba(112, 37, 168, 0.12);
   }
 
   .comp-rayo-img {
@@ -1529,7 +1561,7 @@ const getStageType = (p: any) => {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #9333ea;
+    background: #7025a8;
   }
 
   .comp-rayo-title {
@@ -1552,7 +1584,7 @@ const getStageType = (p: any) => {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: linear-gradient(135deg, #7025a8 0%, #276717 100%);
+    background: #7025a8;
     color: #ffffff;
     border: none;
     padding: 12px 22px;
@@ -1560,14 +1592,15 @@ const getStageType = (p: any) => {
     font-size: 14px;
     font-weight: 800;
     cursor: pointer;
-    box-shadow: 0 4px 14px rgba(112, 37, 168, 0.3);
+    box-shadow: 0 4px 12px rgba(112, 37, 168, 0.25);
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     white-space: nowrap;
   }
 
   .comp-rayo-cta-btn:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 6px 20px rgba(112, 37, 168, 0.4);
+    background: #5b1d8a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(112, 37, 168, 0.35);
   }
 
   .rayo-spark-icon {

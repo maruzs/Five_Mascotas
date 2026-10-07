@@ -256,17 +256,16 @@ export function findAntiparasitics(products, { species = 'perro', weightKg = 10 
  * Fallback Algorítmico Determinista de Rayo (en caso de no tener API key o fallo de cuota)
  */
 function buildDeterministicResponse({ query, mode, productsToCompare, portionData, antiparasitics, petProfile }) {
-  const greeting = `🐾 **¡Hola! Soy Rayo · Experto Nutricional de FIVE Mascotas.**\n*(Un gato tuxedo con visión veterinaria objetiva para perros y gatos)*\n\n`;
+  const greeting = `**Rayo · Experto Nutricional** (FIVE Mascotas)\n*Asesoría técnica y objetiva para perros y gatos*\n\n`;
 
   if (mode === 'comparison' && productsToCompare && productsToCompare.length >= 2) {
-    const [p1, p2, p3] = productsToCompare;
     let resp = greeting;
-    resp += `### ⚡ Veredicto Nutricional Técnico de Rayo\n\n`;
-    resp += `He analizado al detalle las fichas oficiales del PIM de FIVE para:\n`;
-    productsToCompare.forEach((p, idx) => {
+    resp += `### Veredicto Nutricional Técnico\n\n`;
+    resp += `He analizado al detalle las fichas oficiales del catálogo PIM para:\n`;
+    productsToCompare.forEach((p) => {
       resp += `- **${p.brand} ${p.name}** (${p.pet} · ${p.lifeStage} · ${p.proteinPct}% Prot. · $${p.pricePerKg.toLocaleString('es-CL')}/kg)\n`;
     });
-    resp += `\n---\n`;
+    resp += `\n---\n\n`;
 
     // Comparativa de proteína
     const sortedProt = [...productsToCompare].sort((a, b) => b.proteinPct - a.proteinPct);
@@ -276,7 +275,7 @@ function buildDeterministicResponse({ query, mode, productsToCompare, portionDat
     const sortedPrice = [...productsToCompare].sort((a, b) => a.pricePerKg - b.pricePerKg);
     const bestPrice = sortedPrice[0];
 
-    resp += `#### 🥩 1. Calidad y Aporte Proteico\n`;
+    resp += `#### 1. Calidad y Aporte Proteico\n`;
     resp += `- **Líder en proteína bruta:** **${bestProt.brand} ${bestProt.name}** con un **${bestProt.proteinPct}%**. `;
     if (bestProt.pet === 'Gatos') {
       resp += `En gatos (carnívoros estrictos), una mayor concentración de proteína animal garantiza taurina esencial y preservación muscular sin sobrecarga de carbohidratos.\n`;
@@ -284,22 +283,22 @@ function buildDeterministicResponse({ query, mode, productsToCompare, portionDat
       resp += `Para perros, este nivel optimiza la masa magra y la digestibilidad celular.\n`;
     }
 
-    resp += `\n#### 🌾 2. Análisis de Ingredientes y Cereales\n`;
+    resp += `\n#### 2. Análisis de Ingredientes y Cereales\n`;
     productsToCompare.forEach((p) => {
       const ing = (p.ingredients || '').toLowerCase();
       const firstIng = (p.ingredients || '').split(',')[0] || 'Ingredientes no especificados';
       const isGrainFree = !ing.includes('maíz') && !ing.includes('trigo') && !ing.includes('gluten de maíz');
       resp += `- **${p.brand}**: Primer ingrediente declarado: *${firstIng.trim()}*. `;
       if (isGrainFree) {
-        resp += `✅ **Fórmula sin cereales tradicionales**, ideal para digestión sensible o prevención de alergias.\n`;
+        resp += `**Fórmula sin cereales tradicionales**, ideal para digestión sensible o prevención de alergias.\n`;
       } else {
         resp += `Contiene cereales (maíz/trigo/arroz) como fuente de carbohidratos energéticos.\n`;
       }
     });
 
-    resp += `\n#### 💰 3. Rendimiento y Relación Precio/Calidad\n`;
+    resp += `\n#### 3. Rendimiento y Relación Precio / Calidad\n`;
     resp += `- **Opción más conveniente por kilo:** **${bestPrice.brand} ${bestPrice.name}** a **$${bestPrice.pricePerKg.toLocaleString('es-CL')}/kg**.\n`;
-    resp += `- **Conclusión de Rayo:** Si buscas el máximo rigor nutricional e ingredientes nobles, **${bestProt.brand}** toma la delantera. Si priorizas rendimiento económico diario con estándar balanceado, **${bestPrice.brand}** ofrece excelente costo por kilo.\n`;
+    resp += `- **Conclusión:** Si buscas el máximo rigor nutricional e ingredientes nobles, **${bestProt.brand}** toma la delantera. Si priorizas rendimiento económico diario con estándar balanceado, **${bestPrice.brand}** ofrece un costo por ración altamente competitivo.\n`;
 
     return resp;
   }
@@ -308,7 +307,7 @@ function buildDeterministicResponse({ query, mode, productsToCompare, portionDat
     let resp = greeting;
     const petLabel = petProfile?.species || 'Mascota';
     const weightLabel = petProfile?.weightKg ? `${petProfile.weightKg} kg` : 'peso indicado';
-    resp += `### 💊 Antiparasitarios Recomendados en FIVE para ${petLabel} (${weightLabel})\n\n`;
+    resp += `### Antiparasitarios Indicados en FIVE para ${petLabel} (${weightLabel})\n\n`;
     resp += `Según el rango de peso oficial de nuestro catálogo de farmacia, las opciones indicadas son:\n\n`;
     if (antiparasitics && antiparasitics.length > 0) {
       antiparasitics.forEach((m) => {
@@ -318,33 +317,33 @@ function buildDeterministicResponse({ query, mode, productsToCompare, portionDat
     } else {
       resp += `Actualmente contamos con antiparasitarios como Nexgard, Simparica, Bravecto y Credelio para diversos rangos de peso en nuestro catálogo.\n`;
     }
-    resp += `\n⚠️ **Disclaimer Veterinario Obligatorio:**\n`;
-    resp += `*Los antiparasitarios internos y externos deben administrarse según el peso corporal exacto y la edad mínima del prospecto (generalmente desde las 8 semanas). Si tu mascota tiene antecedentes de convulsiones, enfermedades hepáticas, o está gestando/lactando, consulta siempre previamente con tu médico veterinario.*`;
+    resp += `\n**Aviso Veterinario Obligatorio:**\n`;
+    resp += `*Los antiparasitarios internos y externos deben administrarse según el peso corporal exacto y la edad mínima del prospecto (generalmente desde las 8 semanas). Si tu mascota tiene antecedentes médicos particulares o está en gestación, consulta previamente con tu médico veterinario.*`;
     return resp;
   }
 
   if (portionData) {
     const p = portionData;
     let resp = greeting;
-    resp += `### ⚖️ Cálculo de Porción Diaria Recomendada\n\n`;
+    resp += `### Cálculo de Ración Diaria Recomendada\n\n`;
     resp += `Para un **${p.species}** de **${p.weightKg} kg**:\n\n`;
     resp += `- **Requerimiento Energético en Reposo (RER):** ${p.rer} kcal/día\n`;
     resp += `- **Energía Diaria Total (MER estimado):** **${p.dailyCalories} kcal/día**\n`;
     resp += `- **Porción Diaria Total Sugerida:** **${p.totalDailyGrams} gramos al día** (densidad aprox. ${p.kcalDensity} kcal/kg)\n`;
     resp += `- **Distribución:** **${p.gramsPerMeal} gramos** por ración, repartidos en **${p.mealsPerDay} tomas al día**.\n\n`;
-    resp += `> 💡 *Consejo de Rayo:* Pesa el alimento con balanza de cocina las primeras dos semanas. Los vasitos medidores suelen tener un margen de error del 20% al 30%.`;
+    resp += `*Recomendación de precisión:* Pesa el alimento con balanza de cocina las primeras dos semanas para asegurar una dosificación exacta.`;
     return resp;
   }
 
   // Consulta general
   let resp = greeting;
   resp += `He recibido tu consulta sobre nutrición y bienestar para tu mascota.\n\n`;
-  resp += `En **FIVE Mascotas**, analizamos los alimentos con 4 pilares innegociables:\n`;
+  resp += `En **FIVE Mascotas**, evaluamos los alimentos bajo criterios técnicos rigurosos:\n`;
   resp += `1. **Primer ingrediente de origen animal:** Proteína real (pollo, salmón, cordero) por encima de subproductos o harinas de cereales.\n`;
   resp += `2. **Especie adecuada:** Los gatos son carnívoros estrictos que no sintetizan taurina por sí mismos; los perros son omnívoros adaptados con necesidades calóricas según peso y actividad.\n`;
   resp += `3. **Transparencia en etiqueta:** Declaración clara del porcentaje de proteína bruta, grasa y cenizas.\n`;
   resp += `4. **Costo por kilo real:** Comparar el saco según duración y rendimiento diario, no solo el precio facial.\n\n`;
-  resp += `¿Te gustaría que comparemos dos alimentos específicos, que calculemos la porción exacta de tu peludo, o que revisemos la pastilla antiparasitaria para su peso?`;
+  resp += `¿Deseas que comparemos dos fórmulas, calculemos la porción exacta de tu mascota o busquemos antiparasitarios para su peso?`;
   return resp;
 }
 
@@ -412,19 +411,20 @@ export async function handleRayoNutritionalChat({
     };
   }
 
-  // 5. Preparar System Prompt y XML Context para Gemini 2.0 Flash
+  // 5. Preparar System Prompt y XML Context para Gemini
   const systemInstruction = `
 Eres "Rayo · Experto Nutricional", la mascota oficial y asesor veterinario de FIVE Mascotas (un gato tuxedo distinguido, empático, directo y científicamente riguroso).
 Tu misión es asesorar a tutores de mascotas con total objetividad y transparencia sobre nutrición y salud preventiva para PERROS y GATOS.
 
-REGLAS INNEGOCIABLES DE SEGURIDAD Y ÉTICA:
-1. NUNCA respondas temas ajenos a perros, gatos, nutrición animal o bienestar de mascotas (cero código, política o temas fuera de lugar).
-2. NUNCA inventes descuentos, cupones, regalos ni modifiques los precios oficiales del catálogo de FIVE Mascotas.
-3. Si hablas de antiparasitarios o medicamentos, incluye SIEMPRE el disclaimer veterinario obligatorio: el tutor debe pesar a su mascota antes de administrar y consultar al veterinario ante cualquier condición médica previa.
-4. Basa tus veredictos en la ciencia nutricional veterinaria:
+REGLAS INNEGOCIABLES DE SEGURIDAD, ESTILO Y ÉTICA:
+1. ESTÁ TERMINANTEMENTE PROHIBIDO EL USO DE EMOJIS O ÍCONOS PICTOGRÁFICOS EN TODAS TUS RESPUESTAS. Mantén una redacción limpia, sobria, elegante y profesional.
+2. NUNCA respondas temas ajenos a perros, gatos, nutrición animal o bienestar de mascotas (cero código, política o temas fuera de lugar).
+3. NUNCA inventes descuentos, cupones, regalos ni modifiques los precios oficiales del catálogo de FIVE Mascotas.
+4. Si hablas de antiparasitarios o medicamentos, incluye SIEMPRE el aviso veterinario obligatorio: el tutor debe pesar a su mascota antes de administrar y consultar al veterinario ante cualquier condición médica previa.
+5. Basa tus veredictos en la ciencia nutricional veterinaria:
    - Gatos: Carnívoros estrictos. Requieren alta proteína de origen animal, taurina, grasas de calidad y control de cenizas/fósforo.
    - Perros: Carnívoros facultativos / omnívoros adaptados. Se evalúa primer ingrediente (carne/harina de carne sobre maíz/soja), fuentes de carbohidratos, balance de fibra y ácidos grasos Omega 3/6.
-5. Formato: Escribe en Markdown pulido, con subtítulos concisos, viñetas claras y un tono cálido de tutor experto a tutor responsable.
+6. Formato: Escribe en Markdown pulido, con subtítulos concisos, viñetas limpias y un tono cálido de tutor experto a tutor responsable, SIN emojis.
 `.trim();
 
   // Formatear contexto estructurado XML
