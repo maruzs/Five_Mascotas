@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PromoBannerStrip from '../components/PromoBannerStrip.astro';
 import HeroCarousel from '../components/HeroCarousel.astro';
+import Icon from '../components/Icon.astro';
 import nexoSnapshot from '../data/pim/nexo-catalog.json';
 import type { Product } from '../data/pim/types';
 
@@ -21,12 +22,12 @@ const demoProducts = [
 const products = (nexoSnapshot as Product[] | null)?.map(p => ({ ...p, type:p.category })) ?? demoProducts;
 
 const categoryIcons = [
-  { name: 'Perros', href: '/perros', icon: '🐶', desc: 'Compañeros fieles' },
-  { name: 'Gatos', href: '/gatos', icon: '🐱', desc: 'Reyes del hogar' },
-  { name: 'Alimentos', href: '/alimentos', icon: '🍲', desc: 'Nutrición balanceada' },
-  { name: 'Farmacia', href: '/farmacia', icon: '💊', desc: 'Cuidado y salud' },
-  { name: 'Accesorios', href: '/accesorios', icon: '🎾', desc: 'Juegos y confort' },
-  { name: 'Ofertas', href: '/ofertas', icon: '🏷️', desc: 'Hasta 40% OFF' },
+  { name: 'Perros', href: '/perros', iconName: 'dog' as const, desc: 'Compañeros fieles' },
+  { name: 'Gatos', href: '/gatos', iconName: 'cat' as const, desc: 'Reyes del hogar' },
+  { name: 'Alimentos', href: '/alimentos', iconName: 'food' as const, desc: 'Nutrición balanceada' },
+  { name: 'Farmacia', href: '/farmacia', iconName: 'pharmacy' as const, desc: 'Cuidado y salud' },
+  { name: 'Accesorios', href: '/accesorios', iconName: 'toys' as const, desc: 'Juegos y confort' },
+  { name: 'Ofertas', href: '/ofertas', iconName: 'tag' as const, desc: 'Hasta 40% OFF' },
 ];
 
 const departments = [
@@ -68,7 +69,7 @@ const money = (n: number) =>
     <div class="five-category-circles-scroll">
       {categoryIcons.map((cat) => (
         <a href={cat.href} class="five-category-circle-item">
-          <div class="five-circle-icon">{cat.icon}</div>
+          <div class="five-circle-icon"><Icon name={cat.iconName} size={28} color="#7025A8" strokeWidth={2} /></div>
           <span class="five-circle-label">{cat.name}</span>
         </a>
       ))}
@@ -79,7 +80,7 @@ const money = (n: number) =>
   <section class="five-wrap">
     <div class="five-flash-sale-banner">
       <div class="five-sale-banner-left">
-        <div class="five-sale-icon">⚡</div>
+        <div class="five-sale-icon"><Icon name="flash" size={24} color="#ffffff" strokeWidth={2.2} /></div>
         <div class="five-sale-text">
           <small>¡Promoción Flash Activa!</small>
           <h3>Hasta 40% OFF en Alimentos Seleccionados</h3>
@@ -203,7 +204,7 @@ const money = (n: number) =>
 
     <!-- Empty State -->
     <div id="five-empty" class="five-empty-state" hidden>
-      <div class="five-empty-icon">🐾</div>
+      <div class="five-empty-icon"><Icon name="paw" size={44} color="#7025A8" /></div>
       <h3>No encontramos productos con esos filtros</h3>
       <p>Prueba limpiando los filtros seleccionados.</p>
       <button id="five-clear" class="five-button">Ver todos</button>

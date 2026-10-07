@@ -1,5 +1,6 @@
 ---
 import { navigationCategories } from '../data/pim/navigation';
+import Icon from './Icon.astro';
 ---
 
 <div id="five-drawer-overlay" class="five-drawer-overlay" hidden></div>
@@ -26,10 +27,12 @@ import { navigationCategories } from '../data/pim/navigation';
     <!-- Quick Pet Switcher -->
     <div class="five-drawer-pets">
       <a href="/perros" class="five-drawer-pet-pill dog">
-        <span>🐶 Para Perros</span>
+        <Icon name="dog" size={18} color="#7025A8" strokeWidth={2} />
+        <span>Para Perros</span>
       </a>
       <a href="/gatos" class="five-drawer-pet-pill cat">
-        <span>🐱 Para Gatos</span>
+        <Icon name="cat" size={18} color="#7025A8" strokeWidth={2} />
+        <span>Para Gatos</span>
       </a>
     </div>
 
@@ -73,20 +76,5 @@ import { navigationCategories } from '../data/pim/navigation';
         </div>
       ))}
     </nav>
-
-    <!-- Support / Store info -->
-    <div class="five-drawer-foot">
-      <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;">
-        <a href="/mi-cuenta" class="five-button" style="width:100%; justify-content:center; padding:10px; font-size:13px;">
-          👤 Mi Cuenta / Iniciar Sesión
-        </a>
-        <a href="/rastreo" class="five-button" style="width:100%; justify-content:center; padding:10px; font-size:13px; background:#faf5ff; color:#7025a8; border:1px solid #d8b4fe;">
-          📦 Rastrear Pedido en Vivo
-        </a>
-      </div>
-      <p><strong>Tienda FIVE Mascotas</strong></p>
-      <p>Lun - Sáb: 10:00 a 20:00 hrs</p>
-      <a href="/conoce-five" class="five-drawer-about-link">Conoce nuestra historia ↗</a>
-    </div>
   </div>
 </aside>

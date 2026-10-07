@@ -19,7 +19,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div style="max-width:720px; margin:0 auto;">
       <!-- Title & Search Hero -->
       <div style="text-align:center; margin-bottom:28px;">
-        <span style="font-size:36px; display:inline-block; margin-bottom:6px;">📦</span>
+        <div style="display:flex; justify-content:center; margin-bottom:10px;"><div style="width:54px; height:54px; border-radius:50%; background:#f3e8ff; display:flex; align-items:center; justify-content:center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7025A8" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg></div></div>
         <h1 style="font-size:clamp(24px, 4vw, 32px); font-weight:850; letter-spacing:-0.8px; margin:0 0 8px;">
           Rastrea tu Pedido en Vivo
         </h1>
@@ -40,7 +40,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             style="font-size:14px; padding:12px 16px; border-radius:12px;"
           />
           <button type="submit" class="five-button" style="padding:12px 24px; border-radius:12px; font-weight:800; white-space:nowrap;">
-            🔍 Buscar
+            Buscar
           </button>
         </form>
       </div>
@@ -52,7 +52,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       <!-- Empty / Not Found Message -->
       <div id="track-empty-box" class="five-empty-state" hidden style="margin-top:24px; padding:32px; background:#faf8fb; border:1px solid #e5dde9; border-radius:16px;">
-        <div style="font-size:32px; margin-bottom:8px;">🔎</div>
+        <div style="display:flex; justify-content:center; margin-bottom:12px;"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.8"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></div>
         <h3 style="font-size:16px; font-weight:800; color:#111827;">No encontramos pedidos con ese código</h3>
         <p style="font-size:13px; color:#6b7280; max-width:440px; margin:4px auto 14px;">
           Verifica que el código esté bien escrito (incluyendo <code>FIVE-TRK-</code>) o contáctanos por WhatsApp para asistirte de inmediato.
@@ -96,7 +96,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       resultBox.hidden = false;
       resultBox.innerHTML = `
         <div style="text-align:center; padding:32px; color:#7025a8; font-weight:700;">
-          <span style="display:inline-block; font-size:24px; animation:spin 1s infinite linear;">⏳</span>
+          <div class="rayo-verdict-spinner" style="width:28px; height:28px; border:3px solid #f3e8ff; border-top-color:#7025a8; border-radius:50%; margin:0 auto; animation:spin 0.8s linear infinite;"></div>
           <p style="margin:8px 0 0; font-size:14px;">Buscando estado en tiempo real...</p>
         </div>
       `;
@@ -171,7 +171,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               <span style="font-size:11px; text-transform:uppercase; color:#6b7280; font-weight:750; letter-spacing:0.3px;">Código de Seguimiento Oficial</span>
               <div style="display:flex; align-items:center; gap:8px; margin-top:2px;">
                 <strong style="font-size:22px; color:#7025a8; font-family:ui-monospace, monospace;">${order.code}</strong>
-                <button type="button" class="five-copy-track-btn" data-track="${order.code}">📋 Copiar</button>
+                <button type="button" class="five-copy-track-btn" data-track="${order.code}">Copiar</button>
               </div>
               <small style="color:#6b7280; display:block; margin-top:4px;">
                 Fecha: ${new Date(order.createdAt || Date.now()).toLocaleDateString('es-CL', { day:'numeric', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit' })}
@@ -186,11 +186,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           ${isPendingPayment ? `
             <div style="background:#fffbeb; border:1px solid #fef3c7; border-radius:12px; padding:12px 16px; margin-bottom:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
               <div>
-                <strong style="color:#92400e; font-size:13px; display:block;">⚠️ Esperando comprobante de transferencia</strong>
+                <strong style="color:#92400e; font-size:13px; display:block;">Esperando comprobante de transferencia</strong>
                 <span style="color:#b45309; font-size:12px;">Transfiere ${formatMoney(transferTotal)} a BancoEstado Cta Corriente 000-1234567-89</span>
               </div>
               <a href="https://wa.me/56912345678?text=${waProofMsg}" target="_blank" rel="noopener noreferrer" class="five-button" style="background:#25d366; font-size:12px; padding:6px 14px;">
-                💬 Enviar Comprobante WhatsApp
+                Enviar Comprobante WhatsApp
               </a>
             </div>
           ` : ''}
@@ -231,7 +231,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <!-- WhatsApp contact for assistance -->
           <div style="margin-top:22px; text-align:center; padding-top:16px; border-top:1px solid #f3f4f6;">
             <a href="https://wa.me/56912345678?text=Hola%20tengo%20una%20consulta%20sobre%20mi%20pedido%20${order.code}" target="_blank" rel="noopener noreferrer" class="five-button" style="background:#25d366; color:#ffffff; font-size:13px; padding:10px 22px;">
-              💬 Hablar con Soporte de Despacho
+              Hablar con Soporte de Despacho
             </a>
           </div>
         </div>

@@ -16,7 +16,7 @@ import { formatMoney } from '../data/pim/catalog';
   <div class="five-dialog-body">
     <!-- Notice Talca Flat Rate -->
     <div class="five-cart-notice" style="background:#edf8e8; color:#2d5d1c; border:1px solid #cce9c2;">
-      <span>🚚 <strong>Tarifa plana Talca:</strong> $1.500 · Entregas el mismo día para pedidos antes de las 14:00 hrs</span>
+      <span style="display:flex; align-items:center; gap:8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2d5d1c" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg><strong>Tarifa plana Talca:</strong> $1.500 · Entregas el mismo día para pedidos antes de las 14:00 hrs</span>
     </div>
 
     <!-- Product list -->
@@ -27,7 +27,7 @@ import { formatMoney } from '../data/pim/catalog';
     <!-- City Delivery Selector -->
     <div class="five-cart-shipping-select-wrap" style="background:#faf8fb; border:1px solid #e5dde9; border-radius:10px; padding:12px; margin-top:14px;">
       <label for="cart-city-select" style="font-size:12px; font-weight:750; color:#374151; display:block;">
-        📍 Selecciona tu ciudad de despacho:
+        Selecciona tu ciudad de despacho:
       </label>
       <select id="cart-city-select" class="five-select" style="width:100%; font-size:12.5px; padding:7px 10px; margin-top:6px; border-radius:6px;">
         {defaultShippingRates.map((r) => (

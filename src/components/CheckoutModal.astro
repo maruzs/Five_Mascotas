@@ -12,7 +12,7 @@ import { formatMoney } from '../data/pim/catalog';
     <div class="five-checkout-head">
       <div style="display:flex; align-items:center; justify-content:space-between;">
         <div style="display:flex; align-items:center; gap:8px;">
-          <span style="font-size:20px;">🛍️</span>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7025A8" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
           <h2 id="chk-title" style="font-size:18px; font-weight:850; margin:0; color:#111827;">Finalizar Compra FIVE</h2>
         </div>
         <button type="button" class="five-dialog-close" data-chk-close aria-label="Cerrar checkout">&times;</button>
@@ -123,7 +123,7 @@ import { formatMoney } from '../data/pim/catalog';
                 loading="eager"
               />
             </div>
-            <span class="five-qr-hint">📲 Escanea con tu cámara o app bancaria para obtener los datos</span>
+            <span class="five-qr-hint" style="display:flex; align-items:center; justify-content:center; gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7025A8" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg> Escanea con tu cámara o app bancaria para obtener los datos</span>
           </div>
 
           <!-- Bank Details text card -->
@@ -134,7 +134,7 @@ import { formatMoney } from '../data/pim/catalog';
                 <strong id="chk-bank-name" class="five-bank-val">{defaultBankAccount.bankName}</strong>
               </div>
               <button type="button" class="five-mini-copy-btn" data-copy-target="#chk-bank-name" aria-label="Copiar Banco">
-                <span>📋 Copiar</span>
+                <span>Copiar</span>
               </button>
             </div>
 
@@ -154,7 +154,7 @@ import { formatMoney } from '../data/pim/catalog';
                 <strong id="chk-bank-number" class="five-bank-val" style="color:#7025a8; font-size:15px; font-family:monospace;">{defaultBankAccount.accountNumber}</strong>
               </div>
               <button type="button" class="five-mini-copy-btn prominent" data-copy-target="#chk-bank-number" aria-label="Copiar Número de Cuenta">
-                <span>📋 Copiar Cuenta</span>
+                <span>Copiar Cuenta</span>
               </button>
             </div>
 
@@ -164,7 +164,7 @@ import { formatMoney } from '../data/pim/catalog';
                 <strong id="chk-bank-rut" class="five-bank-val" style="font-family:monospace;">{defaultBankAccount.holderRut}</strong>
               </div>
               <button type="button" class="five-mini-copy-btn prominent" data-copy-target="#chk-bank-rut" aria-label="Copiar RUT">
-                <span>📋 Copiar RUT</span>
+                <span>Copiar RUT</span>
               </button>
             </div>
 
@@ -194,18 +194,18 @@ import { formatMoney } from '../data/pim/catalog';
                 <strong id="chk-bank-amount" class="five-bank-val" style="font-size:17px; color:#276717;">$0</strong>
               </div>
               <button type="button" class="five-mini-copy-btn prominent green" data-copy-target="#chk-bank-amount" aria-label="Copiar Monto Exacto">
-                <span>📋 Copiar Monto</span>
+                <span>Copiar Monto</span>
               </button>
             </div>
 
             <button type="button" class="five-copy-data-btn" id="chk-copy-btn">
-              <span>📋 Copiar todos los datos de transferencia juntos</span>
+              <span>Copiar todos los datos de transferencia juntos</span>
             </button>
           </div>
         </div>
 
         <div class="five-cart-notice" style="margin-block:14px 10px; font-size:11.5px; background:#faf5ff; border:1px solid #e9d5ff; color:#6b21a8;">
-          💡 <strong>Importante:</strong> Al transferir, escribe tu código de pedido en el asunto/comentario de la transferencia. Luego pulsa "Ya Transferí / Confirmar Pedido" para enviarnos tu comprobante por WhatsApp.
+          <strong>Importante:</strong> Al transferir, escribe tu código de pedido en el asunto/comentario de la transferencia. Luego pulsa "Ya Transferí / Confirmar Pedido" para enviarnos tu comprobante por WhatsApp.
         </div>
 
         <div style="display:flex; justify-content:space-between; margin-top:12px;">
@@ -219,7 +219,7 @@ import { formatMoney } from '../data/pim/catalog';
       <!-- ================= STEP 3: CONFIRMACIÓN Y CÓDIGO DE SEGUIMIENTO ================= -->
       <div id="chk-step-3" class="five-chk-step-pane" hidden>
         <div style="text-align:center; padding:10px 0 16px;">
-          <div style="font-size:42px; margin-bottom:8px;">🎉</div>
+          <div style="display:flex; justify-content:center; margin-bottom:12px;"><div style="width:56px; height:56px; border-radius:50%; background:#edf8e8; display:flex; align-items:center; justify-content:center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#276717" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg></div></div>
           <h3 style="font-size:20px; font-weight:850; color:#111827; margin:0 0 6px;">Solicitud registrada</h3>
           <p id="chk-result-message" style="color:#4b5563; font-size:13.5px; margin:0;">
             Guarda el número de tu solicitud. La tienda verificará el pago y la disponibilidad:
@@ -234,13 +234,13 @@ import { formatMoney } from '../data/pim/catalog';
                 <span>📋 Copiar</span>
               </button>
             </div>
-            <small id="chk-result-status" style="color:#276717; font-weight:600; font-size:11.5px;">Estado: 🕒 Pendiente de confirmación de transferencia</small>
+            <small id="chk-result-status" style="color:#276717; font-weight:600; font-size:11.5px;">Estado: Pendiente de confirmación de transferencia</small>
           </div>
 
           <!-- WhatsApp Verification Button -->
           <div style="max-width:440px; margin:18px auto 0;">
             <a id="chk-whatsapp-proof-btn" href="#" target="_blank" rel="noopener noreferrer" class="five-button" style="background:#25d366; color:#ffffff; width:100%; justify-content:center; padding:12px 18px; font-size:14px; box-shadow:0 4px 14px rgba(37,211,102,0.3);">
-              <span>📲 Enviar Comprobante por WhatsApp</span>
+              <span>Enviar Comprobante por WhatsApp</span>
             </a>
             <small id="chk-proof-help" style="color:#6b7280; font-size:11px; margin-top:6px;">
               Haz clic para abrir WhatsApp con el mensaje pre-llenado listo para adjuntar tu captura o comprobante.

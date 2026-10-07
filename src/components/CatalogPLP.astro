@@ -2,6 +2,7 @@
 import { products } from '../data/pim/catalog';
 import ProductCard from './ProductCard.astro';
 import PromoBannerStrip from './PromoBannerStrip.astro';
+import Icon from './Icon.astro';
 
 interface Props {
   pageTitle: string;
@@ -235,7 +236,7 @@ const formats = [...new Set(products.map((p) => p.format))].sort();
 
         <!-- Empty State -->
         <div id="five-empty" class="five-empty-state" hidden>
-          <div class="five-empty-icon">🐾</div>
+          <div class="five-empty-icon"><Icon name="paw" size={44} color="#7025A8" /></div>
           <h3>No encontramos productos con esos filtros</h3>
           <p>Prueba desmarcando algunas opciones o buscando otro término.</p>
           <button id="five-clear" class="five-button">Limpiar todos los filtros</button>
