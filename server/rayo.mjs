@@ -483,7 +483,7 @@ Responde como Rayo, analizando objetivamente los datos anteriores. Sé claro, pr
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 12000); // 12s timeout
 
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${apiKey}`;
+    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`;
     const payload = {
       systemInstruction: {
         parts: [{ text: systemInstruction }],
@@ -539,7 +539,7 @@ Responde como Rayo, analizando objetivamente los datos anteriores. Sé claro, pr
 
     return {
       ok: true,
-      provider: 'gemini-3.8-flash',
+      provider: 'gemini-flash-latest',
       answer: candidateText,
       portionData,
       antiparasitics,
