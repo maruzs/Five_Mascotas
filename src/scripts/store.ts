@@ -366,7 +366,7 @@ class StoreManager {
         lines.push('Por favor confírmenme disponibilidad para coordinar el pago y entrega. ¡Gracias!');
 
         const textParam = encodeURIComponent(lines.join('\n'));
-        checkoutBtn.href = `https://wa.me/56912345678?text=${textParam}`;
+        checkoutBtn.href = `https://wa.me/56964183605?text=${textParam}`;
         checkoutBtn.target = '_blank';
         checkoutBtn.rel = 'noopener noreferrer';
       }
@@ -1186,7 +1186,7 @@ class StoreManager {
         `Adjunto mi comprobante de transferencia para confirmación. ¡Muchas gracias!`,
       ];
       if (waProofBtn) {
-        const supportPhone = sentToNexo ? String((nexoBank as unknown as Record<string,string> | null)?.whatsappPhone || '').replace(/\D/g,'') : '56912345678';
+        const supportPhone = sentToNexo ? String((nexoBank as unknown as Record<string,string> | null)?.whatsappPhone || '').replace(/\D/g,'') : '56964183605';
         waProofBtn.hidden = !supportPhone;
         const proofHelp = chkModal.querySelector<HTMLElement>('#chk-proof-help');
         if (proofHelp) proofHelp.hidden = !supportPhone;
