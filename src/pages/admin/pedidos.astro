@@ -9,7 +9,7 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
         <h1 style="display:flex; align-items:center; gap:10px;">
           <span>Control de Pedidos y Despacho</span>
           <span style="font-size:12px; background:#dcfce7; color:#166534; padding:3px 10px; border-radius:9999px; font-weight:750;">
-            ● En Vivo
+            En Vivo
           </span>
         </h1>
         <p>Gestión en tiempo real de órdenes de compra, control de repartos locales y actualización de estados para clientes.</p>
@@ -18,7 +18,12 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
       <div style="display:flex; gap:10px; align-items:center;">
         <span id="live-clock" style="font-size:12.5px; color:#6b7280; font-weight:600;"></span>
         <button type="button" class="admin-btn secondary" id="btn-refresh-orders" style="font-size:13px;">
-          <span>🔄 Refrescar Pedidos</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <polyline points="1 20 1 14 7 14"></polyline>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+          </svg>
+          <span>Refrescar Pedidos</span>
         </button>
       </div>
     </div>
@@ -61,20 +66,20 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
   <section class="admin-card" style="padding:16px 20px; margin-bottom:20px;">
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;">
       <div style="display:flex; gap:8px; flex-wrap:wrap;" id="status-filter-pills">
-        <button type="button" class="admin-btn secondary is-active filter-pill" data-status="all" style="font-size:12px; padding:6px 14px;">
+        <button type="button" class="admin-btn secondary is-active filter-pill" data-status="all" style="font-size:12px; padding:8px 14px; min-height:44px;">
           Todos (<span id="count-pill-all">0</span>)
         </button>
-        <button type="button" class="admin-btn secondary filter-pill" data-status="recibido" style="font-size:12px; padding:6px 14px;">
-          ⏳ Recibidos (<span id="count-pill-recibido">0</span>)
+        <button type="button" class="admin-btn secondary filter-pill" data-status="recibido" style="font-size:12px; padding:8px 14px; min-height:44px;">
+          Recibidos (<span id="count-pill-recibido">0</span>)
         </button>
-        <button type="button" class="admin-btn secondary filter-pill" data-status="confirmado" style="font-size:12px; padding:6px 14px;">
-          ✓ Confirmados (<span id="count-pill-confirmado">0</span>)
+        <button type="button" class="admin-btn secondary filter-pill" data-status="confirmado" style="font-size:12px; padding:8px 14px; min-height:44px;">
+          Confirmados (<span id="count-pill-confirmado">0</span>)
         </button>
-        <button type="button" class="admin-btn secondary filter-pill" data-status="en_reparto" style="font-size:12px; padding:6px 14px;">
-          🚚 En Reparto (<span id="count-pill-en_reparto">0</span>)
+        <button type="button" class="admin-btn secondary filter-pill" data-status="en_reparto" style="font-size:12px; padding:8px 14px; min-height:44px;">
+          En Reparto (<span id="count-pill-en_reparto">0</span>)
         </button>
-        <button type="button" class="admin-btn secondary filter-pill" data-status="entregado" style="font-size:12px; padding:6px 14px;">
-          ✅ Entregados (<span id="count-pill-entregado">0</span>)
+        <button type="button" class="admin-btn secondary filter-pill" data-status="entregado" style="font-size:12px; padding:8px 14px; min-height:44px;">
+          Entregados (<span id="count-pill-entregado">0</span>)
         </button>
       </div>
 
@@ -82,16 +87,16 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
         <input 
           type="text" 
           id="orders-search-input" 
-          class="admin-input" 
-          placeholder="🔍 Buscar por código, cliente o teléfono..." 
-          style="width:100%; font-size:13px; padding:8px 12px;"
+          class="admin-search-input" 
+          placeholder="Buscar por código, cliente o teléfono..." 
+          style="width:100%; font-size:13px; min-height:44px;"
         />
       </div>
     </div>
   </section>
 
-  <!-- Orders Master Table -->
-  <section class="admin-card" style="padding:0; overflow:hidden;">
+  <!-- Orders Desktop Master Table -->
+  <section class="admin-card admin-desktop-only" style="padding:0; overflow:hidden; margin-bottom:20px;">
     <div class="admin-table-container" style="border:0; border-radius:0;">
       <table class="admin-table" id="orders-table">
         <thead>
@@ -115,16 +120,26 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
         </tbody>
       </table>
     </div>
+  </section>
 
-    <!-- Empty State Container -->
-    <div id="orders-empty-state" style="display:none; padding:48px 24px; text-align:center;">
-      <div style="font-size:40px; margin-bottom:12px;">📦</div>
-      <h3 style="font-size:17px; font-weight:800; color:#111827; margin:0 0 6px;">No se encontraron pedidos</h3>
-      <p style="font-size:13.5px; color:#6b7280; max-width:480px; margin:0 auto 16px;">
-        Los pedidos que realicen los clientes en el checkout de la tienda se registrarán aquí en vivo para su preparación y despacho.
-      </p>
+  <!-- Orders Mobile Cards View (< 768px) -->
+  <section class="admin-mobile-only" style="margin-bottom:20px;">
+    <div id="orders-mobile-cards" class="admin-card-list">
+      <!-- Injected dynamically via client script -->
     </div>
   </section>
+
+  <!-- Empty State Container -->
+  <div id="orders-empty-state" style="display:none; padding:48px 24px; text-align:center; background:#ffffff; border:1px solid var(--admin-border); border-radius:16px;">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5" style="margin:0 auto 12px; display:block;">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+      <polyline points="14 2 14 8 20 8"></polyline>
+    </svg>
+    <h3 style="font-size:17px; font-weight:800; color:#111827; margin:0 0 6px;">No se encontraron pedidos</h3>
+    <p style="font-size:13.5px; color:#6b7280; max-width:480px; margin:0 auto 16px;">
+      Los pedidos que realicen los clientes en el checkout de la tienda se registrarán aquí en vivo para su preparación y despacho.
+    </p>
+  </div>
 
   <!-- Script for Live Order Management -->
   <script>
@@ -151,6 +166,7 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
     let searchQuery = '';
 
     const ordersTbody = document.querySelector('#orders-tbody')!;
+    const ordersMobileCards = document.querySelector('#orders-mobile-cards')!;
     const emptyState = document.querySelector('#orders-empty-state') as HTMLElement;
     const refreshBtn = document.querySelector('#btn-refresh-orders')!;
     const searchInput = document.querySelector('#orders-search-input') as HTMLInputElement;
@@ -228,15 +244,16 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
 
       if (!filtered.length) {
         ordersTbody.innerHTML = '';
+        ordersMobileCards.innerHTML = '';
         emptyState.style.display = 'block';
         return;
       }
 
       emptyState.style.display = 'none';
       ordersTbody.innerHTML = '';
+      ordersMobileCards.innerHTML = '';
 
       filtered.forEach((ord) => {
-        const tr = document.createElement('tr');
         const itemsList = Array.isArray(ord.items)
           ? ord.items.map((it: any) => `${it.qty || 1}x ${it.title || it.name}`).join('<br>')
           : '1x Alimento';
@@ -253,6 +270,8 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
         const phoneClean = (ord.phone || '').replace(/[^0-9]/g, '');
         const waLink = phoneClean.length >= 8 ? `https://wa.me/${phoneClean.startsWith('56') ? phoneClean : '56' + phoneClean}` : null;
 
+        // Desktop Row
+        const tr = document.createElement('tr');
         tr.innerHTML = `
           <td>
             <a href="/rastreo?code=${ord.code}" target="_blank" style="font-family:monospace; font-weight:800; color:#7025a8; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
@@ -266,8 +285,9 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
             <strong style="color:#111827; display:block;">${ord.customerName || ord.name || 'Cliente Particular'}</strong>
             ${
               waLink
-                ? `<a href="${waLink}" target="_blank" style="font-size:12px; color:#16a34a; text-decoration:none; display:inline-flex; align-items:center; gap:3px;">
-                     💬 ${ord.phone}
+                ? `<a href="${waLink}" target="_blank" style="font-size:12px; color:#16a34a; text-decoration:none; display:inline-flex; align-items:center; gap:4px; font-weight:700;">
+                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                     <span>${ord.phone}</span>
                    </a>`
                 : `<span style="font-size:12px; color:#6b7280;">${ord.phone || 'Sin teléfono'}</span>`
             }
@@ -288,19 +308,71 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
             </span>
           </td>
           <td>
-            <select class="admin-select order-status-select" data-code="${ord.code}" style="font-size:12px; padding:4px 8px; border-radius:6px; font-weight:700;">
-              <option value="recibido" ${(!ord.status || ord.status === 'recibido') ? 'selected' : ''}>⏳ Recibido</option>
-              <option value="confirmado" ${ord.status === 'confirmado' ? 'selected' : ''}>✓ Confirmado</option>
-              <option value="en_reparto" ${ord.status === 'en_reparto' ? 'selected' : ''}>🚚 En Reparto</option>
-              <option value="entregado" ${ord.status === 'entregado' ? 'selected' : ''}>✅ Entregado</option>
+            <select class="admin-select order-status-select" data-code="${ord.code}" style="font-size:12px; padding:6px 8px; border-radius:6px; font-weight:700; min-height:38px;">
+              <option value="recibido" ${(!ord.status || ord.status === 'recibido') ? 'selected' : ''}>Recibido</option>
+              <option value="confirmado" ${ord.status === 'confirmado' ? 'selected' : ''}>Confirmado</option>
+              <option value="en_reparto" ${ord.status === 'en_reparto' ? 'selected' : ''}>En Reparto</option>
+              <option value="entregado" ${ord.status === 'entregado' ? 'selected' : ''}>Entregado</option>
             </select>
           </td>
         `;
-
         ordersTbody.appendChild(tr);
+
+        // Mobile Touch Card (< 768px)
+        const card = document.createElement('div');
+        card.className = 'admin-mobile-item-card';
+        card.innerHTML = `
+          <div class="admin-mobile-item-header">
+            <div>
+              <a href="/rastreo?code=${ord.code}" target="_blank" style="font-family:monospace; font-weight:800; font-size:15px; color:#7025a8; text-decoration:none;">
+                #${ord.code || 'SIN CÓDIGO'} ↗
+              </a>
+              <span style="display:block; font-size:11.5px; color:#6b7280; margin-top:2px;">${dateStr}</span>
+            </div>
+            <strong style="font-size:16px; color:#111827;">${formatMoney(Number(ord.total) || 0)}</strong>
+          </div>
+
+          <div class="admin-mobile-item-body">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <strong style="font-size:14px; color:#111827;">${ord.customerName || ord.name || 'Cliente Particular'}</strong>
+              ${
+                waLink
+                  ? `<a href="${waLink}" target="_blank" class="admin-btn secondary" style="padding:6px 10px; font-size:12px; min-height:40px; color:#16a34a; font-weight:700;">
+                       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                       <span>Llamar</span>
+                     </a>`
+                  : ''
+              }
+            </div>
+
+            <div style="font-size:12.5px; color:#4b5563; display:flex; align-items:center; gap:4px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <span>${ord.city || ord.comuna || 'Talca'}: ${ord.address || 'Despacho a Domicilio'}</span>
+            </div>
+
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:8px 10px; font-size:12px; color:#334155; margin-top:4px;">
+              ${itemsList}
+            </div>
+          </div>
+
+          <div class="admin-mobile-item-footer">
+            <span style="font-size:11.5px; color:#6b7280; font-weight:600;">
+              ${ord.paymentMethod === 'transfer' ? 'Transferencia (5% OFF)' : 'Tarjeta de Débito'}
+            </span>
+            <div style="flex:1; max-width:180px;">
+              <select class="admin-select order-status-select" data-code="${ord.code}" style="width:100%; font-size:12.5px; font-weight:700; min-height:44px; border-radius:8px;">
+                <option value="recibido" ${(!ord.status || ord.status === 'recibido') ? 'selected' : ''}>Recibido</option>
+                <option value="confirmado" ${ord.status === 'confirmado' ? 'selected' : ''}>Confirmado</option>
+                <option value="en_reparto" ${ord.status === 'en_reparto' ? 'selected' : ''}>En Reparto</option>
+                <option value="entregado" ${ord.status === 'entregado' ? 'selected' : ''}>Entregado</option>
+              </select>
+            </div>
+          </div>
+        `;
+        ordersMobileCards.appendChild(card);
       });
 
-      // Bind status dropdowns
+      // Bind status dropdowns for both desktop and mobile
       document.querySelectorAll<HTMLSelectElement>('.order-status-select').forEach((sel) => {
         sel.addEventListener('change', async (e) => {
           const target = e.target as HTMLSelectElement;

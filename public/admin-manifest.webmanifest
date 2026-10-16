@@ -1,0 +1,63 @@
+{
+  "name": "FIVE Mascotas — Panel de Administración",
+  "short_name": "FIVE Admin",
+  "description": "Panel de administración y control operativo PWA para FIVE Mascotas",
+  "start_url": "/admin",
+  "scope": "/admin",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#7025a8",
+  "background_color": "#ffffff",
+  "lang": "es-CL",
+  "dir": "ltr",
+  "categories": ["business", "productivity", "shopping"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Control de Pedidos",
+      "short_name": "Pedidos",
+      "description": "Ver y gestionar pedidos entrantes",
+      "url": "/admin/pedidos",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Catálogo PIM",
+      "short_name": "PIM",
+      "description": "Editar precios, stock y fichas de productos",
+      "url": "/admin/pim",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "CMS Banners",
+      "short_name": "CMS",
+      "description": "Administrar banners y tickers de tienda",
+      "url": "/admin/cms",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

@@ -634,12 +634,355 @@ body.overflow-hidden {
   gap: 16px;
 }
 
-/* Responsive Admin Breakpoints */
+/* ==========================================================================
+   PWA & WEB PUSH TOPBAR CONTROLS
+   ========================================================================== */
+.admin-pwa-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--admin-primary);
+  color: #ffffff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 44px;
+  min-width: 44px;
+  transition: background 0.15s;
+}
+
+.admin-pwa-btn:hover {
+  background: var(--admin-primary-hover);
+}
+
+.admin-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 10px;
+  border: 1px solid var(--admin-border);
+  background: #ffffff;
+  color: var(--admin-text-main);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.admin-icon-btn:hover {
+  background: var(--admin-bg);
+  border-color: #cbd5e1;
+}
+
+.admin-push-dot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #9ca3af;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.admin-push-dot.is-active {
+  background: #22c55e;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+}
+
+.admin-user-ctrl {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-user-meta {
+  text-align: right;
+}
+
+.admin-user-meta strong {
+  font-size: 12.5px;
+  display: block;
+  color: #111827;
+}
+
+.admin-user-meta small {
+  font-size: 11px;
+  color: #276717;
+  font-weight: 700;
+}
+
+.admin-topbar-mobile-logo {
+  display: none;
+  height: 28px;
+  width: auto;
+}
+
+.admin-breadcrumbs-separator {
+  color: var(--admin-text-muted);
+}
+
+/* ==========================================================================
+   MOBILE BOTTOM NAVIGATION BAR (< 768px)
+   ========================================================================== */
+.admin-bottom-nav {
+  display: none;
+}
+
+/* ==========================================================================
+   BOTTOM SHEET FOR MOBILE (< 768px) & MODAL ENHANCEMENTS
+   ========================================================================== */
+.admin-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(3px);
+  z-index: 2500;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.admin-sheet-backdrop[hidden] {
+  display: none !important;
+}
+
+.admin-sheet-dialog {
+  background: #ffffff;
+  width: 100%;
+  max-width: 600px;
+  border-radius: 24px 24px 0 0;
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  max-height: 88vh;
+  overflow: hidden;
+  animation: adminSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes adminSlideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.admin-sheet-handle-bar {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0 4px;
+}
+
+.admin-sheet-handle {
+  width: 38px;
+  height: 4px;
+  border-radius: 2px;
+  background: #d1d5db;
+}
+
+.admin-sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 20px 14px;
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.admin-sheet-title {
+  font-size: 16px;
+  font-weight: 800;
+  margin: 0;
+  color: #111827;
+}
+
+.admin-sheet-close-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #6b7280;
+  transition: background 0.15s;
+}
+
+.admin-sheet-close-btn:hover {
+  background: #f3f4f6;
+}
+
+.admin-sheet-content {
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: max(24px, env(safe-area-inset-bottom, 24px));
+}
+
+.admin-sheet-section-title {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--admin-text-muted);
+  letter-spacing: 0.6px;
+  margin-bottom: 10px;
+}
+
+.admin-sheet-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.admin-sheet-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 10px;
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  background: #ffffff;
+  color: var(--admin-text-main);
+  text-decoration: none;
+  font-size: 12.5px;
+  font-weight: 700;
+  min-height: 72px;
+  transition: all 0.15s;
+}
+
+.admin-sheet-tile:active {
+  background: #f3f4f6;
+  border-color: #cbd5e1;
+}
+
+.admin-sheet-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-sheet-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 16px;
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  background: #ffffff;
+  color: var(--admin-text-main);
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.admin-sheet-action-btn.secondary {
+  background: #f9fafb;
+}
+
+.admin-sheet-action-btn.danger {
+  border-color: #fecaca;
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.admin-sheet-action-text strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.admin-sheet-action-text small {
+  display: block;
+  font-size: 11.5px;
+  color: var(--admin-text-muted);
+}
+
+.admin-sheet-action-btn.danger .admin-sheet-action-text small {
+  color: #ef4444;
+}
+
+/* Responsive utilities */
+.admin-mobile-only {
+  display: none !important;
+}
+
+.admin-desktop-only {
+  display: block;
+}
+
+/* ==========================================================================
+   MOBILE CARDS FOR DATA (< 768px)
+   ========================================================================== */
+.admin-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin-mobile-item-card {
+  background: #ffffff;
+  border: 1px solid var(--admin-border);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+}
+
+.admin-mobile-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.admin-mobile-item-body {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--admin-text-main);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-mobile-item-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--admin-border-subtle);
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS (Mobile-First & PWA Ergonomics)
+   ========================================================================== */
 @media (max-width: 1024px) {
   .admin-sidebar {
     width: 70px;
   }
-  .admin-sidebar-brand span, .admin-nav-item span, .admin-sidebar-footer span {
+  .admin-sidebar-brand span,
+  .admin-nav-item span,
+  .admin-sidebar-footer span {
     display: none;
   }
   .admin-main-wrap {
@@ -653,14 +996,169 @@ body.overflow-hidden {
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+  .admin-desktop-only {
+    display: none !important;
+  }
+  .admin-mobile-only {
+    display: block !important;
+  }
+
+  /* Hide Desktop Sidebar Completely on Mobile */
+  .admin-sidebar {
+    display: none !important;
+  }
+
+  /* Reset Main Wrap to full width with bottom bar padding */
+  .admin-main-wrap {
+    margin-left: 0 !important;
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 16px));
+    min-width: 0;
+  }
+
+  /* Topbar Mobile Styles */
+  .admin-topbar {
+    height: 56px;
+    padding-inline: 14px;
+  }
+
+  .admin-topbar-mobile-logo {
+    display: block;
+  }
+
+  .admin-breadcrumbs strong {
+    font-size: 13px;
+    max-width: 140px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .admin-status-pill,
+  .admin-user-meta {
+    display: none;
+  }
+
+  .admin-pwa-label {
+    display: none;
+  }
+
+  .admin-pwa-btn {
+    padding: 8px;
+    border-radius: 10px;
+  }
+
+  .admin-logout-action span {
+    display: none;
+  }
+
+  .admin-logout-action {
+    padding: 8px 10px;
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Bottom Navigation Bar Active */
+  .admin-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: calc(58px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background: #ffffff;
+    border-top: 1px solid var(--admin-border);
+    z-index: 2000;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06);
+  }
+
+  .admin-bottom-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    background: none;
+    border: none;
+    color: var(--admin-text-muted);
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    min-height: 48px;
+    transition: color 0.15s;
+    font-family: inherit;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .admin-bottom-item.is-active {
+    color: var(--admin-primary);
+  }
+
+  .admin-bottom-item.is-active svg {
+    stroke: var(--admin-primary);
+  }
+
+  /* Mobile Modals as Bottom Sheets */
+  .admin-modal-backdrop {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .admin-modal {
+    max-width: 100% !important;
+    width: 100% !important;
+    border-radius: 22px 22px 0 0 !important;
+    max-height: 88vh;
+    animation: adminSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .admin-modal-body {
+    padding: 16px;
+    max-height: calc(88vh - 120px);
+  }
+
+  .admin-modal-foot {
+    padding: 12px 16px;
+    padding-bottom: max(16px, env(safe-area-inset-bottom, 16px));
+  }
+
+  .admin-form-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  /* Touch targets enforcement */
+  .admin-btn {
+    min-height: 44px;
+    padding: 10px 16px;
+  }
+
+  .admin-content {
+    padding: 16px 14px;
+  }
+
   .admin-kpi-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
-  .admin-content {
-    padding: 16px;
+
+  .admin-toolbar {
+    flex-direction: column;
+    align-items: stretch;
   }
-  .admin-topbar {
-    padding-inline: 16px;
+
+  .admin-toolbar-left {
+    flex-direction: column;
+    max-width: 100%;
+  }
+
+  .admin-select,
+  .admin-search-input {
+    width: 100%;
+    min-height: 44px;
   }
 }
+

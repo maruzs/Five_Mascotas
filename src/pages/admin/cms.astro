@@ -340,7 +340,7 @@ import { announcementTickers, promoBanners, defaultHeroSlides } from '../../data
 
           <div class="admin-form-group">
             <label for="hero-form-badge">Badge / Etiqueta Superior</label>
-            <input type="text" id="hero-form-badge" name="badge" placeholder="ej: 🐾 SU MUNDO EMPIEZA CONTIGO, 🐱 REYES DE LA CASA" />
+            <input type="text" id="hero-form-badge" name="badge" placeholder="ej: SU MUNDO EMPIEZA CONTIGO, REYES DE LA CASA" />
           </div>
 
           <div class="admin-form-group">
@@ -369,10 +369,10 @@ import { announcementTickers, promoBanners, defaultHeroSlides } from '../../data
             <input type="text" id="hero-form-image" name="image" required placeholder="ej: /demos/miga/dog.webp o /demos/miga/arena.svg" />
             <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:4px;">
               <small style="color:#6c757d; width:100%;">Imágenes predefinidas de la tienda:</small>
-              <button type="button" class="admin-btn secondary preset-img-btn" data-img="/demos/miga/dog.webp" style="padding:2px 8px; font-size:11px;">🐶 Perro (/demos/miga/dog.webp)</button>
-              <button type="button" class="admin-btn secondary preset-img-btn" data-img="/five-mascotas/alimento-1.svg" style="padding:2px 8px; font-size:11px;">🐱 Gato (/five-mascotas/alimento-1.svg)</button>
-              <button type="button" class="admin-btn secondary preset-img-btn" data-img="/five-mascotas/botiquin.svg" style="padding:2px 8px; font-size:11px;">💊 Farmacia (/five-mascotas/botiquin.svg)</button>
-              <button type="button" class="admin-btn secondary preset-img-btn" data-img="/demos/miga/arena.svg" style="padding:2px 8px; font-size:11px;">🏖️ Arena (/demos/miga/arena.svg)</button>
+              <button type="button" class="admin-btn secondary preset-img-btn" data-img="/demos/miga/dog.webp" style="padding:4px 8px; font-size:11px;">Perro (/demos/miga/dog.webp)</button>
+              <button type="button" class="admin-btn secondary preset-img-btn" data-img="/five-mascotas/alimento-1.svg" style="padding:4px 8px; font-size:11px;">Gato (/five-mascotas/alimento-1.svg)</button>
+              <button type="button" class="admin-btn secondary preset-img-btn" data-img="/five-mascotas/botiquin.svg" style="padding:4px 8px; font-size:11px;">Farmacia (/five-mascotas/botiquin.svg)</button>
+              <button type="button" class="admin-btn secondary preset-img-btn" data-img="/demos/miga/arena.svg" style="padding:4px 8px; font-size:11px;">Arena (/demos/miga/arena.svg)</button>
             </div>
           </div>
         </div>
@@ -733,7 +733,7 @@ import { announcementTickers, promoBanners, defaultHeroSlides } from '../../data
       const slide: HeroSlide = {
         id: formData.get('id') as string,
         active: (document.querySelector('#hero-form-active') as HTMLInputElement).checked,
-        badge: (formData.get('badge') as string) || '🐾 FIVE MASCOTAS',
+        badge: (formData.get('badge') as string) || 'FIVE MASCOTAS',
         title: formData.get('title') as string,
         subtitle: formData.get('subtitle') as string,
         ctaText: (formData.get('ctaText') as string) || 'Explora la tienda',

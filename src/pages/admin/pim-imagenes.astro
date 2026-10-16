@@ -1049,9 +1049,9 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
             <h3 class="pim-card-name" title="${esc(effective.name)}">${esc(effective.name)}</h3>
             <p class="pim-card-meta">${esc(effective.format || 'Sin formato')} <span>·</span> ${esc(effective.category || 'Sin categoría')}</p>
             <div class="pim-pet-toggle" role="group" aria-label="Mascota de ${esc(effective.name)}">
-              <button type="button" class="pim-pet-btn${pet === 'Perros' ? ' is-active' : ''}" data-pet="Perros" aria-pressed="${pet === 'Perros'}">🐶 Perros</button>
-              <button type="button" class="pim-pet-btn${pet === 'Gatos' ? ' is-active' : ''}" data-pet="Gatos" aria-pressed="${pet === 'Gatos'}">🐱 Gatos</button>
-              <button type="button" class="pim-pet-btn${pet === 'Perros Gatos' ? ' is-active' : ''}" data-pet="Perros Gatos" aria-pressed="${pet === 'Perros Gatos'}">🐾 Ambos</button>
+              <button type="button" class="pim-pet-btn${pet === 'Perros' ? ' is-active' : ''}" data-pet="Perros" aria-pressed="${pet === 'Perros'}">Perros</button>
+              <button type="button" class="pim-pet-btn${pet === 'Gatos' ? ' is-active' : ''}" data-pet="Gatos" aria-pressed="${pet === 'Gatos'}">Gatos</button>
+              <button type="button" class="pim-pet-btn${pet === 'Perros Gatos' ? ' is-active' : ''}" data-pet="Perros Gatos" aria-pressed="${pet === 'Perros Gatos'}">Ambos</button>
             </div>
           </div>
         </article>

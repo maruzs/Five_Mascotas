@@ -5,6 +5,7 @@ import path from 'node:path';
 import zlib from 'node:zlib';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import webpush from 'web-push';
 import { nexoEnabled, nexoConfigured, nexoCatalogData, nexoCheckout, nexoRequest } from './nexo.mjs';
 import { checkRateLimit, handleRayoNutritionalChat } from './rayo.mjs';
 
@@ -24,6 +25,8 @@ const cmsFilePath = path.join(dataDir, 'cms.json');
 const pimFilePath = path.join(dataDir, 'pim.json');
 const usersFilePath = path.join(dataDir, 'users.json');
 const ordersFilePath = path.join(dataDir, 'orders.json');
+const pushSubsFilePath = path.join(dataDir, 'push-subscriptions.json');
+const vapidKeysFilePath = path.join(dataDir, 'vapid-keys.json');
 
 const getDefaultOrders = () => ({ orders: [] });
 
@@ -38,6 +41,7 @@ const MIME_TYPES = {
   '.js': 'application/javascript; charset=utf-8',
   '.mjs': 'application/javascript; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
+  '.webmanifest': 'application/manifest+json; charset=utf-8',
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
@@ -130,6 +134,99 @@ const writeJsonFile = async (filePath, data) => {
   const tmpPath = `${filePath}.tmp.${Date.now()}`;
   await fsp.writeFile(tmpPath, JSON.stringify(data, null, 2), 'utf8');
   await fsp.rename(tmpPath, filePath);
+};
+
+// Web Push VAPID configuration & persistence
+let vapidPublicKey = process.env.VAPID_PUBLIC_KEY;
+let vapidPrivateKey = process.env.VAPID_PRIVATE_KEY;
+const vapidSubject = process.env.VAPID_SUBJECT || 'mailto:admin@fivemascotas.cl';
+
+const initVapidKeys = async () => {
+  if (!vapidPublicKey || !vapidPrivateKey) {
+    try {
+      if (fs.existsSync(vapidKeysFilePath)) {
+        const raw = await fsp.readFile(vapidKeysFilePath, 'utf8');
+        const saved = JSON.parse(raw);
+        vapidPublicKey = saved.publicKey;
+        vapidPrivateKey = saved.privateKey;
+      }
+    } catch (e) {
+      console.warn('[VAPID] Advertencia al leer llaves guardadas:', e.message);
+    }
+  }
+
+  if (!vapidPublicKey || !vapidPrivateKey) {
+    const generated = webpush.generateVAPIDKeys();
+    vapidPublicKey = generated.publicKey;
+    vapidPrivateKey = generated.privateKey;
+    try {
+      await fsp.writeFile(vapidKeysFilePath, JSON.stringify({
+        publicKey: vapidPublicKey,
+        privateKey: vapidPrivateKey,
+        createdAt: new Date().toISOString(),
+      }, null, 2), 'utf8');
+      console.log('[VAPID] Llaves generadas y guardadas en data/vapid-keys.json');
+    } catch (err) {
+      console.error('[VAPID] Error al guardar llaves generadas:', err.message);
+    }
+  }
+
+  try {
+    webpush.setVapidDetails(vapidSubject, vapidPublicKey, vapidPrivateKey);
+    console.log('[Web Push] VAPID configurado exitosamente.');
+  } catch (err) {
+    console.error('[Web Push] Error configurando VAPID:', err.message);
+  }
+};
+
+await initVapidKeys();
+
+const getDefaultPushSubscriptions = () => ({ subscriptions: [] });
+
+const getPushSubscriptions = async () => {
+  return readJsonFile(pushSubsFilePath, getDefaultPushSubscriptions);
+};
+
+const savePushSubscriptions = async (data) => {
+  return writeJsonFile(pushSubsFilePath, data);
+};
+
+const sendPushNotificationToAdmins = async (payload) => {
+  try {
+    const data = await getPushSubscriptions();
+    if (!data.subscriptions || data.subscriptions.length === 0) {
+      return { sent: 0, failed: 0 };
+    }
+
+    const payloadStr = JSON.stringify(payload);
+    let sent = 0;
+    const deadEndpoints = [];
+
+    await Promise.all(
+      data.subscriptions.map(async (sub) => {
+        try {
+          await webpush.sendNotification(sub, payloadStr);
+          sent++;
+        } catch (err) {
+          if (err.statusCode === 404 || err.statusCode === 410) {
+            deadEndpoints.push(sub.endpoint);
+          } else {
+            console.warn('[Web Push] Advertencia de entrega:', err.message);
+          }
+        }
+      })
+    );
+
+    if (deadEndpoints.length > 0) {
+      data.subscriptions = data.subscriptions.filter(s => !deadEndpoints.includes(s.endpoint));
+      await savePushSubscriptions(data);
+    }
+
+    return { sent, failed: deadEndpoints.length };
+  } catch (err) {
+    console.error('[Web Push] Error en difusión Push:', err.message);
+    return { sent: 0, failed: 0, error: err.message };
+  }
 };
 
 // Parse JSON body
@@ -802,6 +899,17 @@ const server = http.createServer(async (req, res) => {
         }
         await writeJsonFile(ordersFilePath, data);
 
+        // Disparar Notificación Push a administradores
+        const orderTotal = Number(body.total || 0).toLocaleString('es-CL');
+        sendPushNotificationToAdmins({
+          title: `Nuevo Pedido #${body.code || 'FIVE'}`,
+          body: `${body.customerName || 'Cliente'} compro por $${orderTotal}. Toca para abrir.`,
+          icon: '/icon-192.png',
+          badge: '/icon-192.png',
+          tag: `order-${body.code}`,
+          data: { url: '/admin/pedidos', code: body.code },
+        }).catch((e) => console.warn('[Push Alert Error]', e.message));
+
         res.statusCode = 201;
         res.end(JSON.stringify({ ok: true, order: body }));
       } catch (err) {
@@ -895,6 +1003,109 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // API ROUTE: /api/admin/push-* (Web Push Subscriptions and Alerts)
+  if (pathname.startsWith('/api/admin/push-')) {
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+
+    const session = getSessionFromReq(req);
+    if (!session || session.role !== 'admin') {
+      res.statusCode = 401;
+      res.end(JSON.stringify({ ok: false, error: 'Acceso restringido a administradores' }));
+      return;
+    }
+
+    // GET /api/admin/push-vapid-key
+    if (pathname === '/api/admin/push-vapid-key' && req.method === 'GET') {
+      res.statusCode = 200;
+      res.end(JSON.stringify({ ok: true, publicKey: vapidPublicKey }));
+      return;
+    }
+
+    // POST /api/admin/push-subscribe
+    if (pathname === '/api/admin/push-subscribe' && req.method === 'POST') {
+      try {
+        const body = await parseBody(req);
+        const sub = body.subscription;
+        if (!sub || !sub.endpoint || !sub.keys?.p256dh || !sub.keys?.auth) {
+          res.statusCode = 400;
+          res.end(JSON.stringify({ ok: false, error: 'Formato de suscripción Push inválido' }));
+          return;
+        }
+
+        const data = await getPushSubscriptions();
+        const existingIdx = data.subscriptions.findIndex((s) => s.endpoint === sub.endpoint);
+        const enrichedSub = {
+          ...sub,
+          userId: session.userId,
+          userEmail: session.email,
+          userAgent: body.userAgent || req.headers['user-agent'] || 'Browser/PWA',
+          updatedAt: new Date().toISOString(),
+        };
+
+        if (existingIdx >= 0) {
+          data.subscriptions[existingIdx] = enrichedSub;
+        } else {
+          data.subscriptions.push(enrichedSub);
+        }
+        await savePushSubscriptions(data);
+
+        res.statusCode = 200;
+        res.end(JSON.stringify({ ok: true, message: 'Dispositivo suscrito exitosamente' }));
+      } catch (err) {
+        res.statusCode = 500;
+        res.end(JSON.stringify({ ok: false, error: err.message }));
+      }
+      return;
+    }
+
+    // POST /api/admin/push-unsubscribe
+    if (pathname === '/api/admin/push-unsubscribe' && req.method === 'POST') {
+      try {
+        const body = await parseBody(req);
+        const endpoint = body.endpoint;
+        if (!endpoint) {
+          res.statusCode = 400;
+          res.end(JSON.stringify({ ok: false, error: 'Endpoint requerido' }));
+          return;
+        }
+        const data = await getPushSubscriptions();
+        data.subscriptions = data.subscriptions.filter((s) => s.endpoint !== endpoint);
+        await savePushSubscriptions(data);
+        res.statusCode = 200;
+        res.end(JSON.stringify({ ok: true }));
+      } catch (err) {
+        res.statusCode = 500;
+        res.end(JSON.stringify({ ok: false, error: err.message }));
+      }
+      return;
+    }
+
+    // POST /api/admin/push-test
+    if (pathname === '/api/admin/push-test' && req.method === 'POST') {
+      try {
+        const result = await sendPushNotificationToAdmins({
+          title: 'FIVE Mascotas — Alerta de Prueba',
+          body: `¡Hola ${session.name || 'Admin'}! Notificaciones Web Push activas y operativas en tu dispositivo.`,
+          icon: '/icon-192.png',
+          badge: '/icon-192.png',
+          tag: 'five-test-push',
+          data: { url: '/admin' },
+        });
+        res.statusCode = 200;
+        res.end(JSON.stringify({ ok: true, result }));
+      } catch (err) {
+        res.statusCode = 500;
+        res.end(JSON.stringify({ ok: false, error: err.message }));
+      }
+      return;
+    }
+
+    res.statusCode = 404;
+    res.end(JSON.stringify({ ok: false, error: 'Push endpoint not found' }));
+    return;
+  }
+
   // Static File Serving from dist/ or dataDir/uploads
   if (req.method === 'GET' || req.method === 'HEAD') {
     let filePath = path.join(distDir, pathname);
@@ -917,6 +1128,11 @@ const server = http.createServer(async (req, res) => {
         stat = fs.statSync(filePath);
       }
     } catch {
+      const publicFilePath = path.join(rootDir, 'public', pathname);
+      if (fs.existsSync(publicFilePath)) {
+        filePath = publicFilePath;
+        stat = fs.statSync(filePath);
+      } else
       // Try adding .html
       if (fs.existsSync(`${filePath}.html`)) {
         filePath = `${filePath}.html`;
@@ -939,7 +1155,12 @@ const server = http.createServer(async (req, res) => {
     res.setHeader('Content-Type', contentType);
 
     // Cache control
-    if (ext === '.html') {
+    if (pathname === '/sw-admin.js') {
+      res.setHeader('Service-Worker-Allowed', '/');
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    } else if (pathname === '/admin-manifest.webmanifest') {
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    } else if (ext === '.html') {
       res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
     } else if (/\.(css|js|woff2?|webp|png|jpe?g|ico|svg)$/.test(ext)) {
       res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');

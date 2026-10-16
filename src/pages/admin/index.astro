@@ -24,13 +24,21 @@ const totalAcc = products.filter((p) => p.category === 'Accesorios').length;
         <p>Métricas operativas de ventas, seguimiento de órdenes y estado en tiempo real del catálogo PIM.</p>
       </div>
 
-      <div style="display:flex; gap:10px; align-items:center;">
+      <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
         <span id="live-clock" style="font-size:12.5px; color:#6b7280; font-weight:600;"></span>
         <a href="/admin/pedidos" class="admin-btn secondary" style="font-size:13px;">
-          <span>🚚 Control de Pedidos</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+          </svg>
+          <span>Control de Pedidos</span>
         </a>
         <a href="/admin/pim" class="admin-btn primary" style="font-size:13px;">
-          <span>📦 Catálogo PIM</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+          </svg>
+          <span>Catálogo PIM</span>
         </a>
       </div>
     </div>
@@ -243,7 +251,7 @@ const totalAcc = products.filter((p) => p.category === 'Accesorios').length;
           </span>
         </div>
         <a href="/admin/pedidos" class="admin-btn secondary" style="font-size:12px; padding:6px 12px;">
-          <span>🚚 Ver Todas en Control de Pedidos →</span>
+          <span>Ver Todas en Control de Pedidos &rarr;</span>
         </a>
       </div>
 
@@ -332,13 +340,13 @@ const totalAcc = products.filter((p) => p.category === 'Accesorios').length;
     const statusBadge = (status: string) => {
       switch (status) {
         case 'entregado':
-          return '<span class="admin-badge-trend up" style="background:#dcfce7; color:#166534;">✓ Entregado</span>';
+          return '<span class="admin-badge-trend up" style="background:#dcfce7; color:#166534;">Entregado</span>';
         case 'en_reparto':
-          return '<span class="admin-badge-trend up" style="background:#e0f2fe; color:#0369a1;">🚚 En Reparto</span>';
+          return '<span class="admin-badge-trend up" style="background:#e0f2fe; color:#0369a1;">En Reparto</span>';
         case 'confirmado':
-          return '<span class="admin-badge-trend up" style="background:#ede9fe; color:#6d28d9;">✓ Confirmado</span>';
+          return '<span class="admin-badge-trend up" style="background:#ede9fe; color:#6d28d9;">Confirmado</span>';
         default:
-          return '<span class="admin-badge-trend warning" style="background:#fef3c7; color:#b45309;">⏳ Recibido</span>';
+          return '<span class="admin-badge-trend warning" style="background:#fef3c7; color:#b45309;">Recibido</span>';
       }
     };
 
@@ -392,7 +400,10 @@ const totalAcc = products.filter((p) => p.category === 'Accesorios').length;
         dashOrdersTbody.innerHTML = `
           <tr>
             <td colspan="5" style="text-align:center; padding:32px 16px; color:#6b7280;">
-              <span style="display:block; font-size:18px; margin-bottom:4px;">📦</span>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5" style="margin:0 auto 8px; display:block;">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+              </svg>
               <strong>Sin pedidos registrados aún</strong>
               <small style="display:block; margin-top:2px;">Los pedidos de clientes en la tienda aparecerán aquí automáticamente.</small>
             </td>
