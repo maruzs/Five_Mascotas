@@ -1022,13 +1022,14 @@
       "images": [
         "/products/master-dog-master-dog-cachorro.png"
       ],
-      "proteinPct": 8,
-      "fatPct": 3,
-      "moisturePct": 80,
-      "ingredients": "Agua, menudencias porcinas, harina de trigo, harina de soya, almidón modificado, cloruro de sodio, goma xanthan, aceite de pescado desodorizado y estabilizado (fuente de ácidos grasos omega3), nitritos y nitratos, saborizante autorizado, carboximetilcelulosa, agar agar, EDTA.",
-      "originUrl": "https://www.masterdog.cl/producto/master-dog-pate-pote-pollo/",
-      "description": "Exquisito paté sabor pollo, ideal para regalonear a tu Master Dog. Se lo puedes dar solo o mezclado con su alimento diario.",
-      "supplier": "Carozzi"
+      "proteinPct": 24,
+      "fatPct": 10,
+      "moisturePct": 12,
+      "ingredients": "Harina de carne y hueso de ave y vacuno, maíz, trigo, salvado de trigo, harina de soya, arroz, grasa animal de ave, hidrolizado de hígado, vitaminas (A, D3, E, complejo B), minerales (zinc, hierro, cobre, manganeso, selenio), prebióticos, extracto de Yucca Schidigera.",
+      "originUrl": "https://www.masterdog.cl/producto/master-dog-cachorro-carne-leche/",
+      "description": "Alimento completo y balanceado para cachorros con calcio, prebióticos y proteínas de alta absorción.",
+      "supplier": "Carozzi",
+      "fiberPct": 4
     },
     {
       "id": "prod-38",
@@ -1049,13 +1050,14 @@
       "images": [
         "/products/master-dog-master-dog-adulto.png"
       ],
-      "proteinPct": 8,
-      "fatPct": 3,
-      "moisturePct": 80,
-      "ingredients": "Agua, menudencias porcinas, harina de trigo, harina de soya, almidón modificado, cloruro de sodio, goma xanthan, aceite de pescado desodorizado y estabilizado (fuente de ácidos grasos omega3), nitritos y nitratos, saborizante autorizado, carboximetilcelulosa, agar agar, EDTA.",
-      "originUrl": "https://www.masterdog.cl/producto/master-dog-pate-pote-pollo/",
-      "description": "Exquisito paté sabor pollo, ideal para regalonear a tu Master Dog. Se lo puedes dar solo o mezclado con su alimento diario.",
-      "supplier": "Carozzi"
+      "proteinPct": 21,
+      "fatPct": 9,
+      "moisturePct": 12,
+      "ingredients": "Harina de carne y hueso de ave y vacuno, maíz, trigo, harina de subproductos de cereales, harina de soya, arroz, grasa animal de pollo o cerdo, hidrolizado de hígado, vitaminas (A, D3, E, complejo B), minerales (zinc, hierro, cobre, manganeso, selenio, yodo), Omega 3 y 6, extracto de Yucca Schidigera.",
+      "originUrl": "https://www.masterdog.cl/producto/master-dog-adulto-carne/",
+      "description": "Alimento completo y balanceado para perros adultos de todas las razas con proteínas y ácidos grasos esenciales.",
+      "supplier": "Carozzi",
+      "fiberPct": 4
     },
     {
       "id": "prod-39",
@@ -1076,13 +1078,14 @@
       "images": [
         "/products/master-dog-master-dog-adulto-razas-pequenas.png"
       ],
-      "proteinPct": 8,
-      "fatPct": 3,
-      "moisturePct": 80,
-      "ingredients": "Agua, menudencias porcinas, harina de trigo, harina de soya, almidón modificado, cloruro de sodio, goma xanthan, aceite de pescado desodorizado y estabilizado (fuente de ácidos grasos omega3), nitritos y nitratos, saborizante autorizado, carboximetilcelulosa, agar agar, EDTA.",
-      "originUrl": "https://www.masterdog.cl/producto/master-dog-pate-pote-pollo/",
-      "description": "Exquisito paté sabor pollo, ideal para regalonear a tu Master Dog. Se lo puedes dar solo o mezclado con su alimento diario.",
-      "supplier": "Carozzi"
+      "proteinPct": 22,
+      "fatPct": 10,
+      "moisturePct": 12,
+      "ingredients": "Harina de carne y hueso de ave y vacuno, maíz, trigo, arroz, grasa animal de ave, harina de soya, hidrolizado de vísceras de ave, vitaminas (A, D3, E, complejo B), minerales (zinc, hierro, cobre, selenio), Omega 3 y 6, extracto de Yucca Schidigera.",
+      "originUrl": "https://www.masterdog.cl/producto/master-dog-adulto-raza-pequena-carne/",
+      "description": "Fórmula adaptada en tamaño de croqueta y nutrientes para perros de razas pequeñas.",
+      "supplier": "Carozzi",
+      "fiberPct": 3.5
     },
     {
       "id": "prod-40",
@@ -1103,13 +1106,14 @@
       "images": [
         "/products/master-dog-master-dog-senior.png"
       ],
-      "proteinPct": 8,
-      "fatPct": 3,
-      "moisturePct": 80,
-      "ingredients": "Agua, menudencias porcinas, harina de trigo, harina de soya, almidón modificado, cloruro de sodio, goma xanthan, aceite de pescado desodorizado y estabilizado (fuente de ácidos grasos omega3), nitritos y nitratos, saborizante autorizado, carboximetilcelulosa, agar agar, EDTA.",
-      "originUrl": "https://www.masterdog.cl/producto/master-dog-pate-pote-pollo/",
-      "description": "Exquisito paté sabor pollo, ideal para regalonear a tu Master Dog. Se lo puedes dar solo o mezclado con su alimento diario.",
-      "supplier": "Carozzi"
+      "proteinPct": 20,
+      "fatPct": 8,
+      "moisturePct": 12,
+      "ingredients": "Harina de carne y hueso de ave y vacuno, maíz, trigo, salvado de arroz, harina de soya, grasa animal de ave, sulfato de glucosamina, sulfato de condroitina, vitaminas (A, D3, E, complejo B), minerales quelados, extracto de Yucca Schidigera.",
+      "originUrl": "https://www.masterdog.cl/producto/master-dog-senior-carne-pollo/",
+      "description": "Alimento especializado para perros mayores de 7 años con glucosamina, condroitina y densidad calórica moderada.",
+      "supplier": "Carozzi",
+      "fiberPct": 4.5
     },
     {
       "id": "prod-41",
@@ -1130,13 +1134,14 @@
       "images": [
         "/products/master-dog-master-dog-senior-21kg.png"
       ],
-      "proteinPct": 8,
-      "fatPct": 3,
-      "moisturePct": 80,
-      "ingredients": "Agua, menudencias porcinas, harina de trigo, harina de soya, almidón modificado, cloruro de sodio, goma xanthan, aceite de pescado desodorizado y estabilizado (fuente de ácidos grasos omega3), nitritos y nitratos, saborizante autorizado, carboximetilcelulosa, agar agar, EDTA.",
-      "originUrl": "https://www.masterdog.cl/producto/master-dog-pate-pote-pollo/",
-      "description": "Exquisito paté sabor pollo, ideal para regalonear a tu Master Dog. Se lo puedes dar solo o mezclado con su alimento diario.",
-      "supplier": "Carozzi"
+      "proteinPct": 20,
+      "fatPct": 8,
+      "moisturePct": 12,
+      "ingredients": "Harina de carne y hueso de ave y vacuno, maíz, trigo, salvado de arroz, harina de soya, grasa animal de ave, sulfato de glucosamina, sulfato de condroitina, vitaminas (A, D3, E, complejo B), minerales quelados, extracto de Yucca Schidigera.",
+      "originUrl": "https://www.masterdog.cl/producto/master-dog-senior-carne-pollo/",
+      "description": "Alimento especializado para perros mayores de 7 años con glucosamina, condroitina y densidad calórica moderada.",
+      "supplier": "Carozzi",
+      "fiberPct": 4.5
     },
     {
       "id": "prod-42",

@@ -561,7 +561,7 @@ REGLAS INNEGOCIABLES DE SEGURIDAD, ESTILO Y ÉTICA:
 7. Basa tus veredictos en la ciencia nutricional veterinaria:
    - Gatos: Carnívoros estrictos. Requieren alta proteína de origen animal, taurina, grasas de calidad y control de cenizas/fósforo.
    - Perros: Carnívoros facultativos / omnívoros adaptados. Se evalúa primer ingrediente (carne/harina de carne sobre maíz/soja), fuentes de carbohidratos, balance de fibra y ácidos grasos Omega 3/6.
-8. Formato: Escribe en Markdown pulido, con subtítulos concisos, viñetas limpias y un tono cálido de tutor experto a tutor responsable, SIN emojis.
+8. Formato y concisión: Escribe en Markdown pulido, con subtítulos concisos, viñetas limpias y un tono cálido de tutor experto a tutor responsable, SIN emojis. Sé estructurado y conciso (entre 200 y 350 palabras), asegurando finalizar siempre todas tus oraciones y conclusiones completas sin cortes.
 `.trim();
 
   // Formatear contexto estructurado XML
@@ -684,7 +684,7 @@ Responde como Rayo, analizando objetivamente los datos anteriores. Si hay produc
         contents,
         generationConfig: {
           temperature: 0.3,
-          maxOutputTokens: 1500,
+          maxOutputTokens: 2000,
         },
       };
 
