@@ -93,4 +93,21 @@ import { Window } from 'happy-dom';
   }
 }
 
-console.log('PASS PORTAL & COMPARATOR: Customer portal, live tracking, food comparator and brand packshots verified.');
+// 5. Validar Botón Flotante y Enlaces de Cotización al por Mayor WhatsApp
+{
+  const html = await readFile('dist/index.html', 'utf8');
+  const w = new Window();
+  w.document.write(html);
+
+  const wholesaleBtn = w.document.querySelector('.five-wholesale-wa-btn');
+  assert.ok(wholesaleBtn, 'El botón flotante .five-wholesale-wa-btn debe existir en la interfaz');
+  const href = wholesaleBtn.getAttribute('href') || '';
+  assert.ok(href.includes('56964183605'), 'El enlace debe dirigir al número de WhatsApp corporativo 56964183605');
+  assert.ok(href.toLowerCase().includes('por%20mayor') || href.toLowerCase().includes('mayor'), 'El mensaje predeterminado debe indicar cotización al por mayor');
+  assert.ok(wholesaleBtn.querySelector('svg'), 'El botón debe incluir icono SVG vectorial oficial de WhatsApp (cero emojis)');
+
+  await w.happyDOM.abort();
+}
+
+console.log('PASS PORTAL, COMPARATOR & WHOLESALE WA: Customer portal, live tracking, food comparator, brand packshots, and wholesale WhatsApp CTA verified.');
+

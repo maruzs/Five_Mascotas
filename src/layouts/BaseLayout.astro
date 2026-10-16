@@ -11,6 +11,7 @@ import CheckoutModal from '../components/CheckoutModal.astro';
 import MobileDrawer from '../components/MobileDrawer.astro';
 import MobileBottomNav from '../components/MobileBottomNav.astro';
 import RayoAssistantWidget from '../components/RayoAssistantWidget.astro';
+import WholesaleWhatsAppButton from '../components/WholesaleWhatsAppButton.astro';
 
 interface Props {
   title?: string;
@@ -77,6 +78,9 @@ const currentPath = Astro.url.pathname;
 
     <!-- Asistente Nutricional Flotante Rayo (IA / Gemini 2.0 Flash) -->
     <RayoAssistantWidget />
+
+    <!-- Botón Flotante WhatsApp Cotizaciones al por Mayor -->
+    <WholesaleWhatsAppButton />
 
     <!-- Store Client Logic -->
     <script>
