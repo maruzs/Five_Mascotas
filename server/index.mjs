@@ -314,12 +314,13 @@ const server = http.createServer(async (req, res) => {
 
       try {
         const body = await parseBody(req);
-        const { query, mode, productIds, petProfile } = body;
+        const { query, mode, productIds, petProfile, history } = body;
         const result = await handleRayoNutritionalChat({
           query: typeof query === 'string' ? query.slice(0, 1000) : '',
           mode: mode || 'chat',
           productIds: Array.isArray(productIds) ? productIds.slice(0, 5) : [],
           petProfile: typeof petProfile === 'object' && petProfile !== null ? petProfile : null,
+          history: Array.isArray(history) ? history.slice(-10) : [],
           dataDir,
         });
 

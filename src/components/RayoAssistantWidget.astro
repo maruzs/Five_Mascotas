@@ -495,6 +495,9 @@
       ind?.remove();
     };
 
+    // Historial de conversación local para mantener memoria y contexto multi-turno
+    const chatHistory: Array<{ role: 'user' | 'model'; text: string }> = [];
+
     // Chat submit handler
     chatForm?.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -502,6 +505,7 @@
       if (!val) return;
 
       appendMessage('user', val);
+      chatHistory.push({ role: 'user', text: val });
       if (chatInput) chatInput.value = '';
       if (suggestionsWrap) suggestionsWrap.style.display = 'none';
 
@@ -514,6 +518,7 @@
           body: JSON.stringify({
             query: val,
             mode: 'chat',
+            history: chatHistory.slice(-8),
           }),
         });
 
@@ -522,6 +527,10 @@
 
         if (data.ok && data.answer) {
           appendMessage('bot', data.answer);
+          chatHistory.push({ role: 'model', text: data.answer });
+          if (chatHistory.length > 12) {
+            chatHistory.splice(0, chatHistory.length - 12);
+          }
         } else {
           appendMessage('bot', data.error || 'No fue posible procesar la consulta en este momento.');
         }

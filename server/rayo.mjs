@@ -253,17 +253,85 @@ export function findAntiparasitics(products, { species = 'perro', weightKg = 10 
 }
 
 /**
+ * Busca productos relevantes en el catálogo PIM mediante coincidencia léxica ponderada
+ */
+export function searchCatalog(queryText, allProducts, maxResults = 8) {
+  if (!queryText || !Array.isArray(allProducts) || allProducts.length === 0) return [];
+
+  const normalized = queryText
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^\w\s]/g, ' ');
+
+  const stopWords = new Set([
+    'para', 'como', 'cual', 'que', 'con', 'por', 'los', 'las', 'una', 'uno', 'unos', 'unas',
+    'del', 'mas', 'mejor', 'peor', 'precio', 'cuesta', 'vale', 'ambos', 'entonces', 'quiero',
+    'saber', 'cuanto', 'alimento', 'comida', 'entre', 'sobre', 'este', 'esta', 'estos', 'estas',
+    'hola', 'buenas', 'tardes', 'dias', 'noches', 'saludos', 'favor', 'gracias', 'recomiendas',
+    'recomienda', 'sirve', 'venden', 'tienen', 'five', 'mascotas', 'perro', 'gato', 'perros', 'gatos'
+  ]);
+
+  const tokens = normalized
+    .split(/\s+/)
+    .filter((t) => t.length >= 3 && !stopWords.has(t));
+
+  if (tokens.length === 0) return [];
+
+  const scored = [];
+  for (const p of allProducts) {
+    const brand = (p.brand || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const name = (p.name || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const pet = (p.pet || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const stage = (p.lifeStage || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const category = (p.category || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const subcat = (p.subcategory || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+    const haystack = `${brand} ${name} ${pet} ${stage} ${category} ${subcat}`;
+
+    let score = 0;
+    let tokenMatches = 0;
+
+    for (const t of tokens) {
+      if (brand === t) {
+        score += 40;
+        tokenMatches++;
+      } else if (brand.includes(t)) {
+        score += 25;
+        tokenMatches++;
+      } else if (name.includes(t)) {
+        score += 20;
+        tokenMatches++;
+      } else if (stage.includes(t)) {
+        score += 15;
+        tokenMatches++;
+      } else if (haystack.includes(t)) {
+        score += 8;
+        tokenMatches++;
+      }
+    }
+
+    if (score >= 20 && tokenMatches > 0) {
+      scored.push({ product: p, score });
+    }
+  }
+
+  scored.sort((a, b) => b.score - a.score);
+  return scored.slice(0, maxResults).map((s) => s.product);
+}
+
+/**
  * Fallback Algorítmico Determinista de Rayo (en caso de no tener API key o fallo de cuota)
  */
 function buildDeterministicResponse({ query, mode, productsToCompare, portionData, antiparasitics, petProfile }) {
   const greeting = `**Rayo · Experto Nutricional** (FIVE Mascotas)\n*Asesoría técnica y objetiva para perros y gatos*\n\n`;
 
-  if (mode === 'comparison' && productsToCompare && productsToCompare.length >= 2) {
+  if (productsToCompare && productsToCompare.length >= 2) {
     let resp = greeting;
     resp += `### Veredicto Nutricional Técnico\n\n`;
-    resp += `He analizado al detalle las fichas oficiales del catálogo PIM para:\n`;
+    resp += `He analizado al detalle las fichas oficiales del catálogo PIM de FIVE Mascotas:\n`;
     productsToCompare.forEach((p) => {
-      resp += `- **${p.brand} ${p.name}** (${p.pet} · ${p.lifeStage} · ${p.proteinPct}% Prot. · $${p.pricePerKg.toLocaleString('es-CL')}/kg)\n`;
+      resp += `- **${p.brand} ${p.name}** (${p.pet} · ${p.lifeStage} · Formato: **${p.format}** · Precio: **$${p.price.toLocaleString('es-CL')}** · **$${p.pricePerKg.toLocaleString('es-CL')}/kg** · ${p.proteinPct}% Prot.)\n`;
     });
     resp += `\n---\n\n`;
 
@@ -297,9 +365,26 @@ function buildDeterministicResponse({ query, mode, productsToCompare, portionDat
     });
 
     resp += `\n#### 3. Rendimiento y Relación Precio / Calidad\n`;
-    resp += `- **Opción más conveniente por kilo:** **${bestPrice.brand} ${bestPrice.name}** a **$${bestPrice.pricePerKg.toLocaleString('es-CL')}/kg**.\n`;
-    resp += `- **Conclusión:** Si buscas el máximo rigor nutricional e ingredientes nobles, **${bestProt.brand}** toma la delantera. Si priorizas rendimiento económico diario con estándar balanceado, **${bestPrice.brand}** ofrece un costo por ración altamente competitivo.\n`;
+    resp += `- **Opción más económica por kilo:** **${bestPrice.brand} ${bestPrice.name}** (${bestPrice.format}) a **$${bestPrice.price.toLocaleString('es-CL')}** (**$${bestPrice.pricePerKg.toLocaleString('es-CL')}/kg**).\n`;
+    if (bestProt.id !== bestPrice.id) {
+      resp += `- **Veredicto Recomendado:** Si tu prioridad es el rendimiento económico con un balance básico de mantenimiento, **${bestPrice.brand}** es la opción más conveniente por kilo ($${bestPrice.pricePerKg.toLocaleString('es-CL')}/kg). Si buscas mejor perfil de ingredientes y proteína, **${bestProt.brand}** ofrece mayor calidad biológica.\n`;
+    } else {
+      resp += `- **Veredicto Recomendado:** **${bestProt.brand} ${bestProt.name}** lidera tanto en nivel proteico como en costo por kilo, siendo la mejor recomendación global.\n`;
+    }
 
+    return resp;
+  }
+
+  if (productsToCompare && productsToCompare.length === 1) {
+    const p = productsToCompare[0];
+    let resp = greeting;
+    resp += `### Ficha Oficial de Catálogo: ${p.brand} ${p.name}\n\n`;
+    resp += `- **Especie y Etapa:** ${p.pet} · ${p.lifeStage}\n`;
+    resp += `- **Formato Disponible:** ${p.format}\n`;
+    resp += `- **Precio FIVE:** **$${p.price.toLocaleString('es-CL')}** ($${p.pricePerKg.toLocaleString('es-CL')}/kg)\n`;
+    resp += `- **Perfil Nutricional:** ${p.proteinPct}% Proteína · ${p.fatPct}% Grasa · ${p.fiberPct}% Fibra\n`;
+    resp += `- **Primeros Ingredientes Declarados:** ${p.ingredients.slice(0, 200)}...\n\n`;
+    resp += `¿Deseas comparar esta fórmula con otra marca o calcular la porción diaria para el peso de tu mascota?`;
     return resp;
   }
 
@@ -348,19 +433,20 @@ function buildDeterministicResponse({ query, mode, productsToCompare, portionDat
 }
 
 /**
- * Función Principal: Atiende una consulta a Rayo usando Gemini 2.0 Flash o Fallback
+ * Función Principal: Atiende una consulta a Rayo usando Gemini con RAG de catálogo y memoria multi-turno
  */
 export async function handleRayoNutritionalChat({
   query = '',
   mode = 'chat', // 'chat' | 'comparison' | 'portion' | 'antiparasitic'
   productIds = [],
   petProfile = null, // { species, weightKg, lifeStage, activityLevel, breed }
+  history = [], // Array<{ role: 'user' | 'model', text: string }>
   dataDir,
 }) {
   const pimFilePath = path.join(dataDir, 'pim.json');
   const allProducts = await loadPimProducts(pimFilePath);
 
-  // 1. Contexto de comparación si aplica
+  // 1. Contexto de comparación explícito si se enviaron IDs específicos
   let productsToCompare = [];
   if (Array.isArray(productIds) && productIds.length > 0) {
     productsToCompare = productIds
@@ -369,7 +455,39 @@ export async function handleRayoNutritionalChat({
       .map(extractProductNutrition);
   }
 
-  // 2. Cálculo de porción si aplica
+  // 2. Búsqueda RAG en el catálogo PIM usando la consulta actual y el historial previo
+  const pastUserQueries = Array.isArray(history)
+    ? history
+        .filter((h) => h && (h.role === 'user' || h.role === 'human') && typeof h.text === 'string')
+        .map((h) => h.text)
+        .join(' ')
+    : '';
+  const searchCorpus = `${pastUserQueries} ${query}`.trim();
+  const catalogMatches = searchCatalog(searchCorpus, allProducts, 8);
+  const matchedProducts = catalogMatches.map(extractProductNutrition);
+
+  // Si no se pasaron IDs explícitos pero la búsqueda arrojó resultados relevantes
+  if (productsToCompare.length === 0 && matchedProducts.length > 0) {
+    const uniqueBrands = new Set(matchedProducts.map((p) => p.brand.toLowerCase()));
+    if (uniqueBrands.size >= 2 || mode === 'comparison') {
+      // Tomamos hasta 1 producto representativo por marca
+      const selected = [];
+      const seen = new Set();
+      for (const p of matchedProducts) {
+        const b = p.brand.toLowerCase();
+        if (!seen.has(b)) {
+          seen.add(b);
+          selected.push(p);
+        }
+        if (selected.length >= 4) break;
+      }
+      productsToCompare = selected.length >= 2 ? selected : matchedProducts.slice(0, 3);
+    } else {
+      productsToCompare = matchedProducts.slice(0, 3);
+    }
+  }
+
+  // 3. Cálculo de porción si aplica
   let portionData = null;
   if (mode === 'portion' || (petProfile && petProfile.weightKg)) {
     portionData = calculatePortion({
@@ -380,19 +498,31 @@ export async function handleRayoNutritionalChat({
     });
   }
 
-  // 3. Antiparasitarios si aplica
+  // 4. Antiparasitarios si aplica
   let antiparasitics = [];
-  if (mode === 'antiparasitic' || (query && (query.toLowerCase().includes('pastilla') || query.toLowerCase().includes('antiparasit') || query.toLowerCase().includes('pulga') || query.toLowerCase().includes('garrapata')))) {
+  const queryLower = (query || '').toLowerCase();
+  const isFarmaInquiry =
+    mode === 'antiparasitic' ||
+    queryLower.includes('pastilla') ||
+    queryLower.includes('antiparasit') ||
+    queryLower.includes('desparasit') ||
+    queryLower.includes('pulga') ||
+    queryLower.includes('garrapata') ||
+    queryLower.includes('nexgard') ||
+    queryLower.includes('bravecto') ||
+    queryLower.includes('simparica');
+
+  if (isFarmaInquiry) {
     antiparasitics = findAntiparasitics(allProducts, {
-      species: petProfile?.species || (query.toLowerCase().includes('gato') ? 'gato' : 'perro'),
+      species: petProfile?.species || (queryLower.includes('gato') ? 'gato' : 'perro'),
       weightKg: petProfile?.weightKg || 10,
     });
   }
 
-  // 4. Verificar API KEY de Gemini
+  // 5. Verificar API KEY de Gemini
   const apiKey = (process.env.GEMINI_API_KEY || '').trim();
 
-  // Si no hay API Key disponible en el entorno, usar fallback determinista
+  // Si no hay API Key disponible en el entorno, usar fallback determinista enriquecido con catálogo
   if (!apiKey) {
     const fallbackAnswer = buildDeterministicResponse({
       query,
@@ -408,23 +538,30 @@ export async function handleRayoNutritionalChat({
       answer: fallbackAnswer,
       portionData,
       antiparasitics,
+      matchedProducts,
     };
   }
 
-  // 5. Preparar System Prompt y XML Context para Gemini
+  // 6. Preparar System Prompt y XML Context para Gemini
   const systemInstruction = `
 Eres "Rayo · Experto Nutricional", la mascota oficial y asesor veterinario de FIVE Mascotas (un gato tuxedo distinguido, empático, directo y científicamente riguroso).
-Tu misión es asesorar a tutores de mascotas con total objetividad y transparencia sobre nutrición y salud preventiva para PERROS y GATOS.
+Tu misión es asesorar a tutores de mascotas con total objetividad y rigor técnico sobre nutrición y salud preventiva para PERROS y GATOS.
 
 REGLAS INNEGOCIABLES DE SEGURIDAD, ESTILO Y ÉTICA:
 1. ESTÁ TERMINANTEMENTE PROHIBIDO EL USO DE EMOJIS O ÍCONOS PICTOGRÁFICOS EN TODAS TUS RESPUESTAS. Mantén una redacción limpia, sobria, elegante y profesional.
 2. NUNCA respondas temas ajenos a perros, gatos, nutrición animal o bienestar de mascotas (cero código, política o temas fuera de lugar).
 3. NUNCA inventes descuentos, cupones, regalos ni modifiques los precios oficiales del catálogo de FIVE Mascotas.
 4. Si hablas de antiparasitarios o medicamentos, incluye SIEMPRE el aviso veterinario obligatorio: el tutor debe pesar a su mascota antes de administrar y consultar al veterinario ante cualquier condición médica previa.
-5. Basa tus veredictos en la ciencia nutricional veterinaria:
+5. PRECIOS Y DISPONIBILIDAD DEL CATÁLOGO FIVE MASCOTAS:
+   - Consulta SIEMPRE las etiquetas <catalog_products_found> o <products_to_compare> suministradas en el contexto.
+   - Si el tutor pregunta por precios, formatos o comparativas de productos disponibles en el catálogo, DEBES informar con exactitud el formato de saco (ej. 18 kg, 21 kg), el precio en pesos chilenos ($28.000) y calcular el costo por kilo ($/kg) para darle una respuesta 100% concreta e inmediata.
+   - Si el tutor pregunta "¿cuál es mejor?" o "¿cuál compro?", da un veredicto nutricional directo y claro primero, contrastando la calidad de ingredientes y el costo por kilo, sin dar evasivas ni respuestas a medias.
+6. MEMORIA Y CONTINUIDAD DE LA CONVERSACIÓN:
+   - Mantén la coherencia con los mensajes anteriores de la conversación. No repitas saludos introductorios largos ni menús genéricos cuando el tutor ya está en un diálogo fluido.
+7. Basa tus veredictos en la ciencia nutricional veterinaria:
    - Gatos: Carnívoros estrictos. Requieren alta proteína de origen animal, taurina, grasas de calidad y control de cenizas/fósforo.
    - Perros: Carnívoros facultativos / omnívoros adaptados. Se evalúa primer ingrediente (carne/harina de carne sobre maíz/soja), fuentes de carbohidratos, balance de fibra y ácidos grasos Omega 3/6.
-6. Formato: Escribe en Markdown pulido, con subtítulos concisos, viñetas limpias y un tono cálido de tutor experto a tutor responsable, SIN emojis.
+8. Formato: Escribe en Markdown pulido, con subtítulos concisos, viñetas limpias y un tono cálido de tutor experto a tutor responsable, SIN emojis.
 `.trim();
 
   // Formatear contexto estructurado XML
@@ -433,15 +570,29 @@ REGLAS INNEGOCIABLES DE SEGURIDAD, ESTILO Y ÉTICA:
   if (productsToCompare.length > 0) {
     xmlContext += '  <products_to_compare>\n';
     productsToCompare.forEach((p) => {
-      xmlContext += `    <product id="${p.id}" brand="${p.brand}" name="${p.name}" pet="${p.pet}" stage="${p.lifeStage}" price="${p.price}" price_per_kg="${p.pricePerKg}">
+      xmlContext += `    <product id="${p.id}" brand="${p.brand}" name="${p.name}" pet="${p.pet}" stage="${p.lifeStage}" format="${p.format}" price="${p.price}" price_per_kg="${p.pricePerKg}">
       <protein>${p.proteinPct}%</protein>
       <fat>${p.fatPct}%</fat>
       <fiber>${p.fiberPct}%</fiber>
       <moisture>${p.moisturePct}%</moisture>
-      <ingredients>${p.ingredients}</ingredients>
+      <ingredients>${(p.ingredients || '').slice(0, 300)}</ingredients>
     </product>\n`;
     });
     xmlContext += '  </products_to_compare>\n';
+  }
+
+  if (matchedProducts.length > 0) {
+    xmlContext += '  <catalog_products_found>\n';
+    matchedProducts.slice(0, 6).forEach((p) => {
+      xmlContext += `    <product id="${p.id}" brand="${p.brand}" name="${p.name}" pet="${p.pet}" stage="${p.lifeStage}" format="${p.format}" price="${p.price}" price_per_kg="${p.pricePerKg}">
+      <protein>${p.proteinPct}%</protein>
+      <fat>${p.fatPct}%</fat>
+      <fiber>${p.fiberPct}%</fiber>
+      <moisture>${p.moisturePct}%</moisture>
+      <ingredients>${(p.ingredients || '').slice(0, 250)}</ingredients>
+    </product>\n`;
+    });
+    xmlContext += '  </catalog_products_found>\n';
   }
 
   if (portionData) {
@@ -475,11 +626,53 @@ Consulta: ${query || 'Solicitud de veredicto o asesoría nutricional'}
 ${petProfile ? `Perfil Mascota: Especie=${petProfile.species || 'N/A'}, Peso=${petProfile.weightKg || 'N/A'}kg, Etapa=${petProfile.lifeStage || 'N/A'}, Actividad=${petProfile.activityLevel || 'N/A'}, Raza=${petProfile.breed || 'N/A'}` : ''}
 </user_inquiry>
 
-Responde como Rayo, analizando objetivamente los datos anteriores. Sé claro, profesional y estructurado.
+Responde como Rayo, analizando objetivamente los datos anteriores. Si hay productos en el catálogo que respondan a la consulta, cita sus formatos y precios exactos en pesos chilenos. Sé claro, profesional y estructurado.
 `.trim();
 
-  // 6. Invocar Gemini REST API con failover automático entre modelos
-  const candidateModels = ['gemini-flash-latest', 'gemini-3.8-flash', 'gemini-3.1-flash-lite'];
+  // 7. Construir historial multi-turno para Gemini respetando la alternancia estricta de turnos
+  const formattedHistory = [];
+  if (Array.isArray(history) && history.length > 0) {
+    for (const msg of history) {
+      if (!msg || typeof msg.text !== 'string' || !msg.text.trim()) continue;
+      const role =
+        msg.role === 'model' || msg.role === 'bot' || msg.role === 'assistant' ? 'model' : 'user';
+      const text = msg.text.trim().slice(0, 1500);
+
+      const lastMsg = formattedHistory[formattedHistory.length - 1];
+      if (lastMsg && lastMsg.role === role) {
+        lastMsg.parts[0].text += `\n\n${text}`;
+      } else {
+        formattedHistory.push({ role, parts: [{ text }] });
+      }
+    }
+  }
+
+  // Gemini exige que el primer turno sea 'user'
+  while (formattedHistory.length > 0 && formattedHistory[0].role === 'model') {
+    formattedHistory.shift();
+  }
+
+  // Si el último turno es 'user' y coincide con query, lo removemos para que el prompt actual lo reemplace con contexto
+  if (formattedHistory.length > 0 && formattedHistory[formattedHistory.length - 1].role === 'user') {
+    formattedHistory.pop();
+  }
+
+  const contents = [
+    ...formattedHistory,
+    {
+      role: 'user',
+      parts: [{ text: userPrompt }],
+    },
+  ];
+
+  // 8. Invocar Gemini REST API con failover automático entre modelos activos comprobados
+  const candidateModels = [
+    'gemini-3.5-flash',
+    'gemini-3.6-flash',
+    'gemini-3-flash-preview',
+    'gemini-3.8-flash',
+    'gemini-flash-latest',
+  ];
 
   for (const model of candidateModels) {
     try {
@@ -488,15 +681,10 @@ Responde como Rayo, analizando objetivamente los datos anteriores. Sé claro, pr
         systemInstruction: {
           parts: [{ text: systemInstruction }],
         },
-        contents: [
-          {
-            role: 'user',
-            parts: [{ text: userPrompt }],
-          },
-        ],
+        contents,
         generationConfig: {
           temperature: 0.3,
-          maxOutputTokens: 900,
+          maxOutputTokens: 1500,
         },
       };
 
@@ -517,6 +705,7 @@ Responde como Rayo, analizando objetivamente los datos anteriores. Sé claro, pr
             answer: candidateText,
             portionData,
             antiparasitics,
+            matchedProducts,
           };
         }
       } else {
@@ -543,5 +732,6 @@ Responde como Rayo, analizando objetivamente los datos anteriores. Sé claro, pr
     answer: fallbackAnswer,
     portionData,
     antiparasitics,
+    matchedProducts,
   };
 }
