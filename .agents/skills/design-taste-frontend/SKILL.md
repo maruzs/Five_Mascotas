@@ -602,6 +602,7 @@ Avoid these signatures unless the brief explicitly asks for them.
 * **NO oversaturated accents.** Desaturate to blend with neutrals.
 * **NO excessive gradient text** for large headers.
 * **NO custom mouse cursors.** Outdated, accessibility-hostile, perf-hostile.
+* **NO instant anchor-link jumping.** Avoid single-page landing anchors (#) when routing makes sense. If anchor links are used, **instant hard jumps are forbidden**: enforce cinematic soft-scroll via `html { scroll-behavior: smooth; scroll-padding-top: 5rem; }` or `element.scrollIntoView({ behavior: 'smooth', block: 'start' })`. Never let fixed headers obscure destination targets.
 
 ### 9.B Typography
 * **AVOID Inter as default.** See Section 4.1. Override path exists.

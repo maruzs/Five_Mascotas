@@ -32,8 +32,19 @@ npx prisma generate       # Regenerar cliente de base de datos
 ## 📐 3. Arquitectura y Reglas Técnicas Innegociables
 
 ### A. UI/UX & Frontend ("Zero-Scaffold Policy")
-- **Biblioteca Base & Plantillas:** Utiliza obligatoriamente los componentes listos para producción en `templates/` (`templates/web/` y `templates/mobile/`), el catálogo visual interactivo `skills/design-system-vault/showcase.html` y los recursos de la skill `design-system-vault` (`skills/design-system-vault/` o `.agents/skills/design-system-vault/`). Consulta `CATALOGO_COMPONENTES.md` para las rutas y ejemplos exactos de uso de cada uno de los 10 componentes universales.
-- **Estándar de Dashboards y Gráficos:** Para cualquier pantalla analítica, KPI o métricas en Web, Desktop o Mobile, es obligatorio consultar y aplicar las directivas de `DASHBOARD_STANDARDS.md` (6 leyes anti-ruido, matriz de charts y componentes contextuales).
+- **Biblioteca Base & Plantillas:** Utiliza obligatoriamente los componentes listos para producción en `templates/` (`templates/web/` y `templates/mobile/`), el catálogo visual interactivo `.agents/skills/design-system-vault/showcase.html` y los recursos de la skill `design-system-vault` (`.agents/skills/design-system-vault/`).
+- **Enrutamiento vs Anchor Links & Soft-Scroll:**
+  - **Prioridad a Rutas Reales:** Prioriza siempre navegación por enrutamiento (`/features`, `/pricing`, `/docs`, etc.) en lugar de landing pages monolíticas plagadas de anchor links (#).
+  - **Ley de Anchor Links (Soft-Scroll Obligatorio):** Si por arquitectura o diseño de una sección se justifica usar anchor links a un ID de la página, **está terminantemente prohibido el salto brusco instantáneo por defecto del navegador**. Es obligatorio aplicar *soft-scroll / smooth scrolling* cinemático (`html { scroll-behavior: smooth; scroll-padding-top: 5rem; }` y `element.scrollIntoView({ behavior: 'smooth', block: 'start' })`), asegurando que la barra de navegación nunca tape el encabezado de destino.
+- **Estándar de Dashboards y Gráficos:** Para cualquier pantalla analítica, KPI o métricas en Web, Desktop o Mobile, es obligatorio consultar y aplicar las directivas de la skill `dashboard-standards` (`.agents/skills/dashboard-standards/`) (6 leyes anti-ruido, matriz de charts y componentes contextuales).
+- **Diagramas Interactivos y Clickeables (Regla SVG en Documentos y LaTeX):**
+  - Todo diagrama de arquitectura, flujo o entidad complejo en documentos oficiales (Markdown y LaTeX) **debe ser clickeable para abrir la versión vectorial `.svg` en alta resolución**.
+  - **En Markdown:** `[![Diagrama (Clic para ver SVG)](./figures/diagrama.png)](./figures/diagrama.svg)`
+  - **En LaTeX:** Con `\usepackage{hyperref}`:
+    ```latex
+    \href{figures/diagrama.svg}{\includegraphics[width=0.9\textwidth]{figures/diagrama.png}}
+    ```
+  - Esto previene la pérdida de legibilidad en diagramas extensos al exportar a PDF.
 - **Prohibición Anti-Slop:** Prohibido inventar componentes básicos de Tailwind con layouts cliché (hero oscuro centrado con gradiente morado, cards sin jerarquía). Reutiliza bento grids, shimmer buttons y layouts pulidos del vault y templates.
 - **Diseño Adaptativo (Mobile-First):** Todo componente complejo de escritorio debe colapsar limpiamente en una sola columna en pantallas menores a 768px.
 - **Cuatro Estados Obligatorios:** Toda vista que consuma datos debe contemplar: Carga (*skeleton loading*), Vacío (*empty state con llamada a la acción*), Error (*mensaje comprensible*) y Éxito.
@@ -55,7 +66,7 @@ npx prisma generate       # Regenerar cliente de base de datos
 - **Consentimiento:** Formularios de registro con consentimiento expreso (sin casillas premarcadas) y bloqueo preventivo de scripts de cookies de terceros.
 
 ### E. Infraestructura & Despliegue (Proxmox Homelab / Prod Cluster)
-- **Estándar de Ingress & Red:** Es obligatorio respetar la topología definida en `PROXMOX_INFRASTRUCTURE.md` y la skill `.agents/skills/proxmox-deploy`.
+- **Estándar de Ingress & Red:** Es obligatorio respetar la topología y directivas definidas en las skills `.agents/skills/proxmox-deploy` y `.agents/skills/proxmox-sysadmin`.
 - **Cero Port-Forwarding:** Prohibido asumir o sugerir apertura de puertos 80/443 en el router residencial. El tráfico público ingresa exclusivamente vía **Cloudflare Tunnels** hacia `network-master` (LXC 101: `192.168.1.51`).
 - **Nginx Proxy Manager:** Para exponer cualquier microservicio o app web, generar la configuración proxy host con cabeceras `Host`, `X-Real-IP`, `X-Forwarded-For`, `Upgrade $http_upgrade` y subdominio `*.epistia.cl`.
 - **Acceso Administrativo:** Gestión out-of-band exclusivamente vía **Tailscale** (`100.x.x.x`).

@@ -402,7 +402,9 @@ Scope notice: This checklist is for App UI (iOS/Android/React Native/Flutter).
 - [ ] Modal/drawer scrim is measured against the real background and preserves foreground legibility
 - [ ] Both themes are tested before delivery (not inferred from a single theme)
 
-### Layout
+### Layout & Navigation
+- [ ] Prioritize URL routing navigation over single-page anchor link overload
+- [ ] If anchor links (#) are used, **instant jumps are forbidden**: smooth / soft scroll is strictly enforced (`scroll-behavior: smooth`, `scroll-padding-top` to account for sticky nav)
 - [ ] Safe areas are respected for headers, tab bars, and bottom CTA bars
 - [ ] Scroll content is not hidden behind fixed/sticky bars
 - [ ] Verified on small phone, large phone, and tablet (portrait + landscape)
