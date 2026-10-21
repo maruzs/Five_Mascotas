@@ -9,6 +9,18 @@ export type CategoryType =
 
 export type LifeStage = 'Cachorro' | 'Adulto' | 'Senior' | 'Todas las edades';
 
+export interface ProductVariant {
+  id: string;
+  nexoVariantId?: string;
+  sku?: string;
+  format: string;
+  weightKg?: number;
+  price: number;
+  oldPrice?: number;
+  pricePerKg?: number;
+  available?: number;
+}
+
 export interface Product {
   nexoVariantId?: string;
   sku?: string;
@@ -29,6 +41,12 @@ export interface Product {
   image: string;
   images?: string[];
   featured?: boolean;
+  // Variant, weight and range attributes
+  variants?: ProductVariant[];
+  priceMin?: number;
+  priceMax?: number;
+  hasMultipleFormats?: boolean;
+  totalStock?: number;
   // Nutritional attributes configurable from PIM
   proteinPct?: number;
   fatPct?: number;

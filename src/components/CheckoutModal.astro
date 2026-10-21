@@ -1,6 +1,6 @@
 ---
 // src/components/CheckoutModal.astro
-// Modal de Checkout interactivo paso a paso: Datos de entrega -> Pago Transferencia con QR + Datos Bancarios -> Generación de Código de Seguimiento.
+// Modal de Checkout interactivo paso a paso: Datos de entrega -> Medio de Pago (Webpay Plus, Khipu o Transferencia QR) -> Confirmación & Rastreo.
 import { defaultBankAccount } from '../data/pim/bank';
 import { defaultShippingRates } from '../data/pim/shipping';
 import { formatMoney } from '../data/pim/catalog';
@@ -27,7 +27,7 @@ import { formatMoney } from '../data/pim/catalog';
         <div class="chk-step-divider"></div>
         <div class="five-chk-step" id="chk-step-pill-2">
           <span class="chk-step-num">2</span>
-          <span>Pago & QR</span>
+          <span>Medio de Pago</span>
         </div>
         <div class="chk-step-divider"></div>
         <div class="five-chk-step" id="chk-step-pill-3">
@@ -96,123 +96,227 @@ import { formatMoney } from '../data/pim/catalog';
 
           <div style="display:flex; justify-content:space-between; margin-top:8px;">
             <button type="button" class="five-text-btn" data-chk-close>Cancelar</button>
-            <button type="submit" class="five-button" style="padding:10px 24px;">
-              Continuar al Pago con Transferencia / QR ➔
+            <button type="submit" class="five-button" style="padding:10px 24px; display:inline-flex; align-items:center; gap:8px;">
+              <span>Continuar al Pago</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
           </div>
         </form>
       </div>
 
-      <!-- ================= STEP 2: PAGO TRANSFERENCIA + QR ================= -->
+      <!-- ================= STEP 2: MEDIO DE PAGO ================= -->
       <div id="chk-step-2" class="five-chk-step-pane" hidden>
-        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
-          <h3 style="font-size:15px; font-weight:800; margin:0; color:#111827;">2. Pagar mediante Transferencia Bancaria</h3>
-          <span class="five-badge-pill green" style="font-size:11px;">★ Precio más conveniente</span>
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
+          <div>
+            <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:#111827;">2. Selecciona tu Medio de Pago</h3>
+            <p style="font-size:12.5px; color:#6b7280; margin:0;">Elige cómo prefieres abonar tu compra:</p>
+          </div>
+          <span class="five-badge-pill green" style="font-size:11px;">Pago Seguro</span>
         </div>
 
-        <div class="five-qr-payment-grid">
-          <!-- QR Code Display Box -->
-          <div class="five-qr-box">
-            <div class="five-qr-code-canvas-wrap">
-              <!-- Dynamic QR Code generated via API / SVG -->
-              <img
-                id="chk-qr-image"
-                alt="Código QR para Transferencia Bancaria"
-                width="190"
-                height="190"
-                loading="eager"
-              />
+        <!-- Selector de Métodos de Pago con botones táctiles (mínimo 52px de alto) -->
+        <div class="five-pay-methods-grid" role="radiogroup" aria-label="Métodos de Pago">
+          <!-- Opción 1: Webpay Plus -->
+          <button type="button" class="five-pay-method-btn is-selected" id="chk-tab-webpay" data-pay-method="webpay" aria-checked="true">
+            <span class="five-pay-method-badge">Transbank</span>
+            <div class="five-pay-method-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7025A8" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
             </div>
-            <span class="five-qr-hint" style="display:flex; align-items:center; justify-content:center; gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7025A8" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg> Escanea con tu cámara o app bancaria para obtener los datos</span>
+            <div class="five-pay-method-info">
+              <strong>Webpay Plus</strong>
+              <small>Débito, Crédito, Prepago</small>
+            </div>
+          </button>
+
+          <!-- Opción 2: Khipu -->
+          <button type="button" class="five-pay-method-btn" id="chk-tab-khipu" data-pay-method="khipu" aria-checked="false">
+            <span class="five-pay-method-badge info">Automático</span>
+            <div class="five-pay-method-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2"><path d="M3 21h18"></path><path d="M3 10h18"></path><path d="M5 6l7-3 7 3"></path><path d="M4 10v11"></path><path d="M20 10v11"></path><path d="M8 14v4"></path><path d="M12 14v4"></path><path d="M16 14v4"></path></svg>
+            </div>
+            <div class="five-pay-method-info">
+              <strong>Khipu</strong>
+              <small>Transferencia instantánea</small>
+            </div>
+          </button>
+
+          <!-- Opción 3: Transferencia Manual / QR -->
+          <button type="button" class="five-pay-method-btn" id="chk-tab-transfer" data-pay-method="transfer" aria-checked="false">
+            <span class="five-pay-method-badge green">Directo</span>
+            <div class="five-pay-method-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#276717" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            </div>
+            <div class="five-pay-method-info">
+              <strong>Transferencia QR</strong>
+              <small>Manual con comprobante</small>
+            </div>
+          </button>
+        </div>
+
+        <!-- ================= PANEL 1: WEBPAY PLUS ================= -->
+        <div id="chk-panel-webpay" class="five-pay-content-panel">
+          <div class="five-pay-summary-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <span style="font-size:13px; color:#4b5563;">Total a pagar con tarjeta:</span>
+              <strong id="chk-webpay-amount" style="font-size:22px; color:#7025a8;">$0</strong>
+            </div>
+            <p style="font-size:12px; color:#6b7280; margin:0 0 12px; line-height:1.45;">
+              Paga en línea con Redcompra, tarjeta de débito, crédito o prepago a través de la pasarela certificada de Transbank Webpay Plus con confirmación inmediata.
+            </p>
+            <div style="display:flex; align-items:center; gap:8px; font-size:11.5px; color:#276717; background:#f0fdf4; padding:8px 12px; border-radius:8px; border:1px solid #bbf7d0;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#276717" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              <span>Transacción cifrada y protegida por los estándares de seguridad de Transbank</span>
+            </div>
           </div>
 
-          <!-- Bank Details text card -->
-          <div class="five-bank-details-card">
-            <div class="five-bank-row">
-              <div class="five-bank-text-wrap">
-                <span class="five-bank-label">Banco:</span>
-                <strong id="chk-bank-name" class="five-bank-val">{defaultBankAccount.bankName}</strong>
-              </div>
-              <button type="button" class="five-mini-copy-btn" data-copy-target="#chk-bank-name" aria-label="Copiar Banco">
-                <span>Copiar</span>
-              </button>
-            </div>
+          <div id="chk-webpay-feedback" role="status" aria-live="polite" hidden></div>
 
-            <div class="five-bank-row">
-              <div class="five-bank-text-wrap">
-                <span class="five-bank-label">Tipo de Cuenta:</span>
-                <strong id="chk-bank-type" class="five-bank-val">{defaultBankAccount.accountType}</strong>
-              </div>
-              <button type="button" class="five-mini-copy-btn" data-copy-target="#chk-bank-type" aria-label="Copiar Tipo de Cuenta">
-                <span>📋 Copiar</span>
-              </button>
-            </div>
-
-            <div class="five-bank-row highlight-row">
-              <div class="five-bank-text-wrap">
-                <span class="five-bank-label">Número de Cuenta:</span>
-                <strong id="chk-bank-number" class="five-bank-val" style="color:#7025a8; font-size:15px; font-family:monospace;">{defaultBankAccount.accountNumber}</strong>
-              </div>
-              <button type="button" class="five-mini-copy-btn prominent" data-copy-target="#chk-bank-number" aria-label="Copiar Número de Cuenta">
-                <span>Copiar Cuenta</span>
-              </button>
-            </div>
-
-            <div class="five-bank-row highlight-row">
-              <div class="five-bank-text-wrap">
-                <span class="five-bank-label">RUT:</span>
-                <strong id="chk-bank-rut" class="five-bank-val" style="font-family:monospace;">{defaultBankAccount.holderRut}</strong>
-              </div>
-              <button type="button" class="five-mini-copy-btn prominent" data-copy-target="#chk-bank-rut" aria-label="Copiar RUT">
-                <span>Copiar RUT</span>
-              </button>
-            </div>
-
-            <div class="five-bank-row">
-              <div class="five-bank-text-wrap">
-                <span class="five-bank-label">Titular:</span>
-                <strong id="chk-bank-holder" class="five-bank-val">{defaultBankAccount.holderName}</strong>
-              </div>
-              <button type="button" class="five-mini-copy-btn" data-copy-target="#chk-bank-holder" aria-label="Copiar Titular">
-                <span>📋 Copiar</span>
-              </button>
-            </div>
-
-            <div class="five-bank-row">
-              <div class="five-bank-text-wrap">
-                <span class="five-bank-label">Correo para Comprobante:</span>
-                <strong id="chk-bank-email" class="five-bank-val">{defaultBankAccount.email}</strong>
-              </div>
-              <button type="button" class="five-mini-copy-btn" data-copy-target="#chk-bank-email" aria-label="Copiar Correo">
-                <span>📋 Copiar</span>
-              </button>
-            </div>
-
-            <div class="five-bank-row total-row">
-              <div class="five-bank-text-wrap">
-                <span class="five-bank-label" style="font-weight:800; color:#111827;">Monto Exacto a Transferir:</span>
-                <strong id="chk-bank-amount" class="five-bank-val" style="font-size:17px; color:#276717;">$0</strong>
-              </div>
-              <button type="button" class="five-mini-copy-btn prominent green" data-copy-target="#chk-bank-amount" aria-label="Copiar Monto Exacto">
-                <span>Copiar Monto</span>
-              </button>
-            </div>
-
-            <button type="button" class="five-copy-data-btn" id="chk-copy-btn">
-              <span>Copiar todos los datos de transferencia juntos</span>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px;">
+            <button type="button" class="five-text-btn chk-back-btn">Volver a Datos</button>
+            <button type="button" class="five-button" id="chk-btn-pay-webpay" style="background:#7025a8; padding:12px 28px; font-size:14.5px; font-weight:800; min-height:48px; display:inline-flex; align-items:center; gap:8px;">
+              <span>Pagar con Webpay Plus</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
           </div>
         </div>
 
-        <div class="five-cart-notice" style="margin-block:14px 10px; font-size:11.5px; background:#faf5ff; border:1px solid #e9d5ff; color:#6b21a8;">
-          <strong>Importante:</strong> Al transferir, escribe tu código de pedido en el asunto/comentario de la transferencia. Luego pulsa "Ya Transferí / Confirmar Pedido" para enviarnos tu comprobante por WhatsApp.
+        <!-- ================= PANEL 2: KHIPU ================= -->
+        <div id="chk-panel-khipu" class="five-pay-content-panel" hidden>
+          <div class="five-pay-summary-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <span style="font-size:13px; color:#4b5563;">Total a transferir vía Khipu:</span>
+              <strong id="chk-khipu-amount" style="font-size:22px; color:#0284c7;">$0</strong>
+            </div>
+            <p style="font-size:12px; color:#6b7280; margin:0 0 12px; line-height:1.45;">
+              Transfiere desde cualquier banco nacional (BancoEstado, Santander, Banco de Chile, BCI, Scotiabank, etc.) con verificación automática instantánea sin necesidad de adjuntar comprobantes.
+            </p>
+            <div style="display:flex; align-items:center; gap:8px; font-size:11.5px; color:#0369a1; background:#f0f9ff; padding:8px 12px; border-radius:8px; border:1px solid #bae6fd;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              <span>Confirmación automática de pago en segundos vinculada a tu pedido</span>
+            </div>
+          </div>
+
+          <div id="chk-khipu-feedback" role="status" aria-live="polite" hidden></div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px;">
+            <button type="button" class="five-text-btn chk-back-btn">Volver a Datos</button>
+            <button type="button" class="five-button" id="chk-btn-pay-khipu" style="background:#0284c7; padding:12px 28px; font-size:14.5px; font-weight:800; min-height:48px; display:inline-flex; align-items:center; gap:8px;">
+              <span>Pagar con Khipu</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
         </div>
 
-        <div style="display:flex; justify-content:space-between; margin-top:12px;">
-          <button type="button" class="five-text-btn" id="chk-back-to-step1">← Volver a Datos</button>
-          <button type="button" class="five-button" id="chk-confirm-pay-btn" style="background:#276717; padding:10px 24px;">
-            ✓ Ya Transferí / Confirmar Pedido ➔
-          </button>
+        <!-- ================= PANEL 3: TRANSFERENCIA MANUAL + QR ================= -->
+        <div id="chk-panel-transfer" class="five-pay-content-panel" hidden>
+          <div class="five-qr-payment-grid">
+            <!-- QR Code Display Box -->
+            <div class="five-qr-box">
+              <div class="five-qr-code-canvas-wrap">
+                <!-- Dynamic QR Code generated via API / SVG -->
+                <img
+                  id="chk-qr-image"
+                  alt="Código QR para Transferencia Bancaria"
+                  width="190"
+                  height="190"
+                  loading="eager"
+                />
+              </div>
+              <span class="five-qr-hint" style="display:flex; align-items:center; justify-content:center; gap:6px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7025A8" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                Escanea con tu cámara o app bancaria para obtener los datos
+              </span>
+            </div>
+
+            <!-- Bank Details text card -->
+            <div class="five-bank-details-card">
+              <div class="five-bank-row">
+                <div class="five-bank-text-wrap">
+                  <span class="five-bank-label">Banco:</span>
+                  <strong id="chk-bank-name" class="five-bank-val">{defaultBankAccount.bankName}</strong>
+                </div>
+                <button type="button" class="five-mini-copy-btn" data-copy-target="#chk-bank-name" aria-label="Copiar Banco">
+                  <span>Copiar</span>
+                </button>
+              </div>
+
+              <div class="five-bank-row">
+                <div class="five-bank-text-wrap">
+                  <span class="five-bank-label">Tipo de Cuenta:</span>
+                  <strong id="chk-bank-type" class="five-bank-val">{defaultBankAccount.accountType}</strong>
+                </div>
+                <button type="button" class="five-mini-copy-btn" data-copy-target="#chk-bank-type" aria-label="Copiar Tipo de Cuenta">
+                  <span>Copiar</span>
+                </button>
+              </div>
+
+              <div class="five-bank-row highlight-row">
+                <div class="five-bank-text-wrap">
+                  <span class="five-bank-label">Número de Cuenta:</span>
+                  <strong id="chk-bank-number" class="five-bank-val" style="color:#7025a8; font-size:15px; font-family:monospace;">{defaultBankAccount.accountNumber}</strong>
+                </div>
+                <button type="button" class="five-mini-copy-btn prominent" data-copy-target="#chk-bank-number" aria-label="Copiar Número de Cuenta">
+                  <span>Copiar Cuenta</span>
+                </button>
+              </div>
+
+              <div class="five-bank-row highlight-row">
+                <div class="five-bank-text-wrap">
+                  <span class="five-bank-label">RUT:</span>
+                  <strong id="chk-bank-rut" class="five-bank-val" style="font-family:monospace;">{defaultBankAccount.holderRut}</strong>
+                </div>
+                <button type="button" class="five-mini-copy-btn prominent" data-copy-target="#chk-bank-rut" aria-label="Copiar RUT">
+                  <span>Copiar RUT</span>
+                </button>
+              </div>
+
+              <div class="five-bank-row">
+                <div class="five-bank-text-wrap">
+                  <span class="five-bank-label">Titular:</span>
+                  <strong id="chk-bank-holder" class="five-bank-val">{defaultBankAccount.holderName}</strong>
+                </div>
+                <button type="button" class="five-mini-copy-btn" data-copy-target="#chk-bank-holder" aria-label="Copiar Titular">
+                  <span>Copiar</span>
+                </button>
+              </div>
+
+              <div class="five-bank-row">
+                <div class="five-bank-text-wrap">
+                  <span class="five-bank-label">Correo para Comprobante:</span>
+                  <strong id="chk-bank-email" class="five-bank-val">{defaultBankAccount.email}</strong>
+                </div>
+                <button type="button" class="five-mini-copy-btn" data-copy-target="#chk-bank-email" aria-label="Copiar Correo">
+                  <span>Copiar</span>
+                </button>
+              </div>
+
+              <div class="five-bank-row total-row">
+                <div class="five-bank-text-wrap">
+                  <span class="five-bank-label" style="font-weight:800; color:#111827;">Monto Exacto a Transferir:</span>
+                  <strong id="chk-bank-amount" class="five-bank-val" style="font-size:17px; color:#276717;">$0</strong>
+                </div>
+                <button type="button" class="five-mini-copy-btn prominent green" data-copy-target="#chk-bank-amount" aria-label="Copiar Monto Exacto">
+                  <span>Copiar Monto</span>
+                </button>
+              </div>
+
+              <button type="button" class="five-copy-data-btn" id="chk-copy-btn">
+                <span>Copiar todos los datos de transferencia juntos</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="five-cart-notice" style="margin-block:14px 10px; font-size:11.5px; background:#faf5ff; border:1px solid #e9d5ff; color:#6b21a8;">
+            <strong>Importante:</strong> Al transferir, escribe tu código de pedido en el asunto/comentario de la transferencia. Luego pulsa "Ya Transferí / Confirmar Pedido" para enviarnos tu comprobante por WhatsApp.
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px;">
+            <button type="button" class="five-text-btn chk-back-btn" id="chk-back-to-step1">Volver a Datos</button>
+            <button type="button" class="five-button" id="chk-confirm-pay-btn" style="background:#276717; padding:10px 24px; min-height:46px; display:inline-flex; align-items:center; gap:8px;">
+              <span>Ya Transferí / Confirmar Pedido</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -231,7 +335,7 @@ import { formatMoney } from '../data/pim/catalog';
             <div style="display:flex; align-items:center; justify-content:center; gap:10px; margin-block:4px;">
               <strong id="chk-tracking-code" class="five-tracking-code-text">FIVE-TRK-8492</strong>
               <button type="button" class="five-mini-copy-btn prominent" id="chk-copy-track-code" data-copy-target="#chk-tracking-code" aria-label="Copiar código de seguimiento">
-                <span>📋 Copiar</span>
+                <span>Copiar</span>
               </button>
             </div>
             <small id="chk-result-status" style="color:#276717; font-weight:600; font-size:11.5px;">Estado: Pendiente de confirmación de transferencia</small>
@@ -249,8 +353,9 @@ import { formatMoney } from '../data/pim/catalog';
 
           <div style="margin-top:24px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
             <a id="chk-quotation-pdf" class="five-button" hidden download>Descargar cotización PDF</a>
-            <a href="/rastreo" id="chk-go-track-btn" class="five-button" style="background:#7025a8; font-size:13px; padding:9px 18px;">
-              🔍 Ir a Rastrear este Pedido
+            <a href="/rastreo" id="chk-go-track-btn" class="five-button" style="background:#7025a8; font-size:13px; padding:9px 18px; display:inline-flex; align-items:center; gap:6px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <span>Ir a Rastrear este Pedido</span>
             </a>
             <button type="button" class="five-text-btn" data-chk-close>
               Continuar comprando
@@ -371,6 +476,119 @@ import { formatMoney } from '../data/pim/catalog';
     padding: 10px 14px;
     font-size: 12.5px;
     color: #4b5563;
+  }
+
+  /* Selector de Métodos de Pago táctil */
+  .five-pay-methods-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .five-pay-method-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 14px;
+    min-height: 88px;
+    border: 2px solid #e5e7eb;
+    border-radius: 14px;
+    background: #ffffff;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s ease-in-out;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .five-pay-method-btn:hover {
+    border-color: #c084fc;
+    background: #faf5ff;
+  }
+
+  .five-pay-method-btn.is-selected {
+    border-color: #7025a8;
+    background: #faf5ff;
+    box-shadow: 0 4px 14px rgba(112, 37, 168, 0.12);
+  }
+
+  .five-pay-method-icon {
+    margin-bottom: 6px;
+  }
+
+  .five-pay-method-info strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 800;
+    color: #111827;
+  }
+
+  .five-pay-method-info small {
+    display: block;
+    font-size: 10.5px;
+    color: #6b7280;
+    margin-top: 2px;
+  }
+
+  .five-pay-method-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 9.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: #f3e8ff;
+    color: #7025a8;
+  }
+
+  .five-pay-method-badge.info {
+    background: #e0f2fe;
+    color: #0369a1;
+  }
+
+  .five-pay-method-badge.green {
+    background: #f0fdf4;
+    color: #166534;
+  }
+
+  .five-pay-summary-card {
+    background: #f9fafb;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+  }
+
+  .five-payment-status {
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .five-payment-status.loading {
+    background: #faf5ff;
+    border: 1px solid #e9d5ff;
+    color: #7025a8;
+  }
+
+  .five-payment-status.error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
+  }
+
+  .five-payment-status.redirecting {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
   }
 
   .five-qr-payment-grid {
@@ -548,6 +766,9 @@ import { formatMoney } from '../data/pim/catalog';
   }
 
   @media (max-width: 640px) {
+    .five-pay-methods-grid {
+      grid-template-columns: 1fr;
+    }
     .five-qr-payment-grid {
       grid-template-columns: 1fr;
     }

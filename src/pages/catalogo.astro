@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CatalogPLP from '../components/CatalogPLP.astro';
+---
+
+<BaseLayout
+  title="Catálogo Completo — Alimentos, Farmacia y Accesorios | FIVE Mascotas"
+  description="Explora todo el catálogo de FIVE Mascotas. Nutrición premium, alimentos para perros y gatos, farmacia veterinaria y accesorios con despacho rápido."
+>
+  <CatalogPLP
+    pageTitle="Catálogo de Productos"
+    initialPet="Todos"
+    initialCategory="Todos"
+    bannerId="banner-perros"
+    breadcrumbs={[
+      { label: 'Inicio', href: '/' },
+      { label: 'Catálogo' },
+    ]}
+  />
+</BaseLayout>

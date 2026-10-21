@@ -1,3 +1,4 @@
+import type { ProductVariant } from '../data/pim/types';
 // Global Storefront Client Script: Cart, Predictive Search, Drawers, and Interactive Filters
 import { products, formatMoney } from '../data/pim/catalog';
 import { defaultShippingRates, type ShippingCityRate } from '../data/pim/shipping';
@@ -14,6 +15,7 @@ interface CartItem {
 }
 
 const CART_STORAGE_KEY = 'five_cart_v2';
+const normalize = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 
 class StoreManager {
   private cart: Map<string, CartItem> = new Map();
@@ -28,6 +30,7 @@ class StoreManager {
     this.initDrawer();
     this.initPLP();
     this.initQuickView();
+    this.initVariantModal();
     this.initCheckout();
     void this.initNexo();
   }
@@ -200,7 +203,12 @@ class StoreManager {
       const price = Number(target.dataset.price) || 0;
       const image = target.dataset.image;
 
-      this.addToCart(id, name, price, image);
+      // Check if adjacent or container quantity input exists (e.g. on PDP)
+      const container = target.closest('.five-pdp-actions-row, .five-variant-footer');
+      const qtyInput = container?.querySelector<HTMLInputElement>('input[type="number"]');
+      const qty = qtyInput ? (parseInt(qtyInput.value, 10) || 1) : 1;
+
+      this.addToCart(id, name, price, image, qty);
 
       // Feedback animation on button
       const originalText = target.innerHTML;
@@ -248,18 +256,22 @@ class StoreManager {
     }
   }
 
-  public addToCart(id: string, name: string, price: number, image?: string) {
+  public addToCart(id: string, name: string, price: number, image?: string, quantity: number = 1) {
+    const qtyToAdd = Math.max(1, Math.min(quantity, 10));
     if (this.nexoState === 'enabled') {
       const p = this.nexoProducts.get(id);
-      if (!p || (this.cart.get(id)?.quantity || 0) >= p.available) return;
-      name = p.name; price = p.price; image = p.image;
+      if (p) {
+        const currentQty = this.cart.get(id)?.quantity || 0;
+        if (currentQty + qtyToAdd > p.available) return;
+        name = p.name; price = p.price; image = p.image;
+      }
     }
     const existing = this.cart.get(id);
     if (existing) {
       if (existing.quantity >= 10) return;
-      existing.quantity += 1;
+      existing.quantity = Math.min(10, existing.quantity + qtyToAdd);
     } else {
-      this.cart.set(id, { id, name, price, image, quantity: 1 });
+      this.cart.set(id, { id, name, price, image, quantity: qtyToAdd });
     }
     this.saveCart();
     this.renderCartUI();
@@ -446,7 +458,7 @@ class StoreManager {
       matches.forEach((p: any) => {
         const li = document.createElement('li');
         li.className = 'five-search-suggestion';
-        const targetHref = p.pet === 'Gatos' ? '/gatos' : '/perros';
+        const targetHref = `/producto/${encodeURIComponent(p.id)}`;
         const link = document.createElement('a'); link.href = targetHref;
         const image = document.createElement('img'); image.src = p.image; image.alt = ''; image.width = 36; image.height = 36;
         const text = document.createElement('div'); text.className = 'five-suggestion-text';
@@ -457,6 +469,15 @@ class StoreManager {
         link.append(image, text, arrow); li.append(link);
         list.append(li);
       });
+
+      // Bottom link to full catalog search
+      const seeAllLi = document.createElement('li');
+      seeAllLi.className = 'five-search-suggestion five-search-all-link';
+      const seeAllLink = document.createElement('a');
+      seeAllLink.href = `/catalogo?q=${encodeURIComponent(input.value.trim())}`;
+      seeAllLink.innerHTML = `<span>Ver todos los resultados para <strong>"${input.value.trim()}"</strong></span><span class="five-suggestion-arrow">↗</span>`;
+      seeAllLi.append(seeAllLink);
+      list.append(seeAllLi);
 
       dropdown.hidden = false;
     });
@@ -536,8 +557,18 @@ class StoreManager {
     // Read initial URL params
     const applyURLParams = () => {
       const url = new URL(window.location.href);
+      const qParam = url.searchParams.get('q');
+      if (qParam) {
+        const searchInput = document.querySelector<HTMLInputElement>('#five-search');
+        if (searchInput) searchInput.value = qParam;
+        // On catalog or when searching query, uncheck restrictive pet radio so search matches across all species
+        if (window.location.pathname.includes('/catalogo') || qParam.trim().length > 0) {
+          const allPetRadio = document.querySelector<HTMLInputElement>('input[name="facet-pet"][value="Todos"]');
+          if (allPetRadio) allPetRadio.checked = true;
+        }
+      }
       const petParam = url.searchParams.get('mascota');
-      if (petParam) {
+      if (petParam && !qParam) {
         const radio = document.querySelector<HTMLInputElement>(`input[name="facet-pet"][value="${petParam}"]`);
         if (radio) radio.checked = true;
       }
@@ -551,6 +582,10 @@ class StoreManager {
     applyURLParams();
 
     const applyFilter = () => {
+      // 0. Search query from input or URL
+      const searchInput = document.querySelector<HTMLInputElement>('#five-search');
+      const query = normalize(searchInput?.value.trim() || '');
+
       // 1. Get selected pet
       const petRadio = document.querySelector<HTMLInputElement>('input[name="facet-pet"]:checked');
       const selectedPet = petRadio ? petRadio.value : 'Todos';
@@ -587,7 +622,9 @@ class StoreManager {
         const fmt = card.dataset.format || '';
         const stage = card.dataset.lifestage || '';
         const isOffer = card.dataset.offer === 'true';
+        const searchCorpus = normalize(card.dataset.search || `${brand} ${card.dataset.id} ${cat} ${pet}`);
 
+        const matchesSearch = !query || searchCorpus.includes(query);
         const matchesPet = selectedPet === 'Todos' || pet.includes(selectedPet);
         const matchesBrand = checkedBrands.length === 0 || checkedBrands.includes(brand);
         const matchesCategory = checkedCategories.length === 0 || checkedCategories.includes(cat);
@@ -595,7 +632,7 @@ class StoreManager {
         const matchesStage = checkedStages.length === 0 || checkedStages.includes(stage);
         const matchesOffer = !offersOnly || isOffer;
 
-        const isVisible = matchesPet && matchesBrand && matchesCategory && matchesFormat && matchesStage && matchesOffer;
+        const isVisible = matchesSearch && matchesPet && matchesBrand && matchesCategory && matchesFormat && matchesStage && matchesOffer;
 
         card.hidden = !isVisible;
         if (isVisible) visibleCount++;
@@ -604,6 +641,12 @@ class StoreManager {
       // Update results counter
       if (resultsCount) {
         resultsCount.textContent = `${visibleCount} ${visibleCount === 1 ? 'Resultado' : 'Resultados'}`;
+      }
+
+      // Update dynamic page heading on search
+      const pageTitleEl = document.querySelector<HTMLElement>('.five-plp-title');
+      if (pageTitleEl && window.location.pathname.includes('/catalogo')) {
+        pageTitleEl.textContent = query ? `Resultados para "${searchInput?.value.trim()}"` : 'Catálogo de Productos';
       }
 
       if (emptyState) {
@@ -631,6 +674,9 @@ class StoreManager {
       // Sync URL query params cleanly without reload
       try {
         const url = new URL(window.location.href);
+        if (query) url.searchParams.set('q', searchInput?.value.trim() || '');
+        else url.searchParams.delete('q');
+
         if (selectedPet !== 'Todos') url.searchParams.set('mascota', selectedPet);
         else url.searchParams.delete('mascota');
 
@@ -660,7 +706,14 @@ class StoreManager {
       sortSelect.addEventListener('change', applyFilter);
     }
 
+    // Live search input filter
+    const searchInput = document.querySelector<HTMLInputElement>('#five-search');
+    if (searchInput) {
+      searchInput.addEventListener('input', applyFilter);
+    }
+
     const resetAll = () => {
+      if (searchInput) searchInput.value = '';
       document.querySelectorAll<HTMLInputElement>('input[name="facet-pet"]').forEach((r) => {
         r.checked = r.value === 'Todos';
       });
@@ -838,6 +891,229 @@ class StoreManager {
     });
   }
 
+  // ===================== VARIANT & WEIGHT SELECTOR MODAL =====================
+  private initVariantModal() {
+    const dialog = document.querySelector<HTMLDialogElement>('#five-variant-modal');
+    if (!dialog) return;
+
+    const closeBtn = dialog.querySelector<HTMLButtonElement>('#vm-close-btn');
+    const imgEl = dialog.querySelector<HTMLImageElement>('#vm-product-img');
+    const brandEl = dialog.querySelector<HTMLElement>('#vm-product-brand');
+    const titleEl = dialog.querySelector<HTMLElement>('#vm-product-title');
+    const detailEl = dialog.querySelector<HTMLElement>('#vm-product-detail');
+    const optionsList = dialog.querySelector<HTMLElement>('#vm-options-list');
+    const heroPrice = dialog.querySelector<HTMLElement>('#vm-active-price');
+    const stockBadge = dialog.querySelector<HTMLElement>('#vm-stock-badge');
+    const qtyInput = dialog.querySelector<HTMLInputElement>('#vm-qty-input');
+    const qtyMinus = dialog.querySelector<HTMLButtonElement>('#vm-qty-minus');
+    const qtyPlus = dialog.querySelector<HTMLButtonElement>('#vm-qty-plus');
+    const addBtn = dialog.querySelector<HTMLButtonElement>('#vm-add-cart-btn');
+    const addBtnText = dialog.querySelector<HTMLElement>('#vm-add-btn-text');
+    const pdpLink = dialog.querySelector<HTMLAnchorElement>('#vm-pdp-link');
+
+    let currentVariants: ProductVariant[] = [];
+    let selectedVariant: ProductVariant | null = null;
+    let currentProductName = '';
+    let currentProductImage = '';
+
+    const updateModalState = (variant: ProductVariant) => {
+      selectedVariant = variant;
+      if (!selectedVariant) return;
+
+      if (heroPrice) heroPrice.textContent = formatMoney(variant.price);
+
+      const available = variant.available !== undefined ? variant.available : 25;
+      if (stockBadge) {
+        stockBadge.className = 'five-variant-stock-indicator';
+        if (available === 0) {
+          stockBadge.classList.add('is-out');
+          stockBadge.textContent = 'Agotado';
+        } else if (available <= 5) {
+          stockBadge.classList.add('is-low');
+          stockBadge.textContent = `Últimas ${available} unidades en stock`;
+        } else {
+          stockBadge.classList.add('is-in');
+          stockBadge.textContent = `✓ En stock (${available} unidades)`;
+        }
+      }
+
+      if (qtyInput) {
+        qtyInput.value = '1';
+        qtyInput.max = String(Math.min(available || 1, 10));
+      }
+
+      if (qtyMinus) qtyMinus.disabled = true;
+      if (qtyPlus) qtyPlus.disabled = available <= 1;
+
+      if (addBtn) {
+        addBtn.disabled = available === 0;
+      }
+      if (addBtnText) {
+        addBtnText.textContent = available === 0 ? 'Agotado' : 'Agregar al carro';
+      }
+    };
+
+    // Close handlers
+    closeBtn?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (e) => {
+      const rect = dialog.getBoundingClientRect();
+      const isInDialog = (
+        rect.top <= e.clientY && e.clientY <= rect.top + rect.height &&
+        rect.left <= e.clientX && e.clientX <= rect.left + rect.width
+      );
+      if (!isInDialog) dialog.close();
+    });
+
+    // Stepper handlers
+    qtyMinus?.addEventListener('click', () => {
+      if (!qtyInput) return;
+      let val = parseInt(qtyInput.value, 10) || 1;
+      if (val > 1) {
+        val -= 1;
+        qtyInput.value = String(val);
+      }
+      qtyMinus.disabled = val <= 1;
+      if (qtyPlus && selectedVariant) {
+        qtyPlus.disabled = val >= Math.min(selectedVariant.available || 1, 10);
+      }
+    });
+
+    qtyPlus?.addEventListener('click', () => {
+      if (!qtyInput || !selectedVariant) return;
+      let val = parseInt(qtyInput.value, 10) || 1;
+      const maxLimit = Math.min(selectedVariant.available || 1, 10);
+      if (val < maxLimit) {
+        val += 1;
+        qtyInput.value = String(val);
+      }
+      if (qtyMinus) qtyMinus.disabled = val <= 1;
+      qtyPlus.disabled = val >= maxLimit;
+    });
+
+    // Add to cart click inside modal
+    addBtn?.addEventListener('click', () => {
+      if (!selectedVariant || selectedVariant.available === 0) return;
+      const qty = parseInt(qtyInput?.value || '1', 10) || 1;
+      const displayName = `${currentProductName} (${selectedVariant.format})`;
+      this.addToCart(selectedVariant.id, displayName, selectedVariant.price, currentProductImage, qty);
+
+      if (addBtnText) addBtnText.textContent = '✓ Agregado';
+      addBtn.classList.add('is-added');
+
+      setTimeout(() => {
+        addBtn.classList.remove('is-added');
+        if (addBtnText) addBtnText.textContent = 'Agregar al carro';
+        dialog.close();
+      }, 600);
+    });
+
+    // Listen for clicks on [data-open-variants] anywhere on page
+    document.addEventListener('click', (e) => {
+      const target = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-open-variants]');
+      if (!target) return;
+
+      const card = target.closest<HTMLElement>('.five-product-card');
+      if (!card) return;
+
+      const id = card.dataset.id || '';
+      currentProductName = card.querySelector('.five-product-title a')?.textContent || '';
+      const brand = card.dataset.brand || card.querySelector('.five-product-brand')?.textContent || '';
+      const detail = card.querySelector('.five-product-meta')?.textContent || '';
+      const image = card.querySelector<HTMLImageElement>('.five-product-image-link img')?.getAttribute('src') || '';
+      currentProductImage = image;
+
+      try {
+        currentVariants = JSON.parse(card.dataset.variants || '[]');
+      } catch {
+        currentVariants = [];
+      }
+
+      if (currentVariants.length === 0) {
+        window.location.href = `/producto/${id}`;
+        return;
+      }
+
+      if (imgEl) {
+        imgEl.src = image;
+        imgEl.alt = currentProductName;
+      }
+      if (brandEl) brandEl.textContent = brand;
+      if (titleEl) titleEl.textContent = currentProductName;
+      if (detailEl) detailEl.textContent = detail;
+      if (pdpLink) pdpLink.href = `/producto/${id}`;
+
+      if (optionsList) {
+        optionsList.innerHTML = '';
+        currentVariants.forEach((v) => {
+          const row = document.createElement('div');
+          row.className = 'five-variant-row';
+          row.dataset.variantId = v.id;
+          if (v.available === 0) row.classList.add('is-disabled');
+
+          const left = document.createElement('div');
+          left.className = 'five-variant-row-left';
+
+          const circle = document.createElement('span');
+          circle.className = 'five-variant-radio-circle';
+          const dot = document.createElement('span');
+          dot.className = 'five-variant-radio-dot';
+          circle.appendChild(dot);
+
+          const textWrap = document.createElement('div');
+          const formatText = document.createElement('strong');
+          formatText.className = 'five-variant-format-text';
+          formatText.textContent = String(v.format || '').toUpperCase();
+          textWrap.appendChild(formatText);
+
+          if (v.pricePerKg) {
+            const kgText = document.createElement('span');
+            kgText.className = 'five-variant-unit-price';
+            kgText.textContent = ` (${formatMoney(v.pricePerKg)} x KG)`;
+            textWrap.appendChild(kgText);
+          }
+
+          left.append(circle, textWrap);
+
+          const right = document.createElement('div');
+          right.className = 'five-variant-row-right';
+
+          if (v.available === 0) {
+            const soldout = document.createElement('span');
+            soldout.className = 'five-variant-soldout-pill';
+            soldout.textContent = 'Agotado';
+            right.appendChild(soldout);
+          } else {
+            const priceVal = document.createElement('strong');
+            priceVal.className = 'five-variant-price-val';
+            priceVal.textContent = formatMoney(v.price);
+            right.appendChild(priceVal);
+          }
+
+          row.append(left, right);
+
+          row.addEventListener('click', () => {
+            if (v.available === 0) return;
+            optionsList.querySelectorAll('.five-variant-row').forEach(r => r.classList.remove('is-selected'));
+            row.classList.add('is-selected');
+            updateModalState(v);
+          });
+
+          optionsList.appendChild(row);
+        });
+
+        // Preselect first available variant
+        const firstAvailable = currentVariants.find(v => v.available && v.available > 0) || currentVariants[0];
+        const selectedRow = optionsList.querySelector<HTMLElement>(`[data-variant-id="${firstAvailable.id}"]`);
+        if (selectedRow) selectedRow.classList.add('is-selected');
+        updateModalState(firstAvailable);
+      }
+
+      if (typeof dialog.showModal === 'function') {
+        dialog.showModal();
+      }
+    });
+  }
+
   // ===================== CHECKOUT MODAL SYSTEM =====================
   private initCheckout() {
     const chkModal = document.querySelector<HTMLDialogElement>('#five-checkout-modal');
@@ -856,15 +1132,53 @@ class StoreManager {
     const formStep1 = chkModal.querySelector<HTMLFormElement>('#chk-form-step1');
     const miniSummary = chkModal.querySelector<HTMLElement>('#chk-mini-summary');
 
-    const backBtn = chkModal.querySelector<HTMLButtonElement>('#chk-back-to-step1');
     const confirmPayBtn = chkModal.querySelector<HTMLButtonElement>('#chk-confirm-pay-btn');
     const copyDataBtn = chkModal.querySelector<HTMLButtonElement>('#chk-copy-btn');
 
-    const qrImage = chkModal.querySelector<HTMLImageElement>('#chk-qr-image');
+    // Payment Method Selector Tabs & Panels
+    const tabWebpay = chkModal.querySelector<HTMLButtonElement>('#chk-tab-webpay');
+    const tabKhipu = chkModal.querySelector<HTMLButtonElement>('#chk-tab-khipu');
+    const tabTransfer = chkModal.querySelector<HTMLButtonElement>('#chk-tab-transfer');
+
+    const panelWebpay = chkModal.querySelector<HTMLElement>('#chk-panel-webpay');
+    const panelKhipu = chkModal.querySelector<HTMLElement>('#chk-panel-khipu');
+    const panelTransfer = chkModal.querySelector<HTMLElement>('#chk-panel-transfer');
+
+    const webpayAmountEl = chkModal.querySelector<HTMLElement>('#chk-webpay-amount');
+    const khipuAmountEl = chkModal.querySelector<HTMLElement>('#chk-khipu-amount');
     const bankAmountEl = chkModal.querySelector<HTMLElement>('#chk-bank-amount');
+
+    const payWebpayBtn = chkModal.querySelector<HTMLButtonElement>('#chk-btn-pay-webpay');
+    const payKhipuBtn = chkModal.querySelector<HTMLButtonElement>('#chk-btn-pay-khipu');
+
+    const webpayFeedback = chkModal.querySelector<HTMLElement>('#chk-webpay-feedback');
+    const khipuFeedback = chkModal.querySelector<HTMLElement>('#chk-khipu-feedback');
+
+    const qrImage = chkModal.querySelector<HTMLImageElement>('#chk-qr-image');
     const trackingCodeEl = chkModal.querySelector<HTMLElement>('#chk-tracking-code');
     const waProofBtn = chkModal.querySelector<HTMLAnchorElement>('#chk-whatsapp-proof-btn');
     const goTrackBtn = chkModal.querySelector<HTMLAnchorElement>('#chk-go-track-btn');
+
+
+    const selectPaymentMethod = (method: 'webpay' | 'khipu' | 'transfer') => {
+      currentOrder.paymentMethod = method === 'webpay' ? 'Webpay Plus' : method === 'khipu' ? 'Khipu' : 'Transferencia Manual';
+      tabWebpay?.classList.toggle('is-selected', method === 'webpay');
+      tabWebpay?.setAttribute('aria-checked', String(method === 'webpay'));
+
+      tabKhipu?.classList.toggle('is-selected', method === 'khipu');
+      tabKhipu?.setAttribute('aria-checked', String(method === 'khipu'));
+
+      tabTransfer?.classList.toggle('is-selected', method === 'transfer');
+      tabTransfer?.setAttribute('aria-checked', String(method === 'transfer'));
+
+      if (panelWebpay) panelWebpay.hidden = method !== 'webpay';
+      if (panelKhipu) panelKhipu.hidden = method !== 'khipu';
+      if (panelTransfer) panelTransfer.hidden = method !== 'transfer';
+    };
+
+    tabWebpay?.addEventListener('click', () => selectPaymentMethod('webpay'));
+    tabKhipu?.addEventListener('click', () => selectPaymentMethod('khipu'));
+    tabTransfer?.addEventListener('click', () => selectPaymentMethod('transfer'));
 
     let currentOrder = {
       code: '',
@@ -879,6 +1193,8 @@ class StoreManager {
       shippingFee: 0,
       totalTransfer: 0,
       totalDebit: 0,
+      paymentMethod: 'Webpay Plus' as string,
+      paymentStatus: 'PENDING' as string,
       status: 'Recibido', // 'Recibido' | 'Pago Confirmado' | 'En Reparto' | 'Entregado'
       createdAt: '',
     };
@@ -905,7 +1221,9 @@ class StoreManager {
       });
     });
 
-    backBtn?.addEventListener('click', () => showStep(1));
+    chkModal.querySelectorAll<HTMLButtonElement>('.chk-back-btn, #chk-back-to-step1').forEach((btn) => {
+      btn.addEventListener('click', () => showStep(1));
+    });
 
     // Helper to update mini summary dynamically
     const updateMiniSummary = () => {
@@ -1061,6 +1379,8 @@ class StoreManager {
         shippingFee: shipFee,
         totalTransfer,
         totalDebit,
+        paymentMethod: 'Webpay Plus',
+        paymentStatus: 'PENDING',
         status: 'Recibido',
         createdAt: new Date().toISOString(),
       };
@@ -1111,8 +1431,13 @@ class StoreManager {
         } finally { submitting = false; if (submit) submit.disabled = false; }
       } else { sentToNexo = false; nexoBank = null; }
 
-      // Set Step 2 data
+      // Set Step 2 amounts across all 3 gateways
       if (bankAmountEl) bankAmountEl.textContent = formatMoney(currentOrder.totalTransfer);
+      if (webpayAmountEl) webpayAmountEl.textContent = formatMoney(currentOrder.totalTransfer);
+      if (khipuAmountEl) khipuAmountEl.textContent = formatMoney(currentOrder.totalTransfer);
+
+      // Default to Webpay Plus panel
+      selectPaymentMethod('webpay');
 
       // Generate QR Code URL with bank details payload
       const bankConfig = AdminStoreService.getBankAccount();
@@ -1138,7 +1463,7 @@ class StoreManager {
         navigator.clipboard?.writeText(textToCopy);
         const originalHtml = btn.innerHTML;
         btn.classList.add('is-copied');
-        btn.innerHTML = '<span>✓ Copiado</span>';
+        btn.innerHTML = '<span>Copiado</span>';
 
         setTimeout(() => {
           btn.classList.remove('is-copied');
@@ -1154,11 +1479,164 @@ class StoreManager {
       navigator.clipboard?.writeText(payload);
       const origText = copyDataBtn.innerHTML;
       copyDataBtn.classList.add('is-copied');
-      copyDataBtn.innerHTML = '<span>✓ ¡Todos los datos copiados al portapapeles!</span>';
+      copyDataBtn.innerHTML = '<span>Datos copiados al portapapeles</span>';
       setTimeout(() => {
         copyDataBtn.classList.remove('is-copied');
         copyDataBtn.innerHTML = origText;
       }, 2200);
+    });
+
+    // ================= Transbank Webpay Plus Gateway Action =================
+    payWebpayBtn?.addEventListener('click', async () => {
+      if (submitting) return;
+      submitting = true;
+      payWebpayBtn.disabled = true;
+
+      if (webpayFeedback) {
+        webpayFeedback.hidden = false;
+        webpayFeedback.className = 'five-payment-status loading';
+        webpayFeedback.innerHTML = `
+          <div class="rayo-verdict-spinner" style="width:18px; height:18px; border:2px solid #e9d5ff; border-top-color:#7025a8; border-radius:50%; animation:spin 0.8s linear infinite;"></div>
+          <span>Conectando con Transbank Webpay Plus de forma segura...</span>
+        `;
+      }
+
+      try {
+        const payload = {
+          orderCode: currentOrder.code,
+          amount: currentOrder.totalTransfer,
+          shippingRateId: chkCitySelect?.value || 'ship-talca',
+          customer: {
+            name: currentOrder.customerName,
+            email: currentOrder.email,
+            phone: currentOrder.phone,
+            city: currentOrder.city,
+            address: currentOrder.address,
+            notes: currentOrder.notes,
+          },
+          items: currentOrder.items.map((i) => ({ id: i.id, quantity: i.quantity })),
+        };
+
+        const res = await fetch('/api/payments/webpay/create', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await res.json();
+        if (!res.ok || !data.ok || !data.url || !data.token) {
+          throw new Error(data.error || 'No se pudo iniciar la transacción en Transbank Webpay');
+        }
+
+        if (webpayFeedback) {
+          webpayFeedback.className = 'five-payment-status redirecting';
+          webpayFeedback.innerHTML = `
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#276717" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>Sesión creada. Redirigiendo a Webpay Plus...</span>
+          `;
+        }
+
+        // Limpiar carrito local antes de redirigir
+        this.cart.clear();
+        this.saveCart();
+        this.renderCartUI();
+
+        // Enviar formulario POST con token_ws hacia Transbank
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = data.url;
+
+        const tokenInput = document.createElement('input');
+        tokenInput.type = 'hidden';
+        tokenInput.name = 'token_ws';
+        tokenInput.value = data.token;
+        form.appendChild(tokenInput);
+
+        document.body.appendChild(form);
+        form.submit();
+      } catch (err: any) {
+        console.error('[Webpay Error]', err);
+        submitting = false;
+        payWebpayBtn.disabled = false;
+        if (webpayFeedback) {
+          webpayFeedback.className = 'five-payment-status error';
+          webpayFeedback.innerHTML = `
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#b91c1c" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <span>${err.message || 'Error al conectar con Webpay. Puedes reintentar o usar Transferencia Bancaria.'}</span>
+          `;
+        }
+      }
+    });
+
+    // ================= Khipu Gateway Action =================
+    payKhipuBtn?.addEventListener('click', async () => {
+      if (submitting) return;
+      submitting = true;
+      payKhipuBtn.disabled = true;
+
+      if (khipuFeedback) {
+        khipuFeedback.hidden = false;
+        khipuFeedback.className = 'five-payment-status loading';
+        khipuFeedback.innerHTML = `
+          <div class="rayo-verdict-spinner" style="width:18px; height:18px; border:2px solid #bae6fd; border-top-color:#0284c7; border-radius:50%; animation:spin 0.8s linear infinite;"></div>
+          <span>Generando cobro seguro en Khipu...</span>
+        `;
+      }
+
+      try {
+        const payload = {
+          orderCode: currentOrder.code,
+          amount: currentOrder.totalTransfer,
+          shippingRateId: chkCitySelect?.value || 'ship-talca',
+          customer: {
+            name: currentOrder.customerName,
+            email: currentOrder.email,
+            phone: currentOrder.phone,
+            city: currentOrder.city,
+            address: currentOrder.address,
+            notes: currentOrder.notes,
+          },
+          items: currentOrder.items.map((i) => ({ id: i.id, quantity: i.quantity })),
+        };
+
+        const res = await fetch('/api/payments/khipu/create', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await res.json();
+        if (!res.ok || !data.ok || !data.paymentUrl) {
+          throw new Error(data.error || 'No se pudo iniciar el cobro con Khipu');
+        }
+
+        if (khipuFeedback) {
+          khipuFeedback.className = 'five-payment-status redirecting';
+          khipuFeedback.innerHTML = `
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>Cobro generado. Redirigiendo a Khipu...</span>
+          `;
+        }
+
+        // Limpiar carrito local
+        this.cart.clear();
+        this.saveCart();
+        this.renderCartUI();
+
+        // Redirigir a Khipu
+        window.location.href = data.paymentUrl;
+      } catch (err: any) {
+        console.error('[Khipu Error]', err);
+        submitting = false;
+        payKhipuBtn.disabled = false;
+        if (khipuFeedback) {
+          khipuFeedback.className = 'five-payment-status error';
+          khipuFeedback.innerHTML = `
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#b91c1c" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <span>${err.message || 'Error al conectar con Khipu. Puedes reintentar o usar Transferencia Bancaria.'}</span>
+          `;
+        }
+      }
     });
 
     // Step 2 Confirm Payment -> Save Order & Show Step 3 (Tracking code)

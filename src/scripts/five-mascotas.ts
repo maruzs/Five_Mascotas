@@ -18,7 +18,7 @@ function filter(){
 }
 function reset(){category='Todos';search.value='';department.value='Todos';offers.checked=false;filter();}
 search.addEventListener('input',filter);department.addEventListener('change',filter);offers.addEventListener('change',filter);
-document.querySelector('.five-search')!.addEventListener('submit',e=>{e.preventDefault();filter();document.querySelector('#productos')!.scrollIntoView();});
+// Allow standard form navigation to /catalogo?q=... on submit
 document.querySelectorAll<HTMLElement>('[data-filter],[data-category-link]').forEach(b=>b.addEventListener('click',()=>{
  category=b.dataset.filter||b.dataset.categoryLink||'Todos';
  if(b.dataset.categoryLink){search.value='';department.value='Todos';offers.checked=false;}

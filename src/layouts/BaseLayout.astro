@@ -7,6 +7,7 @@ import MegaMenu from '../components/MegaMenu.astro';
 import Footer from '../components/Footer.astro';
 import CartDrawer from '../components/CartDrawer.astro';
 import QuickViewModal from '../components/QuickViewModal.astro';
+import VariantSelectModal from '../components/VariantSelectModal.astro';
 import CheckoutModal from '../components/CheckoutModal.astro';
 import MobileDrawer from '../components/MobileDrawer.astro';
 import MobileBottomNav from '../components/MobileBottomNav.astro';
@@ -66,6 +67,9 @@ const currentPath = Astro.url.pathname;
 
     <!-- Quick View Product Modal -->
     <QuickViewModal />
+
+    <!-- Variant & Weight Selector Modal -->
+    <VariantSelectModal />
 
     <!-- Checkout Modal Step-by-Step with QR -->
     <CheckoutModal />

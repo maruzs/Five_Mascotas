@@ -8,15 +8,36 @@ interface Props {
 
 const { product } = Astro.props;
 
-// Calculate debit surcharge (+5%)
-const debitPrice = Math.round(product.price * 1.05);
+const hasMultiple = Boolean(product.hasMultipleFormats && product.variants && product.variants.length > 1);
+const stock = product.totalStock ?? product.available ?? 25;
+const isOutOfStock = stock === 0;
+
+// Price calculations
+const priceMin = product.priceMin ?? product.price;
+const priceMax = product.priceMax ?? product.price;
+const isRange = hasMultiple && priceMin !== priceMax;
+
+const debitPriceMin = Math.round(priceMin * 1.05);
+const debitPriceMax = Math.round(priceMax * 1.05);
 
 // Calculate discount percentage if oldPrice exists
-const discountPercent = product.oldPrice > product.price
-  ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)
+const discountPercent = product.oldPrice > priceMin
+  ? Math.round(((product.oldPrice - priceMin) / product.oldPrice) * 100)
   : 0;
 
 const cleanId = product.id.replace('prod-', '');
+
+const stockBadgeText = isOutOfStock
+  ? 'Agotado'
+  : stock <= 5
+  ? `Últimas ${stock} unidades`
+  : '✓ En stock';
+
+const stockBadgeClass = isOutOfStock
+  ? 'is-out'
+  : stock <= 5
+  ? 'is-low'
+  : 'is-in';
 ---
 
 <article
@@ -30,9 +51,12 @@ const cleanId = product.id.replace('prod-', '');
   data-type={product.category}
   data-format={product.format}
   data-lifestage={product.lifeStage}
-  data-price={product.price}
+  data-price={priceMin}
   data-offer={product.oldPrice > 0 ? "true" : "false"}
   data-search={`${product.name} ${product.brand} ${product.detail} ${product.category} ${product.subcategory} ${product.pet}`}
+  data-variants={JSON.stringify(product.variants || [])}
+  data-has-variants={hasMultiple ? "true" : "false"}
+  data-stock={stock}
 >
   <div class={`five-product-image-box ${product.color}`}>
     <span class="five-product-pet-tag">
@@ -62,7 +86,7 @@ const cleanId = product.id.replace('prod-', '');
       data-name={product.name}
       data-brand={product.brand}
       data-detail={product.detail}
-      data-price={product.price}
+      data-price={priceMin}
       data-oldprice={product.oldPrice}
       data-image={product.image}
       data-format={product.format}
@@ -101,7 +125,7 @@ const cleanId = product.id.replace('prod-', '');
     <!-- ID and Stock availability row (Foto usuario) -->
     <div class="five-product-sku-row">
       <span class="five-sku-text">ID {cleanId.padStart(5, '0')}</span>
-      <span class="five-stock-badge">{product.available === undefined ? 'Consultar stock' : `${product.available} Unid.`}</span>
+      <span class={`five-stock-badge ${stockBadgeClass}`}>{stockBadgeText}</span>
     </div>
 
     <!-- Discount row if on sale (Foto usuario) -->
@@ -122,34 +146,64 @@ const cleanId = product.id.replace('prod-', '');
     <div class="five-dual-pricing-block">
       <!-- Primary Price (Transferencia / Efectivo) -->
       <div class="five-primary-price-group">
-        <strong class="five-price-hero">{formatMoney(product.price)}</strong>
+        <strong class="five-price-hero">
+          {isRange ? `${formatMoney(priceMin)} - ${formatMoney(priceMax)}` : formatMoney(priceMin)}
+        </strong>
         <span class="five-price-type-label">Transferencia / Efectivo</span>
       </div>
 
       <!-- Secondary Price (Débito +5%) -->
       <div class="five-secondary-price-group">
-        <strong class="five-price-debit">{formatMoney(debitPrice)}</strong>
+        <strong class="five-price-debit">
+          {isRange ? `${formatMoney(debitPriceMin)} - ${formatMoney(debitPriceMax)}` : formatMoney(debitPriceMin)}
+        </strong>
         <span class="five-price-type-sublabel">Tarjeta Débito (+5%)</span>
       </div>
     </div>
 
     <!-- Action Button (Foto usuario: Dark button con icono carrito) -->
     <div class="five-product-bottom-row">
-      <button
-        class="five-card-add-btn"
-        data-add={product.id}
-        data-name={product.name}
-        data-price={product.price}
-        data-image={product.image}
-        aria-label={`Agregar ${product.name} al carro`}
-      >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="9" cy="21" r="1"></circle>
-          <circle cx="20" cy="21" r="1"></circle>
-          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-        </svg>
-        <span>Agregar al carro</span>
-      </button>
+      {hasMultiple ? (
+        <button
+          type="button"
+          class="five-card-add-btn five-card-select-variants-btn"
+          data-open-variants={product.id}
+          aria-label={`Seleccionar formato y comprar ${product.name}`}
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span>Comprar</span>
+        </button>
+      ) : isOutOfStock ? (
+        <button
+          type="button"
+          class="five-card-add-btn is-out-of-stock"
+          disabled
+          aria-label={`${product.name} agotado`}
+        >
+          <span>Agotado</span>
+        </button>
+      ) : (
+        <button
+          type="button"
+          class="five-card-add-btn"
+          data-add={product.id}
+          data-name={product.name}
+          data-price={priceMin}
+          data-image={product.image}
+          aria-label={`Agregar ${product.name} al carro`}
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span>Agregar al carro</span>
+        </button>
+      )}
     </div>
   </div>
 </article>

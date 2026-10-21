@@ -1,4 +1,4 @@
-import type { Product } from './types';
+import type { Product, ProductVariant } from './types';
 import nexoCatalog from './nexo-catalog.json';
 
 const fallbackProducts: Product[] = [
@@ -11125,7 +11125,85 @@ const fallbackProducts: Product[] = [
   }
 ];
 
-export const products: Product[] = Array.isArray(nexoCatalog) ? nexoCatalog as Product[] : fallbackProducts;
+export function parseWeightKg(str?: string): number | undefined {
+  if (!str) return undefined;
+  const s = str.toLowerCase().replace(',', '.');
+  const kg = s.match(/([\d.]+)\s*kg/);
+  if (kg) return parseFloat(kg[1]);
+  const g = s.match(/([\d.]+)\s*g/);
+  if (g && !s.includes('kg')) return parseFloat(g[1]) / 1000;
+  return undefined;
+}
+
+export function consolidateCatalog(raw: Product[]): Product[] {
+  const byKey = new Map<string, Product[]>();
+  for (const p of raw) {
+    if (p.variants && p.variants.length > 1) {
+      byKey.set(`explicit-${p.id}`, [p]);
+      continue;
+    }
+    const key = (p.brand + '|||' + p.name + '|||' + p.pet).toLowerCase().trim();
+    if (!byKey.has(key)) byKey.set(key, []);
+    byKey.get(key)!.push(p);
+  }
+
+  const consolidated: Product[] = [];
+  for (const [, list] of byKey) {
+    if (list[0].variants && list[0].variants.length > 1) {
+      const p = { ...list[0] };
+      const prices = p.variants!.map(v => v.price);
+      p.priceMin = Math.min(...prices);
+      p.priceMax = Math.max(...prices);
+      p.hasMultipleFormats = true;
+      p.totalStock = p.variants!.reduce((s, v) => s + (v.available ?? 25), 0);
+      p.available = p.totalStock;
+      consolidated.push(p);
+      continue;
+    }
+
+    const parent: Product = { ...list[0] };
+    const variants: ProductVariant[] = list.map(item => {
+      const w = parseWeightKg(item.format);
+      return {
+        id: item.id,
+        nexoVariantId: item.nexoVariantId || item.id,
+        sku: item.sku || item.id,
+        format: item.format || '1 un',
+        weightKg: w,
+        price: item.price,
+        oldPrice: item.oldPrice,
+        pricePerKg: w && w > 0 ? Math.round(item.price / w) : undefined,
+        available: item.available !== undefined ? item.available : 25
+      };
+    });
+
+    variants.sort((a, b) => {
+      if (a.weightKg && b.weightKg) return a.weightKg - b.weightKg;
+      return a.price - b.price;
+    });
+
+    const prices = variants.map(v => v.price);
+    parent.priceMin = Math.min(...prices);
+    parent.priceMax = Math.max(...prices);
+    parent.hasMultipleFormats = variants.length > 1;
+    parent.price = parent.priceMin;
+    parent.totalStock = variants.reduce((s, v) => s + (v.available ?? 25), 0);
+    parent.available = parent.totalStock;
+    parent.variants = variants;
+    consolidated.push(parent);
+  }
+
+  return consolidated;
+}
+
+export const rawProducts: Product[] = Array.isArray(nexoCatalog) ? nexoCatalog as Product[] : fallbackProducts;
+export const products: Product[] = consolidateCatalog(rawProducts);
+
+export function getProductById(id: string): Product | undefined {
+  const direct = products.find(p => p.id === id);
+  if (direct) return direct;
+  return products.find(p => p.variants?.some(v => v.id === id || v.nexoVariantId === id));
+}
 
 export const formatMoney = (n: number) =>
   new Intl.NumberFormat('es-CL', {

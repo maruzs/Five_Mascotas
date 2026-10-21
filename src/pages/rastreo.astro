@@ -45,6 +45,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </form>
       </div>
 
+      <!-- Payment Status Alert Banner -->
+      <div id="track-payment-alert" class="five-track-payment-alert" hidden></div>
+
       <!-- Order Result Box (Hidden by default) -->
       <div id="track-result-box" class="five-track-result-box" hidden>
         <!-- Injected via script -->
@@ -246,7 +249,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         if (code) {
           navigator.clipboard.writeText(code).then(() => {
             const orig = btn.textContent;
-            btn.textContent = '✓ Copiado';
+            btn.textContent = 'Copiado';
             btn.style.color = '#276717';
             setTimeout(() => {
               btn.textContent = orig;
@@ -262,8 +265,56 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       doSearch(input.value);
     });
 
-    // Auto-search if query param present in URL
+    // Handle payment status banner
+    const paymentAlert = document.querySelector<HTMLElement>('#track-payment-alert');
     const urlParams = new URLSearchParams(window.location.search);
+    const paymentParam = urlParams.get('payment');
+
+    if (paymentAlert && paymentParam) {
+      if (paymentParam === 'webpay_approved') {
+        paymentAlert.hidden = false;
+        paymentAlert.className = 'five-track-payment-alert success';
+        paymentAlert.innerHTML = `
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <div>
+            <strong>¡Pago Aprobado con Transbank Webpay Plus!</strong>
+            <p>Tu transacción ha sido autorizada y tu pedido está confirmado en nuestro sistema.</p>
+          </div>
+        `;
+      } else if (paymentParam === 'khipu_success') {
+        paymentAlert.hidden = false;
+        paymentAlert.className = 'five-track-payment-alert success';
+        paymentAlert.innerHTML = `
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <div>
+            <strong>¡Transferencia Khipu Recibida con Éxito!</strong>
+            <p>Tu pago se encuentra confirmado automáticamente y comenzaremos la preparación.</p>
+          </div>
+        `;
+      } else if (paymentParam === 'webpay_rejected' || paymentParam === 'khipu_cancel') {
+        paymentAlert.hidden = false;
+        paymentAlert.className = 'five-track-payment-alert error';
+        paymentAlert.innerHTML = `
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          <div>
+            <strong>Pago no completado</strong>
+            <p>La operación no fue autorizada por el emisor. Puedes reintentar o usar otro método.</p>
+          </div>
+        `;
+      } else if (paymentParam === 'webpay_aborted') {
+        paymentAlert.hidden = false;
+        paymentAlert.className = 'five-track-payment-alert info';
+        paymentAlert.innerHTML = `
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7025a8" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          <div>
+            <strong>Transacción cancelada</strong>
+            <p>Has cancelado la operación en Webpay. Tu pedido sigue guardado y puedes pagar por transferencia.</p>
+          </div>
+        `;
+      }
+    }
+
+    // Auto-search if query param present in URL
     const codeParam = urlParams.get('codigo') || urlParams.get('code');
     if (codeParam) {
       input.value = codeParam;
@@ -273,6 +324,84 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
+  .five-track-payment-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 20px;
+    border-radius: 16px;
+    margin-top: 20px;
+    font-size: 13.5px;
+  }
+
+  .five-track-payment-alert strong {
+    display: block;
+    font-size: 14.5px;
+    margin-bottom: 2px;
+  }
+
+  .five-track-payment-alert p {
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .five-track-payment-alert.success {
+    background: #f0fdf4;
+    border: 1.5px solid #86efac;
+    color: #166534;
+  }
+
+  .five-track-payment-alert.error {
+    background: #fef2f2;
+    border: 1.5px solid #fca5a5;
+    color: #991b1b;
+  }
+
+  .five-track-payment-alert.info {
+    background: #faf5ff;
+    border: 1.5px solid #d8b4fe;
+    color: #6b21a8;
+  }
+
+  .five-track-payment-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 20px;
+    border-radius: 16px;
+    margin-top: 20px;
+    font-size: 13.5px;
+  }
+
+  .five-track-payment-alert strong {
+    display: block;
+    font-size: 14.5px;
+    margin-bottom: 2px;
+  }
+
+  .five-track-payment-alert p {
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .five-track-payment-alert.success {
+    background: #f0fdf4;
+    border: 1.5px solid #86efac;
+    color: #166534;
+  }
+
+  .five-track-payment-alert.error {
+    background: #fef2f2;
+    border: 1.5px solid #fca5a5;
+    color: #991b1b;
+  }
+
+  .five-track-payment-alert.info {
+    background: #faf5ff;
+    border: 1.5px solid #d8b4fe;
+    color: #6b21a8;
+  }
+
   .five-track-search-card {
     background: #ffffff;
     border: 1px solid var(--border-color);

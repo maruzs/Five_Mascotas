@@ -8,6 +8,16 @@ import { fileURLToPath } from 'node:url';
 import webpush from 'web-push';
 import { nexoEnabled, nexoConfigured, nexoCatalogData, nexoCheckout, nexoRequest } from './nexo.mjs';
 import { checkRateLimit, handleRayoNutritionalChat } from './rayo.mjs';
+import {
+  createWebpayTransaction,
+  commitWebpayTransaction,
+  createKhipuPayment,
+  verifyKhipuPayment,
+  verifyOrderAmountZeroTrust,
+  getWebpayConfig,
+  getKhipuConfig,
+} from './payments.mjs';
+import { defaultShippingRates } from './shipping.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -229,7 +239,7 @@ const sendPushNotificationToAdmins = async (payload) => {
   }
 };
 
-// Parse JSON body
+// Parse JSON or URL-encoded body
 const parseBody = (req) => {
   return new Promise((resolve, reject) => {
     let raw = '';
@@ -242,9 +252,27 @@ const parseBody = (req) => {
     });
     req.on('end', () => {
       try {
-        resolve(raw ? JSON.parse(raw) : {});
+        if (!raw) return resolve({});
+        const contentType = req.headers['content-type'] || '';
+        if (contentType.includes('application/x-www-form-urlencoded')) {
+          const params = new URLSearchParams(raw);
+          const obj = {};
+          for (const [key, val] of params.entries()) {
+            obj[key] = val;
+          }
+          return resolve(obj);
+        }
+        resolve(JSON.parse(raw));
       } catch (e) {
-        reject(new Error('Invalid JSON format'));
+        try {
+          const params = new URLSearchParams(raw);
+          const obj = {};
+          for (const [key, val] of params.entries()) {
+            obj[key] = val;
+          }
+          if (Object.keys(obj).length > 0) return resolve(obj);
+        } catch {}
+        reject(new Error('Invalid payload format'));
       }
     });
     req.on('error', reject);
@@ -307,6 +335,503 @@ const server = http.createServer(async (req, res) => {
   if (req.method === 'OPTIONS') {
     res.statusCode = 204;
     res.end();
+    return;
+  }
+
+  // =========================================================================
+  // PASARELAS DE PAGO CHILENAS (TRANSBANK WEBPAY PLUS & KHIPU)
+  // =========================================================================
+
+  // GET /api/payments/config — Estado de configuración de pasarelas
+  if (pathname === '/api/payments/config' && req.method === 'GET') {
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+
+    const webpay = getWebpayConfig();
+    const khipu = getKhipuConfig();
+
+    res.statusCode = 200;
+    res.end(JSON.stringify({
+      ok: true,
+      webpay: {
+        enabled: true,
+        environment: webpay.isProduction ? 'PRODUCCION' : 'INTEGRACION',
+        commerceCode: webpay.commerceCode,
+      },
+      khipu: {
+        enabled: true,
+        configured: khipu.isConfigured,
+      },
+      manualTransfer: {
+        enabled: true,
+      },
+    }));
+    return;
+  }
+
+  // POST /api/payments/webpay/create — Inicia transacción Webpay Plus
+  if (pathname === '/api/payments/webpay/create') {
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+
+    if (req.method !== 'POST') {
+      res.statusCode = 405;
+      res.end(JSON.stringify({ ok: false, error: 'Method Not Allowed' }));
+      return;
+    }
+
+    try {
+      const body = await parseBody(req);
+      const { orderCode, items, shippingRateId, customer, amount } = body;
+
+      if (!orderCode) {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ ok: false, error: 'Código de pedido requerido' }));
+        return;
+      }
+
+      // Zero-Trust: verificación del catálogo oficial en el servidor
+      let catalogProducts = [];
+      let shippingRatesMap = null;
+      if (nexoConfigured() && nexoEnabled()) {
+        try {
+          const nexoData = await nexoCatalogData();
+          catalogProducts = nexoData.products;
+          shippingRatesMap = nexoData.shippingRates;
+        } catch {
+          const pim = await readJsonFile(pimFilePath, getDefaultPim);
+          catalogProducts = pim.products || [];
+        }
+      } else {
+        const pim = await readJsonFile(pimFilePath, getDefaultPim);
+        catalogProducts = pim.products || [];
+      }
+
+      let verifiedOrder;
+      if (Array.isArray(items) && items.length > 0) {
+        verifiedOrder = verifyOrderAmountZeroTrust({
+          items,
+          shippingRateId,
+          catalogProducts,
+          shippingRates: shippingRatesMap || defaultShippingRates,
+        });
+
+        if (amount && Number(amount) !== verifiedOrder.calculatedTotal) {
+          res.statusCode = 400;
+          res.end(JSON.stringify({
+            ok: false,
+            error: `El monto enviado (${amount}) no coincide con el cálculo del servidor (${verifiedOrder.calculatedTotal}).`,
+          }));
+          return;
+        }
+      } else {
+        const ordersData = await readJsonFile(ordersFilePath, getDefaultOrders);
+        const existingOrder = ordersData.orders.find((o) => o.code === orderCode);
+        if (!existingOrder) {
+          res.statusCode = 404;
+          res.end(JSON.stringify({ ok: false, error: 'Pedido no encontrado para calcular monto' }));
+          return;
+        }
+        verifiedOrder = {
+          calculatedTotal: Number(existingOrder.totalTransfer || existingOrder.total || existingOrder.totalDebit || 0),
+          subtotal: Number(existingOrder.subtotal || 0),
+          shippingFee: Number(existingOrder.shippingFee || 0),
+          verifiedItems: existingOrder.items || [],
+        };
+      }
+
+      const totalAmount = verifiedOrder.calculatedTotal;
+      if (totalAmount <= 0) {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ ok: false, error: 'Monto total inválido' }));
+        return;
+      }
+
+      const siteUrl = process.env.PUBLIC_SITE_URL || `http://${req.headers.host || 'localhost:3004'}`;
+      const returnUrl = `${siteUrl.replace(/\/$/, '')}/api/payments/webpay/commit`;
+      const sessionId = crypto.randomBytes(16).toString('hex');
+
+      const webpayResult = await createWebpayTransaction({
+        orderCode,
+        amount: totalAmount,
+        sessionId,
+        returnUrl,
+      });
+
+      // Persistir orden localmente con estado PENDING_WEBPAY
+      const ordersData = await readJsonFile(ordersFilePath, getDefaultOrders);
+      const existingIdx = ordersData.orders.findIndex((o) => o.code === orderCode);
+      const orderRecord = {
+        code: orderCode,
+        customerName: customer?.name || '',
+        phone: customer?.phone || '',
+        email: customer?.email || '',
+        city: customer?.city || '',
+        address: customer?.address || '',
+        notes: customer?.notes || '',
+        items: verifiedOrder.verifiedItems,
+        subtotal: verifiedOrder.subtotal,
+        shippingFee: verifiedOrder.shippingFee,
+        totalTransfer: totalAmount,
+        totalDebit: totalAmount,
+        paymentMethod: 'Webpay Plus',
+        paymentStatus: 'PENDING_WEBPAY',
+        webpayToken: webpayResult.token,
+        webpaySessionId: sessionId,
+        status: 'Recibido',
+        updatedAt: new Date().toISOString(),
+      };
+
+      if (existingIdx >= 0) {
+        ordersData.orders[existingIdx] = { ...ordersData.orders[existingIdx], ...orderRecord };
+      } else {
+        ordersData.orders.unshift({ ...orderRecord, createdAt: new Date().toISOString() });
+      }
+      await writeJsonFile(ordersFilePath, ordersData);
+
+      res.statusCode = 200;
+      res.end(JSON.stringify({
+        ok: true,
+        token: webpayResult.token,
+        url: webpayResult.url,
+        orderCode,
+        amount: totalAmount,
+      }));
+    } catch (err) {
+      console.error('[Webpay Create Error]', err);
+      res.statusCode = 500;
+      res.end(JSON.stringify({ ok: false, error: err.message || 'Error al iniciar Webpay Plus' }));
+    }
+    return;
+  }
+
+  // GET/POST /api/payments/webpay/commit — Retorno de Webpay Plus
+  if (pathname === '/api/payments/webpay/commit') {
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+
+    try {
+      let tokenWs = null;
+      let tbkToken = null;
+      let tbkOrdenCompra = null;
+
+      if (req.method === 'POST') {
+        const body = await parseBody(req);
+        tokenWs = body.token_ws || parsedUrl.searchParams.get('token_ws');
+        tbkToken = body.TBK_TOKEN || parsedUrl.searchParams.get('TBK_TOKEN');
+        tbkOrdenCompra = body.TBK_ORDEN_COMPRA || parsedUrl.searchParams.get('TBK_ORDEN_COMPRA');
+      } else {
+        tokenWs = parsedUrl.searchParams.get('token_ws');
+        tbkToken = parsedUrl.searchParams.get('TBK_TOKEN');
+        tbkOrdenCompra = parsedUrl.searchParams.get('TBK_ORDEN_COMPRA');
+      }
+
+      const siteUrl = process.env.PUBLIC_SITE_URL || `http://${req.headers.host || 'localhost:3004'}`;
+      const cleanSiteUrl = siteUrl.replace(/\/$/, '');
+
+      // Caso de cancelación / anulación por usuario en Transbank
+      if (tbkToken && !tokenWs) {
+        console.warn(`[Webpay Commit] Transacción anulada por el usuario (TBK_TOKEN: ${tbkToken}, orden: ${tbkOrdenCompra})`);
+
+        if (tbkOrdenCompra) {
+          const ordersData = await readJsonFile(ordersFilePath, getDefaultOrders);
+          const order = ordersData.orders.find((o) => o.code === tbkOrdenCompra || o.webpayToken === tbkToken);
+          if (order) {
+            order.paymentStatus = 'ABORTED';
+            order.status = 'Pago Cancelado';
+            order.updatedAt = new Date().toISOString();
+            await writeJsonFile(ordersFilePath, ordersData);
+          }
+        }
+
+        const redirectUrl = `${cleanSiteUrl}/rastreo?codigo=${encodeURIComponent(tbkOrdenCompra || '')}&payment=webpay_aborted`;
+        res.writeHead(302, { Location: redirectUrl });
+        res.end();
+        return;
+      }
+
+      if (!tokenWs) {
+        res.statusCode = 400;
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        res.end('<h3>Error: No se recibió token de transacción de Webpay.</h3><p><a href="/rastreo">Ir a Rastreo</a></p>');
+        return;
+      }
+
+      // Confirmación oficial con Transbank Webpay
+      const commitResult = await commitWebpayTransaction(tokenWs);
+      const ordersData = await readJsonFile(ordersFilePath, getDefaultOrders);
+      const order = ordersData.orders.find(
+        (o) => o.code === commitResult.buyOrder || o.webpayToken === tokenWs
+      );
+
+      if (commitResult.approved) {
+        if (order) {
+          order.status = 'Pago Confirmado';
+          order.paymentStatus = 'PAID';
+          order.paymentMethod = 'Webpay Plus';
+          order.paymentDetails = {
+            authorizationCode: commitResult.authorizationCode,
+            amount: commitResult.amount,
+            cardNumber: commitResult.cardNumber,
+            transactionDate: commitResult.transactionDate,
+            paymentTypeCode: commitResult.paymentTypeCode,
+            responseCode: commitResult.data?.response_code ?? 0,
+          };
+          order.updatedAt = new Date().toISOString();
+          await writeJsonFile(ordersFilePath, ordersData);
+
+          // Notificación Push a administradores
+          sendPushNotificationToAdmins({
+            title: `Pago Aprobado Webpay #${order.code}`,
+            body: `${order.customerName || 'Cliente'} pagó ${Number(commitResult.amount).toLocaleString('es-CL')} con Webpay Plus.`,
+            icon: '/icon-192.png',
+            badge: '/icon-192.png',
+            tag: `payment-${order.code}`,
+            data: { url: `/rastreo?codigo=${order.code}`, code: order.code },
+          }).catch((e) => console.warn('[Push Alert Error]', e.message));
+        }
+
+        const redirectUrl = `${cleanSiteUrl}/rastreo?codigo=${encodeURIComponent(commitResult.buyOrder)}&payment=webpay_approved`;
+        res.writeHead(302, { Location: redirectUrl });
+        res.end();
+        return;
+      } else {
+        if (order) {
+          order.status = 'Pago Rechazado';
+          order.paymentStatus = 'REJECTED';
+          order.paymentDetails = {
+            responseCode: commitResult.data?.response_code,
+            transactionDate: commitResult.transactionDate,
+          };
+          order.updatedAt = new Date().toISOString();
+          await writeJsonFile(ordersFilePath, ordersData);
+        }
+
+        const respCode = commitResult.data?.response_code ?? -1;
+        const redirectUrl = `${cleanSiteUrl}/rastreo?codigo=${encodeURIComponent(commitResult.buyOrder)}&payment=webpay_rejected&code=${respCode}`;
+        res.writeHead(302, { Location: redirectUrl });
+        res.end();
+        return;
+      }
+    } catch (err) {
+      console.error('[Webpay Commit Exception]', err);
+      res.statusCode = 500;
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+      res.end(`<h3>Error al procesar retorno de Webpay: ${err.message}</h3><p><a href="/rastreo">Volver a la tienda</a></p>`);
+    }
+    return;
+  }
+
+  // POST /api/payments/khipu/create — Inicia cobro automatizado en Khipu v3
+  if (pathname === '/api/payments/khipu/create') {
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+
+    if (req.method !== 'POST') {
+      res.statusCode = 405;
+      res.end(JSON.stringify({ ok: false, error: 'Method Not Allowed' }));
+      return;
+    }
+
+    try {
+      const body = await parseBody(req);
+      const { orderCode, items, shippingRateId, customer, amount } = body;
+
+      if (!orderCode) {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ ok: false, error: 'Código de pedido requerido' }));
+        return;
+      }
+
+      // Verificación Zero-Trust de montos en el servidor
+      let catalogProducts = [];
+      let shippingRatesMap = null;
+      if (nexoConfigured() && nexoEnabled()) {
+        try {
+          const nexoData = await nexoCatalogData();
+          catalogProducts = nexoData.products;
+          shippingRatesMap = nexoData.shippingRates;
+        } catch {
+          const pim = await readJsonFile(pimFilePath, getDefaultPim);
+          catalogProducts = pim.products || [];
+        }
+      } else {
+        const pim = await readJsonFile(pimFilePath, getDefaultPim);
+        catalogProducts = pim.products || [];
+      }
+
+      let verifiedOrder;
+      if (Array.isArray(items) && items.length > 0) {
+        verifiedOrder = verifyOrderAmountZeroTrust({
+          items,
+          shippingRateId,
+          catalogProducts,
+          shippingRates: shippingRatesMap || defaultShippingRates,
+        });
+
+        if (amount && Number(amount) !== verifiedOrder.calculatedTotal) {
+          res.statusCode = 400;
+          res.end(JSON.stringify({
+            ok: false,
+            error: `El monto enviado (${amount}) no coincide con el cálculo del servidor (${verifiedOrder.calculatedTotal}).`,
+          }));
+          return;
+        }
+      } else {
+        const ordersData = await readJsonFile(ordersFilePath, getDefaultOrders);
+        const existingOrder = ordersData.orders.find((o) => o.code === orderCode);
+        if (!existingOrder) {
+          res.statusCode = 404;
+          res.end(JSON.stringify({ ok: false, error: 'Pedido no encontrado para calcular monto' }));
+          return;
+        }
+        verifiedOrder = {
+          calculatedTotal: Number(existingOrder.totalTransfer || existingOrder.total || existingOrder.totalDebit || 0),
+          subtotal: Number(existingOrder.subtotal || 0),
+          shippingFee: Number(existingOrder.shippingFee || 0),
+          verifiedItems: existingOrder.items || [],
+        };
+      }
+
+      const totalAmount = verifiedOrder.calculatedTotal;
+      const siteUrl = process.env.PUBLIC_SITE_URL || `http://${req.headers.host || 'localhost:3004'}`;
+      const cleanSiteUrl = siteUrl.replace(/\/$/, '');
+
+      const returnUrl = `${cleanSiteUrl}/rastreo?codigo=${encodeURIComponent(orderCode)}&payment=khipu_success`;
+      const cancelUrl = `${cleanSiteUrl}/rastreo?codigo=${encodeURIComponent(orderCode)}&payment=khipu_cancel`;
+      const notifyUrl = `${cleanSiteUrl}/api/payments/khipu/webhook`;
+
+      const khipuResult = await createKhipuPayment({
+        orderCode,
+        amount: totalAmount,
+        customer,
+        returnUrl,
+        cancelUrl,
+        notifyUrl,
+      });
+
+      // Persistir orden con estado PENDING_KHIPU
+      const ordersData = await readJsonFile(ordersFilePath, getDefaultOrders);
+      const existingIdx = ordersData.orders.findIndex((o) => o.code === orderCode);
+      const orderRecord = {
+        code: orderCode,
+        customerName: customer?.name || '',
+        phone: customer?.phone || '',
+        email: customer?.email || '',
+        city: customer?.city || '',
+        address: customer?.address || '',
+        notes: customer?.notes || '',
+        items: verifiedOrder.verifiedItems,
+        subtotal: verifiedOrder.subtotal,
+        shippingFee: verifiedOrder.shippingFee,
+        totalTransfer: totalAmount,
+        totalDebit: totalAmount,
+        paymentMethod: 'Khipu',
+        paymentStatus: 'PENDING_KHIPU',
+        khipuPaymentId: khipuResult.paymentId,
+        status: 'Recibido',
+        updatedAt: new Date().toISOString(),
+      };
+
+      if (existingIdx >= 0) {
+        ordersData.orders[existingIdx] = { ...ordersData.orders[existingIdx], ...orderRecord };
+      } else {
+        ordersData.orders.unshift({ ...orderRecord, createdAt: new Date().toISOString() });
+      }
+      await writeJsonFile(ordersFilePath, ordersData);
+
+      res.statusCode = 200;
+      res.end(JSON.stringify({
+        ok: true,
+        paymentId: khipuResult.paymentId,
+        paymentUrl: khipuResult.paymentUrl,
+        orderCode,
+        amount: totalAmount,
+      }));
+    } catch (err) {
+      console.error('[Khipu Create Error]', err);
+      res.statusCode = 500;
+      res.end(JSON.stringify({ ok: false, error: err.message || 'Error al iniciar Khipu' }));
+    }
+    return;
+  }
+
+  // POST /api/payments/khipu/webhook — Webhook asíncrono con idempotencia
+  if (pathname === '/api/payments/khipu/webhook') {
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+
+    if (req.method !== 'POST') {
+      res.statusCode = 405;
+      res.end(JSON.stringify({ ok: false, error: 'Method Not Allowed' }));
+      return;
+    }
+
+    try {
+      const body = await parseBody(req);
+      const paymentId = body.payment_id || body.notification_token || parsedUrl.searchParams.get('payment_id');
+
+      if (!paymentId) {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ ok: false, error: 'payment_id requerido' }));
+        return;
+      }
+
+      // Verificación directa e independiente contra la API de Khipu
+      const verification = await verifyKhipuPayment(paymentId);
+      if (!verification.verified) {
+        console.warn(`[Khipu Webhook] Pago ${paymentId} no verificado o pendiente: ${verification.status}`);
+        res.statusCode = 200;
+        res.end(JSON.stringify({ ok: true, status: verification.status, verified: false }));
+        return;
+      }
+
+      const ordersData = await readJsonFile(ordersFilePath, getDefaultOrders);
+      const order = ordersData.orders.find(
+        (o) => o.khipuPaymentId === paymentId || o.code === verification.transactionId
+      );
+
+      if (!order) {
+        console.warn(`[Khipu Webhook] No se encontró orden para payment_id ${paymentId}`);
+        res.statusCode = 200;
+        res.end(JSON.stringify({ ok: true, warning: 'Orden no encontrada' }));
+        return;
+      }
+
+      // Idempotencia: si ya está pagada, retornar 200 sin duplicar efectos
+      if (order.status === 'Pago Confirmado' && order.paymentStatus === 'PAID') {
+        res.statusCode = 200;
+        res.end(JSON.stringify({ ok: true, idempotency: true, message: 'Pago ya confirmado previamente' }));
+        return;
+      }
+
+      order.status = 'Pago Confirmado';
+      order.paymentStatus = 'PAID';
+      order.paymentMethod = 'Khipu';
+      order.paymentDetails = {
+        khipuPaymentId: paymentId,
+        amount: verification.amount,
+        verifiedAt: new Date().toISOString(),
+      };
+      order.updatedAt = new Date().toISOString();
+      await writeJsonFile(ordersFilePath, ordersData);
+
+      // Notificación Push a administradores
+      sendPushNotificationToAdmins({
+        title: `Pago Confirmado Khipu #${order.code}`,
+        body: `${order.customerName || 'Cliente'} transfirió ${Number(verification.amount || order.totalTransfer).toLocaleString('es-CL')} vía Khipu.`,
+        icon: '/icon-192.png',
+        badge: '/icon-192.png',
+        tag: `payment-${order.code}`,
+        data: { url: `/rastreo?codigo=${order.code}`, code: order.code },
+      }).catch((e) => console.warn('[Push Alert Error]', e.message));
+
+      res.statusCode = 200;
+      res.end(JSON.stringify({ ok: true, message: 'Pago verificado y orden confirmada exitosamente' }));
+    } catch (err) {
+      console.error('[Khipu Webhook Exception]', err);
+      res.statusCode = 500;
+      res.end(JSON.stringify({ ok: false, error: err.message }));
+    }
     return;
   }
 
