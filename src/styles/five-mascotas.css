@@ -1441,44 +1441,111 @@ img {
 }
 
 /* Shipping Box (Talca $1.500) */
+/* Enhanced Delivery Calculator Card */
 .five-pdp-shipping-box {
-  background: #edf8e8;
-  border: 1px solid #cce9c2;
-  border-radius: 16px;
-  padding: 20px;
+  background: #ffffff;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  margin-top: 18px;
 }
 
 .five-pdp-ship-head {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: #276717;
   margin-bottom: 12px;
+}
+
+.five-pdp-ship-icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #f5f3ff;
+  border: 1px solid #ede9fe;
+  color: #7025a8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .five-pdp-ship-head strong {
   display: block;
-  font-size: 14px;
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -0.2px;
 }
 
 .five-pdp-ship-head small {
-  font-size: 11.5px;
-  color: #3b7425;
+  display: block;
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 1px;
+}
+
+.five-pdp-ship-selector-row {
+  margin-bottom: 10px;
 }
 
 .five-pdp-ship-feedback {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 8px;
-  font-size: 12.5px;
-  color: #2d5d1c;
-  line-height: 1.5;
-  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #166534;
+  background: #f0fdf4;
+  border: 1px solid #dcfce7;
+  border-radius: 8px;
+  padding: 8px 12px;
+  line-height: 1.4;
 }
 
-.five-ship-check {
-  font-weight: 900;
-  color: #276717;
+.five-ship-check-svg {
+  flex-shrink: 0;
+  color: #16a34a;
+}
+
+/* Cart Shipping Selector Box */
+.five-cart-shipping-select-wrap {
+  background: #fbf9fd;
+  border: 1px solid #ede4f2;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-top: 14px;
+}
+
+.five-cart-ship-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.five-cart-ship-head label {
+  font-size: 12px;
+  font-weight: 750;
+  color: #374151;
+  cursor: pointer;
+}
+
+.five-cart-shipping-select-wrap .five-select {
+  padding: 8px 36px 8px 12px;
+  font-size: 13px;
+  height: 38px;
+}
+
+.five-cart-ship-feedback {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #166534;
 }
 
 .five-pdp-extra-info {
@@ -3367,4 +3434,54 @@ button.five-button {
   .five-ingredients-box {
     padding: 16px;
   }
+}
+
+/* ==========================================================================
+   UNIVERSAL STYLED SELECT DROPDOWN (FIVE MASCOTAS DESIGN SYSTEM)
+   ========================================================================== */
+
+select.five-select,
+.five-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  background-color: #ffffff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237025a8' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px 16px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 10px;
+  padding: 10px 40px 10px 14px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #1f2937;
+  font-family: inherit;
+  cursor: pointer;
+  line-height: 1.4;
+  box-sizing: border-box;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+  outline: none;
+}
+
+select.five-select:hover,
+.five-select:hover {
+  border-color: #9ca3af;
+  background-color: #fafafb;
+}
+
+select.five-select:focus,
+.five-select:focus {
+  border-color: #7025a8;
+  box-shadow: 0 0 0 3.5px rgba(112, 37, 168, 0.14);
+  background-color: #ffffff;
+}
+
+select.five-select:disabled,
+.five-select:disabled {
+  background-color: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+  border-color: #e5e7eb;
 }
