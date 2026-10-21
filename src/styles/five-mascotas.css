@@ -2862,3 +2862,509 @@ button.five-button {
 [hidden] {
   display: none !important;
 }
+
+/* ==========================================================================
+   PDP VETERINARY NUTRITION & INGREDIENTS DESIGN SYSTEM
+   ========================================================================== */
+
+.five-pdp-details-tabs {
+  margin-top: 48px;
+  margin-bottom: 32px;
+}
+
+.five-accordion-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.five-accordion-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.five-accordion-card[open] {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(112, 37, 168, 0.06);
+}
+
+.five-accordion-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  cursor: pointer;
+  user-select: none;
+  background: #ffffff;
+  list-style: none;
+  transition: background-color 0.15s ease;
+}
+
+.five-accordion-summary::-webkit-details-marker {
+  display: none;
+}
+
+.five-accordion-summary:hover {
+  background-color: #fbfbfe;
+}
+
+.five-accordion-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.five-accordion-icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.five-accordion-icon-box.violet {
+  background: #f5f3ff;
+  color: #7025a8;
+  border: 1px solid #ede9fe;
+}
+
+.five-accordion-icon-box.blue {
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #dbeafe;
+}
+
+.five-accordion-icon-box.green {
+  background: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #dcfce7;
+}
+
+.five-accordion-heading {
+  font-size: 16px;
+  font-weight: 800;
+  color: #111827;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.five-accordion-subheading {
+  display: block;
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+.five-accordion-chevron {
+  color: #9ca3af;
+  flex-shrink: 0;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.five-accordion-card[open] .five-accordion-chevron {
+  transform: rotate(180deg);
+  color: #7025a8;
+}
+
+.five-accordion-body {
+  padding: 0 24px 24px 24px;
+  border-top: 1px solid #f3f4f6;
+  background: #ffffff;
+  animation: fiveAccordionFade 0.25s ease-out;
+}
+
+@keyframes fiveAccordionFade {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Nutrition Bento Grid --- */
+.five-nutrition-bento {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.five-nutrition-kpi-card {
+  padding: 18px;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.five-nutrition-kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+}
+
+.five-nutrition-kpi-card.violet {
+  background: linear-gradient(145deg, #fdf4ff 0%, #fae8ff 100%);
+  border: 1px solid #f0abfc;
+}
+.five-nutrition-kpi-card.amber {
+  background: linear-gradient(145deg, #fffbeb 0%, #fef3c7 100%);
+  border: 1px solid #fde68a;
+}
+.five-nutrition-kpi-card.green {
+  background: linear-gradient(145deg, #f0fdf4 0%, #dcfce7 100%);
+  border: 1px solid #bbf7d0;
+}
+.five-nutrition-kpi-card.cyan {
+  background: linear-gradient(145deg, #f0fdfa 0%, #ccfbf1 100%);
+  border: 1px solid #99f6e4;
+}
+
+.five-kpi-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.five-kpi-label {
+  font-size: 13px;
+  font-weight: 750;
+  color: #374151;
+}
+
+.five-kpi-badge {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.7);
+  color: #4b5563;
+}
+
+.five-kpi-number {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.8px;
+  line-height: 1.1;
+  margin-bottom: 10px;
+}
+
+.five-nutrition-kpi-card.violet .five-kpi-number { color: #86198f; }
+.five-nutrition-kpi-card.amber .five-kpi-number { color: #b45309; }
+.five-nutrition-kpi-card.green .five-kpi-number { color: #15803d; }
+.five-nutrition-kpi-card.cyan .five-kpi-number { color: #0f766e; }
+
+.five-kpi-bar-wrap {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.65);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.five-kpi-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.five-nutrition-kpi-card.violet .five-kpi-bar-fill { background: #a21caf; }
+.five-nutrition-kpi-card.amber .five-kpi-bar-fill { background: #d97706; }
+.five-nutrition-kpi-card.green .five-kpi-bar-fill { background: #16a34a; }
+.five-nutrition-kpi-card.cyan .five-kpi-bar-fill { background: #0d9488; }
+
+.five-kpi-hint {
+  font-size: 11.5px;
+  line-height: 1.35;
+  color: #4b5563;
+  margin-top: auto;
+}
+
+/* --- Ingredients Box --- */
+.five-ingredients-box {
+  margin-top: 24px;
+  padding: 22px;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #fcfcfd;
+}
+
+.five-ingredients-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.five-ing-title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.five-ing-title-group h4 {
+  font-size: 15px;
+  font-weight: 800;
+  color: #111827;
+  margin: 0;
+}
+
+.five-ing-count-badge {
+  font-size: 12px;
+  font-weight: 700;
+  color: #7025a8;
+  background: #f5f3ff;
+  border: 1px solid #ede9fe;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.five-ingredients-tags-row {
+  margin-bottom: 14px;
+}
+
+.five-tags-title {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 8px;
+}
+
+.five-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.five-ingredient-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 650;
+  color: #1f2937;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: all 0.15s ease;
+}
+
+.five-ingredient-pill svg {
+  color: #16a34a;
+  flex-shrink: 0;
+}
+
+.five-ingredient-pill:hover {
+  border-color: #7025a8;
+  background: #fdf4ff;
+  color: #7025a8;
+}
+
+.five-ingredients-text-wrap {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 14px;
+}
+
+.five-ingredients-paragraph {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: #374151;
+  margin: 0;
+}
+
+.five-ingredients-footer-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #4b5563;
+  line-height: 1.4;
+}
+
+.five-ingredients-footer-note svg {
+  flex-shrink: 0;
+}
+
+/* --- Feeding Guide Table --- */
+.five-guide-table-wrap {
+  margin-top: 18px;
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.five-guide-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  text-align: left;
+}
+
+.five-guide-table th {
+  background: #f9fafb;
+  color: #374151;
+  font-weight: 750;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 13px;
+}
+
+.five-guide-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f3f4f6;
+  color: #1f2937;
+}
+
+.five-guide-table tr:last-child td {
+  border-bottom: none;
+}
+
+.five-guide-table tr:hover td {
+  background: #fafafa;
+}
+
+.five-gram-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background: #f3f4f6;
+  color: #374151;
+  border-radius: 6px;
+  font-weight: 650;
+  font-size: 13px;
+}
+
+.five-gram-badge.highlight {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #dbeafe;
+}
+
+.five-guide-tip-box {
+  margin-top: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: #f0f7ff;
+  border: 1px solid #dbeafe;
+  font-size: 13px;
+  color: #1e40af;
+  line-height: 1.5;
+}
+
+.five-guide-tip-box svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* --- Dispatch & Guarantee Bento --- */
+.five-dispatch-bento {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.five-dispatch-card {
+  padding: 18px;
+  border-radius: 12px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.five-dispatch-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.five-dispatch-card h4 {
+  font-size: 14px;
+  font-weight: 800;
+  color: #111827;
+  margin: 0;
+}
+
+.five-dispatch-card p {
+  font-size: 13px;
+  color: #4b5563;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Responsive adjustments for Accordions & Nutrition */
+@media (max-width: 900px) {
+  .five-nutrition-bento {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .five-dispatch-bento {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .five-accordion-summary {
+    padding: 14px 16px;
+  }
+  .five-accordion-title-wrap {
+    gap: 12px;
+  }
+  .five-accordion-icon-box {
+    width: 38px;
+    height: 38px;
+  }
+  .five-accordion-heading {
+    font-size: 14.5px;
+  }
+  .five-accordion-subheading {
+    font-size: 12px;
+  }
+  .five-accordion-body {
+    padding: 0 16px 20px 16px;
+  }
+  .five-nutrition-bento {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .five-nutrition-kpi-card {
+    padding: 14px;
+  }
+  .five-kpi-number {
+    font-size: 24px;
+  }
+  .five-ingredients-box {
+    padding: 16px;
+  }
+}

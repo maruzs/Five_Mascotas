@@ -70,6 +70,16 @@ const stockBadgeClass = (activeVariant.available === 0)
   : (activeVariant.available && activeVariant.available <= 5)
   ? 'is-low'
   : 'is-in';
+
+// Parse top noble ingredients for visual highlight badges
+const rawIngredients = product.ingredients || '';
+const topIngredients = rawIngredients
+  ? rawIngredients
+      .split(/[,;]/)
+      .map((s) => s.trim().replace(/^y\s+/i, ''))
+      .filter((s) => s.length > 2 && !s.toLowerCase().startsWith('vitaminas') && !s.toLowerCase().startsWith('minerales'))
+      .slice(0, 5)
+  : ['Carne seleccionada', 'Arroz integral', 'Proteínas nobles', 'Omega 3 y 6', 'Vitaminas'];
 ---
 
 <BaseLayout
@@ -288,97 +298,218 @@ const stockBadgeClass = (activeVariant.available === 0)
     </div>
 
     <!-- Product Features & Nutrition Accordion -->
-    <section class="five-pdp-details-tabs" aria-label="Ficha técnica e información adicional">
-      <div class="five-accordion">
+    <section class="five-pdp-details-tabs" aria-label="Ficha técnica e información nutricional">
+      <div class="five-accordion-group">
         <!-- Tab 1: Nutritional Information & Ingredients -->
-        <details class="five-accordion-item" open>
-          <summary class="five-accordion-header">
-            <span>Información Nutricional e Ingredientes</span>
-            <span class="five-accordion-chevron">&darr;</span>
+        <details class="five-accordion-card" open>
+          <summary class="five-accordion-summary">
+            <div class="five-accordion-title-wrap">
+              <span class="five-accordion-icon-box violet">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              </span>
+              <div>
+                <h3 class="five-accordion-heading">Información Nutricional e Ingredientes</h3>
+                <span class="five-accordion-subheading">Análisis garantizado, desglose de macronutrientes y materias primas seleccionadas</span>
+              </div>
+            </div>
+            <svg class="five-accordion-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </summary>
-          <div class="five-accordion-content">
-            <div class="five-nutrition-grid">
-              <div class="five-nutrition-kpi">
-                <span class="label">Proteína Cruda (mín.)</span>
-                <strong class="value">{product.proteinPct ? `${product.proteinPct}%` : '28%'}</strong>
+
+          <div class="five-accordion-body">
+            <!-- Nutrition KPI Bento Grid -->
+            <div class="five-nutrition-bento">
+              <!-- Proteína -->
+              <div class="five-nutrition-kpi-card violet">
+                <div class="five-kpi-header">
+                  <span class="five-kpi-label">Proteína Cruda</span>
+                  <span class="five-kpi-badge">Mínimo</span>
+                </div>
+                <strong class="five-kpi-number">{product.proteinPct ? `${product.proteinPct}%` : '28%'}</strong>
+                <div class="five-kpi-bar-wrap">
+                  <div class="five-kpi-bar-fill" style={`width: ${Math.min(100, (product.proteinPct || 28) * 2.5)}%`}></div>
+                </div>
+                <span class="five-kpi-hint">Desarrollo y mantenimiento de masa muscular</span>
               </div>
-              <div class="five-nutrition-kpi">
-                <span class="label">Grasa Total (mín.)</span>
-                <strong class="value">{product.fatPct ? `${product.fatPct}%` : '12%'}</strong>
+
+              <!-- Grasa -->
+              <div class="five-nutrition-kpi-card amber">
+                <div class="five-kpi-header">
+                  <span class="five-kpi-label">Grasa Total</span>
+                  <span class="five-kpi-badge">Mínimo</span>
+                </div>
+                <strong class="five-kpi-number">{product.fatPct ? `${product.fatPct}%` : '9%'}</strong>
+                <div class="five-kpi-bar-wrap">
+                  <div class="five-kpi-bar-fill" style={`width: ${Math.min(100, (product.fatPct || 9) * 4)}%`}></div>
+                </div>
+                <span class="five-kpi-hint">Aporte de energía, palatabilidad y pelaje brillante</span>
               </div>
-              <div class="five-nutrition-kpi">
-                <span class="label">Fibra Cruda (máx.)</span>
-                <strong class="value">{product.fiberPct ? `${product.fiberPct}%` : '3.5%'}</strong>
+
+              <!-- Fibra -->
+              <div class="five-nutrition-kpi-card green">
+                <div class="five-kpi-header">
+                  <span class="five-kpi-label">Fibra Cruda</span>
+                  <span class="five-kpi-badge">Máximo</span>
+                </div>
+                <strong class="five-kpi-number">{product.fiberPct ? `${product.fiberPct}%` : '4.5%'}</strong>
+                <div class="five-kpi-bar-wrap">
+                  <div class="five-kpi-bar-fill" style={`width: ${Math.min(100, (product.fiberPct || 4.5) * 12)}%`}></div>
+                </div>
+                <span class="five-kpi-hint">Salud digestiva y regulación del tránsito intestinal</span>
               </div>
-              <div class="five-nutrition-kpi">
-                <span class="label">Humedad (máx.)</span>
-                <strong class="value">{product.moisturePct ? `${product.moisturePct}%` : '10%'}</strong>
+
+              <!-- Humedad -->
+              <div class="five-nutrition-kpi-card cyan">
+                <div class="five-kpi-header">
+                  <span class="five-kpi-label">Humedad</span>
+                  <span class="five-kpi-badge">Máximo</span>
+                </div>
+                <strong class="five-kpi-number">{product.moisturePct ? `${product.moisturePct}%` : '10%'}</strong>
+                <div class="five-kpi-bar-wrap">
+                  <div class="five-kpi-bar-fill" style={`width: ${Math.min(100, (product.moisturePct || 10) * 7)}%`}></div>
+                </div>
+                <span class="five-kpi-hint">Garantiza croqueta fresca y textura crujiente</span>
               </div>
             </div>
 
-            <h4 style="margin-top:20px;margin-bottom:8px;font-size:14px;font-weight:750;">Ingredientes Principales</h4>
-            <p class="five-ingredients-text">
-              {product.ingredients || 'Harina de carne seleccionada, arroz integral, maíz grano molido, grasa animal estabilizada con antioxidantes naturales, pulpa de remolacha (fuente de FOS), extracto de Yucca Schidigera, levadura de cerveza, minerales quelados y vitaminas esenciales.'}
-            </p>
+            <!-- Ingredients Section -->
+            <div class="five-ingredients-box">
+              <div class="five-ingredients-header">
+                <div class="five-ing-title-group">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7025a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
+                  <h4>Fórmula y Materias Primas</h4>
+                </div>
+                <span class="five-ing-count-badge">Fórmula Completa</span>
+              </div>
+
+              <!-- Top Highlights Tags -->
+              {topIngredients.length > 0 && (
+                <div class="five-ingredients-tags-row">
+                  <span class="five-tags-title">Primeros ingredientes declarados:</span>
+                  <div class="five-tags-list">
+                    {topIngredients.map((ing) => (
+                      <span class="five-ingredient-pill">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>{ing}</span>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <!-- Full ingredients text with styled container -->
+              <div class="five-ingredients-text-wrap">
+                <p class="five-ingredients-paragraph">
+                  {product.ingredients || 'Harina de carne seleccionada, arroz integral, maíz grano molido, grasa animal estabilizada con antioxidantes naturales, pulpa de remolacha (fuente de FOS), extracto de Yucca Schidigera, levadura de cerveza, minerales quelados y vitaminas esenciales.'}
+                </p>
+              </div>
+
+              <!-- Quality Stamp -->
+              <div class="five-ingredients-footer-note">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 8 12 12 14 14"></polyline></svg>
+                <span>Sin subproductos de desecho. Formulado para cumplir con los estándares nutricionales de AAFCO y FEDIAF.</span>
+              </div>
+            </div>
           </div>
         </details>
 
         <!-- Tab 2: Feeding Guide -->
-        <details class="five-accordion-item">
-          <summary class="five-accordion-header">
-            <span>Guía de Porciones Diarias Recomendadas</span>
-            <span class="five-accordion-chevron">&darr;</span>
+        <details class="five-accordion-card">
+          <summary class="five-accordion-summary">
+            <div class="five-accordion-title-wrap">
+              <span class="five-accordion-icon-box blue">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              </span>
+              <div>
+                <h3 class="five-accordion-heading">Guía de Porciones Diarias Recomendadas</h3>
+                <span class="five-accordion-subheading">Cantidades sugeridas según peso de tu mascota y nivel de actividad física</span>
+              </div>
+            </div>
+            <svg class="five-accordion-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </summary>
-          <div class="five-accordion-content">
-            <p style="margin-bottom:12px;font-size:13px;color:#4b5563;">
-              Las cantidades son orientativas y pueden variar según el nivel de actividad física, edad y condición corporal de tu mascota:
-            </p>
-            <table class="five-table-guide" style="width:100%;border-collapse:collapse;font-size:13px;">
-              <thead>
-                <tr style="background:#f3f4f6;text-align:left;">
-                  <th style="padding:8px 12px;border:1px solid #e5e7eb;">Peso Mascota</th>
-                  <th style="padding:8px 12px;border:1px solid #e5e7eb;">Actividad Moderada</th>
-                  <th style="padding:8px 12px;border:1px solid #e5e7eb;">Actividad Alta</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="padding:8px 12px;border:1px solid #e5e7eb;">1 – 5 kg</td>
-                  <td style="padding:8px 12px;border:1px solid #e5e7eb;">35 – 90 g / día</td>
-                  <td style="padding:8px 12px;border:1px solid #e5e7eb;">45 – 115 g / día</td>
-                </tr>
-                <tr>
-                  <td style="padding:8px 12px;border:1px solid #e5e7eb;">5 – 10 kg</td>
-                  <td style="padding:8px 12px;border:1px solid #e5e7eb;">90 – 150 g / día</td>
-                  <td style="padding:8px 12px;border:1px solid #e5e7eb;">115 – 190 g / día</td>
-                </tr>
-                <tr>
-                  <td style="padding:8px 12px;border:1px solid #e5e7eb;">10 – 25 kg</td>
-                  <td style="padding:8px 12px;border:1px solid #e5e7eb;">150 – 290 g / día</td>
-                  <td style="padding:8px 12px;border:1px solid #e5e7eb;">190 – 380 g / día</td>
-                </tr>
-                <tr>
-                  <td style="padding:8px 12px;border:1px solid #e5e7eb;">+25 kg</td>
-                  <td style="padding:8px 12px;border:1px solid #e5e7eb;">+300 g / día</td>
-                  <td style="padding:8px 12px;border:1px solid #e5e7eb;">+400 g / día</td>
-                </tr>
-              </tbody>
-            </table>
+
+          <div class="five-accordion-body">
+            <div class="five-guide-table-wrap">
+              <table class="five-guide-table">
+                <thead>
+                  <tr>
+                    <th>Peso de la Mascota</th>
+                    <th>Actividad Moderada (Hogareño)</th>
+                    <th>Actividad Alta (Paseos y Deporte)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>1 a 5 kg</strong> (Mini / Pequeño)</td>
+                    <td><span class="five-gram-badge">35 a 90 g / día</span></td>
+                    <td><span class="five-gram-badge highlight">45 a 115 g / día</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>5 a 10 kg</strong> (Pequeño / Mediano)</td>
+                    <td><span class="five-gram-badge">90 a 150 g / día</span></td>
+                    <td><span class="five-gram-badge highlight">115 a 190 g / día</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>10 a 25 kg</strong> (Mediano / Grande)</td>
+                    <td><span class="five-gram-badge">150 a 290 g / día</span></td>
+                    <td><span class="five-gram-badge highlight">190 a 380 g / día</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>+25 kg</strong> (Grande / Gigante)</td>
+                    <td><span class="five-gram-badge">+300 g / día</span></td>
+                    <td><span class="five-gram-badge highlight">+400 g / día</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="five-guide-tip-box">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              <span><strong>Consejo Nutricional FIVE:</strong> Se recomienda dividir la porción diaria en 2 tomas (mañana y tarde). Procura mantener siempre un recipiente con agua fresca y limpia a su disposición.</span>
+            </div>
           </div>
         </details>
 
         <!-- Tab 3: Dispatch & Guarantee -->
-        <details class="five-accordion-item">
-          <summary class="five-accordion-header">
-            <span>Envíos, Retiro en Tienda y Garantía FIVE</span>
-            <span class="five-accordion-chevron">&darr;</span>
+        <details class="five-accordion-card">
+          <summary class="five-accordion-summary">
+            <div class="five-accordion-title-wrap">
+              <span class="five-accordion-icon-box green">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+              </span>
+              <div>
+                <h3 class="five-accordion-heading">Envíos, Retiro en Tienda y Garantía FIVE</h3>
+                <span class="five-accordion-subheading">Despacho Same-Day Talca, retiro presencial gratuito y política de cambio</span>
+              </div>
+            </div>
+            <svg class="five-accordion-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </summary>
-          <div class="five-accordion-content">
-            <p style="font-size:13px;line-height:1.6;color:#374151;">
-              <strong>Despacho Same-Day Talca:</strong> Pedidos recibidos antes de las 14:00 hrs son entregados el mismo día hábil en la puerta de tu hogar.<br />
-              <strong>Retiro Express:</strong> Disponible sin costo en tienda física FIVE Mascotas (Talca) una hora tras confirmar tu compra.<br />
-              <strong>Garantía de Satisfacción 100%:</strong> Si a tu mascota no le gusta su nuevo alimento o recibes un empaque dañado, te lo cambiamos sin trámites engorrosos en menos de 48 horas.
-            </p>
+
+          <div class="five-accordion-body">
+            <div class="five-dispatch-bento">
+              <div class="five-dispatch-card">
+                <div class="five-dispatch-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7025a8" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </div>
+                <h4>Despacho Same-Day</h4>
+                <p>Compras realizadas antes de las <strong>14:00 hrs</strong> (Lun a Vie) se entregan el mismo día hábil en la puerta de tu hogar.</p>
+              </div>
+
+              <div class="five-dispatch-card">
+                <div class="five-dispatch-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                </div>
+                <h4>Retiro en Tienda Express</h4>
+                <p>Retira gratis en Casa Matriz <strong>10 Oriente 1431</strong> o Las Rastras indicando tu RUT y código de orden.</p>
+              </div>
+
+              <div class="five-dispatch-card">
+                <div class="five-dispatch-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </div>
+                <h4>Garantía de Transporte</h4>
+                <p>Si el saco llega con daños de transporte o empaque roto, te lo cambiamos <strong>inmediatamente y sin costo</strong>.</p>
+              </div>
+            </div>
           </div>
         </details>
       </div>
