@@ -6,7 +6,7 @@ import crypto from 'node:crypto';
 
 // Transbank Webpay Plus Oficial (Credenciales de integración públicas por defecto)
 const TBK_INTEGRATION_COMMERCE_CODE = '597055555532';
-const TBK_INTEGRATION_API_KEY_SECRET = '579B532A7440BB077C2DBED5C8CF029CD1E394ACA982786B9380B1F4A7B0194D';
+const TBK_INTEGRATION_API_KEY_SECRET = '579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C';
 const TBK_INTEGRATION_URL = 'https://webpay3gint.transbank.cl';
 const TBK_PRODUCTION_URL = 'https://webpay3g.transbank.cl';
 
